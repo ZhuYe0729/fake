@@ -1,0 +1,81 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Any
+
+import torch
+
+
+DEFAULT_MAXVIT_MODEL_PATH = Path(
+    "/data/home/scxj523/run/wja/data/models/timm/maxvit_tiny_tf_224.in1k"
+)
+
+
+def load_maxvit_dense(
+    model_path: str | Path = DEFAULT_MAXVIT_MODEL_PATH,
+    dtype: str = "auto",
+    device: str | torch.device = "cuda",
+) -> tuple[torch.nn.Module, dict[str, Any]]:
+    import timm
+
+    model_dir = Path(model_path)
+    config = _load_config(model_dir)
+    arch = config.get("architecture", "maxvit_tiny_tf_224")
+    num_classes = int(config.get("num_classes", 1000))
+
+    model = timm.create_model(arch, pretrained=False, num_classes=num_classes)
+    state_dict = _load_state_dict(model_dir, map_location="cpu")
+    missing, unexpected = model.load_state_dict(state_dict, strict=False)
+    if missing or unexpected:
+        raise RuntimeError(
+            f"Failed to load MaxViT weights cleanly: missing={missing}, unexpected={unexpected}"
+        )
+
+    torch_dtype = resolve_dtype(dtype, model)
+    if torch_dtype is not None:
+        model = model.to(dtype=torch_dtype)
+    model = model.to(device)
+    model.eval()
+    return model, config
+
+
+def resolve_dtype(dtype: str, model: torch.nn.Module) -> torch.dtype | None:
+    if dtype == "auto":
+        return None
+    if dtype == "fp32":
+        return torch.float32
+    if dtype == "bf16":
+        return torch.bfloat16
+    if dtype == "fp16":
+        return torch.float16
+    raise ValueError(f"Unsupported dtype: {dtype}")
+
+
+def model_input_dtype(model: torch.nn.Module) -> torch.dtype:
+    try:
+        return next(model.parameters()).dtype
+    except StopIteration:
+        return torch.float32
+
+
+def _load_config(model_dir: Path) -> dict[str, Any]:
+    config_path = model_dir / "config.json"
+    with config_path.open("r") as f:
+        return json.load(f)
+
+
+def _load_state_dict(model_dir: Path, map_location: str) -> dict[str, torch.Tensor]:
+    safetensors_path = model_dir / "model.safetensors"
+    bin_path = model_dir / "pytorch_model.bin"
+    if safetensors_path.exists():
+        from safetensors.torch import load_file
+
+        return load_file(str(safetensors_path), device=map_location)
+    if bin_path.exists():
+        state = torch.load(bin_path, map_location=map_location)
+        if isinstance(state, dict) and "state_dict" in state:
+            state = state["state_dict"]
+        return state
+    raise FileNotFoundError(f"No model.safetensors or pytorch_model.bin found in {model_dir}")
+

@@ -84,6 +84,9 @@ fake/
 # 基础配置
 - 当前关注的模型：
     - timm/maxvit_tiny_tf_224.in1k，路径：/data/home/scxj523/run/wja/data/models/timm/maxvit_tiny_tf_224.in1k/
+    - dinov3-vit7b16-pretrain-lvd1689m
+    > backbone路径：/data/home/scxj523/run/wja/data/models/facebook/dinov3-vit7b16-pretrain-lvd1689m  
+    > imagenet head路径：/data/home/scxj523/run/wja/data/models/facebook/dinov3_vit7b16_imagenet1k_linear_head
 
 - 当前关注的数据集
     - imagenet-1k val的subset，路径：/data/home/scxj523/run/wja/data/datasets/imagenet_val/
@@ -93,3 +96,43 @@ fake/
     - unstructured pruning
     - semi-structured pruning
     - joint method
+
+# MaxViT dense baseline
+
+当前已支持 `timm/maxvit_tiny_tf_224.in1k` dense 模型的 ImageNet 精度测试和纯模型 forward 速度测试。
+
+- 精度测试：
+```shell
+sbatch scripts/slurm/eval_maxvit_dense_accuracy.sh
+```
+
+- 速度测试：
+```shell
+sbatch scripts/slurm/bench_maxvit_dense_speed.sh
+```
+
+- 结果路径：
+    - 精度：`artifacts/results/maxvit_dense/accuracy.csv`
+    - 速度：`artifacts/results/maxvit_dense/speed.csv`
+
+速度测试使用随机输入，仅统计模型 forward，不包含数据读取、图片解码和预处理开销；CSV 中会记录 batch size、输入尺寸、dtype、warmup、iters、GPU、torch/cuda 版本等测试配置。
+
+# DINOv3 ViT-7B dense baseline
+
+当前已支持 `facebook/dinov3-vit7b16-pretrain-lvd1689m` dense 模型的 ImageNet linear head 精度测试和纯模型 forward 速度测试。
+
+- 精度测试：
+```shell
+sbatch scripts/slurm/eval_dinov3_vit7b16_dense_accuracy.sh
+```
+
+- 速度测试：
+```shell
+sbatch scripts/slurm/bench_dinov3_vit7b16_dense_speed.sh
+```
+
+- 结果路径：
+    - 精度：`artifacts/results/dinov3_vit7b16_dense/accuracy.csv`
+    - 速度：`artifacts/results/dinov3_vit7b16_dense/speed.csv`
+
+DINOv3 dense baseline 使用 backbone 原始 dtype，通过本地 ImageNet linear head 做分类；分类输入遵循 DINOv3 hub classifier 逻辑，即 `cls token` 拼接 `patch tokens mean`。图像预处理参考 `third_party/dinov3/README.md` 中 LVD-1689M 的 ImageNet transform，默认 resize 到 256。

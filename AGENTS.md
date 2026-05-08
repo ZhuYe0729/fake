@@ -22,3 +22,31 @@
 ## 其他
 
 conda环境：wja-cospaq
+cuda：12.8
+环境：超算环境，登录节点有网络没有显卡，计算需要提交到计算节点，计算节点没有网络，GPU为RTX 5090。脚本示例如下：
+```shell
+#!/bin/bash
+#SBATCH --job-name=model_test
+#SBATCH --partition=gpu_5090
+#SBATCH --gpus=1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --output=out/xxx_%j.out
+#SBATCH --error=err/xxx_%j.err
+
+echo "Running on $(hostname)"
+
+module load cuda/12.8
+
+# 初始化conda（关键）
+source ~/run/miniconda3/etc/profile.d/conda.sh
+
+# 激活环境
+conda activate wja-cospaq
+
+
+export HF_HOME=/data/home/scxj523/.cache/huggingface/
+export HF_DATASETS_OFFLINE="1"
+
+cd /data/home/scxj523/run/wja/project/my/fake/
+```
