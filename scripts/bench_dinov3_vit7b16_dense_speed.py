@@ -6,6 +6,7 @@ from datetime import datetime
 
 import torch
 
+from fake.compression.checkpoint import checkpoint_csv_fields, load_checkpoint_into_model
 from fake.evaluation.speed import benchmark_forward
 from fake.models.dinov3 import (
     DEFAULT_DINOV3_BACKBONE_PATH,
@@ -25,6 +26,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--warmup", type=int, default=10)
     parser.add_argument("--iters", type=int, default=50)
     parser.add_argument("--output", default="artifacts/results/dinov3_vit7b16_dense/speed.csv")
+    parser.add_argument("--checkpoint", default=None)
+    parser.add_argument("--method", default="dense")
     return parser.parse_args()
 
 
@@ -35,6 +38,7 @@ def main() -> None:
 
     device = torch.device("cuda")
     model, config = load_dinov3_vit7b16_dense_classifier(args.backbone_path, args.head_path, device=device)
+    checkpoint_metadata = load_checkpoint_into_model(model, args.checkpoint)
     input_dtype = model_input_dtype(model)
     result = benchmark_forward(
         model=model,
@@ -49,7 +53,7 @@ def main() -> None:
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "model": "facebook/dinov3-vit7b16-pretrain-lvd1689m",
         "head": "dinov3_vit7b16_imagenet1k_linear_head",
-        "method": "dense",
+        "method": args.method,
         "task": "forward_speed",
         "speed_scope": "random_input_classifier_forward_only",
         "runtime_dtype": str(input_dtype).replace("torch.", ""),
@@ -72,6 +76,7 @@ def main() -> None:
         "head_path": args.head_path,
         "torch_version": torch.__version__,
         "cuda_version": torch.version.cuda,
+        **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
     }
     append_csv_row(args.output, list(row.keys()), row)
     print(
@@ -84,4 +89,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

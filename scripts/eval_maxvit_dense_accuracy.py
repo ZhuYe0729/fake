@@ -7,6 +7,7 @@ from datetime import datetime
 import torch
 from torch.utils.data import DataLoader
 
+from fake.compression.checkpoint import checkpoint_csv_fields, load_checkpoint_into_model
 from fake.data.imagenet_zip import DEFAULT_IMAGENET_ROOT, ImageNetZipDataset
 from fake.evaluation.accuracy import evaluate_topk
 from fake.models.maxvit import DEFAULT_MAXVIT_MODEL_PATH, load_maxvit_dense, model_input_dtype
@@ -24,6 +25,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dtype", choices=["auto", "fp32", "bf16", "fp16"], default="auto")
     parser.add_argument("--log-interval", type=int, default=50)
     parser.add_argument("--output", default="artifacts/results/maxvit_dense/accuracy.csv")
+    parser.add_argument("--checkpoint", default=None)
+    parser.add_argument("--method", default="dense")
     return parser.parse_args()
 
 
@@ -34,6 +37,7 @@ def main() -> None:
 
     device = torch.device("cuda")
     model, config = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device)
+    checkpoint_metadata = load_checkpoint_into_model(model, args.checkpoint)
     input_dtype = model_input_dtype(model)
     dataset = ImageNetZipDataset(args.dataset_root, args.csv, args.zip, config)
     dataloader = DataLoader(
@@ -50,7 +54,7 @@ def main() -> None:
     row = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "model": "timm/maxvit_tiny_tf_224.in1k",
-        "method": "dense",
+        "method": args.method,
         "task": "imagenet_accuracy",
         "dtype_arg": args.dtype,
         "runtime_dtype": str(input_dtype).replace("torch.", ""),
@@ -68,6 +72,7 @@ def main() -> None:
         "zip": args.zip,
         "torch_version": torch.__version__,
         "cuda_version": torch.version.cuda,
+        **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
     }
     fieldnames = list(row.keys())
     append_csv_row(args.output, fieldnames, row)
@@ -80,4 +85,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

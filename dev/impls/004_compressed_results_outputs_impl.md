@@ -1,0 +1,11 @@
+## 2026-05-08 - 压缩结果输出目录和 CSV 表头修正
+- 开发目的：将压缩模型结果从 dense 结果目录拆出，并修复压缩结果追加到 CSV 时表头缺失的问题。
+- 修改内容：
+  - 压缩 speed/eval Slurm 脚本输出改为 `artifacts/results/<model>_compressed/`。
+  - `append_csv_row` 增加 lock 文件互斥写入，并在新行包含额外字段时扩展已有 CSV 表头。
+- 影响文件：
+  - `fake/utils/csv_io.py`
+  - `scripts/slurm/bench_compressed_speed.sh`
+  - `scripts/slurm/eval_compressed_accuracy.sh`
+  - `dev/plans/004_compressed_results_outputs_plan.md`
+- 后续注意：历史 `artifacts/results/maxvit_dense/*.csv` 中已混入的压缩结果不会自动迁移；重跑后以 `artifacts/results/maxvit_compressed/` 下的新结果为准。

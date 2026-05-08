@@ -136,3 +136,27 @@ sbatch scripts/slurm/bench_dinov3_vit7b16_dense_speed.sh
     - 速度：`artifacts/results/dinov3_vit7b16_dense/speed.csv`
 
 DINOv3 dense baseline 使用 backbone 原始 dtype，通过本地 ImageNet linear head 做分类；分类输入遵循 DINOv3 hub classifier 逻辑，即 `cls token` 拼接 `patch tokens mean`。图像预处理参考 `third_party/dinov3/README.md` 中 LVD-1689M 的 ImageNet transform，默认 resize 到 256。
+
+# 压缩模型生成与评估
+
+当前支持以下压缩方法：`nvfp4`、`unstructured_sparse`、`semi_structured_sparse`、`nvfp4_unstructured_sparse`、`nvfp4_semi_structured_sparse`。
+
+- 生成压缩 checkpoint：
+```shell
+MODEL=maxvit METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=dinov3_vit7b16 METHODS="nvfp4" sbatch scripts/slurm/prepare_compressed_models.sh
+```
+
+- 评估压缩 checkpoint 精度：
+```shell
+MODEL=maxvit METHOD=nvfp4 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch scripts/slurm/eval_compressed_accuracy.sh
+```
+
+- 评估压缩 checkpoint 速度：
+```shell
+MODEL=maxvit METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
+MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
+```
+
+压缩产物默认保存到 `artifacts/checkpoints/{model}/{method}/`。第一版保存 fake-quant / pruned 后的 dequantized checkpoint；`masks.pt` 和 `scales.pt` 默认保存 metadata-only，避免 DINOv3 7B 生成过大的辅助张量文件。

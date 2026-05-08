@@ -6,6 +6,7 @@ from datetime import datetime
 
 import torch
 
+from fake.compression.checkpoint import checkpoint_csv_fields, load_checkpoint_into_model
 from fake.evaluation.speed import benchmark_forward
 from fake.models.maxvit import DEFAULT_MAXVIT_MODEL_PATH, load_maxvit_dense, model_input_dtype
 from fake.utils.csv_io import append_csv_row
@@ -20,6 +21,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--iters", type=int, default=200)
     parser.add_argument("--dtype", choices=["auto", "fp32", "bf16", "fp16"], default="auto")
     parser.add_argument("--output", default="artifacts/results/maxvit_dense/speed.csv")
+    parser.add_argument("--checkpoint", default=None)
+    parser.add_argument("--method", default="dense")
     return parser.parse_args()
 
 
@@ -30,6 +33,7 @@ def main() -> None:
 
     device = torch.device("cuda")
     model, _ = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device)
+    checkpoint_metadata = load_checkpoint_into_model(model, args.checkpoint)
     input_dtype = model_input_dtype(model)
     result = benchmark_forward(
         model=model,
@@ -44,7 +48,7 @@ def main() -> None:
     row = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "model": "timm/maxvit_tiny_tf_224.in1k",
-        "method": "dense",
+        "method": args.method,
         "task": "forward_speed",
         "speed_scope": "random_input_forward_only",
         "dtype_arg": args.dtype,
@@ -65,6 +69,7 @@ def main() -> None:
         "model_path": args.model_path,
         "torch_version": torch.__version__,
         "cuda_version": torch.version.cuda,
+        **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
     }
     fieldnames = list(row.keys())
     append_csv_row(args.output, fieldnames, row)
@@ -78,4 +83,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
