@@ -84,6 +84,9 @@ fake/
 # 基础配置
 - 当前关注的模型：
     - timm/maxvit_tiny_tf_224.in1k，路径：/data/home/scxj523/run/wja/data/models/timm/maxvit_tiny_tf_224.in1k/
+    - timm/maxvit_small_tf_224.in1k，路径：/data/home/scxj523/run/wja/data/models/timm/maxvit_small_tf_224.in1k/
+    - timm/maxvit_base_tf_224.in1k，路径：/data/home/scxj523/run/wja/data/models/timm/maxvit_base_tf_224.in1k/
+    - timm/maxvit_large_tf_512.in21k_ft_in1k，路径：/data/home/scxj523/run/wja/data/models/timm/maxvit_large_tf_512.in21k_ft_in1k/
     - dinov3-vit7b16-pretrain-lvd1689m
     > backbone路径：/data/home/scxj523/run/wja/data/models/facebook/dinov3-vit7b16-pretrain-lvd1689m  
     > imagenet head路径：/data/home/scxj523/run/wja/data/models/facebook/dinov3_vit7b16_imagenet1k_linear_head
@@ -99,21 +102,25 @@ fake/
 
 # MaxViT dense baseline
 
-当前已支持 `timm/maxvit_tiny_tf_224.in1k` dense 模型的 ImageNet 精度测试和纯模型 forward 速度测试。
+当前已支持 `tiny`、`small`、`base`、`large` 四个 MaxViT dense 模型的 ImageNet 精度测试和纯模型 forward 速度测试。通过 `MAXVIT_VARIANT` 选择模型，默认 `tiny`；`large` 会使用配置中的 `3x512x512` 输入尺寸。
 
 - 精度测试：
 ```shell
 sbatch scripts/slurm/eval_maxvit_dense_accuracy.sh
+MAXVIT_VARIANT=small sbatch scripts/slurm/eval_maxvit_dense_accuracy.sh
+MAXVIT_VARIANT=large BATCH_SIZE=8 sbatch scripts/slurm/eval_maxvit_dense_accuracy.sh
 ```
 
 - 速度测试：
 ```shell
 sbatch scripts/slurm/bench_maxvit_dense_speed.sh
+MAXVIT_VARIANT=base sbatch scripts/slurm/bench_maxvit_dense_speed.sh
 ```
 
 - 结果路径：
-    - 精度：`artifacts/results/maxvit_dense/accuracy.csv`
-    - 速度：`artifacts/results/maxvit_dense/speed.csv`
+    - 精度：`artifacts/results/maxvit_<variant>_dense/accuracy.csv`
+    - 速度：`artifacts/results/maxvit_<variant>_dense/speed.csv`
+    - 历史目录 `artifacts/results/maxvit_dense/` 不再作为新实验输出目标。
 
 速度测试使用随机输入，仅统计模型 forward，不包含数据读取、图片解码和预处理开销；CSV 中会记录 batch size、输入尺寸、dtype、warmup、iters、GPU、torch/cuda 版本等测试配置。
 
@@ -144,19 +151,22 @@ DINOv3 dense baseline 使用 backbone 原始 dtype，通过本地 ImageNet linea
 - 生成压缩 checkpoint：
 ```shell
 MODEL=maxvit METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=maxvit MAXVIT_VARIANT=small METHODS="nvfp4" sbatch scripts/slurm/prepare_compressed_models.sh
 MODEL=dinov3_vit7b16 METHODS="nvfp4" sbatch scripts/slurm/prepare_compressed_models.sh
 ```
 
 - 评估压缩 checkpoint 精度：
 ```shell
 MODEL=maxvit METHOD=nvfp4 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4 BATCH_SIZE=8 sbatch scripts/slurm/eval_compressed_accuracy.sh
 MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch scripts/slurm/eval_compressed_accuracy.sh
 ```
 
 - 评估压缩 checkpoint 速度：
 ```shell
 MODEL=maxvit METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
 MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
 ```
 
-压缩产物默认保存到 `artifacts/checkpoints/{model}/{method}/`。第一版保存 fake-quant / pruned 后的 dequantized checkpoint；`masks.pt` 和 `scales.pt` 默认保存 metadata-only，避免 DINOv3 7B 生成过大的辅助张量文件。
+MaxViT 压缩产物默认保存到 `artifacts/checkpoints/maxvit_<variant>/{method}/`，结果写入 `artifacts/results/maxvit_<variant>_compressed/`；历史目录 `artifacts/results/maxvit_compressed/` 不再作为新实验输出目标。DINOv3 仍使用 `artifacts/checkpoints/{model}/{method}/`。第一版保存 fake-quant / pruned 后的 dequantized checkpoint；`masks.pt` 和 `scales.pt` 默认保存 metadata-only，避免 DINOv3 7B 生成过大的辅助张量文件。

@@ -22,7 +22,14 @@ export TRANSFORMERS_OFFLINE="1"
 cd /data/home/scxj523/run/wja/project/my/fake/
 
 MODEL="${MODEL:-maxvit}"
+MAXVIT_VARIANT="${MAXVIT_VARIANT:-tiny}"
 METHODS="${METHODS:-nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse}"
+if [[ "${MAXVIT_VARIANT}" == "large" ]]; then
+  DEFAULT_CALIB_BATCH_SIZE=4
+else
+  DEFAULT_CALIB_BATCH_SIZE=16
+fi
+CALIB_BATCH_SIZE="${CALIB_BATCH_SIZE:-${DEFAULT_CALIB_BATCH_SIZE}}"
 
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
 echo "SLURM_JOB_GPUS=${SLURM_JOB_GPUS:-unset}"
@@ -34,9 +41,16 @@ python -c "import torch; print(torch.__version__, torch.version.cuda); print(tor
 
 
 for METHOD in ${METHODS}; do
-  echo "Preparing ${MODEL} ${METHOD}"
-  PYTHONPATH=. python scripts/prepare_compressed_model.py \
-    --model "${MODEL}" \
-    --method "${METHOD}"
+  echo "Preparing ${MODEL} ${MAXVIT_VARIANT} ${METHOD}"
+  if [[ "${MODEL}" == "maxvit" ]]; then
+    PYTHONPATH=. python scripts/prepare_compressed_model.py \
+      --model "${MODEL}" \
+      --maxvit-variant "${MAXVIT_VARIANT}" \
+      --calib-batch-size "${CALIB_BATCH_SIZE}" \
+      --method "${METHOD}"
+  else
+    PYTHONPATH=. python scripts/prepare_compressed_model.py \
+      --model "${MODEL}" \
+      --method "${METHOD}"
+  fi
 done
-

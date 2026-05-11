@@ -1,28 +1,86 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 import torch
 
 
+@dataclass(frozen=True)
+class MaxViTVariant:
+    variant: str
+    model_id: str
+    model_path: Path
+    result_key: str
+
+
+MAXVIT_VARIANTS: dict[str, MaxViTVariant] = {
+    "tiny": MaxViTVariant(
+        variant="tiny",
+        model_id="timm/maxvit_tiny_tf_224.in1k",
+        model_path=Path("/data/home/scxj523/run/wja/data/models/timm/maxvit_tiny_tf_224.in1k"),
+        result_key="maxvit_tiny",
+    ),
+    "small": MaxViTVariant(
+        variant="small",
+        model_id="timm/maxvit_small_tf_224.in1k",
+        model_path=Path("/data/home/scxj523/run/wja/data/models/timm/maxvit_small_tf_224.in1k"),
+        result_key="maxvit_small",
+    ),
+    "base": MaxViTVariant(
+        variant="base",
+        model_id="timm/maxvit_base_tf_224.in1k",
+        model_path=Path("/data/home/scxj523/run/wja/data/models/timm/maxvit_base_tf_224.in1k"),
+        result_key="maxvit_base",
+    ),
+    "large": MaxViTVariant(
+        variant="large",
+        model_id="timm/maxvit_large_tf_512.in21k_ft_in1k",
+        model_path=Path("/data/home/scxj523/run/wja/data/models/timm/maxvit_large_tf_512.in21k_ft_in1k"),
+        result_key="maxvit_large",
+    ),
+}
+MAXVIT_VARIANT_CHOICES = tuple(MAXVIT_VARIANTS.keys())
+DEFAULT_MAXVIT_VARIANT = "tiny"
 DEFAULT_MAXVIT_MODEL_PATH = Path(
     "/data/home/scxj523/run/wja/data/models/timm/maxvit_tiny_tf_224.in1k"
 )
 
 
+def get_maxvit_variant(variant: str = DEFAULT_MAXVIT_VARIANT) -> MaxViTVariant:
+    try:
+        return MAXVIT_VARIANTS[variant]
+    except KeyError as exc:
+        choices = ", ".join(MAXVIT_VARIANT_CHOICES)
+        raise ValueError(f"Unsupported MaxViT variant: {variant}. Choices: {choices}") from exc
+
+
+def maxvit_input_size(config: dict[str, Any]) -> tuple[int, int, int]:
+    pretrained_cfg = config.get("pretrained_cfg", {})
+    input_size = pretrained_cfg.get("input_size", [3, 224, 224])
+    if len(input_size) != 3:
+        raise ValueError(f"Expected 3D MaxViT input_size, got: {input_size}")
+    return tuple(int(value) for value in input_size)
+
+
 def load_maxvit_dense(
-    model_path: str | Path = DEFAULT_MAXVIT_MODEL_PATH,
+    model_path: str | Path | None = None,
     dtype: str = "auto",
     device: str | torch.device = "cuda",
+    variant: str = DEFAULT_MAXVIT_VARIANT,
 ) -> tuple[torch.nn.Module, dict[str, Any]]:
     import timm
 
-    model_dir = Path(model_path)
+    variant_info = get_maxvit_variant(variant)
+    model_dir = Path(model_path) if model_path is not None else variant_info.model_path
     config = _load_config(model_dir)
     arch = config.get("architecture", "maxvit_tiny_tf_224")
     num_classes = int(config.get("num_classes", 1000))
+    config.setdefault("model_id", variant_info.model_id)
+    config.setdefault("model_variant", variant_info.variant)
+    config.setdefault("result_key", variant_info.result_key)
 
     model = timm.create_model(arch, pretrained=False, num_classes=num_classes)
     state_dict = _load_state_dict(model_dir, map_location="cpu")
@@ -78,4 +136,3 @@ def _load_state_dict(model_dir: Path, map_location: str) -> dict[str, torch.Tens
             state = state["state_dict"]
         return state
     raise FileNotFoundError(f"No model.safetensors or pytorch_model.bin found in {model_dir}")
-

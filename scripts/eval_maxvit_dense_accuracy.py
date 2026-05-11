@@ -10,13 +10,14 @@ from torch.utils.data import DataLoader
 from fake.compression.checkpoint import checkpoint_csv_fields, load_checkpoint_into_model
 from fake.data.imagenet_zip import DEFAULT_IMAGENET_ROOT, ImageNetZipDataset
 from fake.evaluation.accuracy import evaluate_topk
-from fake.models.maxvit import DEFAULT_MAXVIT_MODEL_PATH, load_maxvit_dense, model_input_dtype
+from fake.models.maxvit import MAXVIT_VARIANT_CHOICES, get_maxvit_variant, load_maxvit_dense, model_input_dtype
 from fake.utils.csv_io import append_csv_row
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate dense MaxViT on ImageNet val zip dataset.")
-    parser.add_argument("--model-path", default=str(DEFAULT_MAXVIT_MODEL_PATH))
+    parser.add_argument("--variant", choices=MAXVIT_VARIANT_CHOICES, default="tiny")
+    parser.add_argument("--model-path", default=None)
     parser.add_argument("--dataset-root", default=str(DEFAULT_IMAGENET_ROOT))
     parser.add_argument("--csv", default="val.csv")
     parser.add_argument("--zip", default="imagenet_val.zip")
@@ -24,7 +25,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-workers", type=int, default=8)
     parser.add_argument("--dtype", choices=["auto", "fp32", "bf16", "fp16"], default="auto")
     parser.add_argument("--log-interval", type=int, default=50)
-    parser.add_argument("--output", default="artifacts/results/maxvit_dense/accuracy.csv")
+    parser.add_argument("--output", default=None)
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--method", default="dense")
     return parser.parse_args()
@@ -36,7 +37,9 @@ def main() -> None:
         raise RuntimeError("CUDA is required. Submit this script to a GPU compute node.")
 
     device = torch.device("cuda")
-    model, config = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device)
+    variant_info = get_maxvit_variant(args.variant)
+    output = args.output or f"artifacts/results/{variant_info.result_key}_dense/accuracy.csv"
+    model, config = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device, variant=args.variant)
     checkpoint_metadata = load_checkpoint_into_model(model, args.checkpoint)
     input_dtype = model_input_dtype(model)
     dataset = ImageNetZipDataset(args.dataset_root, args.csv, args.zip, config)
@@ -53,7 +56,8 @@ def main() -> None:
     gpu_name = torch.cuda.get_device_name(device)
     row = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
-        "model": "timm/maxvit_tiny_tf_224.in1k",
+        "model": variant_info.model_id,
+        "model_variant": variant_info.variant,
         "method": args.method,
         "task": "imagenet_accuracy",
         "dtype_arg": args.dtype,
@@ -66,7 +70,7 @@ def main() -> None:
         "top5": f"{result.top5:.6f}",
         "elapsed_sec": f"{result.elapsed_sec:.3f}",
         "images_per_sec": f"{result.images_per_sec:.3f}",
-        "model_path": args.model_path,
+        "model_path": args.model_path or str(variant_info.model_path),
         "dataset_root": args.dataset_root,
         "csv": args.csv,
         "zip": args.zip,
@@ -75,11 +79,11 @@ def main() -> None:
         **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
     }
     fieldnames = list(row.keys())
-    append_csv_row(args.output, fieldnames, row)
+    append_csv_row(output, fieldnames, row)
     print(
         "accuracy done: "
         f"top1={row['top1']} top5={row['top5']} samples={result.num_samples} "
-        f"batch_size={args.batch_size} dtype={row['runtime_dtype']} output={args.output}"
+        f"variant={args.variant} batch_size={args.batch_size} dtype={row['runtime_dtype']} output={output}"
     )
 
 

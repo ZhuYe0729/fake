@@ -24,7 +24,12 @@ from fake.models.dinov3 import (
     load_dinov3_vit7b16_dense_classifier,
     model_input_dtype as dinov3_input_dtype,
 )
-from fake.models.maxvit import DEFAULT_MAXVIT_MODEL_PATH, load_maxvit_dense, model_input_dtype as maxvit_input_dtype
+from fake.models.maxvit import (
+    MAXVIT_VARIANT_CHOICES,
+    get_maxvit_variant,
+    load_maxvit_dense,
+    model_input_dtype as maxvit_input_dtype,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -44,7 +49,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--nvfp4-scale-remap", default="none")
     parser.add_argument("--save-full-masks", action="store_true")
     parser.add_argument("--save-full-scales", action="store_true")
-    parser.add_argument("--maxvit-model-path", default=str(DEFAULT_MAXVIT_MODEL_PATH))
+    parser.add_argument("--maxvit-variant", choices=MAXVIT_VARIANT_CHOICES, default="tiny")
+    parser.add_argument("--maxvit-model-path", default=None)
     parser.add_argument("--dinov3-backbone-path", default=str(DEFAULT_DINOV3_BACKBONE_PATH))
     parser.add_argument("--dinov3-head-path", default=str(DEFAULT_DINOV3_HEAD_PATH))
     return parser.parse_args()
@@ -58,11 +64,9 @@ def main() -> None:
     device = torch.device("cuda")
     model, model_config, input_dtype = _load_model(args, device)
     calib_samples = args.calib_samples if args.calib_samples is not None else default_calib_samples(args.model)
-    calib_batch_size = (
-        args.calib_batch_size if args.calib_batch_size is not None else default_calib_batch_size(args.model)
-    )
+    calib_batch_size = args.calib_batch_size if args.calib_batch_size is not None else _default_calib_batch_size(args)
     group_size = args.nvfp4_group_size if args.nvfp4_group_size is not None else default_nvfp4_group_size(args.method)
-    output_dir = Path(args.output_dir or f"artifacts/checkpoints/{args.model}/{args.method}")
+    output_dir = Path(args.output_dir or _default_output_dir(args))
     output_dir.mkdir(parents=True, exist_ok=True)
 
     dataset = _build_dataset(args, model_config)
@@ -100,6 +104,7 @@ def main() -> None:
             "dataset_root": args.dataset_root,
             "csv": args.csv,
             "zip": args.zip,
+            **_model_metadata(args),
         }
     )
 
@@ -110,14 +115,20 @@ def main() -> None:
         json.dump(metadata, f, indent=2)
     print(
         "compression done: "
-        f"model={args.model} method={args.method} modules={metadata['compressed_modules']} "
+        f"model={args.model} variant={metadata.get('model_variant', '')} "
+        f"method={args.method} modules={metadata['compressed_modules']} "
         f"calib_samples={calib_samples} output={output_dir}"
     )
 
 
 def _load_model(args: argparse.Namespace, device: torch.device):
     if args.model == "maxvit":
-        model, config = load_maxvit_dense(args.maxvit_model_path, dtype="auto", device=device)
+        model, config = load_maxvit_dense(
+            args.maxvit_model_path,
+            dtype="auto",
+            device=device,
+            variant=args.maxvit_variant,
+        )
         return model, config, maxvit_input_dtype(model)
     if args.model == "dinov3_vit7b16":
         model, config = load_dinov3_vit7b16_dense_classifier(
@@ -140,6 +151,29 @@ def _build_dataset(args: argparse.Namespace, model_config: dict):
     return ImageNetZipDataset(args.dataset_root, args.csv, args.zip, model_config)
 
 
+def _default_calib_batch_size(args: argparse.Namespace) -> int:
+    if args.model == "maxvit" and args.maxvit_variant == "large":
+        return 4
+    return default_calib_batch_size(args.model)
+
+
+def _default_output_dir(args: argparse.Namespace) -> str:
+    if args.model == "maxvit":
+        return f"artifacts/checkpoints/maxvit_{args.maxvit_variant}/{args.method}"
+    return f"artifacts/checkpoints/{args.model}/{args.method}"
+
+
+def _model_metadata(args: argparse.Namespace) -> dict[str, str]:
+    if args.model == "maxvit":
+        variant_info = get_maxvit_variant(args.maxvit_variant)
+        return {
+            "model_id": variant_info.model_id,
+            "model_variant": variant_info.variant,
+            "result_key": variant_info.result_key,
+            "model_path": str(args.maxvit_model_path or variant_info.model_path),
+        }
+    return {}
+
+
 if __name__ == "__main__":
     main()
-

@@ -22,15 +22,25 @@ export TRANSFORMERS_OFFLINE="1"
 cd /data/home/scxj523/run/wja/project/my/fake/
 
 MODEL="${MODEL:-maxvit}"
+MAXVIT_VARIANT="${MAXVIT_VARIANT:-tiny}"
 METHOD="${METHOD:-nvfp4}"
-CHECKPOINT="${CHECKPOINT:-artifacts/checkpoints/${MODEL}/${METHOD}/model.pt}"
 
 if [[ "${MODEL}" == "maxvit" ]]; then
+  CHECKPOINT="${CHECKPOINT:-artifacts/checkpoints/maxvit_${MAXVIT_VARIANT}/${METHOD}/model.pt}"
+  if [[ "${MAXVIT_VARIANT}" == "large" ]]; then
+    DEFAULT_BATCH_SIZE=16
+  else
+    DEFAULT_BATCH_SIZE=128
+  fi
+  BATCH_SIZE="${BATCH_SIZE:-${DEFAULT_BATCH_SIZE}}"
   PYTHONPATH=. python scripts/bench_maxvit_dense_speed.py \
+    --variant "${MAXVIT_VARIANT}" \
+    --batch-size "${BATCH_SIZE}" \
     --checkpoint "${CHECKPOINT}" \
     --method "${METHOD}" \
-    --output "artifacts/results/maxvit_compressed/speed.csv"
+    --output "artifacts/results/maxvit_${MAXVIT_VARIANT}_compressed/speed.csv"
 elif [[ "${MODEL}" == "dinov3_vit7b16" ]]; then
+  CHECKPOINT="${CHECKPOINT:-artifacts/checkpoints/${MODEL}/${METHOD}/model.pt}"
   PYTHONPATH=. python scripts/bench_dinov3_vit7b16_dense_speed.py \
     --checkpoint "${CHECKPOINT}" \
     --method "${METHOD}" \

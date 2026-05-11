@@ -8,19 +8,26 @@ import torch
 
 from fake.compression.checkpoint import checkpoint_csv_fields, load_checkpoint_into_model
 from fake.evaluation.speed import benchmark_forward
-from fake.models.maxvit import DEFAULT_MAXVIT_MODEL_PATH, load_maxvit_dense, model_input_dtype
+from fake.models.maxvit import (
+    MAXVIT_VARIANT_CHOICES,
+    get_maxvit_variant,
+    load_maxvit_dense,
+    maxvit_input_size,
+    model_input_dtype,
+)
 from fake.utils.csv_io import append_csv_row
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Benchmark dense MaxViT forward speed.")
-    parser.add_argument("--model-path", default=str(DEFAULT_MAXVIT_MODEL_PATH))
+    parser.add_argument("--variant", choices=MAXVIT_VARIANT_CHOICES, default="tiny")
+    parser.add_argument("--model-path", default=None)
     parser.add_argument("--batch-size", type=int, default=128)
-    parser.add_argument("--input-size", type=int, nargs=3, default=[3, 224, 224])
+    parser.add_argument("--input-size", type=int, nargs=3, default=None)
     parser.add_argument("--warmup", type=int, default=50)
     parser.add_argument("--iters", type=int, default=200)
     parser.add_argument("--dtype", choices=["auto", "fp32", "bf16", "fp16"], default="auto")
-    parser.add_argument("--output", default="artifacts/results/maxvit_dense/speed.csv")
+    parser.add_argument("--output", default=None)
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--method", default="dense")
     return parser.parse_args()
@@ -32,13 +39,16 @@ def main() -> None:
         raise RuntimeError("CUDA is required. Submit this script to a GPU compute node.")
 
     device = torch.device("cuda")
-    model, _ = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device)
+    variant_info = get_maxvit_variant(args.variant)
+    output = args.output or f"artifacts/results/{variant_info.result_key}_dense/speed.csv"
+    model, config = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device, variant=args.variant)
     checkpoint_metadata = load_checkpoint_into_model(model, args.checkpoint)
     input_dtype = model_input_dtype(model)
+    input_size = tuple(args.input_size) if args.input_size is not None else maxvit_input_size(config)
     result = benchmark_forward(
         model=model,
         batch_size=args.batch_size,
-        input_size=tuple(args.input_size),
+        input_size=input_size,
         input_dtype=input_dtype,
         device=device,
         warmup=args.warmup,
@@ -47,7 +57,8 @@ def main() -> None:
     gpu_name = torch.cuda.get_device_name(device)
     row = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
-        "model": "timm/maxvit_tiny_tf_224.in1k",
+        "model": variant_info.model_id,
+        "model_variant": variant_info.variant,
         "method": args.method,
         "task": "forward_speed",
         "speed_scope": "random_input_forward_only",
@@ -55,9 +66,9 @@ def main() -> None:
         "runtime_dtype": str(input_dtype).replace("torch.", ""),
         "device": gpu_name,
         "batch_size": args.batch_size,
-        "input_c": args.input_size[0],
-        "input_h": args.input_size[1],
-        "input_w": args.input_size[2],
+        "input_c": input_size[0],
+        "input_h": input_size[1],
+        "input_w": input_size[2],
         "warmup": args.warmup,
         "iters": args.iters,
         "latency_mean_ms": f"{result.latency_mean_ms:.6f}",
@@ -66,18 +77,18 @@ def main() -> None:
         "latency_min_ms": f"{result.latency_min_ms:.6f}",
         "latency_max_ms": f"{result.latency_max_ms:.6f}",
         "images_per_sec": f"{result.images_per_sec:.3f}",
-        "model_path": args.model_path,
+        "model_path": args.model_path or str(variant_info.model_path),
         "torch_version": torch.__version__,
         "cuda_version": torch.version.cuda,
         **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
     }
     fieldnames = list(row.keys())
-    append_csv_row(args.output, fieldnames, row)
+    append_csv_row(output, fieldnames, row)
     print(
         "speed done: "
-        f"batch_size={args.batch_size} dtype={row['runtime_dtype']} "
+        f"variant={args.variant} batch_size={args.batch_size} dtype={row['runtime_dtype']} "
         f"mean_ms={row['latency_mean_ms']} images_per_sec={row['images_per_sec']} "
-        f"warmup={args.warmup} iters={args.iters} output={args.output}"
+        f"warmup={args.warmup} iters={args.iters} output={output}"
     )
 
 

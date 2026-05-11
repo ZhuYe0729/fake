@@ -20,9 +20,18 @@ export HF_DATASETS_OFFLINE="1"
 
 cd /data/home/scxj523/run/wja/project/my/fake/
 
-PYTHONPATH=. python scripts/eval_maxvit_dense_accuracy.py \
-  --batch-size 128 \
-  --num-workers 8 \
-  --dtype auto \
-  --output artifacts/results/maxvit_dense/accuracy.csv
+MAXVIT_VARIANT="${MAXVIT_VARIANT:-tiny}"
+if [[ "${MAXVIT_VARIANT}" == "large" ]]; then
+  DEFAULT_BATCH_SIZE=16
+else
+  DEFAULT_BATCH_SIZE=128
+fi
+BATCH_SIZE="${BATCH_SIZE:-${DEFAULT_BATCH_SIZE}}"
+NUM_WORKERS="${NUM_WORKERS:-8}"
 
+PYTHONPATH=. python scripts/eval_maxvit_dense_accuracy.py \
+  --variant "${MAXVIT_VARIANT}" \
+  --batch-size "${BATCH_SIZE}" \
+  --num-workers "${NUM_WORKERS}" \
+  --dtype auto \
+  --output "artifacts/results/maxvit_${MAXVIT_VARIANT}_dense/accuracy.csv"
