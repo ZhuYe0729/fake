@@ -21,3 +21,9 @@
 - 修改内容：将 `accuracy_summary.png` 中的单元格数字字号从 8 调整为 11，并重新生成精度图。
 - 影响文件：`scripts/plot_accuracy_results.py`、`artifacts/results/accuracy_summary.png`、`dev/impls/005_maxvit_variants_eval_impl.md`。
 - 后续注意：每次重新运行 `scripts/plot_accuracy_results.py` 都会沿用新的字号。
+
+## 2026-05-12 - 汇总图增加压缩率
+- 开发目的：在统一精度汇总图中同时展示当前压缩方法的估算压缩率。
+- 修改内容：`scripts/plot_accuracy_results.py` 读取 accuracy CSV 对应 checkpoint metadata，按当前模型 safetensors 参数量、压缩目标权重数、剪枝零值数、NVFP4 group/scale 配置计算理想 packed 存储压缩率，并在 `accuracy_summary.png` 单元格中追加 `CR x.xx`。
+- 影响文件：`scripts/plot_accuracy_results.py`、`artifacts/results/accuracy_summary.png`、各 `artifacts/results/*_compressed/accuracy_comparison.png`、`dev/impls/005_maxvit_variants_eval_impl.md`。
+- 后续注意：CR 是基于理想 packed/sparse 表示的估算值；当前 `model.pt` 仍是 dense float checkpoint，不代表实际文件大小压缩率。

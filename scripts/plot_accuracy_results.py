@@ -3,9 +3,13 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
+import math
+import struct
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 import matplotlib
 
@@ -128,6 +132,7 @@ def _collect_model_rows(spec: ModelSpec) -> dict[str, dict[str, float]]:
         results[method] = {
             "top1": _as_percent(row.get("top1", "")),
             "top5": _as_percent(row.get("top5", "")),
+            "compression_ratio": _compression_ratio_for_row(row),
         }
     return results
 
@@ -157,6 +162,137 @@ def _timestamp(row: dict[str, str]) -> datetime:
 
 def _as_percent(value: str) -> float:
     return float(value) * 100.0
+
+
+def _compression_ratio_for_row(row: dict[str, str]) -> float:
+    method = row.get("method", "")
+    if method == "dense":
+        return 1.0
+
+    checkpoint_path = _resolve_path(row.get("checkpoint_path", ""))
+    metadata_path = checkpoint_path.parent / "metadata.json" if checkpoint_path is not None else None
+    if metadata_path is None or not metadata_path.exists():
+        return float("nan")
+
+    with metadata_path.open("r") as f:
+        metadata = json.load(f)
+
+    total_params = _total_params_for_row(row)
+    selected_weights = _selected_weight_count(metadata)
+    if total_params <= 0 or selected_weights <= 0:
+        return float("nan")
+
+    zeros = _zero_weight_count(metadata)
+    scale_count = _scale_count(metadata)
+    uncompressed_weights = total_params - selected_weights
+
+    dense_bits = total_params * 32.0
+    compressed_bits = uncompressed_weights * 32.0
+
+    if _has_quant(metadata):
+        scale_bits = _scale_bits(metadata)
+        stored_weights = selected_weights - zeros if _has_prune(metadata) else selected_weights
+        compressed_bits += stored_weights * 4.0 + scale_count * scale_bits
+    elif _has_prune(metadata):
+        compressed_bits += (selected_weights - zeros) * 32.0
+    else:
+        compressed_bits += selected_weights * 32.0
+
+    if compressed_bits <= 0:
+        return float("nan")
+    return dense_bits / compressed_bits
+
+
+def _resolve_path(value: str) -> Path | None:
+    if not value:
+        return None
+    path = Path(value)
+    if not path.is_absolute():
+        path = Path.cwd() / path
+    return path
+
+
+def _total_params_for_row(row: dict[str, str]) -> int:
+    model_path = _resolve_path(row.get("model_path") or row.get("backbone_path", ""))
+    if model_path is None:
+        return 0
+
+    model = row.get("model", "")
+    if "dinov3" in model:
+        return _safetensors_dir_param_count(model_path) + _dinov3_head_param_count(row)
+
+    return _safetensors_dir_param_count(model_path)
+
+
+def _safetensors_dir_param_count(model_dir: Path) -> int:
+    paths = sorted(model_dir.glob("*.safetensors"))
+    return sum(_safetensors_param_count(path) for path in paths)
+
+
+def _safetensors_param_count(path: Path) -> int:
+    with path.open("rb") as f:
+        header_size = struct.unpack("<Q", f.read(8))[0]
+        header = json.loads(f.read(header_size))
+    total = 0
+    for name, info in header.items():
+        if name == "__metadata__":
+            continue
+        shape = info.get("shape", [])
+        total += math.prod(int(dim) for dim in shape)
+    return total
+
+
+def _dinov3_head_param_count(row: dict[str, str]) -> int:
+    hidden_size = int(row.get("hidden_size") or 4096)
+    num_classes = 1000
+    return num_classes * (2 * hidden_size) + num_classes
+
+
+def _selected_weight_count(metadata: dict[str, Any]) -> int:
+    total = 0
+    for record in metadata.get("modules", []):
+        prune = record.get("prune")
+        quant = record.get("quant")
+        if isinstance(prune, dict) and prune.get("status") == "ok":
+            total += int(prune.get("numel", 0))
+        elif isinstance(quant, dict) and quant.get("status") == "ok":
+            total += int(quant.get("num_groups", 0)) * int(quant.get("group_size", metadata.get("nvfp4_group_size", 16)))
+    return total
+
+
+def _zero_weight_count(metadata: dict[str, Any]) -> int:
+    total = 0
+    for record in metadata.get("modules", []):
+        prune = record.get("prune")
+        if isinstance(prune, dict) and prune.get("status") == "ok":
+            total += int(prune.get("zeros", 0))
+    return total
+
+
+def _scale_count(metadata: dict[str, Any]) -> int:
+    total = 0
+    for record in metadata.get("modules", []):
+        quant = record.get("quant")
+        if isinstance(quant, dict) and quant.get("status") == "ok":
+            total += int(quant.get("num_groups", 0))
+    return total
+
+
+def _scale_bits(metadata: dict[str, Any]) -> float:
+    precision = metadata.get("nvfp4_scale_precision", "fp16")
+    if precision in {"fp16", "bf16"}:
+        return 16.0
+    if precision == "fp32":
+        return 32.0
+    return 16.0
+
+
+def _has_prune(metadata: dict[str, Any]) -> bool:
+    return any(isinstance(record.get("prune"), dict) for record in metadata.get("modules", []))
+
+
+def _has_quant(metadata: dict[str, Any]) -> bool:
+    return any(isinstance(record.get("quant"), dict) for record in metadata.get("modules", []))
 
 
 def _plot_model(spec: ModelSpec, rows: dict[str, dict[str, float]], output_path: Path) -> None:
@@ -218,15 +354,18 @@ def _plot_summary(
         vmin=0,
         vmax=100,
     )
-    ax.set_title("Top-1 Accuracy Summary: Dense and Compressed", fontsize=14, fontweight="bold")
+    ax.set_title("Top-1 Accuracy and Estimated Compression Ratio Summary", fontsize=14, fontweight="bold")
     ax.set_xticks(range(len(METHOD_ORDER)), [METHOD_LABELS[method] for method in METHOD_ORDER], rotation=24, ha="right")
     ax.set_yticks(range(len(specs)), [spec.title for spec in specs])
 
     for row_idx, row in enumerate(matrix):
         for col_idx, value in enumerate(row):
-            text = "NA" if value is None else f"{value:.2f}"
+            method = METHOD_ORDER[col_idx]
+            ratio = all_results[specs[row_idx].key].get(method, {}).get("compression_ratio")
+            ratio_text = "CR NA" if ratio is None or math.isnan(ratio) else f"CR {ratio:.2f}x"
+            text = "NA" if value is None else f"{value:.2f}\n{ratio_text}"
             color = "white" if value is not None and value < 65.0 else "black"
-            ax.text(col_idx, row_idx, text, ha="center", va="center", color=color, fontsize=11)
+            ax.text(col_idx, row_idx, text, ha="center", va="center", color=color, fontsize=9, linespacing=1.15)
 
     cbar = fig.colorbar(image, ax=ax)
     cbar.set_label("Top-1 Accuracy (%)")
