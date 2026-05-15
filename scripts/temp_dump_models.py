@@ -32,15 +32,19 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     
     if args.model == "maxvit":
-        print("Loading MaxViT...")
-        try:
-            maxvit_model, _ = load_maxvit_dense(device="cpu")
-            maxvit_info = get_model_info_string(maxvit_model, "MaxViT Tiny TF 224 in1k")
-            maxvit_path = output_dir / "maxvit_arch.txt"
-            maxvit_path.write_text(maxvit_info)
-            print(f"Saved MaxViT architecture to {maxvit_path}")
-        except Exception as e:
-            print(f"Error loading MaxViT: {e}")
+        from fake.models.maxvit import MAXVIT_VARIANTS
+        for variant in MAXVIT_VARIANTS.keys():
+            print(f"Loading MaxViT {variant}...")
+            try:
+                maxvit_model, _ = load_maxvit_dense(device="cpu", variant=variant)
+                maxvit_info = get_model_info_string(maxvit_model, f"MaxViT {variant.capitalize()} TF 224 in1k")
+                maxvit_path = output_dir / f"maxvit_{variant}_arch.txt"
+                maxvit_path.write_text(maxvit_info)
+                print(f"Saved MaxViT {variant} architecture to {maxvit_path}")
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
+                print(f"Error loading MaxViT {variant}: {e}")
 
     if args.model == "dinov3":
         print("Loading DINOv3...")

@@ -1,0 +1,58 @@
+## 2026-05-13 - FlashInfer NVFP4 runtime skeleton
+- 开发目的：为 MaxViT dense NVFP4 真实 kernel 推理加速建立第一版接入路径，先聚焦 Linear 替换、FlashInfer 算子探测和端到端速度 benchmark。
+- 修改内容：
+  - 新增 `fake.kernels.flashinfer_nvfp4`，封装 `FlashInferNVFP4Linear`、替换报告、fallback 计数和 FlashInfer 版本探测。
+  - 新增 `fake.models.maxvit_nvfp4.load_maxvit_flashinfer_nvfp4`，将 dense MaxViT 加载和 NVFP4 Linear 替换集中到一个 runtime loader。
+  - 新增 `scripts/check_flashinfer_nvfp4.py`，用于在 GPU 节点上验证 `nvfp4_quantize + mm_fp4` 的最小矩阵路径。
+  - 新增 `scripts/bench_maxvit_nvfp4_speed.py`，输出 MaxViT NVFP4 端到端 speed CSV。
+  - 新增 `scripts/compare_maxvit_nvfp4_outputs.py`，比较 dense 与 NVFP4 logits 的误差、cosine 和 top1 agreement。
+  - 新增 FlashInfer/NVFP4 相关 Slurm 脚本，默认 `CUDA_MODULE=cuda/12.9`，同时支持环境变量覆盖。
+- 影响文件：
+  - `fake/kernels/__init__.py`
+  - `fake/kernels/flashinfer_nvfp4.py`
+  - `fake/models/maxvit_nvfp4.py`
+  - `scripts/check_flashinfer_nvfp4.py`
+  - `scripts/bench_maxvit_nvfp4_speed.py`
+  - `scripts/compare_maxvit_nvfp4_outputs.py`
+  - `scripts/slurm/check_flashinfer_nvfp4.sh`
+  - `scripts/slurm/bench_maxvit_nvfp4_speed.sh`
+  - `scripts/slurm/bench_maxvit_dense_vs_nvfp4.sh`
+- 验证情况：
+  - 已运行 `python -m py_compile` 检查新增 Python 文件语法。
+  - 已在 `wja-cospaq` 中检查 `bench_maxvit_nvfp4_speed.py --help` 和 `compare_maxvit_nvfp4_outputs.py --help`。
+  - 当前用户正在安装 FlashInfer；安装完成前，真实 GPU kernel 路径尚未运行。
+- 后续注意：
+  - 安装完成后先提交 `scripts/slurm/check_flashinfer_nvfp4.sh`，确认 FlashInfer import、scale layout、B weight shuffle 与 `mm_fp4` backend 可用。
+  - 第一版只替换 `nn.Linear`；MaxViT 1x1 Conv2d 待 Linear 路径稳定后再接入。
+  - NVFP4 runtime 脚本限定 dtype 为 `bf16/fp16`，避免 fp32 输入不被 FlashInfer NVFP4 量化支持。
+
+## 2026-05-13 - FlashInfer import/cache smoke test
+- 开发目的：FlashInfer 安装完成后开始测试真实 NVFP4 kernel 路径，先解决登录节点 import 卡住和 compute node 无网络时潜在下载重试问题。
+- 修改内容：
+  - 发现 `import flashinfer` 卡在 `tvm_ffi` 的 `torch-c-dlpack` 可选扩展 JIT 编译；手动运行 build 脚本生成 `/data/home/scxj523/.cache/tvm-ffi/libtorch_c_dlpack_addon_torch29-cpu.so` 后，FlashInfer import 正常。
+  - 在 FlashInfer 相关 Slurm 脚本中默认设置 `FLASHINFER_NO_DOWNLOAD=1`，避免计算节点无网络时反复尝试下载 cubin。
+- 影响文件：
+  - `scripts/slurm/check_flashinfer_nvfp4.sh`
+  - `scripts/slurm/bench_maxvit_nvfp4_speed.sh`
+  - `scripts/slurm/bench_maxvit_dense_vs_nvfp4.sh`
+  - `dev/impls/006_dense_nvfp4_flashinfer_impl.md`
+- 验证情况：
+  - `import flashinfer` 已通过，版本 `0.6.11.post1`，并确认 `nvfp4_quantize`、`mm_fp4`、`SfLayout` 可用。
+  - `flashinfer show-config` 能打印基础信息，但因 `flashinfer-cubin` / `flashinfer-jit-cache` 未安装，会尝试访问 NVIDIA artifact 仓库并因 SSL 问题超时。
+  - 已提交最小 NVFP4 GPU 检查 job `435502`，等待 Slurm 资源。
+- 后续注意：
+  - 如果 job 日志显示缺少本地 cubin/JIT cache，需要在登录节点安装 `flashinfer-cubin` 或 `flashinfer-jit-cache`，或允许 FlashInfer 在有 CUDA/NVCC 的节点本地编译。
+
+## 2026-05-13 - NVFP4 timing breakdown
+- 开发目的：澄清最小算子检查中 `nvfp4_mm_ms` 的含义，避免把已量化 GEMM 时间误读为完整 NVFP4 Linear forward 时间。
+- 修改内容：
+  - `scripts/check_flashinfer_nvfp4.py` 改用 CUDA Event 计时。
+  - 新增分项输出：`nvfp4_mm_only_ms`、`activation_global_scale_ms`、`activation_quant_only_ms`、`activation_scale_plus_quant_ms`、`weight_scale_plus_quant_once_ms`、`nvfp4_forward_like_ms`。
+- 影响文件：
+  - `scripts/check_flashinfer_nvfp4.py`
+  - `dev/impls/006_dense_nvfp4_flashinfer_impl.md`
+- 验证情况：
+  - 已运行 `python -m py_compile scripts/check_flashinfer_nvfp4.py`。
+  - 已在 `wja-cospaq` 中检查 `scripts/check_flashinfer_nvfp4.py --help`。
+- 后续注意：
+  - 当前 MaxViT runtime forward 包含 activation global scale、activation quantize、`mm_fp4`、bias add、reshape/contiguous；权重量化只在模块构造时发生。
