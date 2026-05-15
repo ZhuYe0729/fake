@@ -38,6 +38,7 @@ def load_dinov3_vit7b16_dense_classifier(
     backbone_path: str | Path = DEFAULT_DINOV3_BACKBONE_PATH,
     head_path: str | Path = DEFAULT_DINOV3_HEAD_PATH,
     device: str | torch.device = "cuda",
+    torch_dtype: str | torch.dtype = "auto",
 ) -> tuple[nn.Module, dict[str, Any]]:
     from transformers import AutoModel
 
@@ -46,7 +47,7 @@ def load_dinov3_vit7b16_dense_classifier(
     backbone = AutoModel.from_pretrained(
         str(backbone_dir),
         local_files_only=True,
-        torch_dtype="auto",
+        torch_dtype=torch_dtype,
         trust_remote_code=False,
     )
     runtime_dtype = model_input_dtype(backbone)
@@ -75,4 +76,3 @@ def model_input_dtype(model: nn.Module) -> torch.dtype:
 def _load_config(model_dir: Path) -> dict[str, Any]:
     with (model_dir / "config.json").open("r") as f:
         return json.load(f)
-

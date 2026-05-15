@@ -30,6 +30,8 @@ python scripts/bench_maxvit_nvfp4_micro.py --max-layers 3 --warmup 5 --iters 10
 
 - `bench_dinov3_vit7b16_dense_speed.py`：DINOv3 ViT-7B/16 dense classifier forward benchmark。
 - `bench_dinov3_vit7b16_nvfp4_micro.py`：逐层拆解 DINOv3 ViT-7B/16 backbone NVFP4 Linear 的耗时。
+- `bench_dinov3_vit7b16_cutlass_nvfp4_speed.py`：DINOv3 ViT-7B/16 CUTLASS dense NVFP4 classifier forward benchmark，使用真实 CUTLASS NVFP4 kernel。
+- `eval_dinov3_vit7b16_cutlass_nvfp4_accuracy.py`：DINOv3 ViT-7B/16 CUTLASS dense NVFP4 ImageNet linear-head accuracy。
 
 `bench_dinov3_vit7b16_nvfp4_micro.py` 默认以 bf16 运行，输入尺寸为 `3x128x128`、`3x256x256`、`3x384x384`，支持 `--batch-sizes` / `BATCH_SIZES`，单个配置失败时会写入 `status=ERROR`。默认输出：
 
@@ -41,6 +43,19 @@ artifacts/analysis/dinov3_vit7b16/nvfp4/microbench.csv
 
 ```bash
 python scripts/bench_dinov3_vit7b16_nvfp4_micro.py --max-layers 3 --warmup 2 --iters 5
+```
+
+CUTLASS NVFP4 路径是独立真实 kernel 推理路径，不替换现有 FlashInfer 封装。它会把 DINOv3 backbone transformer 内 280 个 projection Linear 替换为 `fake/kernels/cutlass/cutlass_wrapper` 的 `NVFP4Linear`，classifier head 保持 bf16 dense。默认输出：
+
+```text
+artifacts/results/dinov3_vit7b16_cutlass_nvfp4/speed.csv
+artifacts/results/dinov3_vit7b16_cutlass_nvfp4/accuracy.csv
+```
+
+Slurm 冒烟：
+
+```bash
+WARMUP=1 ITERS=2 sbatch scripts/slurm/bench_dinov3_vit7b16_cutlass_nvfp4_speed.sh
 ```
 
 ## FlashInfer / Custom Shapes
