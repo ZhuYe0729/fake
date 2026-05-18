@@ -1,141 +1,95 @@
-# 压缩实验结果总结
+# 端到端压缩推理结果总结
 
-更新时间：2026-05-11
+更新时间：2026-05-16
 
-## 结果文件
+## 结论概览
 
-- MaxViT dense 基线：`artifacts/results/maxvit_<variant>_dense/accuracy.csv`，`artifacts/results/maxvit_<variant>_dense/speed.csv`
-- MaxViT 压缩结果：`artifacts/results/maxvit_<variant>_compressed/accuracy.csv`，`artifacts/results/maxvit_<variant>_compressed/speed.csv`
-- DINOv3 dense 基线：`artifacts/results/dinov3_vit7b16_dense/accuracy.csv`，`artifacts/results/dinov3_vit7b16_dense/speed.csv`
-- DINOv3 压缩结果：`artifacts/results/dinov3_vit7b16_compressed/accuracy.csv`，`artifacts/results/dinov3_vit7b16_compressed/speed.csv`
+- DINOv3 ViT-7B/16 的三条端到端路径已经打通：dense fp32、CUTLASS dense NVFP4、CUTLASS sparse NVFP4 storage。
+- DINOv3 sparse NVFP4 现在从 2.6G storage checkpoint 加载，加载时 pack 成真实 CUTLASS sparse runtime buffer，forward 使用真实 sparse NVFP4 kernel。
+- MaxViT 四个 variant 的 dense、CUTLASS dense NVFP4 runtime checkpoint、CUTLASS sparse NVFP4 storage checkpoint 都已完成 speed/accuracy 测试。
+- MaxViT small/base 的 CUTLASS dense NVFP4 已修复：跳过 first stage 中 `in_features=96` 的 unsupported dense NVFP4 Linear 后，accuracy 恢复正常。
+- MaxViT CUTLASS 首版只替换 Linear；MBConv pointwise Conv2d 仍保持 dense，因此 skipped count 中包含 `unsupported_kind:conv2d`。
 
-注意：早期 `maxvit_dense/*.csv` 中曾混入压缩结果，`maxvit_dense/` 和 `maxvit_compressed/` 现作为历史目录保留。新增 MaxViT 实验应优先使用 `maxvit_tiny_*`、`maxvit_small_*`、`maxvit_base_*`、`maxvit_large_*` 目录。
+## Checkpoint 口径
 
-## 精度结果
+| model | path | format | size |
+| --- | --- | --- | ---: |
+| DINOv3 dense NVFP4 | `artifacts/checkpoints/dinov3_vit7b16/cutlass_nvfp4_runtime/model.pt` | CUTLASS runtime packed | 3.54 GiB |
+| DINOv3 sparse NVFP4 | `artifacts/checkpoints/dinov3_vit7b16/cutlass_sparse_nvfp4_storage/model.pt` | CUTLASS sparse storage | 2.56 GiB |
+| DINOv3 old fake sparse | `artifacts/checkpoints/dinov3_vit7b16/nvfp4_semi_structured_sparse/model.pt` | dense float fake checkpoint | 25.05 GiB |
+| MaxViT tiny dense NVFP4 | `artifacts/checkpoints/maxvit_tiny/cutlass_nvfp4_runtime/model.pt` | CUTLASS runtime packed | 0.029 GiB |
+| MaxViT tiny sparse NVFP4 | `artifacts/checkpoints/maxvit_tiny/cutlass_sparse_nvfp4_storage/model.pt` | CUTLASS sparse storage | 0.026 GiB |
+| MaxViT small dense NVFP4 | `artifacts/checkpoints/maxvit_small/cutlass_nvfp4_runtime/model.pt` | CUTLASS runtime packed | 0.065 GiB |
+| MaxViT small sparse NVFP4 | `artifacts/checkpoints/maxvit_small/cutlass_sparse_nvfp4_storage/model.pt` | CUTLASS sparse storage | 0.058 GiB |
+| MaxViT base dense NVFP4 | `artifacts/checkpoints/maxvit_base/cutlass_nvfp4_runtime/model.pt` | CUTLASS runtime packed | 0.112 GiB |
+| MaxViT base sparse NVFP4 | `artifacts/checkpoints/maxvit_base/cutlass_sparse_nvfp4_storage/model.pt` | CUTLASS sparse storage | 0.100 GiB |
+| MaxViT large dense NVFP4 | `artifacts/checkpoints/maxvit_large/cutlass_nvfp4_runtime/model.pt` | CUTLASS runtime packed | 0.197 GiB |
+| MaxViT large sparse NVFP4 | `artifacts/checkpoints/maxvit_large/cutlass_sparse_nvfp4_storage/model.pt` | CUTLASS sparse storage | 0.176 GiB |
 
-### MaxViT
+## DINOv3 ViT-7B/16
 
-Dense baseline：Top-1 83.44%，Top-5 96.606%。
+### Accuracy
 
-| method | Top-1 | Top-1 delta | Top-5 |
-| --- | ---: | ---: | ---: |
-| nvfp4 | 83.238% | -0.202 pp | 96.514% |
-| unstructured_sparse | 74.876% | -8.564 pp | 93.868% |
-| semi_structured_sparse | 63.832% | -19.608 pp | 87.490% |
-| nvfp4_unstructured_sparse | 74.096% | -9.344 pp | 93.472% |
-| nvfp4_semi_structured_sparse | 33.564% | -49.876 pp | 59.518% |
+| method | checkpoint / loader | Top-1 | delta vs dense | Top-5 | replaced | skipped |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| dense fp32 | original dense | 88.048% | +0.000 pp | 98.404% | - | - |
+| CUTLASS dense NVFP4 | real NVFP4 kernel | 88.146% | +0.098 pp | 98.418% | 280 | 0 |
+| CUTLASS sparse NVFP4 | `cutlass_storage_packed_v1`, load-time pack | 84.546% | -3.502 pp | 97.744% | 280 | 0 |
 
-MaxViT 对结构化/半结构化剪枝非常敏感，尤其 `nvfp4_semi_structured_sparse` 下降很大。
+### Speed
 
-### DINOv3 ViT-7B/16
+Batch sweep 使用 `WARMUP=5, ITERS=20`；accuracy throughput 来自完整 ImageNet eval。
 
-Dense baseline：Top-1 88.048%，Top-5 98.404%。
+| method | batch=1 latency | batch=1 img/s | best batch | best img/s | throughput speedup vs dense best |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| dense fp32 | 106.144 ms | 9.421 | 128 | 14.967 | 1.00x |
+| CUTLASS dense NVFP4 | 38.093 ms | 26.251 | 8 | 81.746 | 5.46x |
+| CUTLASS sparse NVFP4 storage | 39.218 ms | 25.499 | 8 | 87.387 | 5.84x |
 
-| method | Top-1 | Top-1 delta | Top-5 |
-| --- | ---: | ---: | ---: |
-| nvfp4 | 88.116% | +0.068 pp | 98.412% |
-| unstructured_sparse | 87.614% | -0.434 pp | 98.422% |
-| semi_structured_sparse | 87.234% | -0.814 pp | 98.420% |
-| nvfp4_unstructured_sparse | 87.638% | -0.410 pp | 98.418% |
-| nvfp4_semi_structured_sparse | 84.868% | -3.180 pp | 97.854% |
+当前 DINOv3 结论：dense NVFP4 基本无精度损失，并显著快于 fp32；sparse NVFP4 有约 3.5 pp Top-1 损失，但 storage checkpoint 真实压缩且 forward 使用真实 CUTLASS sparse kernel。
 
-DINOv3 的下降确实很小，但从当前代码和 metadata 看，不像是压缩没有生效。更可能的解释是：7B 模型冗余很大，线性 probe 分类任务对这类权重扰动比较鲁棒；同时剪枝分数使用了 `weight^2 * activation_hessian_diag`，不是随机剪枝。
+## MaxViT
 
-## DINOv3 实现检查
+### Accuracy
 
-当前 DINOv3 压缩范围：
+| variant | method | checkpoint / loader | Top-1 | delta vs dense | Top-5 | replaced | skipped | status |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| tiny | dense | original dense | 83.440% | +0.000 pp | 96.606% | - | - | OK |
+| tiny | CUTLASS dense NVFP4 | `cutlass_runtime_packed_v1` | 83.290% | -0.150 pp | 96.584% | 88 | 22 | OK |
+| tiny | CUTLASS sparse NVFP4 | `cutlass_storage_packed_v1` | 70.894% | -12.546 pp | 89.944% | 88 | 22 | OK |
+| small | dense | original dense | 84.456% | +0.000 pp | 96.812% | - | - | OK |
+| small | CUTLASS dense NVFP4 | `cutlass_runtime_packed_v1` | 84.332% | -0.124 pp | 96.770% | 76 | 34 | OK |
+| small | CUTLASS sparse NVFP4 | `cutlass_storage_packed_v1` | 78.302% | -6.154 pp | 94.108% | 76 | 34 | OK |
+| base | dense | original dense | 84.128% | +0.000 pp | 96.166% | - | - | OK |
+| base | CUTLASS dense NVFP4 | `cutlass_runtime_packed_v1` | 84.826% | +0.698 pp | 96.958% | 180 | 60 | OK |
+| base | CUTLASS sparse NVFP4 | `cutlass_storage_packed_v1` | 79.710% | -4.418 pp | 94.784% | 180 | 60 | OK |
+| large | dense | original dense | 88.050% | +0.000 pp | 98.522% | - | - | OK |
+| large | CUTLASS dense NVFP4 | `cutlass_runtime_packed_v1` | 88.022% | -0.028 pp | 98.514% | 192 | 48 | OK |
+| large | CUTLASS sparse NVFP4 | `cutlass_storage_packed_v1` | 79.828% | -8.222 pp | 95.608% | 192 | 48 | OK |
 
-- 选中 280 个 backbone 线性层。
-- 对应 `40` 层 transformer，每层 `7` 个 projection：
-  - `attention.k_proj`
-  - `attention.v_proj`
-  - `attention.q_proj`
-  - `attention.o_proj`
-  - `mlp.gate_proj`
-  - `mlp.up_proj`
-  - `mlp.down_proj`
-- 没有压缩 patch embedding、LayerNorm、分类 head 等小模块。
+### Speed
 
-metadata 检查结果：
+MaxViT tiny/small/base 使用 `224x224`，batch size 128；large 使用 `512x512`，batch size 16。
 
-| method | selected modules | selected weight params | target sparsity in selected weights | skipped |
-| --- | ---: | ---: | ---: | ---: |
-| nvfp4 | 280 | 6,710,886,400 | 0% | 0 |
-| unstructured_sparse | 280 | 6,710,886,400 | 50% | 0 |
-| semi_structured_sparse | 280 | 6,710,886,400 | 50% | 0 |
-| nvfp4_unstructured_sparse | 280 | 6,710,886,400 | 50% | 0 |
-| nvfp4_semi_structured_sparse | 280 | 6,710,886,400 | 50% | 0 |
+| variant | method | latency | img/s | speedup vs dense | replaced | skipped |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| tiny | dense | 89.530 ms | 1429.696 | 1.00x | - | - |
+| tiny | CUTLASS dense NVFP4 | 85.483 ms | 1497.377 | 1.05x | 88 | 22 |
+| tiny | CUTLASS sparse NVFP4 | 83.310 ms | 1536.430 | 1.07x | 88 | 22 |
+| small | dense | 145.967 ms | 876.910 | 1.00x | - | - |
+| small | CUTLASS dense NVFP4 | 118.125 ms | 1083.594 | 1.24x | 76 | 34 |
+| small | CUTLASS sparse NVFP4 | 115.244 ms | 1110.686 | 1.27x | 76 | 34 |
+| base | dense | 256.369 ms | 499.281 | 1.00x | - | - |
+| base | CUTLASS dense NVFP4 | 216.522 ms | 591.163 | 1.18x | 180 | 60 |
+| base | CUTLASS sparse NVFP4 | 213.651 ms | 599.109 | 1.20x | 180 | 60 |
+| large | dense | 262.528 ms | 60.946 | 1.00x | - | - |
+| large | CUTLASS dense NVFP4 | 208.341 ms | 76.797 | 1.26x | 192 | 48 |
+| large | CUTLASS sparse NVFP4 | 202.670 ms | 78.946 | 1.30x | 192 | 48 |
 
-没有发现明显的 no-op 问题：
+当前 MaxViT 结论：真实压缩 checkpoint 和真实 CUTLASS kernel speed 链路已经跑通。dense NVFP4 对四个 variant 的 accuracy 都正常，速度提升约 1.05x-1.26x；sparse NVFP4 对四个 variant 都有速度收益，但有明显精度下降。
 
-- `unstructured_sparse` 和 `semi_structured_sparse` 都会把剪枝后的权重 copy 回模型。
-- `semi_structured_sparse` 是每 4 个输入列保留 2 个，标准 2:4 形式。
-- `nvfp4_semi_structured_sparse` 使用每 8 个元素按 pair 剪枝的变体，精度下降明显更大，也侧面说明压缩确实在改变权重。
-- `nvfp4` 当前是 fake quantize：权重先量化到 FP4 码本，再反量化回 float tensor 保存。
+## 已知限制和后续建议
 
-## 压缩率估算
-
-### 重要说明
-
-当前保存的 `model.pt` 仍是普通 dense float `state_dict`。也就是说，当前 checkpoint 文件本身并没有真实 packed FP4 或 sparse 存储压缩；下面的压缩率是按理想运行时/存储格式估算。
-
-### DINOv3
-
-- backbone safetensors metadata：6,716,035,072 参数。
-- classifier 总参数估算：6,724,228,072 参数。
-- 被压缩目标权重：6,710,886,400 参数。
-- 覆盖率：约 99.80%。
-- 未压缩参数：约 13,341,672 参数。
-
-因此：
-
-- 50% sparse 方法在全模型层面的有效零比例约为 `0.5 * 99.80% = 49.90%`。
-- 若只考虑理想“保留非零 FP32 权重、不计索引/metadata”，稀疏方法理论上接近 2.0x 参数存储压缩。
-- `nvfp4` 若按 4-bit weight + FP16 scale 估算：
-  - group size 16：目标权重约 5 bit/weight，整模型约 6.3x 存储压缩。
-  - group size 32：目标权重约 4.5 bit/weight，整模型约 7.0x 存储压缩。
-- `nvfp4 + sparse` 的真实压缩率取决于是否 packed、是否保存 mask/index、scale 如何按 sparse group 组织；当前代码还没有真实 packed 格式，因此不应报告实际文件压缩率。
-
-### MaxViT
-
-MaxViT 目标压缩权重为 27,885,568 个参数，目标模块内 sparse 方法同样为 50% 零。MaxViT 未压缩模块占比需要进一步统计完整模型参数后才能给出全模型压缩率；从结果看，它对半结构化剪枝比 DINOv3 敏感得多。
-
-## 速度结果解释
-
-当前 speed benchmark 只能说明“压缩后的 dense checkpoint 能正常 forward”，不能说明真实压缩加速。
-
-原因：
-
-- checkpoint 加载只是 `load_state_dict`。
-- pruning 只是把权重置零后仍以 dense tensor 参与普通 PyTorch `Linear` / `Conv2d` 计算。
-- nvfp4 是 fake quantize，保存的是反量化后的 float 权重。
-- 没有替换成真实 sparse kernel、2:4 kernel 或 NVFP4 packed kernel。
-
-因此当前 speed 结果不应作为压缩加速证据。若论文或报告中需要速度收益，需要实现真实运行时算子或 packed 权重路径。
-
-当前 speed 数值可作为 smoke test：
-
-| model | method | mean latency ms | images/sec |
-| --- | --- | ---: | ---: |
-| MaxViT | dense | 89.662 | 1427.577 |
-| MaxViT | nvfp4 | 89.732 | 1426.473 |
-| MaxViT | unstructured_sparse | 89.498 | 1430.201 |
-| MaxViT | semi_structured_sparse | 89.801 | 1425.376 |
-| MaxViT | nvfp4_unstructured_sparse | 90.375 | 1416.313 |
-| MaxViT | nvfp4_semi_structured_sparse | 89.927 | 1423.384 |
-| DINOv3 | dense | 108.282 | 9.235 |
-| DINOv3 | nvfp4 | 106.266 | 9.410 |
-| DINOv3 | unstructured_sparse | 105.165 | 9.509 |
-| DINOv3 | semi_structured_sparse | 100.990 | 9.902 |
-| DINOv3 | nvfp4_unstructured_sparse | 101.520 | 9.850 |
-| DINOv3 | nvfp4_semi_structured_sparse | 102.813 | 9.726 |
-
-这些差异主要反映普通 dense forward 的测量波动和权重数值变化，不代表压缩推理加速。
-
-## 结论
-
-- DINOv3 精度下降小是可能合理的；当前检查没有发现压缩未生效的明显实现错误。
-- DINOv3 压缩覆盖率很高，约 99.80% 参数位于目标压缩线性层中。
-- 当前 sparse 方法在目标权重内确实达到 50% 稀疏，全模型有效零比例约 49.90%。
-- 当前 checkpoint 不是真实 packed/sparse 存储格式；速度结果只能作为 forward smoke test。
-- 若后续要报告真实压缩率和速度收益，需要实现 packed FP4/sparse checkpoint 与对应推理 kernel。
+- MaxViT CUTLASS 当前只替换 Linear，MBConv pointwise Conv2d 未进入 CUTLASS 压缩 kernel；skipped count 主要来自这些 Conv2d，small/base dense/sparse 还额外跳过 first stage 中 `in_features=96` 的 Linear shape。
+- MaxViT small/base dense NVFP4 的旧异常来自过度替换 `K=96` Linear；当前结果已使用 `in_features % 64 == 0` guard 重新 prepare checkpoint 并重测。
+- DINOv3 sparse storage checkpoint 已经显著小于 runtime sparse checkpoint，也远小于旧 fake dense checkpoint；这是目前最可信的“真实压缩存储 + 真实 kernel 推理”路径。

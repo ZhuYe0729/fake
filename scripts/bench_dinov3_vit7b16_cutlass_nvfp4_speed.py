@@ -10,6 +10,10 @@ from fake.evaluation.speed import benchmark_forward
 from fake.kernels.cutlass_nvfp4 import CutlassNVFP4Config, count_cutlass_nvfp4_modules
 from fake.models.dinov3 import DEFAULT_DINOV3_BACKBONE_PATH, DEFAULT_DINOV3_HEAD_PATH, model_input_dtype
 from fake.models.dinov3_cutlass_nvfp4 import load_dinov3_vit7b16_cutlass_nvfp4_classifier
+from fake.models.dinov3_cutlass_runtime import (
+    load_dinov3_vit7b16_cutlass_runtime_classifier,
+    runtime_checkpoint_csv_fields,
+)
 from fake.utils.csv_io import append_csv_row
 
 
@@ -22,6 +26,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--warmup", type=int, default=10)
     parser.add_argument("--iters", type=int, default=50)
     parser.add_argument("--output", default="artifacts/results/dinov3_vit7b16_cutlass_nvfp4/speed.csv")
+    parser.add_argument("--runtime-checkpoint", default=None)
     return parser.parse_args()
 
 
@@ -31,12 +36,23 @@ def main() -> None:
         raise RuntimeError("CUDA is required. Submit this script to a GPU compute node.")
 
     device = torch.device("cuda")
-    model, config, report = load_dinov3_vit7b16_cutlass_nvfp4_classifier(
-        backbone_path=args.backbone_path,
-        head_path=args.head_path,
-        device=device,
-        nvfp4_config=CutlassNVFP4Config(),
-    )
+    runtime_load = None
+    if args.runtime_checkpoint:
+        model, config, report, runtime_load = load_dinov3_vit7b16_cutlass_runtime_classifier(
+            runtime_checkpoint_path=args.runtime_checkpoint,
+            backbone_path=args.backbone_path,
+            head_path=args.head_path,
+            device=device,
+        )
+        if runtime_load.metadata.get("backend") != "dense_nvfp4":
+            raise ValueError(f"Expected dense_nvfp4 runtime checkpoint, got {runtime_load.metadata.get('backend')}")
+    else:
+        model, config, report = load_dinov3_vit7b16_cutlass_nvfp4_classifier(
+            backbone_path=args.backbone_path,
+            head_path=args.head_path,
+            device=device,
+            nvfp4_config=CutlassNVFP4Config(),
+        )
     input_dtype = model_input_dtype(model)
     result = benchmark_forward(
         model=model,
@@ -75,6 +91,7 @@ def main() -> None:
         "cutlass_nvfp4_module_count": count_cutlass_nvfp4_modules(model),
         "torch_version": torch.__version__,
         "cuda_version": torch.version.cuda,
+        **runtime_checkpoint_csv_fields(runtime_load),
         **report.csv_fields(),
     }
     append_csv_row(args.output, list(row.keys()), row)

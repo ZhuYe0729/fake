@@ -23,11 +23,15 @@ PRUNE_METHODS = {
     "semi_structured_sparse",
     "nvfp4_unstructured_sparse",
     "nvfp4_semi_structured_sparse",
+    "nvfp4_4over6_unstructured_sparse",
+    "nvfp4_4over6_semi_structured_sparse",
 }
 QUANT_METHODS = {
     "nvfp4",
     "nvfp4_unstructured_sparse",
     "nvfp4_semi_structured_sparse",
+    "nvfp4_4over6_unstructured_sparse",
+    "nvfp4_4over6_semi_structured_sparse",
 }
 SUPPORTED_METHODS = sorted(PRUNE_METHODS | QUANT_METHODS)
 
@@ -40,6 +44,7 @@ class CompressionConfig:
     sparsity: float = 0.5
     nvfp4_group_size: int = 16
     nvfp4_scale_precision: str = "fp16"
+    nvfp4_scale_rule: str = "static_6"
     nvfp4_scale_remap: str = "none"
     save_full_masks: bool = False
     save_full_scales: bool = False
@@ -98,6 +103,7 @@ def compress_model(
             qconfig = NVFP4Config(
                 group_size=config.nvfp4_group_size,
                 scale_precision=config.nvfp4_scale_precision,
+                scale_rule=config.nvfp4_scale_rule,
                 scale_remap=config.nvfp4_scale_remap,
             )
             qresult = fake_quantize_nvfp4_weight(matrix, qconfig)
@@ -139,17 +145,17 @@ def default_calib_batch_size(model_name: str) -> int:
 
 
 def default_nvfp4_group_size(method: str) -> int:
-    if method == "nvfp4_semi_structured_sparse":
+    if method in ("nvfp4_semi_structured_sparse", "nvfp4_4over6_semi_structured_sparse"):
         return 32
     return 16
 
 
 def _prune_matrix(matrix: torch.Tensor, hdiag: torch.Tensor | None, config: CompressionConfig) -> PruneResult:
-    if config.method in ("unstructured_sparse", "nvfp4_unstructured_sparse"):
+    if config.method in ("unstructured_sparse", "nvfp4_unstructured_sparse", "nvfp4_4over6_unstructured_sparse"):
         return prune_unstructured(matrix, config.sparsity, hdiag)
     if config.method == "semi_structured_sparse":
         return prune_dense_2_4(matrix, hdiag)
-    if config.method == "nvfp4_semi_structured_sparse":
+    if config.method in ("nvfp4_semi_structured_sparse", "nvfp4_4over6_semi_structured_sparse"):
         return prune_nvfp4_pair_2_4(matrix, hdiag)
     raise ValueError(f"Method does not require pruning: {config.method}")
 
@@ -172,4 +178,3 @@ def _scale_payload(scales: torch.Tensor, stats: dict[str, Any], save_full: bool)
     else:
         payload["format"] = "metadata_only"
     return payload
-

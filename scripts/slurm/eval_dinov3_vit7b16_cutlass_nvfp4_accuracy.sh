@@ -33,6 +33,12 @@ HEAD_PATH="${HEAD_PATH:-/data/home/scxj523/run/wja/data/models/facebook/dinov3_v
 DATASET_ROOT="${DATASET_ROOT:-/data/home/scxj523/run/wja/data/datasets/imagenet_val}"
 CSV="${CSV:-val.csv}"
 ZIP="${ZIP:-imagenet_val.zip}"
+RUNTIME_CHECKPOINT="${RUNTIME_CHECKPOINT:-}"
+
+EXTRA_ARGS=()
+if [[ -n "${RUNTIME_CHECKPOINT}" ]]; then
+  EXTRA_ARGS+=(--runtime-checkpoint "${RUNTIME_CHECKPOINT}")
+fi
 
 echo "CUTLASS_WRAPPER_NVFP4_EXT_BUILD_DIR=${CUTLASS_WRAPPER_NVFP4_EXT_BUILD_DIR}"
 python -c "import torch; print(torch.__version__, torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name() if torch.cuda.is_available() else 'no cuda')"
@@ -47,4 +53,5 @@ PYTHONPATH=. python scripts/eval_dinov3_vit7b16_cutlass_nvfp4_accuracy.py \
   --batch-size "${BATCH_SIZE}" \
   --num-workers "${NUM_WORKERS}" \
   --log-interval "${LOG_INTERVAL}" \
-  --output "${OUTPUT}"
+  --output "${OUTPUT}" \
+  "${EXTRA_ARGS[@]}"

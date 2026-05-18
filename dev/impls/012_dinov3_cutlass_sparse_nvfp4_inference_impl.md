@@ -1,0 +1,5 @@
+## 2026-05-16 - DINOv3 CUTLASS sparse NVFP4 inference path
+- 开发目的：为 DINOv3 ViT-7B/16 接入 CUTLASS structured sparse NVFP4 kernel 推理路径，作为 dense CUTLASS NVFP4 的并行真实 kernel 路径。
+- 修改内容：新增 sparse NVFP4 adapter、DINOv3 sparse loader、speed/accuracy 脚本和 Slurm 入口；adapter 内部使用 token padding wrapper 处理 DINOv3 默认 token 数不满足 32 对齐的问题；脚本支持可选 checkpoint + `NO_PRUNE=1`，用于复用已生成的结构化稀疏 checkpoint；新增 012 plan 文件并更新脚本文档。
+- 影响文件：`dev/plans/012_dinov3_cutlass_sparse_nvfp4_inference_plan.md`、`fake/kernels/cutlass_sparse_nvfp4.py`、`fake/models/dinov3_cutlass_sparse_nvfp4.py`、`scripts/bench_dinov3_vit7b16_cutlass_sparse_nvfp4_speed.py`、`scripts/eval_dinov3_vit7b16_cutlass_sparse_nvfp4_accuracy.py`、`scripts/slurm/bench_dinov3_vit7b16_cutlass_sparse_nvfp4_speed.sh`、`scripts/slurm/eval_dinov3_vit7b16_cutlass_sparse_nvfp4_accuracy.sh`、`scripts/README.md`。
+- 后续注意：默认 `prune=True` 在转换时按 magnitude 做 pairwise 4:8 结构化剪枝；若使用已有 `nvfp4_semi_structured_sparse` checkpoint，建议设置 `NO_PRUNE=1` 走 strict sparse conversion；真实 speed/accuracy 需要在 RTX 5090 GPU 节点运行。

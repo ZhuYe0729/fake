@@ -30,8 +30,13 @@ ITERS="${ITERS:-50}"
 OUTPUT="${OUTPUT:-artifacts/results/dinov3_vit7b16_cutlass_nvfp4/speed.csv}"
 BACKBONE_PATH="${BACKBONE_PATH:-/data/home/scxj523/run/wja/data/models/facebook/dinov3-vit7b16-pretrain-lvd1689m}"
 HEAD_PATH="${HEAD_PATH:-/data/home/scxj523/run/wja/data/models/facebook/dinov3_vit7b16_imagenet1k_linear_head/dinov3_vit7b16_imagenet1k_linear_head-90d8ed92.pth}"
+RUNTIME_CHECKPOINT="${RUNTIME_CHECKPOINT:-}"
 
 read -r -a INPUT_SIZE_ARGS <<< "${INPUT_SIZE}"
+EXTRA_ARGS=()
+if [[ -n "${RUNTIME_CHECKPOINT}" ]]; then
+  EXTRA_ARGS+=(--runtime-checkpoint "${RUNTIME_CHECKPOINT}")
+fi
 
 echo "CUTLASS_WRAPPER_NVFP4_EXT_BUILD_DIR=${CUTLASS_WRAPPER_NVFP4_EXT_BUILD_DIR}"
 python -c "import torch; print(torch.__version__, torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name() if torch.cuda.is_available() else 'no cuda')"
@@ -43,4 +48,5 @@ PYTHONPATH=. python scripts/bench_dinov3_vit7b16_cutlass_nvfp4_speed.py \
   --input-size "${INPUT_SIZE_ARGS[@]}" \
   --warmup "${WARMUP}" \
   --iters "${ITERS}" \
-  --output "${OUTPUT}"
+  --output "${OUTPUT}" \
+  "${EXTRA_ARGS[@]}"

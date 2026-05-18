@@ -33,6 +33,6 @@ def checkpoint_csv_fields(metadata: dict[str, Any], checkpoint_path: str | None,
         "compression_method": metadata.get("method", method),
         "sparsity": metadata.get("sparsity", ""),
         "nvfp4_group_size": metadata.get("nvfp4_group_size", ""),
+        "nvfp4_scale_rule": metadata.get("nvfp4_scale_rule", ""),
         "calib_samples": metadata.get("calib_samples", ""),
     }
-

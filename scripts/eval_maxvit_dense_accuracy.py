@@ -7,6 +7,7 @@ from datetime import datetime
 import torch
 from torch.utils.data import DataLoader
 
+from fake.compression.activation import apply_activation_fake_quant
 from fake.compression.checkpoint import checkpoint_csv_fields, load_checkpoint_into_model
 from fake.data.imagenet_zip import DEFAULT_IMAGENET_ROOT, ImageNetZipDataset
 from fake.evaluation.accuracy import evaluate_topk
@@ -28,6 +29,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", default=None)
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--method", default="dense")
+    parser.add_argument("--activation-quant", action="store_true")
+    parser.add_argument("--activation-group-size", type=int, default=None)
+    parser.add_argument("--activation-scale-rule", choices=["static_6", "four_over_six_mse"], default="four_over_six_mse")
     return parser.parse_args()
 
 
@@ -41,6 +45,15 @@ def main() -> None:
     output = args.output or f"artifacts/results/{variant_info.result_key}_dense/accuracy.csv"
     model, config = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device, variant=args.variant)
     checkpoint_metadata = load_checkpoint_into_model(model, args.checkpoint)
+    activation_group_size = args.activation_group_size or int(checkpoint_metadata.get("nvfp4_group_size", 16) or 16)
+    activation_modules = 0
+    if args.activation_quant:
+        activation_modules = apply_activation_fake_quant(
+            model,
+            model_name="maxvit",
+            group_size=activation_group_size,
+            scale_rule=args.activation_scale_rule,
+        )
     input_dtype = model_input_dtype(model)
     dataset = ImageNetZipDataset(args.dataset_root, args.csv, args.zip, config)
     dataloader = DataLoader(
@@ -77,13 +90,18 @@ def main() -> None:
         "torch_version": torch.__version__,
         "cuda_version": torch.version.cuda,
         **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
+        "activation_quant": args.activation_quant,
+        "activation_quant_modules": activation_modules,
+        "activation_group_size": activation_group_size if args.activation_quant else "",
+        "activation_scale_rule": args.activation_scale_rule if args.activation_quant else "",
     }
     fieldnames = list(row.keys())
     append_csv_row(output, fieldnames, row)
     print(
         "accuracy done: "
         f"top1={row['top1']} top5={row['top5']} samples={result.num_samples} "
-        f"variant={args.variant} batch_size={args.batch_size} dtype={row['runtime_dtype']} output={output}"
+        f"variant={args.variant} batch_size={args.batch_size} dtype={row['runtime_dtype']} "
+        f"activation_quant={args.activation_quant} activation_modules={activation_modules} output={output}"
     )
 
 

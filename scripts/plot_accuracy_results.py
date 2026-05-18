@@ -24,6 +24,8 @@ METHOD_ORDER = [
     "semi_structured_sparse",
     "nvfp4_unstructured_sparse",
     "nvfp4_semi_structured_sparse",
+    "nvfp4_4over6_unstructured_sparse",
+    "nvfp4_4over6_semi_structured_sparse",
 ]
 METHOD_LABELS = {
     "dense": "Dense",
@@ -32,6 +34,8 @@ METHOD_LABELS = {
     "semi_structured_sparse": "2:4 Sparse",
     "nvfp4_unstructured_sparse": "NVFP4+Unstruct",
     "nvfp4_semi_structured_sparse": "NVFP4+2:4",
+    "nvfp4_4over6_unstructured_sparse": "4/6+Unstruct",
+    "nvfp4_4over6_semi_structured_sparse": "4/6+2:4",
 }
 METHOD_COLORS = {
     "dense": "#2f4858",
@@ -40,6 +44,8 @@ METHOD_COLORS = {
     "semi_structured_sparse": "#984ea3",
     "nvfp4_unstructured_sparse": "#ff7f00",
     "nvfp4_semi_structured_sparse": "#e41a1c",
+    "nvfp4_4over6_unstructured_sparse": "#a65628",
+    "nvfp4_4over6_semi_structured_sparse": "#f781bf",
 }
 
 
@@ -123,6 +129,11 @@ def _collect_model_rows(spec: ModelSpec) -> dict[str, dict[str, float]]:
         method = row.get("method", "")
         if method in METHOD_ORDER and method != "dense":
             method_rows[method] = _latest(method_rows.get(method), row)
+    if spec.key == "dinov3_vit7b16":
+        for method, path in _dinov3_four_over_six_csvs(spec.dense_csv.parent.parent).items():
+            for row in _read_csv(path):
+                if row.get("method") == method:
+                    method_rows[method] = _latest(method_rows.get(method), row)
 
     results: dict[str, dict[str, float]] = {}
     for method in METHOD_ORDER:
@@ -142,6 +153,17 @@ def _read_csv(path: Path) -> list[dict[str, str]]:
         return []
     with path.open("r", newline="") as f:
         return list(csv.DictReader(f))
+
+
+def _dinov3_four_over_six_csvs(results_dir: Path) -> dict[str, Path]:
+    return {
+        "nvfp4_4over6_unstructured_sparse": results_dir
+        / "dinov3_vit7b16_4over6_unstructured_sparse"
+        / "accuracy.csv",
+        "nvfp4_4over6_semi_structured_sparse": results_dir
+        / "dinov3_vit7b16_4over6_semi_structured_sparse"
+        / "accuracy.csv",
+    }
 
 
 def _latest(current: dict[str, str] | None, candidate: dict[str, str]) -> dict[str, str]:

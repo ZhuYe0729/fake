@@ -122,6 +122,102 @@ MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4_unstructured_sparse sbatch --excl
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 ```
 
+## MaxViT Four Over Six Fake Quant
+
+> MaxViT 4/6 accuracy/speed 脚本默认开启 activation fake quant；设置 `NO_ACTIVATION_QUANT=1` 可关闭。
+
+### 一次性准备全部 MaxViT 4/6 checkpoint
+
+```shell
+MAXVIT_VARIANTS="tiny small base large" \
+METHODS="nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_maxvit_four_over_six_checkpoints.sh
+```
+
+### 一次性提交全部 MaxViT 4/6 精度/速度
+
+```shell
+# 默认：开启 activation fake quant
+for v in tiny small base large; do
+  for m in nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse; do
+    MAXVIT_VARIANT="$v" METHOD="$m" sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+    MAXVIT_VARIANT="$v" METHOD="$m" sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+  done
+done
+
+# 关闭 activation fake quant
+for v in tiny small base large; do
+  for m in nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse; do
+    MAXVIT_VARIANT="$v" METHOD="$m" NO_ACTIVATION_QUANT=1 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+    MAXVIT_VARIANT="$v" METHOD="$m" NO_ACTIVATION_QUANT=1 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+  done
+done
+```
+
+### tiny
+
+```shell
+# checkpoint 准备
+MAXVIT_VARIANTS=tiny METHODS="nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_maxvit_four_over_six_checkpoints.sh
+
+# 精度
+MAXVIT_VARIANT=tiny METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+MAXVIT_VARIANT=tiny METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+
+# 速度
+MAXVIT_VARIANT=tiny METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+MAXVIT_VARIANT=tiny METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+```
+
+### small
+
+```shell
+# checkpoint 准备
+MAXVIT_VARIANTS=small METHODS="nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_maxvit_four_over_six_checkpoints.sh
+
+# 精度
+MAXVIT_VARIANT=small METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+MAXVIT_VARIANT=small METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+
+# 速度
+MAXVIT_VARIANT=small METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+MAXVIT_VARIANT=small METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+```
+
+### base
+
+```shell
+# checkpoint 准备
+MAXVIT_VARIANTS=base METHODS="nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_maxvit_four_over_six_checkpoints.sh
+
+# 精度
+MAXVIT_VARIANT=base METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+MAXVIT_VARIANT=base METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+
+# 速度
+MAXVIT_VARIANT=base METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+MAXVIT_VARIANT=base METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+```
+
+### large
+
+```shell
+# checkpoint 准备
+MAXVIT_VARIANTS=large METHODS="nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_maxvit_four_over_six_checkpoints.sh
+
+# 精度
+MAXVIT_VARIANT=large METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+MAXVIT_VARIANT=large METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_maxvit_four_over_six_accuracy.sh
+
+# 速度
+MAXVIT_VARIANT=large METHOD=nvfp4_4over6_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+MAXVIT_VARIANT=large METHOD=nvfp4_4over6_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_four_over_six_speed.sh
+```
+
 ## DINOv3 ViT-7B Dense Baseline
 
 ```shell
