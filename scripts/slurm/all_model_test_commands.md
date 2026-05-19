@@ -41,15 +41,27 @@ MAXVIT_VARIANT=large sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_maxvit_de
 MODEL=maxvit MAXVIT_VARIANT=tiny METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" \
 sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
 
+# 纯 INT4
+MODEL=maxvit MAXVIT_VARIANT=tiny METHODS="int4" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
+
+# INT4 + SparseGPT opt-in
+MODEL=maxvit MAXVIT_VARIANT=tiny METHODS="int4_unstructured_sparse int4_semi_structured_sparse" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
+
 # 精度
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=nvfp4_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=int4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=int4_semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 
 # 速度
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
@@ -63,8 +75,13 @@ MODEL=maxvit MAXVIT_VARIANT=tiny METHOD=nvfp4_semi_structured_sparse sbatch --ex
 MODEL=maxvit MAXVIT_VARIANT=small METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" \
 sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
 
+# 纯 INT4
+MODEL=maxvit MAXVIT_VARIANT=small METHODS="int4" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
+
 # 精度
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=small METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
@@ -72,6 +89,7 @@ MODEL=maxvit MAXVIT_VARIANT=small METHOD=nvfp4_semi_structured_sparse sbatch --e
 
 # 速度
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=small METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=small METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
@@ -85,8 +103,13 @@ MODEL=maxvit MAXVIT_VARIANT=small METHOD=nvfp4_semi_structured_sparse sbatch --e
 MODEL=maxvit MAXVIT_VARIANT=base METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" \
 sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
 
+# 纯 INT4
+MODEL=maxvit MAXVIT_VARIANT=base METHODS="int4" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
+
 # 精度
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=base METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
@@ -94,6 +117,7 @@ MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4_semi_structured_sparse sbatch --ex
 
 # 速度
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=base METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
@@ -107,8 +131,13 @@ MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4_semi_structured_sparse sbatch --ex
 MODEL=maxvit MAXVIT_VARIANT=large METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" \
 sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
 
+# 纯 INT4
+MODEL=maxvit MAXVIT_VARIANT=large METHODS="int4" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
+
 # 精度
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=large METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
@@ -116,6 +145,7 @@ MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4_semi_structured_sparse sbatch --e
 
 # 速度
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=large METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
@@ -232,8 +262,13 @@ sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_dinov3_vit7b16_dense_speed.sh
 MODEL=dinov3_vit7b16 METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" \
 sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
 
+# 纯 INT4
+MODEL=dinov3_vit7b16 METHODS="int4" \
+sbatch --exclude=wqd10nah09g4 scripts/slurm/prepare_compressed_models.sh
+
 # 精度
 MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
+MODEL=dinov3_vit7b16 METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=dinov3_vit7b16 METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=dinov3_vit7b16 METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
 MODEL=dinov3_vit7b16 METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/eval_compressed_accuracy.sh
@@ -241,6 +276,7 @@ MODEL=dinov3_vit7b16 METHOD=nvfp4_semi_structured_sparse sbatch --exclude=wqd10n
 
 # 速度
 MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
+MODEL=dinov3_vit7b16 METHOD=int4 sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=dinov3_vit7b16 METHOD=unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=dinov3_vit7b16 METHOD=semi_structured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh
 MODEL=dinov3_vit7b16 METHOD=nvfp4_unstructured_sparse sbatch --exclude=wqd10nah09g4 scripts/slurm/bench_compressed_speed.sh

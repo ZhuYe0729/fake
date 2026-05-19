@@ -10,3 +10,9 @@
 - 修改内容：扩展 activation fake quant wrapper，支持 MaxViT 的 Linear 与 1x1 Conv2d；MaxViT accuracy/speed 脚本新增 `--activation-quant` 相关参数；MaxViT 4/6 Slurm 脚本默认传入 activation fake quant，可用 `NO_ACTIVATION_QUANT=1` 关闭。
 - 影响文件：`fake/compression/activation.py`、`scripts/eval_maxvit_dense_accuracy.py`、`scripts/bench_maxvit_dense_speed.py`、`scripts/slurm/eval_maxvit_four_over_six_accuracy.sh`、`scripts/slurm/bench_maxvit_four_over_six_speed.sh`。
 - 后续注意：activation fake quant 仍是 PyTorch fake path，速度只适合观察 fake-quant 开销，不代表真实 kernel 性能。
+
+## 2026-05-18 - Seeded Calibration Checkpoint Sweeps
+- 开发目的：支持用不同 calibration seed 生成多套 MaxViT/DINO 压缩 checkpoint，避免重复 eval 同一 checkpoint 得到相同精度。
+- 修改内容：`prepare_compressed_model.py` 新增 `--calib-shuffle` 与 `--seed`；通用 MaxViT/DINO prepare Slurm 和 MaxViT 4/6 prepare Slurm 支持 `CALIB_SEEDS`，多 seed 时自动输出到 `<method>_seed<N>` 目录。
+- 影响文件：`scripts/prepare_compressed_model.py`、`scripts/slurm/prepare_compressed_models.sh`、`scripts/slurm/prepare_maxvit_four_over_six_checkpoints.sh`。
+- 后续注意：挑选精度时应 eval 对应 seed checkpoint；同一 checkpoint 重复 eval 主要用于稳定性检查，不会产生有意义的精度候选。

@@ -1,2 +1,1 @@
-"""Compression utilities for pruning and NVFP4 fake quantization."""
-
+"""Compression utilities for pruning, NVFP4, and INT4 fake quantization."""

@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 METHOD_ORDER = [
     "dense",
     "nvfp4",
+    "int4",
     "unstructured_sparse",
     "semi_structured_sparse",
     "nvfp4_unstructured_sparse",
@@ -30,6 +31,7 @@ METHOD_ORDER = [
 METHOD_LABELS = {
     "dense": "Dense",
     "nvfp4": "NVFP4",
+    "int4": "INT4",
     "unstructured_sparse": "Unstructured",
     "semi_structured_sparse": "2:4 Sparse",
     "nvfp4_unstructured_sparse": "NVFP4+Unstruct",
@@ -40,6 +42,7 @@ METHOD_LABELS = {
 METHOD_COLORS = {
     "dense": "#2f4858",
     "nvfp4": "#377eb8",
+    "int4": "#1f78b4",
     "unstructured_sparse": "#4daf4a",
     "semi_structured_sparse": "#984ea3",
     "nvfp4_unstructured_sparse": "#ff7f00",

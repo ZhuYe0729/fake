@@ -14,6 +14,7 @@ from fake.compression.pipeline import (
     compress_model,
     default_calib_batch_size,
     default_calib_samples,
+    default_int4_group_size,
     default_nvfp4_group_size,
 )
 from fake.data.dinov3_transforms import build_dinov3_lvd1689m_transform
@@ -42,12 +43,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--zip", default="imagenet_val.zip")
     parser.add_argument("--calib-samples", type=int, default=None)
     parser.add_argument("--calib-batch-size", type=int, default=None)
+    parser.add_argument("--calib-shuffle", action="store_true")
+    parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--num-workers", type=int, default=2)
     parser.add_argument("--sparsity", type=float, default=0.5)
     parser.add_argument("--nvfp4-group-size", type=int, default=None)
     parser.add_argument("--nvfp4-scale-precision", default="fp16")
     parser.add_argument("--nvfp4-scale-rule", choices=["static_6", "four_over_six_mse"], default=None)
     parser.add_argument("--nvfp4-scale-remap", default="none")
+    parser.add_argument("--int4-group-size", type=int, default=None)
+    parser.add_argument("--int4-scale-precision", choices=["fp16", "bf16", "fp32"], default="fp16")
+    parser.add_argument("--sparsegpt-block-size", type=int, default=128)
+    parser.add_argument("--sparsegpt-percdamp", type=float, default=0.01)
     parser.add_argument("--save-full-masks", action="store_true")
     parser.add_argument("--save-full-scales", action="store_true")
     parser.add_argument("--maxvit-variant", choices=MAXVIT_VARIANT_CHOICES, default="tiny")
@@ -66,29 +73,39 @@ def main() -> None:
     model, model_config, input_dtype = _load_model(args, device)
     calib_samples = args.calib_samples if args.calib_samples is not None else default_calib_samples(args.model)
     calib_batch_size = args.calib_batch_size if args.calib_batch_size is not None else _default_calib_batch_size(args)
-    group_size = args.nvfp4_group_size if args.nvfp4_group_size is not None else default_nvfp4_group_size(args.method)
+    nvfp4_group_size = (
+        args.nvfp4_group_size if args.nvfp4_group_size is not None else default_nvfp4_group_size(args.method)
+    )
+    int4_group_size = args.int4_group_size if args.int4_group_size is not None else default_int4_group_size(args.method)
     scale_rule = args.nvfp4_scale_rule or _default_nvfp4_scale_rule(args.method)
     output_dir = Path(args.output_dir or _default_output_dir(args))
     output_dir.mkdir(parents=True, exist_ok=True)
 
     dataset = _build_dataset(args, model_config)
+    generator = torch.Generator()
+    generator.manual_seed(args.seed)
     dataloader = DataLoader(
         dataset,
         batch_size=calib_batch_size,
-        shuffle=False,
+        shuffle=args.calib_shuffle,
         num_workers=args.num_workers,
         pin_memory=True,
         persistent_workers=args.num_workers > 0,
+        generator=generator,
     )
     config = CompressionConfig(
         model_name=args.model,
         method=args.method,
         calib_samples=calib_samples,
         sparsity=args.sparsity,
-        nvfp4_group_size=group_size,
+        nvfp4_group_size=nvfp4_group_size,
         nvfp4_scale_precision=args.nvfp4_scale_precision,
         nvfp4_scale_rule=scale_rule,
         nvfp4_scale_remap=args.nvfp4_scale_remap,
+        int4_group_size=int4_group_size,
+        int4_scale_precision=args.int4_scale_precision,
+        sparsegpt_block_size=args.sparsegpt_block_size,
+        sparsegpt_percdamp=args.sparsegpt_percdamp,
         save_full_masks=args.save_full_masks,
         save_full_scales=args.save_full_scales,
     )
@@ -107,6 +124,8 @@ def main() -> None:
             "dataset_root": args.dataset_root,
             "csv": args.csv,
             "zip": args.zip,
+            "calib_shuffle": args.calib_shuffle,
+            "seed": args.seed,
             **_model_metadata(args),
         }
     )

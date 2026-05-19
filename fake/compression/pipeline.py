@@ -8,6 +8,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 
 from fake.compression.hessian import collect_hessian_diag
+from fake.compression.int4 import INT4Config
 from fake.compression.modules import flatten_weight, restore_weight_shape, select_compressible_modules
 from fake.compression.nvfp4 import NVFP4Config, fake_quantize_nvfp4_weight
 from fake.compression.pruning import (
@@ -16,6 +17,7 @@ from fake.compression.pruning import (
     prune_nvfp4_pair_2_4,
     prune_unstructured,
 )
+from fake.compression.sparsegpt import sparsegpt_int4_compress_module
 
 
 PRUNE_METHODS = {
@@ -28,12 +30,17 @@ PRUNE_METHODS = {
 }
 QUANT_METHODS = {
     "nvfp4",
+    "int4",
     "nvfp4_unstructured_sparse",
     "nvfp4_semi_structured_sparse",
     "nvfp4_4over6_unstructured_sparse",
     "nvfp4_4over6_semi_structured_sparse",
 }
-SUPPORTED_METHODS = sorted(PRUNE_METHODS | QUANT_METHODS)
+INT4_SPARSEGPT_METHODS = {
+    "int4_unstructured_sparse",
+    "int4_semi_structured_sparse",
+}
+SUPPORTED_METHODS = sorted(PRUNE_METHODS | QUANT_METHODS | INT4_SPARSEGPT_METHODS)
 
 
 @dataclass(frozen=True)
@@ -46,6 +53,10 @@ class CompressionConfig:
     nvfp4_scale_precision: str = "fp16"
     nvfp4_scale_rule: str = "static_6"
     nvfp4_scale_remap: str = "none"
+    int4_group_size: int = 32
+    int4_scale_precision: str = "fp16"
+    sparsegpt_block_size: int = 128
+    sparsegpt_percdamp: float = 0.01
     save_full_masks: bool = False
     save_full_scales: bool = False
 
@@ -61,16 +72,18 @@ def compress_model(
         raise ValueError(f"Unsupported compression method: {config.method}")
 
     modules = select_compressible_modules(model, config.model_name)
-    hessian_algo = "obc_diag" if config.model_name == "maxvit" else "sparsegpt_diag"
+    hessian_algo = _hessian_algo(config.model_name, config.method)
     print(f"[compression] selected_modules={len(modules)} hessian_algo={hessian_algo}")
-    hessian_diag = collect_hessian_diag(
-        model=model,
-        modules=modules,
-        dataloader=dataloader,
-        device=device,
-        input_dtype=input_dtype,
-        max_samples=config.calib_samples,
-    )
+    hessian_diag = None
+    if config.method not in INT4_SPARSEGPT_METHODS:
+        hessian_diag = collect_hessian_diag(
+            model=model,
+            modules=modules,
+            dataloader=dataloader,
+            device=device,
+            input_dtype=input_dtype,
+            max_samples=config.calib_samples,
+        )
 
     masks: dict[str, Any] = {"format": "metadata_only", "modules": {}}
     scales: dict[str, Any] = {"format": "metadata_only", "modules": {}}
@@ -80,7 +93,7 @@ def compress_model(
     for idx, info in enumerate(modules, start=1):
         print(f"[compression] {idx}/{len(modules)} {info.name}")
         matrix = flatten_weight(info.module)
-        hdiag = hessian_diag.get(info.name)
+        hdiag = hessian_diag.get(info.name) if hessian_diag is not None else None
         record: dict[str, Any] = {
             "name": info.name,
             "kind": info.kind,
@@ -90,7 +103,42 @@ def compress_model(
             "quant": None,
         }
 
-        if config.method in PRUNE_METHODS:
+        if config.method in INT4_SPARSEGPT_METHODS:
+            int4_config = INT4Config(
+                group_size=config.int4_group_size,
+                scale_precision=config.int4_scale_precision,
+            )
+            sparsegpt_result = sparsegpt_int4_compress_module(
+                model=model,
+                info=info,
+                dataloader=dataloader,
+                device=device,
+                input_dtype=input_dtype,
+                max_samples=config.calib_samples,
+                method=config.method,
+                sparsity=config.sparsity,
+                int4_config=int4_config,
+                block_size=config.sparsegpt_block_size,
+                percdamp=config.sparsegpt_percdamp,
+            )
+            record["prune"] = sparsegpt_result.prune_stats
+            record["quant"] = sparsegpt_result.quant_stats
+            if sparsegpt_result.mask is None or sparsegpt_result.scales is None:
+                skipped.append({"name": info.name, **sparsegpt_result.prune_stats})
+            else:
+                masks["modules"][info.name] = _mask_payload(
+                    PruneResult(sparsegpt_result.weight, sparsegpt_result.mask, sparsegpt_result.prune_stats),
+                    config.save_full_masks,
+                )
+                scales["modules"][info.name] = _scale_payload(
+                    sparsegpt_result.scales,
+                    sparsegpt_result.quant_stats,
+                    config.save_full_scales,
+                )
+                matrix = sparsegpt_result.weight
+
+        elif config.method in PRUNE_METHODS:
+            assert hessian_diag is not None
             prune_result = _prune_matrix(matrix, hdiag, config)
             record["prune"] = prune_result.stats
             if prune_result.mask is None:
@@ -150,7 +198,25 @@ def default_nvfp4_group_size(method: str) -> int:
     return 16
 
 
+def default_int4_group_size(method: str) -> int:
+    if method == "int4":
+        return 32
+    if method == "int4_unstructured_sparse":
+        return 32
+    if method == "int4_semi_structured_sparse":
+        return 64
+    return 32
+
+
+def _hessian_algo(model_name: str, method: str) -> str:
+    if method in INT4_SPARSEGPT_METHODS:
+        return "sparsegpt_full_hessian"
+    return "obc_diag" if model_name == "maxvit" else "sparsegpt_diag"
+
+
 def _prune_matrix(matrix: torch.Tensor, hdiag: torch.Tensor | None, config: CompressionConfig) -> PruneResult:
+    if config.method == "int4":
+        raise ValueError("Method does not require pruning: int4")
     if config.method in ("unstructured_sparse", "nvfp4_unstructured_sparse", "nvfp4_4over6_unstructured_sparse"):
         return prune_unstructured(matrix, config.sparsity, hdiag)
     if config.method == "semi_structured_sparse":

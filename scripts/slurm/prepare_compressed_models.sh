@@ -24,6 +24,8 @@ cd /data/home/scxj523/run/wja/project/my/fake/
 MODEL="${MODEL:-maxvit}"
 MAXVIT_VARIANT="${MAXVIT_VARIANT:-tiny}"
 METHODS="${METHODS:-nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse}"
+CALIB_SEEDS="${CALIB_SEEDS:-}"
+CALIB_SHUFFLE="${CALIB_SHUFFLE:-0}"
 if [[ "${MAXVIT_VARIANT}" == "large" ]]; then
   DEFAULT_CALIB_BATCH_SIZE=4
 else
@@ -39,18 +41,40 @@ nvidia-smi || true
 
 python -c "import torch; print(torch.__version__, torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.device_count())"
 
+if [[ -n "${CALIB_SEEDS}" ]]; then
+  read -r -a SEED_ARGS <<< "${CALIB_SEEDS}"
+else
+  SEED_ARGS=("")
+fi
 
 for METHOD in ${METHODS}; do
-  echo "Preparing ${MODEL} ${MAXVIT_VARIANT} ${METHOD}"
-  if [[ "${MODEL}" == "maxvit" ]]; then
-    PYTHONPATH=. python scripts/prepare_compressed_model.py \
-      --model "${MODEL}" \
-      --maxvit-variant "${MAXVIT_VARIANT}" \
-      --calib-batch-size "${CALIB_BATCH_SIZE}" \
-      --method "${METHOD}"
-  else
-    PYTHONPATH=. python scripts/prepare_compressed_model.py \
-      --model "${MODEL}" \
-      --method "${METHOD}"
-  fi
+  for SEED in "${SEED_ARGS[@]}"; do
+    EXTRA_ARGS=()
+    if [[ -n "${SEED}" ]]; then
+      EXTRA_ARGS+=(--seed "${SEED}")
+      if [[ "${MODEL}" == "maxvit" ]]; then
+        EXTRA_ARGS+=(--output-dir "artifacts/checkpoints/maxvit_${MAXVIT_VARIANT}/${METHOD}_seed${SEED}")
+      else
+        EXTRA_ARGS+=(--output-dir "artifacts/checkpoints/${MODEL}/${METHOD}_seed${SEED}")
+      fi
+    fi
+    if [[ "${CALIB_SHUFFLE}" == "1" ]]; then
+      EXTRA_ARGS+=(--calib-shuffle)
+    fi
+
+    echo "Preparing ${MODEL} ${MAXVIT_VARIANT} ${METHOD} seed=${SEED:-default} calib_shuffle=${CALIB_SHUFFLE}"
+    if [[ "${MODEL}" == "maxvit" ]]; then
+      PYTHONPATH=. python scripts/prepare_compressed_model.py \
+        --model "${MODEL}" \
+        --maxvit-variant "${MAXVIT_VARIANT}" \
+        --calib-batch-size "${CALIB_BATCH_SIZE}" \
+        --method "${METHOD}" \
+        "${EXTRA_ARGS[@]}"
+    else
+      PYTHONPATH=. python scripts/prepare_compressed_model.py \
+        --model "${MODEL}" \
+        --method "${METHOD}" \
+        "${EXTRA_ARGS[@]}"
+    fi
+  done
 done

@@ -146,13 +146,19 @@ DINOv3 dense baseline 使用 backbone 原始 dtype，通过本地 ImageNet linea
 
 # 压缩模型生成与评估
 
-当前支持以下压缩方法：`nvfp4`、`unstructured_sparse`、`semi_structured_sparse`、`nvfp4_unstructured_sparse`、`nvfp4_semi_structured_sparse`。
+当前支持以下压缩方法：`nvfp4`、`int4`、`unstructured_sparse`、`semi_structured_sparse`、`nvfp4_unstructured_sparse`、`nvfp4_semi_structured_sparse`、`int4_unstructured_sparse`、`int4_semi_structured_sparse`。
 
 - 生成压缩 checkpoint：
 ```shell
 MODEL=maxvit METHODS="nvfp4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse" sbatch scripts/slurm/prepare_compressed_models.sh
 MODEL=maxvit MAXVIT_VARIANT=small METHODS="nvfp4" sbatch scripts/slurm/prepare_compressed_models.sh
 MODEL=dinov3_vit7b16 METHODS="nvfp4" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=maxvit METHODS="int4" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=maxvit MAXVIT_VARIANT=small METHODS="int4" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=maxvit MAXVIT_VARIANT=base METHODS="int4" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=maxvit MAXVIT_VARIANT=large METHODS="int4" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=dinov3_vit7b16 METHODS="int4" sbatch scripts/slurm/prepare_compressed_models.sh
+MODEL=maxvit METHODS="int4_unstructured_sparse int4_semi_structured_sparse" sbatch scripts/slurm/prepare_compressed_models.sh
 ```
 
 - 评估压缩 checkpoint 精度：
@@ -160,6 +166,11 @@ MODEL=dinov3_vit7b16 METHODS="nvfp4" sbatch scripts/slurm/prepare_compressed_mod
 MODEL=maxvit METHOD=nvfp4 sbatch scripts/slurm/eval_compressed_accuracy.sh
 MODEL=maxvit MAXVIT_VARIANT=large METHOD=nvfp4 BATCH_SIZE=8 sbatch scripts/slurm/eval_compressed_accuracy.sh
 MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit METHOD=int4 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=small METHOD=int4 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=base METHOD=int4 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit MAXVIT_VARIANT=large METHOD=int4 BATCH_SIZE=8 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=dinov3_vit7b16 METHOD=int4 sbatch scripts/slurm/eval_compressed_accuracy.sh
 ```
 
 - 评估压缩 checkpoint 速度：
@@ -167,6 +178,13 @@ MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch scripts/slurm/eval_compressed_accuracy.
 MODEL=maxvit METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
 MODEL=maxvit MAXVIT_VARIANT=base METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
 MODEL=dinov3_vit7b16 METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit METHOD=int4 sbatch scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=small METHOD=int4 sbatch scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=base METHOD=int4 sbatch scripts/slurm/bench_compressed_speed.sh
+MODEL=maxvit MAXVIT_VARIANT=large METHOD=int4 sbatch scripts/slurm/bench_compressed_speed.sh
+MODEL=dinov3_vit7b16 METHOD=int4 sbatch scripts/slurm/bench_compressed_speed.sh
 ```
 
 MaxViT 压缩产物默认保存到 `artifacts/checkpoints/maxvit_<variant>/{method}/`，结果写入 `artifacts/results/maxvit_<variant>_compressed/`；历史目录 `artifacts/results/maxvit_compressed/` 不再作为新实验输出目标。DINOv3 仍使用 `artifacts/checkpoints/{model}/{method}/`。第一版保存 fake-quant / pruned 后的 dequantized checkpoint；`masks.pt` 和 `scales.pt` 默认保存 metadata-only，避免 DINOv3 7B 生成过大的辅助张量文件。
+
+INT4 方法中，`int4` 是纯 fake quant，默认 group size 为 32；`int4_unstructured_sparse` 默认 group size 为 32；`int4_semi_structured_sparse` 默认 group size 为 64，并使用 pair-wise 2:4 over 8 的半结构化稀疏。前两类 INT4 方法默认不加入 `prepare_compressed_models.sh` 的批量 `METHODS`，需要显式 opt-in。
