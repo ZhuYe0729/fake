@@ -286,7 +286,7 @@ def _plot(
         1,
         2,
         figsize=(13.8, 6.8),
-        gridspec_kw={"width_ratios": [1.55, 1.0], "wspace": 0.24},
+        gridspec_kw={"width_ratios": [1.55, 1.0], "wspace": 0.14},
     )
     method_colors = {method: color for method, _label, color in METHODS}
     _plot_panel(
@@ -371,7 +371,7 @@ def _plot_panel(
     ax.axvline(1.0, color="#1f1f1f", linestyle="--", linewidth=1.0, alpha=0.75)
     ax.set_xlim(0, max_value + x_limit_pad)
     ax.set_title(title, fontsize=12.5)
-    ax.set_xlabel("Throughput Speedup (x)")
+    ax.set_xlabel("Throughput Speedup")
     ax.set_yticks(centers, model_labels)
     ax.invert_yaxis()
     ax.grid(axis="x", color="#d8d8d8", linewidth=0.7, alpha=0.85)
@@ -387,7 +387,7 @@ def _plot_dino_batch_panel(
     metric: str,
 ) -> None:
     title = "DINOv3 Speedup vs. Batch Size"
-    ylabel = "Speedup vs. Dense (x)"
+    ylabel = "Speedup vs. Dense"
     for method, label, _color in METHODS:
         method_rows = sorted([row for row in rows if row.method == method], key=lambda row: row.batch_size)
         if not method_rows:

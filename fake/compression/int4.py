@@ -43,6 +43,25 @@ def fake_quantize_int4_weight(matrix: torch.Tensor, config: INT4Config) -> INT4R
     return INT4Result(dequant, scale_tensor.cpu(), stats)
 
 
+def fake_quantize_int4_activation(x: torch.Tensor, config: INT4Config) -> torch.Tensor:
+    if config.group_size <= 0:
+        raise ValueError(f"Unsupported activation INT4 group_size: {config.group_size}")
+    if x.shape[-1] % config.group_size != 0:
+        raise ValueError(
+            f"Activation last dimension must be divisible by group_size: columns={x.shape[-1]} "
+            f"group_size={config.group_size}"
+        )
+    original_dtype = x.dtype
+    x_float = x.float()
+    grouped = x_float.reshape(*x_float.shape[:-1], -1, config.group_size)
+    # Keep dynamic activation scales in fp32 for the fake op. Casting tiny all-zero
+    # groups to fp16 can underflow the clamp value to 0 and produce NaNs.
+    scales = (grouped.abs().amax(dim=-1, keepdim=True) / 7.0).clamp(min=1e-12)
+    q = torch.clamp(torch.round(grouped / scales), -8, 7)
+    dequant = q * scales
+    return dequant.reshape_as(x_float).to(original_dtype)
+
+
 def calculate_int4_group_scales(matrix: torch.Tensor, config: INT4Config) -> torch.Tensor:
     grouped = matrix.detach().float().reshape(matrix.shape[0], -1, config.group_size)
     scales = (grouped.abs().amax(dim=-1) / 7.0).clamp(min=1e-12)

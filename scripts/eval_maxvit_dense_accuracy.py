@@ -30,8 +30,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--method", default="dense")
     parser.add_argument("--activation-quant", action="store_true")
+    parser.add_argument("--activation-quant-format", choices=["nvfp4", "int4"], default="nvfp4")
     parser.add_argument("--activation-group-size", type=int, default=None)
-    parser.add_argument("--activation-scale-rule", choices=["static_6", "four_over_six_mse"], default="four_over_six_mse")
+    parser.add_argument(
+        "--activation-scale-rule",
+        choices=["static_6", "four_over_six_mse", "signed_symmetric"],
+        default="four_over_six_mse",
+    )
     return parser.parse_args()
 
 
@@ -45,14 +50,21 @@ def main() -> None:
     output = args.output or f"artifacts/results/{variant_info.result_key}_dense/accuracy.csv"
     model, config = load_maxvit_dense(args.model_path, dtype=args.dtype, device=device, variant=args.variant)
     checkpoint_metadata = load_checkpoint_into_model(model, args.checkpoint)
-    activation_group_size = args.activation_group_size or int(checkpoint_metadata.get("nvfp4_group_size", 16) or 16)
+    default_activation_group_size = (
+        checkpoint_metadata.get("int4_group_size", 32)
+        if args.activation_quant_format == "int4"
+        else checkpoint_metadata.get("nvfp4_group_size", 16)
+    )
+    activation_group_size = args.activation_group_size or int(default_activation_group_size or 32)
+    activation_scale_rule = "signed_symmetric" if args.activation_quant_format == "int4" else args.activation_scale_rule
     activation_modules = 0
     if args.activation_quant:
         activation_modules = apply_activation_fake_quant(
             model,
             model_name="maxvit",
             group_size=activation_group_size,
-            scale_rule=args.activation_scale_rule,
+            quant_format=args.activation_quant_format,
+            scale_rule=activation_scale_rule,
         )
     input_dtype = model_input_dtype(model)
     dataset = ImageNetZipDataset(args.dataset_root, args.csv, args.zip, config)
@@ -91,9 +103,11 @@ def main() -> None:
         "cuda_version": torch.version.cuda,
         **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
         "activation_quant": args.activation_quant,
+        "activation_quant_format": args.activation_quant_format if args.activation_quant else "",
         "activation_quant_modules": activation_modules,
         "activation_group_size": activation_group_size if args.activation_quant else "",
-        "activation_scale_rule": args.activation_scale_rule if args.activation_quant else "",
+        "activation_scale_rule": activation_scale_rule if args.activation_quant else "",
+        "quant_eval_mode": "wa_fake" if args.activation_quant else "weight_only_fake",
     }
     fieldnames = list(row.keys())
     append_csv_row(output, fieldnames, row)

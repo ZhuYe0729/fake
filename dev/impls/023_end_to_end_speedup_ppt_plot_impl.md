@@ -17,3 +17,9 @@
 - 影响文件：`scripts/plot_end_to_end_speedup_summary.py`、`artifacts/results/end_to_end_speedup_summary.*`、`artifacts/results/dinov3_batch_speed_summary.csv`。
 - 验证：`python3 -m py_compile` 通过；重新生成并预览 PNG。
 - 后续注意：当前 Sparse BF16 sweep CSV 中已有 batch 1/2/4/8/32/64/128，尚未看到 batch 16 的 Sparse BF16 结果。
+
+## 2026-05-19 - Speed Figure Spacing and Axis Label Polish
+- 开发目的：按 PPT 版式反馈微调端到端速度图。
+- 修改内容：缩小左右两个面板的间距；去掉坐标轴标题中的 `(x)`，保留柱状图上的 `1.71x` 等数值标签。
+- 影响文件：`scripts/plot_end_to_end_speedup_summary.py`、`artifacts/results/end_to_end_speedup_summary.*`、`artifacts/results/dinov3_batch_speed_summary.csv`。
+- 验证：`python3 -m py_compile` 通过；重新生成并预览 PNG。

@@ -173,6 +173,21 @@ MODEL=maxvit MAXVIT_VARIANT=large METHOD=int4 BATCH_SIZE=8 sbatch scripts/slurm/
 MODEL=dinov3_vit7b16 METHOD=int4 sbatch scripts/slurm/eval_compressed_accuracy.sh
 ```
 
+默认 `eval_compressed_accuracy.sh` 写入 `accuracy.csv`，表示 weight-only fake quant / pruning 精度。设置 `WA_FAKE=1` 会在加载 checkpoint 后额外启用 activation fake quant，并写入 `accuracy_wa_fake.csv`：
+
+```shell
+MODEL=maxvit METHOD=nvfp4_unstructured_sparse WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit METHOD=int4 WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit METHOD=int4_unstructured_sparse WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=maxvit METHOD=int4_semi_structured_sparse WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=dinov3_vit7b16 METHOD=nvfp4_unstructured_sparse WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=dinov3_vit7b16 METHOD=int4 WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=dinov3_vit7b16 METHOD=int4_unstructured_sparse WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+MODEL=dinov3_vit7b16 METHOD=int4_semi_structured_sparse WA_FAKE=1 sbatch scripts/slurm/eval_compressed_accuracy.sh
+```
+
+WA fake 结果中的 `activation_quant_format` 会按方法自动推断：`nvfp4*` 使用 NVFP4 activation fake，`int4*` 使用 signed symmetric INT4 activation fake。`nvfp4 + structured` 的真实 WA runtime 由 `cutlass_sparse_nvfp4` 覆盖，不需要放入 `accuracy_wa_fake.csv` 作为主口径。
+
 - 评估压缩 checkpoint 速度：
 ```shell
 MODEL=maxvit METHOD=nvfp4 sbatch scripts/slurm/bench_compressed_speed.sh
