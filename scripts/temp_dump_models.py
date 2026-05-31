@@ -10,6 +10,11 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from fake.models.maxvit import load_maxvit_dense
 from fake.models.dinov3 import load_dinov3_vit7b16_dense_classifier
 
+MIRROR_ROOT = Path(__file__).resolve().parents[1] / "third_party" / "MIRROR"
+MIRROR_WEIGHT_ROOT = Path("/data/home/scxj523/run/wja/data/models/facebook/MIRROR/weight")
+MIRROR_MEMORY_PATH = MIRROR_WEIGHT_ROOT / "mirror_phase1.pth"
+MIRROR_BACKBONE_PATH = MIRROR_WEIGHT_ROOT / "dinov3-huge"
+
 def get_model_info_string(model, model_name):
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
@@ -25,7 +30,7 @@ def get_model_info_string(model, model_name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", type=str, choices=["maxvit", "dinov3"])
+    parser.add_argument("--model", type=str, choices=["maxvit", "dinov3", "mirror"])
     args = parser.parse_args()
 
     output_dir = Path("artifacts/model_details")
@@ -58,6 +63,26 @@ def main():
             import traceback
             traceback.print_exc()
             print(f"Error loading DINOv3: {e}")
+
+    if args.model == "mirror":
+        print("Loading MIRROR...")
+        try:
+            if str(MIRROR_ROOT) not in sys.path:
+                sys.path.insert(0, str(MIRROR_ROOT))
+            from models.mirror import build_mirror
+
+            mirror_model = build_mirror(
+                memory_path=str(MIRROR_MEMORY_PATH),
+                backbone_path=str(MIRROR_BACKBONE_PATH),
+            )
+            mirror_info = get_model_info_string(mirror_model, "MIRROR DINOv3-Huge Dense Detector")
+            mirror_path = output_dir / "mirror_arch.txt"
+            mirror_path.write_text(mirror_info)
+            print(f"Saved MIRROR architecture to {mirror_path}")
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            print(f"Error loading MIRROR: {e}")
 
 if __name__ == "__main__":
     main()

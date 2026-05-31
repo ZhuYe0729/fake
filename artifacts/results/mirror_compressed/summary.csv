@@ -1,0 +1,12 @@
+method,label,chameleon_bal_acc,chameleon_auc,genimage_mean_bal_acc,genimage_mean_auc,genimage_biggan_bal_acc,speed_latency_mean_ms,speed_images_per_sec,speedup_vs_dense,kernel_backend,replaced_linear_count,skipped_linear_count
+dense,Dense,0.941207,0.983745,0.995869,0.999943,0.985000,26.752369,37.380000,1.000000,torch_dense,,
+nvfp4,NVFP4,0.935916,0.982295,0.995656,0.999949,0.987250,49.293008,20.287000,0.542723,cutlass_nvfp4_sm120,224,0
+int4,INT4,0.940674,0.984275,0.995534,0.999937,0.987167,,,,,,
+unstructured_sparse,Unstructured,0.884800,0.962270,0.994734,0.999830,0.997583,,,,,,
+semi_structured_sparse,2:4 Sparse,0.774390,0.861426,0.964244,0.996036,0.971500,31.702875,31.543000,0.843847,cutlass_sparse_bf16_cusparselt,224,0
+nvfp4_unstructured_sparse,NVFP4 + Unstruct,0.883180,0.958702,0.993502,0.999729,0.997417,,,,,,
+nvfp4_semi_structured_sparse,NVFP4 + 2:4,0.530941,0.604929,0.588977,0.919769,0.591917,57.145975,17.499000,0.468138,cutlass_sparse_nvfp4_sm120,224,0
+int4_unstructured_sparse,INT4 + Unstruct,0.917311,0.970858,0.996401,0.999845,0.995833,,,,,,
+int4_semi_structured_sparse,INT4 + 2:4,0.503724,0.567282,0.519346,0.920318,0.518333,,,,,,
+nvfp4_4over6_unstructured_sparse,4/6 NVFP4 + Unstruct,0.894748,0.962709,0.994523,0.999798,0.997583,,,,,,
+nvfp4_4over6_semi_structured_sparse,4/6 NVFP4 + 2:4,0.530966,0.602949,0.595745,0.927113,0.599083,,,,,,

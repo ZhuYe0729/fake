@@ -114,7 +114,10 @@ def collect_module_hessian(
     handle = info.module.register_forward_hook(hook)
     processed = 0
     try:
-        for images, _ in dataloader:
+        for batch in dataloader:
+            if batch is None:
+                continue
+            images, _ = batch
             remaining = max_samples - processed
             if remaining <= 0:
                 break

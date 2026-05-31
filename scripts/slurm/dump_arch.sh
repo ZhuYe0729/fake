@@ -25,3 +25,4 @@ cd /data/home/scxj523/run/wja/project/my/fake/
 
 python scripts/temp_dump_models.py --model maxvit
 python scripts/temp_dump_models.py --model dinov3
+python scripts/temp_dump_models.py --model mirror

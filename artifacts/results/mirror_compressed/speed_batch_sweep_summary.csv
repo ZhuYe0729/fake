@@ -1,0 +1,36 @@
+method,label,batch_size,latency_mean_ms,latency_p50_ms,latency_p90_ms,images_per_sec,speedup_vs_dense,runtime_dtype,kernel_backend,replaced_linear_count,skipped_linear_count
+dense,Dense,1,26.730163,26.727983,26.749575,37.411000,1.000000,float32,torch_dense,,
+dense,Dense,2,34.126094,34.126080,34.174918,58.606000,1.000000,float32,torch_dense,,
+dense,Dense,4,52.190072,52.214785,52.249173,76.643000,1.000000,float32,torch_dense,,
+dense,Dense,8,91.656758,91.626945,91.655424,87.282000,1.000000,float32,torch_dense,,
+dense,Dense,16,174.929601,174.920189,175.025996,91.465000,1.000000,float32,torch_dense,,
+dense,Dense,32,328.056885,328.152008,328.767120,97.544000,1.000000,float32,torch_dense,,
+dense,Dense,64,637.137864,637.793091,640.360168,100.449000,1.000000,float32,torch_dense,,
+dense,Dense,128,1305.963008,1306.948242,1310.947656,98.012000,1.000000,float32,torch_dense,,
+semi_structured_sparse,2:4 Sparse BF16,1,31.522708,31.382960,31.501107,31.723000,0.847959,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,2,33.381653,33.254320,33.402934,59.913000,1.022301,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,4,34.621903,34.494383,34.666574,115.534000,1.507431,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,8,30.623583,30.508432,30.603542,261.237000,2.993023,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,16,39.199932,39.125153,39.150142,408.164000,4.462516,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,32,72.169946,72.175983,72.235706,443.398000,4.545620,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,64,148.222679,148.222946,148.376328,431.783000,4.298530,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,128,317.695918,317.816635,318.162985,402.901000,4.110731,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+semi_structured_sparse,2:4 Sparse BF16,256,653.790272,653.678680,655.479272,391.563000,,bfloat16,cutlass_sparse_bf16_cusparselt,224,0
+nvfp4,NVFP4,1,49.714609,49.553072,49.774053,20.115000,0.537676,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,2,50.958830,50.818592,51.003166,39.247000,0.669675,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,4,51.193773,51.075537,51.243848,78.135000,1.019467,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,8,54.408949,54.289999,54.466248,147.035000,1.684597,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,16,66.805177,66.620544,66.862542,239.502000,2.618510,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,32,111.121970,110.907360,111.173330,287.972000,2.952227,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,64,218.063837,217.662544,219.920393,293.492000,2.921801,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,128,495.311841,495.159622,496.409741,258.423000,2.636647,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4,NVFP4,256,1013.447203,1013.576111,1014.211462,252.603000,,bfloat16,cutlass_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,1,41.065469,40.884432,41.177781,24.351000,0.650905,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,2,41.900240,41.762417,42.088827,47.732000,0.814456,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,4,43.041843,43.055552,43.210302,92.933000,1.212544,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,8,47.035345,46.949936,47.125279,170.085000,1.948684,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,16,60.605963,60.374496,60.530403,264.000000,2.886350,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,32,102.051076,101.912754,103.751122,313.568000,3.214631,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,64,204.719017,204.268768,206.845580,312.624000,3.112266,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,128,467.927428,467.581009,469.355042,273.547000,2.790954,bfloat16,cutlass_sparse_nvfp4_sm120,224,0
+nvfp4_semi_structured_sparse,Sparse NVFP4,256,957.847721,957.825958,958.393347,267.266000,,bfloat16,cutlass_sparse_nvfp4_sm120,224,0

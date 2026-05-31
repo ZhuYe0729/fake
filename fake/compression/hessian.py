@@ -60,7 +60,10 @@ def collect_hessian_diag(
 
     processed = 0
     try:
-        for images, _ in dataloader:
+        for batch in dataloader:
+            if batch is None:
+                continue
+            images, _ = batch
             remaining = max_samples - processed
             if remaining <= 0:
                 break
@@ -91,4 +94,3 @@ def _flatten_module_input(module: nn.Module, x: torch.Tensor) -> tuple[torch.Ten
         flat = unfolded.transpose(1, 2).reshape(-1, unfolded.shape[1])
         return flat, flat.shape[0]
     return None, 0
-

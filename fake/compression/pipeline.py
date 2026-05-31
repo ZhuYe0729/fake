@@ -8,7 +8,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 
 from fake.compression.hessian import collect_hessian_diag
-from fake.compression.int4 import INT4Config
+from fake.compression.int4 import INT4Config, fake_quantize_int4_weight
 from fake.compression.modules import flatten_weight, restore_weight_shape, select_compressible_modules
 from fake.compression.nvfp4 import NVFP4Config, fake_quantize_nvfp4_weight
 from fake.compression.pruning import (
@@ -147,7 +147,19 @@ def compress_model(
                 masks["modules"][info.name] = _mask_payload(prune_result, config.save_full_masks)
                 matrix = prune_result.weight
 
-        if config.method in QUANT_METHODS:
+        if config.method == "int4":
+            int4_config = INT4Config(
+                group_size=config.int4_group_size,
+                scale_precision=config.int4_scale_precision,
+            )
+            qresult = fake_quantize_int4_weight(matrix, int4_config)
+            record["quant"] = qresult.stats
+            if qresult.scales is None:
+                skipped.append({"name": info.name, **qresult.stats})
+            else:
+                scales["modules"][info.name] = _scale_payload(qresult.scales, qresult.stats, config.save_full_scales)
+                matrix = qresult.weight
+        elif config.method in QUANT_METHODS:
             qconfig = NVFP4Config(
                 group_size=config.nvfp4_group_size,
                 scale_precision=config.nvfp4_scale_precision,
@@ -181,6 +193,8 @@ def default_calib_samples(model_name: str) -> int:
         return 128
     if model_name == "dinov3_vit7b16":
         return 16
+    if model_name == "mirror":
+        return 64
     raise ValueError(f"Unsupported model: {model_name}")
 
 
@@ -188,6 +202,8 @@ def default_calib_batch_size(model_name: str) -> int:
     if model_name == "maxvit":
         return 16
     if model_name == "dinov3_vit7b16":
+        return 1
+    if model_name == "mirror":
         return 1
     raise ValueError(f"Unsupported model: {model_name}")
 
