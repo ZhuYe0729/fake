@@ -21,6 +21,8 @@ def select_compressible_modules(model: nn.Module, model_name: str) -> list[Modul
         return _select_dinov3_modules(model)
     if model_name == "mirror":
         return _select_mirror_modules(model)
+    if model_name == "qwen3_5":
+        return _select_qwen3_5_modules(model)
     raise ValueError(f"Unsupported model for compression: {model_name}")
 
 
@@ -88,6 +90,39 @@ def _select_mirror_modules(model: nn.Module) -> list[ModuleInfo]:
             continue
         modules.append(ModuleInfo(name, module, "linear", module.in_features, "mirror_dinov3_transformer_projection"))
     return modules
+
+
+def _select_qwen3_5_modules(model: nn.Module) -> list[ModuleInfo]:
+    modules: list[ModuleInfo] = []
+    language_prefixes = _qwen3_5_language_prefixes(model)
+    for name, module in model.named_modules():
+        if not isinstance(module, nn.Linear):
+            continue
+        if name == "lm_head" or name.endswith(".lm_head"):
+            continue
+        if "" in language_prefixes:
+            in_language_model = bool(name)
+        else:
+            in_language_model = any(name == prefix or name.startswith(f"{prefix}.") for prefix in language_prefixes)
+        if not in_language_model:
+            continue
+        modules.append(ModuleInfo(name, module, "linear", module.in_features, "qwen3_5_language_linear"))
+    return modules
+
+
+def _qwen3_5_language_prefixes(model: nn.Module) -> tuple[str, ...]:
+    prefixes: list[str] = []
+    if hasattr(model, "language_model"):
+        prefixes.append("language_model")
+    inner = getattr(model, "model", None)
+    if inner is not None:
+        if hasattr(inner, "language_model"):
+            prefixes.append("model.language_model")
+        if hasattr(inner, "layers"):
+            prefixes.append("model")
+    if hasattr(model, "layers"):
+        prefixes.append("")
+    return tuple(prefixes)
 
 
 def flatten_weight(module: nn.Module):

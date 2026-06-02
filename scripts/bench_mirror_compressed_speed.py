@@ -17,6 +17,7 @@ from fake.evaluation.speed import benchmark_forward
 from fake.kernels.cutlass_nvfp4 import CutlassNVFP4Config, replace_linear_with_cutlass_nvfp4
 from fake.kernels.cutlass_sparse_bf16 import CutlassSparseBF16Config, replace_linear_with_cutlass_sparse_bf16
 from fake.kernels.cutlass_sparse_nvfp4 import CutlassSparseNVFP4Config, replace_linear_with_cutlass_sparse_nvfp4
+from fake.kernels.marlin_nvfp4 import load_marlin_nvfp4_checkpoint_into_model
 from fake.models.mirror import (
     DEFAULT_MIRROR_BACKBONE_PATH,
     DEFAULT_MIRROR_MEMORY_PATH,
@@ -28,7 +29,7 @@ from fake.models.mirror import (
 from fake.utils.csv_io import append_csv_row
 
 
-RUNTIME_METHODS = ("dense", "nvfp4", "semi_structured_sparse", "nvfp4_semi_structured_sparse")
+RUNTIME_METHODS = ("dense", "nvfp4", "marlin_nvfp4", "semi_structured_sparse", "nvfp4_semi_structured_sparse")
 
 
 def parse_args() -> argparse.Namespace:
@@ -61,6 +62,20 @@ def main() -> None:
             device=device,
         )
         report_fields = {"kernel_backend": "torch_dense", "replaced_linear_count": "", "skipped_linear_count": ""}
+    elif args.method == "marlin_nvfp4":
+        checkpoint = args.checkpoint or "artifacts/checkpoints/mirror/marlin_nvfp4/model.pt"
+        model, config = load_mirror_dense_detector(
+            model_path=args.model_path,
+            memory_path=args.memory_path,
+            backbone_path=args.backbone_path,
+            device=device,
+            torch_dtype=torch.bfloat16,
+        )
+        checkpoint_metadata, report = load_marlin_nvfp4_checkpoint_into_model(model, checkpoint, device=device)
+        args.checkpoint = checkpoint
+        report_fields = report.csv_fields()
+        if report.skipped:
+            print(f"skipped_modules={report.skipped[:10]}")
     else:
         checkpoint = args.checkpoint or f"artifacts/checkpoints/mirror/{args.method}/model.pt"
         model, config, checkpoint_metadata = load_mirror_compressed_detector(

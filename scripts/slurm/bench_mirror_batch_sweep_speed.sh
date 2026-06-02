@@ -21,11 +21,12 @@ export TRANSFORMERS_OFFLINE="1"
 export CUTLASS_WRAPPER_NVFP4_EXT_BUILD_DIR="${CUTLASS_WRAPPER_NVFP4_EXT_BUILD_DIR:-/tmp/cutlass_wrapper_nvfp4_ext_${USER}}"
 export CUTLASS_WRAPPER_SPARSE_BF16_EXT_BUILD_DIR="${CUTLASS_WRAPPER_SPARSE_BF16_EXT_BUILD_DIR:-/tmp/cutlass_wrapper_sparse_bf16_ext_${USER}}"
 export CUTLASS_WRAPPER_SPARSE_NVFP4_EXT_BUILD_DIR="${CUTLASS_WRAPPER_SPARSE_NVFP4_EXT_BUILD_DIR:-/tmp/cutlass_wrapper_sparse_nvfp4_ext_${USER}}"
+export CUTLASS_WRAPPER_MARLIN_NVFP4_EXT_BUILD_DIR="${CUTLASS_WRAPPER_MARLIN_NVFP4_EXT_BUILD_DIR:-/tmp/cutlass_wrapper_marlin_nvfp4_ext_${USER}}"
 
 cd /data/home/scxj523/run/wja/project/my/fake/
 mkdir -p out err artifacts/results/mirror_compressed
 
-METHODS="${METHODS:-dense nvfp4 semi_structured_sparse nvfp4_semi_structured_sparse}"
+METHODS="${METHODS:-dense nvfp4 marlin_nvfp4 semi_structured_sparse nvfp4_semi_structured_sparse}"
 BATCH_SIZES="${BATCH_SIZES:-1 2 4 8 16}"
 INPUT_SIZE="${INPUT_SIZE:-3 224 224}"
 WARMUP="${WARMUP:-10}"

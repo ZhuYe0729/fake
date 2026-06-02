@@ -18,10 +18,11 @@ conda activate wja-cospaq
 export HF_HOME=/data/home/scxj523/.cache/huggingface/
 export HF_DATASETS_OFFLINE="1"
 export TRANSFORMERS_OFFLINE="1"
+export CUTLASS_WRAPPER_MARLIN_NVFP4_EXT_BUILD_DIR="${CUTLASS_WRAPPER_MARLIN_NVFP4_EXT_BUILD_DIR:-/tmp/cutlass_wrapper_marlin_nvfp4_ext_${USER}}"
 
 cd /data/home/scxj523/run/wja/project/my/fake/
 
-METHODS="${METHODS:-${METHOD:-dense nvfp4 semi_structured_sparse nvfp4_semi_structured_sparse}}"
+METHODS="${METHODS:-${METHOD:-dense nvfp4 marlin_nvfp4 semi_structured_sparse nvfp4_semi_structured_sparse}}"
 BATCH_SIZE="${BATCH_SIZE:-1}"
 WARMUP="${WARMUP:-10}"
 ITERS="${ITERS:-50}"

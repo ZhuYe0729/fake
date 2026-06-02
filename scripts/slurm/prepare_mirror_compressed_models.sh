@@ -18,10 +18,11 @@ conda activate wja-cospaq
 export HF_HOME=/data/home/scxj523/.cache/huggingface/
 export HF_DATASETS_OFFLINE="1"
 export TRANSFORMERS_OFFLINE="1"
+export CUTLASS_WRAPPER_MARLIN_NVFP4_EXT_BUILD_DIR="${CUTLASS_WRAPPER_MARLIN_NVFP4_EXT_BUILD_DIR:-/tmp/cutlass_wrapper_marlin_nvfp4_ext_${USER}}"
 
 cd /data/home/scxj523/run/wja/project/my/fake/
 
-METHODS="${METHODS:-nvfp4 int4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse int4_unstructured_sparse int4_semi_structured_sparse nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse}"
+METHODS="${METHODS:-marlin_nvfp4 nvfp4 int4 unstructured_sparse semi_structured_sparse nvfp4_unstructured_sparse nvfp4_semi_structured_sparse int4_unstructured_sparse int4_semi_structured_sparse nvfp4_4over6_unstructured_sparse nvfp4_4over6_semi_structured_sparse}"
 BENCHMARKS="${BENCHMARKS:-Chameleon GenImage}"
 CALIB_SAMPLES="${CALIB_SAMPLES:-64}"
 CALIB_BATCH_SIZE="${CALIB_BATCH_SIZE:-1}"
@@ -37,12 +38,16 @@ fi
 
 for method in ${METHODS}; do
   echo "[mirror prepare] method=${method}"
-  PYTHONPATH=. python scripts/prepare_mirror_compressed_model.py \
-    --method "${method}" \
-    --benchmarks ${BENCHMARKS} \
-    --calib-samples "${CALIB_SAMPLES}" \
-    --calib-batch-size "${CALIB_BATCH_SIZE}" \
-    --num-workers "${NUM_WORKERS}" \
-    "${GENIMAGE_ARG[@]}" \
-    "${LIMIT_ARG[@]}"
+  if [[ "${method}" == "marlin_nvfp4" ]]; then
+    PYTHONPATH=. python scripts/prepare_marlin_nvfp4_checkpoint.py --model mirror --dtype bf16
+  else
+    PYTHONPATH=. python scripts/prepare_mirror_compressed_model.py \
+      --method "${method}" \
+      --benchmarks ${BENCHMARKS} \
+      --calib-samples "${CALIB_SAMPLES}" \
+      --calib-batch-size "${CALIB_BATCH_SIZE}" \
+      --num-workers "${NUM_WORKERS}" \
+      "${GENIMAGE_ARG[@]}" \
+      "${LIMIT_ARG[@]}"
+  fi
 done

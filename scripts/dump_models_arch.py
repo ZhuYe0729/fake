@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from fake.models.maxvit import load_maxvit_dense
 from fake.models.dinov3 import load_dinov3_vit7b16_dense_classifier
+from fake.models.qwen3_5 import load_qwen3_5_dense
 
 def get_model_info_string(model, model_name):
     total_params = sum(p.numel() for p in model.parameters())
@@ -45,6 +46,16 @@ def main():
         print(f"Saved DINOv3 architecture to {dinov3_path}")
     except Exception as e:
         print(f"Error loading DINOv3: {e}")
+
+    print("Loading Qwen3.5...")
+    try:
+        qwen3_5_model, _ = load_qwen3_5_dense(device="cpu")
+        qwen3_5_info = get_model_info_string(qwen3_5_model, "Qwen3.5-0.6B")
+        qwen3_5_path = output_dir / "qwen3_5_arch.txt"
+        qwen3_5_path.write_text(qwen3_5_info)
+        print(f"Saved Qwen3.5 architecture to {qwen3_5_path}")
+    except Exception as e:
+        print(f"Error loading Qwen3.5: {e}")
 
 if __name__ == "__main__":
     main()

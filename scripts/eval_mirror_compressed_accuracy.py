@@ -15,6 +15,7 @@ if str(REPO_ROOT) not in sys.path:
 import scripts.eval_mirror_dense_accuracy as mirror_eval
 from fake.compression.checkpoint import checkpoint_csv_fields
 from fake.compression.pipeline import SUPPORTED_METHODS
+from fake.kernels.marlin_nvfp4 import load_marlin_nvfp4_checkpoint_into_model
 from fake.models.mirror import (
     DEFAULT_MIRROR_BACKBONE_PATH,
     DEFAULT_MIRROR_MEMORY_PATH,
@@ -22,11 +23,12 @@ from fake.models.mirror import (
     load_mirror_compressed_detector,
     load_mirror_dense_detector,
 )
+from fake.utils.csv_io import append_csv_row
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate MIRROR compressed detector on forensic benchmarks.")
-    parser.add_argument("--method", choices=["dense", *SUPPORTED_METHODS], required=True)
+    parser.add_argument("--method", choices=["dense", "marlin_nvfp4", *SUPPORTED_METHODS], required=True)
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--benchmarks", nargs="+", default=["Chameleon", "GenImage"])
     parser.add_argument("--chameleon-root", default=str(mirror_eval.DEFAULT_CHAMELEON_ROOT))
@@ -67,8 +69,23 @@ def main() -> None:
 
     device = torch.device(args.device)
     checkpoint_metadata: dict[str, object] = {}
+    report_fields: dict[str, object] = {}
     if args.method == "dense":
         model, _ = load_mirror_dense_detector(args.model_path, args.memory_path, args.backbone_path, device=device)
+    elif args.method == "marlin_nvfp4":
+        checkpoint = args.checkpoint or "artifacts/checkpoints/mirror/marlin_nvfp4/model.pt"
+        model, _ = load_mirror_dense_detector(
+            args.model_path,
+            args.memory_path,
+            args.backbone_path,
+            device=device,
+            torch_dtype=torch.bfloat16,
+        )
+        checkpoint_metadata, report = load_marlin_nvfp4_checkpoint_into_model(model, checkpoint, device=device)
+        args.checkpoint = checkpoint
+        report_fields = report.csv_fields()
+        if report.skipped:
+            print(f"skipped_modules={report.skipped[:10]}")
     else:
         checkpoint = args.checkpoint or f"artifacts/checkpoints/mirror/{args.method}/model.pt"
         model, _, checkpoint_metadata = load_mirror_compressed_detector(
@@ -127,13 +144,16 @@ def main() -> None:
                 "memory_path": args.memory_path,
                 "backbone_path": args.backbone_path,
                 **checkpoint_csv_fields(checkpoint_metadata, args.checkpoint, args.method),
+                **report_fields,
             }
         )
 
     if not rows:
         raise RuntimeError("No metric rows were produced.")
     _append_mean_rows(rows)
-    mirror_eval.append_rows(args.output, list(rows[0].keys()), rows)
+    fieldnames = list(rows[0].keys())
+    for row in rows:
+        append_csv_row(args.output, fieldnames, row)
     print(f"\nSaved results -> {args.output}")
 
 
