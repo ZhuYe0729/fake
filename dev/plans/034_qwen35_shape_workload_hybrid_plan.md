@@ -3,6 +3,13 @@
 ## Summary
 目标是证明一个二维 hybrid 策略：根据每个 `Linear` 的 shape `(N, K)` 和当前输入负载 `M` 共同选择最快轻量化路径，而不是只按 prefill/decode 切换。策略函数为 `policy(M, N, K) -> {dense_bf16, marlin_nvfp4, sparse_bf16, sparse_nvfp4}`，先只优化速度，不考虑精度。
 
+## Part 0: Dense NVFP4 Same-Weight Switch
+- 前置实现只处理 `W4A16 marlin_nvfp4` 与 `W4A4 dense_nvfp4` 的格式兼容。
+- 兼容性定义为两条 dense NVFP4 路径共享同一份 `NVFP4CanonicalWeight`；各自的 kernel-specific layout 可以在加载或首次使用时 lazy 派生。
+- 不要求 dense NVFP4 与 `sparse_nvfp4` 共享权重，因为 sparse pruning 会改变权重本身。
+- `sparse_nvfp4` 暂时仍作为独立压缩路径参与比较，不纳入 same-weight switch 结论。
+- 未来若补齐 `W4A16 sparse_nvfp4` weight-only kernel，再单独设计 sparse 内部的 same-sparse-weight W4A16/W4A4 切换。
+
 ## Key Changes
 - 新增 Qwen3.5 per-linear hybrid runtime：
   - 对每个 compressible `Linear` 记录 `name, N=out_features, K=in_features`。

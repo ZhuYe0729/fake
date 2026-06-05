@@ -23,6 +23,8 @@ def select_compressible_modules(model: nn.Module, model_name: str) -> list[Modul
         return _select_mirror_modules(model)
     if model_name == "qwen3_5":
         return _select_qwen3_5_modules(model)
+    if model_name == "llama":
+        return _select_llama_modules(model)
     raise ValueError(f"Unsupported model for compression: {model_name}")
 
 
@@ -108,6 +110,33 @@ def _select_qwen3_5_modules(model: nn.Module) -> list[ModuleInfo]:
             continue
         modules.append(ModuleInfo(name, module, "linear", module.in_features, "qwen3_5_language_linear"))
     return modules
+
+
+def _select_llama_modules(model: nn.Module) -> list[ModuleInfo]:
+    modules: list[ModuleInfo] = []
+    prefixes = _llama_language_prefixes(model)
+    for name, module in model.named_modules():
+        if not isinstance(module, nn.Linear):
+            continue
+        if name == "lm_head" or name.endswith(".lm_head"):
+            continue
+        if "" in prefixes:
+            in_model = bool(name)
+        else:
+            in_model = any(name == p or name.startswith(f"{p}.") for p in prefixes)
+        if not in_model:
+            continue
+        modules.append(ModuleInfo(name, module, "linear", module.in_features, "llama_language_linear"))
+    return modules
+
+
+def _llama_language_prefixes(model: nn.Module) -> tuple[str, ...]:
+    prefixes: list[str] = []
+    if hasattr(model, "model") and hasattr(model.model, "layers"):
+        prefixes.append("model")
+    if hasattr(model, "layers"):
+        prefixes.append("")
+    return tuple(prefixes)
 
 
 def _qwen3_5_language_prefixes(model: nn.Module) -> tuple[str, ...]:

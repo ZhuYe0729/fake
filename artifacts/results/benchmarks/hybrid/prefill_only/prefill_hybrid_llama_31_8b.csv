@@ -1,0 +1,7 @@
+model,scenario,batch_size,input_tokens,m_prefill,method,prefill_ms,speedup_vs_dense_bf16,notes
+Llama-3.1-8B,prefill_only,16,1024,16384,dense_bf16,984.4360,1.0000,
+Llama-3.1-8B,prefill_only,16,1024,16384,dense_nvfp4,644.7715,1.5268,
+Llama-3.1-8B,prefill_only,16,1024,16384,sparse_bf16,506.2845,1.9444,
+Llama-3.1-8B,prefill_only,16,1024,16384,sparse_nvfp4,584.3507,1.6847,
+Llama-3.1-8B,prefill_only,16,1024,16384,marlin_nvfp4,986.0990,0.9983,
+Llama-3.1-8B,prefill_only,16,1024,16384,hybrid,405.3724,2.4285,"kernels=sparse_bf16:160,sparse_nvfp4:64"

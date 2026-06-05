@@ -1,0 +1,7 @@
+model,scenario,batch_size,input_tokens,m_prefill,method,prefill_ms,speedup_vs_dense_bf16,notes
+Qwen3.5-9B,prefill_only,16,1024,16384,dense_bf16,972.6556,1.0000,
+Qwen3.5-9B,prefill_only,16,1024,16384,dense_nvfp4,665.1872,1.4622,
+Qwen3.5-9B,prefill_only,16,1024,16384,sparse_bf16,512.7692,1.8969,fallbacks=16
+Qwen3.5-9B,prefill_only,16,1024,16384,sparse_nvfp4,600.1233,1.6208,
+Qwen3.5-9B,prefill_only,16,1024,16384,marlin_nvfp4,989.0460,0.9834,fallbacks=48
+Qwen3.5-9B,prefill_only,16,1024,16384,hybrid,427.2405,2.2766,"kernels=sparse_bf16:136,sparse_nvfp4:96,marlin_nvfp4:16"
