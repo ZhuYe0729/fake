@@ -1,0 +1,1880 @@
+{
+  "policy_format": "offline_hybrid_policy_v1",
+  "scenario": {
+    "batch_size": 1,
+    "input_tokens": 16384,
+    "output_tokens": 32,
+    "m_prefill": 16384,
+    "m_decode": 1
+  },
+  "kernels": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "marlin_nvfp4"
+  ],
+  "include_conversion_cost": true,
+  "modules": [
+    {
+      "name": "linear_attn.in_proj_a",
+      "n": 32,
+      "k": 4096,
+      "count": 24,
+      "selected_prefill_backend": "dense_bf16",
+      "selected_decode_backend": "dense_bf16",
+      "selected_total_ms": 23.280876,
+      "selected_prefill_ms": 0.2048045,
+      "selected_decode_ms": 0.023913499999999997,
+      "selected_conversion_ms": 0.0,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 0.2048045,
+          "decode_latency_ms": 0.023913499999999997,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 23.280876
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 1.525842,
+          "decode_latency_ms": 0.1301265,
+          "conversion_latency_ms": 0.035309,
+          "total_latency_ms": 137.404776
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.2048045,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 1.525842,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 0.1025375,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 1.5002110000000002,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "N%64!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.023913499999999997,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.1301265,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "N%64!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.035309,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": false,
+          "reason": "N%64!=0",
+          "latency_ms": null,
+          "source": "",
+          "prediction_status": "unsupported",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "linear_attn.in_proj_b",
+      "n": 32,
+      "k": 4096,
+      "count": 24,
+      "selected_prefill_backend": "dense_bf16",
+      "selected_decode_backend": "dense_bf16",
+      "selected_total_ms": 23.280876,
+      "selected_prefill_ms": 0.2048045,
+      "selected_decode_ms": 0.023913499999999997,
+      "selected_conversion_ms": 0.0,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 0.2048045,
+          "decode_latency_ms": 0.023913499999999997,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 23.280876
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 1.525842,
+          "decode_latency_ms": 0.1301265,
+          "conversion_latency_ms": 0.035309,
+          "total_latency_ms": 137.404776
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.2048045,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 1.525842,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 0.1025375,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 1.5002110000000002,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "N%64!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.023913499999999997,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.1301265,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "N%64!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.035309,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": false,
+          "reason": "N%64!=0",
+          "latency_ms": null,
+          "source": "",
+          "prediction_status": "unsupported",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "linear_attn.in_proj_qkv",
+      "n": 8192,
+      "k": 4096,
+      "count": 24,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 98.04948,
+      "selected_prefill_ms": 2.460429,
+      "selected_decode_ms": 0.035089499999999996,
+      "selected_conversion_ms": 0.5021019999999999,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 2.460429,
+          "decode_latency_ms": 0.035089499999999996,
+          "conversion_latency_ms": 0.5021019999999999,
+          "total_latency_ms": 98.04948
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 4.6755344999999995,
+          "decode_latency_ms": 0.0560225,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 155.23810799999998
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 4.8981745,
+          "decode_latency_ms": 0.035089499999999996,
+          "conversion_latency_ms": 0.466531,
+          "total_latency_ms": 155.70166799999998
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 2.460429,
+          "decode_latency_ms": 0.13596049999999998,
+          "conversion_latency_ms": 0.035571,
+          "total_latency_ms": 164.32166399999997
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 4.8981745,
+          "decode_latency_ms": 0.13596049999999998,
+          "conversion_latency_ms": 0.5021019999999999,
+          "total_latency_ms": 234.02429999999998
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 4.6755344999999995,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 2.460429,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 2.4402575,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 2.1176075,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 4.8981745,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.0560225,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.13596049999999998,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.035089499999999996,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.035571,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.466531,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "linear_attn.in_proj_z",
+      "n": 4096,
+      "k": 4096,
+      "count": 24,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 86.19048,
+      "selected_prefill_ms": 1.969835,
+      "selected_decode_ms": 0.035496,
+      "selected_conversion_ms": 0.485563,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 1.969835,
+          "decode_latency_ms": 0.035496,
+          "conversion_latency_ms": 0.485563,
+          "total_latency_ms": 86.19048
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 2.441358,
+          "decode_latency_ms": 0.03729,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 87.231312
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 2.398342,
+          "decode_latency_ms": 0.035496,
+          "conversion_latency_ms": 0.4501215,
+          "total_latency_ms": 95.62405199999999
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 1.969835,
+          "decode_latency_ms": 0.130838,
+          "conversion_latency_ms": 0.0354415,
+          "total_latency_ms": 148.61022
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 2.398342,
+          "decode_latency_ms": 0.130838,
+          "conversion_latency_ms": 0.485563,
+          "total_latency_ms": 169.697304
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 2.441358,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 1.969835,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 1.257995,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 1.8060494999999999,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 2.398342,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.03729,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.130838,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.035496,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.0354415,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.4501215,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "linear_attn.out_proj",
+      "n": 4096,
+      "k": 4096,
+      "count": 24,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 86.19048,
+      "selected_prefill_ms": 1.969835,
+      "selected_decode_ms": 0.035496,
+      "selected_conversion_ms": 0.485563,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 1.969835,
+          "decode_latency_ms": 0.035496,
+          "conversion_latency_ms": 0.485563,
+          "total_latency_ms": 86.19048
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 2.441358,
+          "decode_latency_ms": 0.03729,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 87.231312
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 2.398342,
+          "decode_latency_ms": 0.035496,
+          "conversion_latency_ms": 0.4501215,
+          "total_latency_ms": 95.62405199999999
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 1.969835,
+          "decode_latency_ms": 0.130838,
+          "conversion_latency_ms": 0.0354415,
+          "total_latency_ms": 148.61022
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 2.398342,
+          "decode_latency_ms": 0.130838,
+          "conversion_latency_ms": 0.485563,
+          "total_latency_ms": 169.697304
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 2.441358,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 1.969835,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 1.257995,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 1.8060494999999999,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 2.398342,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.03729,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.130838,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.035496,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.0354415,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.4501215,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "mlp.gate_proj",
+      "n": 12288,
+      "k": 4096,
+      "count": 32,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 163.6378774290515,
+      "selected_prefill_ms": 3.294211277232814,
+      "selected_decode_ms": 0.03772280496360337,
+      "selected_conversion_ms": 0.6123426335897382,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 3.294211277232814,
+          "decode_latency_ms": 0.03772280496360337,
+          "conversion_latency_ms": 0.6123426335897382,
+          "total_latency_ms": 163.6378774290515
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 3.294211277232814,
+          "decode_latency_ms": 0.14764877762302117,
+          "conversion_latency_ms": 0.03610966438594391,
+          "total_latency_ms": 257.7626184177739
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 7.380890143455208,
+          "decode_latency_ms": 0.03772280496360337,
+          "conversion_latency_ms": 0.5762329692037943,
+          "total_latency_ms": 293.2560918878179
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 7.8391634750771,
+          "decode_latency_ms": 0.0870306528755836,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 339.9726197470648
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 7.380890143455208,
+          "decode_latency_ms": 0.14764877762302117,
+          "conversion_latency_ms": 0.6123426335897382,
+          "total_latency_ms": 406.975797151412
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 7.8391634750771,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 3.294211277232814,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 3.8042125295750835,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 2.6727769176622624,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 7.380890143455208,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.0870306528755836,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.14764877762302117,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.03772280496360337,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.03610966438594391,
+          "source": "predicted",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.5762329692037943,
+          "source": "predicted",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "mlp.up_proj",
+      "n": 12288,
+      "k": 4096,
+      "count": 32,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 163.6378774290515,
+      "selected_prefill_ms": 3.294211277232814,
+      "selected_decode_ms": 0.03772280496360337,
+      "selected_conversion_ms": 0.6123426335897382,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 3.294211277232814,
+          "decode_latency_ms": 0.03772280496360337,
+          "conversion_latency_ms": 0.6123426335897382,
+          "total_latency_ms": 163.6378774290515
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 3.294211277232814,
+          "decode_latency_ms": 0.14764877762302117,
+          "conversion_latency_ms": 0.03610966438594391,
+          "total_latency_ms": 257.7626184177739
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 7.380890143455208,
+          "decode_latency_ms": 0.03772280496360337,
+          "conversion_latency_ms": 0.5762329692037943,
+          "total_latency_ms": 293.2560918878179
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 7.8391634750771,
+          "decode_latency_ms": 0.0870306528755836,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 339.9726197470648
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 7.380890143455208,
+          "decode_latency_ms": 0.14764877762302117,
+          "conversion_latency_ms": 0.6123426335897382,
+          "total_latency_ms": 406.975797151412
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 7.8391634750771,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 3.294211277232814,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 3.8042125295750835,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 2.6727769176622624,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 7.380890143455208,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.0870306528755836,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.14764877762302117,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.03772280496360337,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.03610966438594391,
+          "source": "predicted",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.5762329692037943,
+          "source": "predicted",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "mlp.down_proj",
+      "n": 4096,
+      "k": 12288,
+      "count": 32,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 234.0345401535335,
+      "selected_prefill_ms": 5.443133955340522,
+      "selected_decode_ms": 0.039340869873946756,
+      "selected_conversion_ms": 0.6115375884911045,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 5.443133955340522,
+          "decode_latency_ms": 0.039340869873946756,
+          "conversion_latency_ms": 0.6115375884911045,
+          "total_latency_ms": 234.0345401535335
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 7.3377021238608435,
+          "decode_latency_ms": 0.039340869873946756,
+          "conversion_latency_ms": 0.5754047450921111,
+          "total_latency_ms": 293.504470557416
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 5.443133955340522,
+          "decode_latency_ms": 0.16316588128658913,
+          "conversion_latency_ms": 0.03613284339899336,
+          "total_latency_ms": 342.41839999713176
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 7.924273942489958,
+          "decode_latency_ms": 0.08697883004526934,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 342.64308812603446
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 7.3377021238608435,
+          "decode_latency_ms": 0.16316588128658913,
+          "conversion_latency_ms": 0.6115375884911045,
+          "total_latency_ms": 421.45753323272965
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 7.924273942489958,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 5.443133955340522,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 3.8149197912726565,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 4.905316899230318,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 7.3377021238608435,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.08697883004526934,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.16316588128658913,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.039340869873946756,
+          "reason": "",
+          "source": "predicted",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.03613284339899336,
+          "source": "predicted",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.5754047450921111,
+          "source": "predicted",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "self_attn.q_proj",
+      "n": 8192,
+      "k": 4096,
+      "count": 8,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 32.68316,
+      "selected_prefill_ms": 2.460429,
+      "selected_decode_ms": 0.035089499999999996,
+      "selected_conversion_ms": 0.5021019999999999,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 2.460429,
+          "decode_latency_ms": 0.035089499999999996,
+          "conversion_latency_ms": 0.5021019999999999,
+          "total_latency_ms": 32.68316
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 4.6755344999999995,
+          "decode_latency_ms": 0.0560225,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 51.746036
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 4.8981745,
+          "decode_latency_ms": 0.035089499999999996,
+          "conversion_latency_ms": 0.466531,
+          "total_latency_ms": 51.900555999999995
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 2.460429,
+          "decode_latency_ms": 0.13596049999999998,
+          "conversion_latency_ms": 0.035571,
+          "total_latency_ms": 54.77388799999999
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 4.8981745,
+          "decode_latency_ms": 0.13596049999999998,
+          "conversion_latency_ms": 0.5021019999999999,
+          "total_latency_ms": 78.0081
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 4.6755344999999995,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 2.460429,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 2.4402575,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 2.1176075,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 4.8981745,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.0560225,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.13596049999999998,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.035089499999999996,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.035571,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.466531,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "self_attn.k_proj",
+      "n": 1024,
+      "k": 4096,
+      "count": 8,
+      "selected_prefill_backend": "dense_bf16",
+      "selected_decode_backend": "dense_bf16",
+      "selected_total_ms": 12.379584000000001,
+      "selected_prefill_ms": 0.765144,
+      "selected_decode_ms": 0.024447,
+      "selected_conversion_ms": 0.0,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 0.765144,
+          "decode_latency_ms": 0.024447,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 12.379584000000001
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 0.6278755,
+          "decode_latency_ms": 0.0358025,
+          "conversion_latency_ms": 0.440586,
+          "total_latency_ms": 17.713132
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 1.615507,
+          "decode_latency_ms": 0.0358025,
+          "conversion_latency_ms": 0.475943,
+          "total_latency_ms": 25.89704
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 0.6278755,
+          "decode_latency_ms": 0.131212,
+          "conversion_latency_ms": 0.475943,
+          "total_latency_ms": 42.42082
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 1.615507,
+          "decode_latency_ms": 0.131212,
+          "conversion_latency_ms": 0.035357,
+          "total_latency_ms": 46.797184
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.765144,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 1.615507,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 0.373521,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 1.5845575,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.6278755,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.024447,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.131212,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.0358025,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.035357,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.440586,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "self_attn.v_proj",
+      "n": 1024,
+      "k": 4096,
+      "count": 8,
+      "selected_prefill_backend": "dense_bf16",
+      "selected_decode_backend": "dense_bf16",
+      "selected_total_ms": 12.379584000000001,
+      "selected_prefill_ms": 0.765144,
+      "selected_decode_ms": 0.024447,
+      "selected_conversion_ms": 0.0,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 0.765144,
+          "decode_latency_ms": 0.024447,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 12.379584000000001
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 0.6278755,
+          "decode_latency_ms": 0.0358025,
+          "conversion_latency_ms": 0.440586,
+          "total_latency_ms": 17.713132
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 1.615507,
+          "decode_latency_ms": 0.0358025,
+          "conversion_latency_ms": 0.475943,
+          "total_latency_ms": 25.89704
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 0.6278755,
+          "decode_latency_ms": 0.131212,
+          "conversion_latency_ms": 0.475943,
+          "total_latency_ms": 42.42082
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 1.615507,
+          "decode_latency_ms": 0.131212,
+          "conversion_latency_ms": 0.035357,
+          "total_latency_ms": 46.797184
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.765144,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 1.615507,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 0.373521,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 1.5845575,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.6278755,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.024447,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.131212,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.0358025,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.035357,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.440586,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "self_attn.o_proj",
+      "n": 4096,
+      "k": 4096,
+      "count": 8,
+      "selected_prefill_backend": "dense_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 28.730159999999998,
+      "selected_prefill_ms": 1.969835,
+      "selected_decode_ms": 0.035496,
+      "selected_conversion_ms": 0.485563,
+      "strategy_candidates": [
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 1.969835,
+          "decode_latency_ms": 0.035496,
+          "conversion_latency_ms": 0.485563,
+          "total_latency_ms": 28.730159999999998
+        },
+        {
+          "prefill_backend": "dense_bf16",
+          "decode_backend": "dense_bf16",
+          "prefill_latency_ms": 2.441358,
+          "decode_latency_ms": 0.03729,
+          "conversion_latency_ms": 0.0,
+          "total_latency_ms": 29.077104
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "marlin_nvfp4",
+          "prefill_latency_ms": 2.398342,
+          "decode_latency_ms": 0.035496,
+          "conversion_latency_ms": 0.4501215,
+          "total_latency_ms": 31.874684
+        },
+        {
+          "prefill_backend": "dense_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 1.969835,
+          "decode_latency_ms": 0.130838,
+          "conversion_latency_ms": 0.0354415,
+          "total_latency_ms": 49.53674
+        },
+        {
+          "prefill_backend": "marlin_nvfp4",
+          "decode_backend": "dense_nvfp4",
+          "prefill_latency_ms": 2.398342,
+          "decode_latency_ms": 0.130838,
+          "conversion_latency_ms": 0.485563,
+          "total_latency_ms": 56.565768
+        }
+      ],
+      "prefill_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 2.441358,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 1.969835,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": true,
+          "latency_ms": 1.257995,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": true,
+          "latency_ms": 1.8060494999999999,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 2.398342,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "decode_candidates": [
+        {
+          "kernel": "dense_bf16",
+          "supported": true,
+          "latency_ms": 0.03729,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "dense_nvfp4",
+          "supported": true,
+          "latency_ms": 0.130838,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        },
+        {
+          "kernel": "sparse_bf16",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%8!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "sparse_nvfp4",
+          "supported": false,
+          "latency_ms": null,
+          "reason": "M%32!=0",
+          "source": "",
+          "prediction_status": "unsupported"
+        },
+        {
+          "kernel": "marlin_nvfp4",
+          "supported": true,
+          "latency_ms": 0.035496,
+          "reason": "",
+          "source": "measured",
+          "prediction_status": "pass"
+        }
+      ],
+      "conversion_candidates": [
+        {
+          "conversion": "canonical_to_cutlass",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.0354415,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        },
+        {
+          "conversion": "canonical_to_marlin",
+          "supported": true,
+          "reason": "",
+          "latency_ms": 0.4501215,
+          "source": "measured",
+          "prediction_status": "pass",
+          "prediction_error": ""
+        }
+      ],
+      "reason": ""
+    }
+  ]
+}

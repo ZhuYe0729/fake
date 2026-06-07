@@ -1,0 +1,14 @@
+candidate,prefill_backend,decode_backend,supported,reason,prefill_ms,decode_ms,total_ms,weighted_total_ms,online_conversion_ms,fallback_backend,used_fallback,fallback_reason,model,scenario,linear_group,n,k,count
+marlin_nvfp4,dense_bf16,dense_bf16,True,,0.2227199986577034,0.0,0.2227199986577034,5.345279967784881,0.0,dense_bf16,True,"ValueError:N/out_features must be divisible by 64 for Marlin NVFP4, got N=32",Qwen3.5-9B,prefill_only,linear_attn.in_proj_a,32,4096,24
+marlin_nvfp4,dense_bf16,dense_bf16,True,,0.22686399668455123,0.0,0.22686399668455123,5.444735920429229,0.0,dense_bf16,True,"ValueError:N/out_features must be divisible by 64 for Marlin NVFP4, got N=32",Qwen3.5-9B,prefill_only,linear_attn.in_proj_b,32,4096,24
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,4.8738751888275145,0.0,4.8738751888275145,116.97300453186034,0.0,,False,,Qwen3.5-9B,prefill_only,linear_attn.in_proj_qkv,8192,4096,24
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,2.398361611366272,0.0,2.398361611366272,57.56067867279052,0.0,,False,,Qwen3.5-9B,prefill_only,linear_attn.in_proj_z,4096,4096,24
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,2.3978271484375,0.0,2.3978271484375,57.5478515625,0.0,,False,,Qwen3.5-9B,prefill_only,linear_attn.out_proj,4096,4096,24
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,6.986217594146728,0.0,6.986217594146728,223.5589630126953,0.0,,False,,Qwen3.5-9B,prefill_only,mlp.down_proj,4096,12288,32
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,7.256883239746093,0.0,7.256883239746093,232.220263671875,0.0,,False,,Qwen3.5-9B,prefill_only,mlp.gate_proj,12288,4096,32
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,7.265097522735596,0.0,7.265097522735596,232.48312072753907,0.0,,False,,Qwen3.5-9B,prefill_only,mlp.up_proj,12288,4096,32
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,0.6378592014312744,0.0,0.6378592014312744,5.102873611450195,0.0,,False,,Qwen3.5-9B,prefill_only,self_attn.k_proj,1024,4096,8
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,2.4251423835754395,0.0,2.4251423835754395,19.401139068603516,0.0,,False,,Qwen3.5-9B,prefill_only,self_attn.o_proj,4096,4096,8
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,4.872079992294312,0.0,4.872079992294312,38.976639938354495,0.0,,False,,Qwen3.5-9B,prefill_only,self_attn.q_proj,8192,4096,8
+marlin_nvfp4,marlin_nvfp4,marlin_nvfp4,True,,0.6704800069332123,0.0,0.6704800069332123,5.363840055465698,0.0,,False,,Qwen3.5-9B,prefill_only,self_attn.v_proj,1024,4096,8
+marlin_nvfp4,,,,,,,,999.9783907413482,,,,,Qwen3.5-9B,prefill_only,__TOTAL__,,,

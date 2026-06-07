@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "task": "qwen35_linear_breakdown",
+    "model": "Qwen3.5-9B",
+    "model_path": "/home/agent/wja/data/models/Qwen/Qwen3.5-9B",
+    "layer": "language_model.layers.0.linear_attn.in_proj_qkv",
+    "n": 8192,
+    "k": 4096,
+    "bias": false,
+    "dtype": "bfloat16",
+    "device": "cuda:0",
+    "gpu_name": "NVIDIA GeForce RTX 5090",
+    "batch_size": 1,
+    "input_tokens": 16384,
+    "output_tokens": 32,
+    "m_prefill": 16384,
+    "m_decode": 1,
+    "warmup": 3,
+    "iters": 10
+  },
+  "paths": {
+    "sparse_bf16": {
+      "build_ms": 941.2162033841014,
+      "conversion_ms": 0.0,
+      "prefill_first_ms": 41.656673431396484,
+      "prefill_steady_ms": 2.503875207901001,
+      "decode_first_ms": 45.69718551635742,
+      "decode_steady_ms": 0.12888960018754006,
+      "decode_x_n_steady_ms": 4.124467206001282,
+      "runtime_only_steady_ms": 6.628342413902283,
+      "runtime_first_inclusive_ms": 91.34943655356764,
+      "e2e_with_build_or_conversion_steady_ms": 947.8445457980037,
+      "e2e_with_build_or_conversion_first_inclusive_ms": 1032.565639937669
+    },
+    "dense_nvfp4_prefill_marlin_decode_explicit": {
+      "build_ms": 117.09828395396471,
+      "conversion_ms": 281.85917530208826,
+      "prefill_first_ms": 2.9654719829559326,
+      "prefill_steady_ms": 2.4926048040390016,
+      "decode_first_ms": 2.0417919158935547,
+      "decode_steady_ms": 0.04712639972567558,
+      "decode_x_n_steady_ms": 1.5080447912216186,
+      "runtime_only_steady_ms": 4.0006495952606205,
+      "runtime_first_inclusive_ms": 6.46818229034543,
+      "e2e_with_build_or_conversion_steady_ms": 402.95810885131357,
+      "e2e_with_build_or_conversion_first_inclusive_ms": 405.4256415463984,
+      "canonical_build_ms": 117.09828395396471,
+      "cutlass_materialize_ms": 87.51027937978506,
+      "marlin_materialize_ms": 194.3488959223032
+    },
+    "dense_nvfp4_prefill_marlin_decode_lazy_wrapper": {
+      "build_ms": 2.160860225558281,
+      "conversion_ms": 0.0,
+      "prefill_first_ms": 2.714495897293091,
+      "prefill_steady_ms": 2.4786240100860595,
+      "decode_first_ms": 1.245535969734192,
+      "decode_steady_ms": 0.052310400456190106,
+      "decode_x_n_steady_ms": 1.6739328145980834,
+      "runtime_only_steady_ms": 4.152556824684143,
+      "runtime_first_inclusive_ms": 5.581654281169176,
+      "e2e_with_build_or_conversion_steady_ms": 6.313417050242424,
+      "e2e_with_build_or_conversion_first_inclusive_ms": 7.742514506727457,
+      "canonical_build_ms": 2.0088134333491325,
+      "wrapper_build_ms": 0.1520467922091484,
+      "lazy_prefill_materialization_in_first_ms": 2.714495897293091,
+      "lazy_decode_materialization_in_first_ms": 1.245535969734192
+    }
+  }
+}

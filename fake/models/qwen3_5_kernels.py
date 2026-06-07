@@ -36,6 +36,7 @@ from fake.kernels.marlin_nvfp4 import (
     install_marlin_nvfp4_modules_from_state_dict,
     prepare_marlin_nvfp4_packed_model,
 )
+from fake.kernels.offline_hybrid_policy import load_policy_json
 
 
 QWEN3_5_KERNEL_CHECKPOINT_FORMAT = "qwen3_5_kernel_packed_v1"
@@ -53,6 +54,7 @@ QWEN3_5_REAL_KERNEL_METHODS = (
     "manual_hybrid_m8",
     "manual_hybrid_m16",
     "shape_workload_hybrid",
+    "predictor_hybrid",
 )
 QWEN3_5_HYBRID_NVFP4_METHODS = (
     "hybrid_nvfp4",
@@ -67,6 +69,8 @@ QWEN3_5_MANUAL_HYBRID_METHODS = (
 QWEN3_5_MANUAL_HYBRID_CHECKPOINT_FORMAT = "qwen3_5_manual_hybrid_packed_v1"
 QWEN3_5_SWH_CHECKPOINT_FORMAT = "qwen3_5_shape_workload_hybrid_packed_v1"
 QWEN3_5_SWH_METHODS = ("shape_workload_hybrid",)
+QWEN3_5_PREDICTOR_HYBRID_CHECKPOINT_FORMAT = "qwen3_5_predictor_hybrid_packed_v1"
+QWEN3_5_PREDICTOR_HYBRID_METHODS = ("predictor_hybrid",)
 
 
 @dataclass(frozen=True)
@@ -138,6 +142,8 @@ class QwenHybridDenseNVFP4Linear(nn.Module):
         *,
         decode_activation_dtype: torch.dtype = torch.bfloat16,
         marlin_m_threshold: int = 16,
+        prefill_backend: str = "dense_nvfp4",
+        decode_backend: str = "marlin_nvfp4",
     ) -> None:
         super().__init__()
         self.in_features = int(canonical.in_features)
@@ -145,6 +151,8 @@ class QwenHybridDenseNVFP4Linear(nn.Module):
         self.original_dtype = canonical.original_dtype
         self.decode_activation_dtype = decode_activation_dtype
         self.marlin_m_threshold = int(marlin_m_threshold)
+        self.prefill_backend = prefill_backend
+        self.decode_backend = decode_backend
         self.register_buffer("canonical_packed_weight", canonical.packed_weight.contiguous(), persistent=True)
         self.register_buffer("canonical_logical_scale", canonical.logical_scale.contiguous(), persistent=True)
         self.register_buffer("canonical_global_scale", canonical.global_scale.contiguous(), persistent=True)
@@ -200,16 +208,23 @@ class QwenHybridDenseNVFP4Linear(nn.Module):
     def forward_w4a16(self, x: torch.Tensor) -> torch.Tensor:
         return self._get_marlin_linear()(x)
 
+    def forward_backend(self, x: torch.Tensor, backend: str) -> torch.Tensor:
+        if backend == "dense_nvfp4":
+            return self.forward_w4a4(x)
+        if backend == "marlin_nvfp4":
+            return self.forward_w4a16(x)
+        raise ValueError(f"Unsupported shared NVFP4 backend: {backend}")
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         m = int(x.reshape(-1, self.in_features).size(0))
-        if m <= self.marlin_m_threshold:
-            return self.forward_w4a16(x)
-        return self.forward_w4a4(x)
+        backend = self.decode_backend if m <= self.marlin_m_threshold else self.prefill_backend
+        return self.forward_backend(x, backend)
 
     def extra_repr(self) -> str:
         return (
             f"in_features={self.in_features}, out_features={self.out_features}, "
             f"marlin_m_threshold={self.marlin_m_threshold}, "
+            f"prefill_backend={self.prefill_backend}, decode_backend={self.decode_backend}, "
             f"decode_activation_dtype={self.decode_activation_dtype}"
         )
 
@@ -267,6 +282,7 @@ def prepare_qwen3_5_kernel_checkpoint_payload(
     variant: str,
     model_path: str,
     activation_dtype: torch.dtype = torch.bfloat16,
+    policy_path: str | Path | None = None,
 ) -> QwenKernelCheckpointBuildResult:
     if method == "dense_nvfp4":
         report = replace_linear_with_cutlass_nvfp4(model, "qwen3_5", CutlassNVFP4Config())
@@ -323,6 +339,15 @@ def prepare_qwen3_5_kernel_checkpoint_payload(
             activation_dtype=activation_dtype,
         )
         checkpoint_format = QWEN3_5_SWH_CHECKPOINT_FORMAT
+    elif method in QWEN3_5_PREDICTOR_HYBRID_METHODS:
+        if policy_path is None:
+            raise ValueError("policy_path is required for predictor_hybrid")
+        report = replace_linear_with_qwen_predictor_hybrid(
+            model,
+            policy_path=policy_path,
+            activation_dtype=activation_dtype,
+        )
+        checkpoint_format = QWEN3_5_PREDICTOR_HYBRID_CHECKPOINT_FORMAT
     else:
         raise ValueError(f"Unsupported Qwen3.5 kernel checkpoint method: {method}")
 
@@ -339,6 +364,8 @@ def prepare_qwen3_5_kernel_checkpoint_payload(
         "skipped": report.skipped,
         "module_specs": _module_specs_from_packed_model(model, method),
     }
+    if policy_path is not None:
+        metadata["policy_path"] = str(policy_path)
     return QwenKernelCheckpointBuildResult(metadata=metadata, state_dict=_cpu_state_dict(model), report=report)
 
 
@@ -366,6 +393,9 @@ def load_qwen3_5_kernel_checkpoint_into_model(
         report = _install_manual_hybrid(model, state_dict, metadata, device=device)
         skip_strict_load = True
     elif checkpoint_format == QWEN3_5_SWH_CHECKPOINT_FORMAT or method in QWEN3_5_SWH_METHODS:
+        report = _install_manual_hybrid(model, state_dict, metadata, device=device)
+        skip_strict_load = True
+    elif checkpoint_format == QWEN3_5_PREDICTOR_HYBRID_CHECKPOINT_FORMAT or method in QWEN3_5_PREDICTOR_HYBRID_METHODS:
         report = _install_manual_hybrid(model, state_dict, metadata, device=device)
         skip_strict_load = True
     elif checkpoint_format == QWEN3_5_KERNEL_CHECKPOINT_FORMAT:
@@ -747,6 +777,120 @@ def replace_linear_with_qwen_swh(
     )
 
 
+def replace_linear_with_qwen_predictor_hybrid(
+    model: nn.Module,
+    *,
+    policy_path: str | Path,
+    activation_dtype: torch.dtype = torch.bfloat16,
+) -> QwenManualHybridReplacementReport:
+    """Replace Qwen3.5 linears using a generic offline hybrid policy."""
+    from fake.compression.modules import select_compressible_modules
+
+    policy = load_policy_json(policy_path)
+    decode_m_threshold = int(policy.scenario.get("m_decode", policy.scenario.get("batch_size", 1)))
+    skipped: list[dict[str, str]] = []
+    backend_counts: dict[str, int] = {}
+    replaced = 0
+    wrapper = _load_wrapper()
+
+    selected = select_compressible_modules(model, "qwen3_5")
+    targets = [(info.name, info.kind) for info in selected]
+    del selected
+    for module_name, kind in targets:
+        if kind != "linear":
+            skipped.append({"name": module_name, "reason": f"unsupported_kind:{kind}"})
+            continue
+        decision = _policy_decision_for_module(policy, module_name)
+        if decision is None:
+            skipped.append({"name": module_name, "reason": "missing_policy"})
+            continue
+        if decision.selected_prefill_backend is None or decision.selected_decode_backend is None:
+            skipped.append({"name": module_name, "reason": decision.reason or "unselected_policy"})
+            continue
+
+        parent, child_name = _resolve_parent(model, module_name)
+        linear = getattr(parent, child_name)
+        if not isinstance(linear, nn.Linear):
+            skipped.append({"name": module_name, "reason": f"not_linear:{type(linear).__name__}"})
+            continue
+        if int(decision.n) != int(linear.out_features) or int(decision.k) != int(linear.in_features):
+            skipped.append(
+                {
+                    "name": module_name,
+                    "reason": (
+                        f"policy_shape_mismatch:policy=({decision.n},{decision.k}),"
+                        f"model=({linear.out_features},{linear.in_features})"
+                    ),
+                }
+            )
+            continue
+
+        prefill_backend = _policy_backend_to_manual(decision.selected_prefill_backend)
+        decode_backend = _policy_backend_to_manual(decision.selected_decode_backend)
+        try:
+            if _is_shared_nvfp4_policy(prefill_backend, decode_backend):
+                canonical = wrapper.canonical_from_linear(linear, device=linear.weight.device)
+                setattr(
+                    parent,
+                    child_name,
+                    QwenHybridDenseNVFP4Linear(
+                        canonical,
+                        decode_activation_dtype=activation_dtype,
+                        marlin_m_threshold=decode_m_threshold,
+                        prefill_backend=prefill_backend,
+                        decode_backend=decode_backend,
+                    ),
+                )
+                backend_counts[f"{prefill_backend}/{decode_backend}"] = backend_counts.get(f"{prefill_backend}/{decode_backend}", 0) + 1
+            else:
+                needed = tuple(dict.fromkeys((prefill_backend, decode_backend)))
+                modules = {
+                    backend: _build_manual_backend_module(linear, backend, activation_dtype=activation_dtype)
+                    for backend in needed
+                }
+                setattr(
+                    parent,
+                    child_name,
+                    QwenManualHybridLinear(
+                        in_features=linear.in_features,
+                        out_features=linear.out_features,
+                        prefill_backend=prefill_backend,
+                        decode_backend=decode_backend,
+                        decode_m_threshold=decode_m_threshold,
+                        modules=modules,
+                    ),
+                )
+                for backend in needed:
+                    backend_counts[backend] = backend_counts.get(backend, 0) + 1
+            replaced += 1
+        except Exception as exc:
+            skipped.append({"name": module_name, "reason": f"{type(exc).__name__}:{exc}"})
+
+    return QwenManualHybridReplacementReport(
+        hybrid_scheme="predictor_hybrid",
+        config={
+            "decode_activation_dtype": str(activation_dtype),
+            "decode_m_threshold": decode_m_threshold,
+            "policy": "offline_hybrid_policy",
+            "policy_path": str(policy_path),
+            "policy_format": policy.policy_format,
+            "include_conversion_cost": policy.include_conversion_cost,
+            "scenario": policy.scenario,
+        },
+        replaced_linear_count=replaced,
+        skipped_linear_count=len(skipped),
+        skipped=skipped,
+        backend_counts=backend_counts,
+    )
+
+
+def _policy_decision_for_module(policy: Any, module_name: str) -> Any | None:
+    for decision in policy.modules:
+        if module_name == decision.name or module_name.endswith(f".{decision.name}"):
+            return decision
+    return None
+
+
 def _install_manual_hybrid(
     model: nn.Module,
     state_dict: dict[str, torch.Tensor],
@@ -768,29 +912,52 @@ def _install_manual_hybrid(
         needed = tuple(dict.fromkeys((prefill_backend, decode_backend)))
         try:
             target_device = _module_target_device(model, name, device)
-            modules = {
-                backend: _manual_backend_from_state(
-                    state_dict,
-                    name,
-                    backend,
-                    spec,
-                    target_device,
-                    activation_dtype=activation_dtype,
-                )
-                for backend in needed
-            }
-            _set_module(
-                model,
-                name,
-                QwenManualHybridLinear(
+            if spec.get("shared_nvfp4"):
+                wrapper = _load_wrapper()
+                canonical = wrapper.NVFP4CanonicalWeight(
+                    packed_weight=state_dict[f"{name}.canonical_packed_weight"].to(target_device),
+                    logical_scale=state_dict[f"{name}.canonical_logical_scale"].to(target_device),
+                    global_scale=state_dict[f"{name}.canonical_global_scale"].to(target_device),
                     in_features=int(spec["in_features"]),
                     out_features=int(spec["out_features"]),
-                    prefill_backend=prefill_backend,
-                    decode_backend=decode_backend,
-                    decode_m_threshold=decode_m_threshold,
-                    modules=modules,
-                ),
-            )
+                    original_dtype=_dtype_from_string(spec.get("original_dtype", "torch.bfloat16")),
+                    bias=_optional_tensor_to(state_dict.get(f"{name}.bias"), target_device),
+                )
+                _set_module(
+                    model,
+                    name,
+                    QwenHybridDenseNVFP4Linear(
+                        canonical,
+                        decode_activation_dtype=activation_dtype,
+                        marlin_m_threshold=decode_m_threshold,
+                        prefill_backend=prefill_backend,
+                        decode_backend=decode_backend,
+                    ),
+                )
+            else:
+                modules = {
+                    backend: _manual_backend_from_state(
+                        state_dict,
+                        name,
+                        backend,
+                        spec,
+                        target_device,
+                        activation_dtype=activation_dtype,
+                    )
+                    for backend in needed
+                }
+                _set_module(
+                    model,
+                    name,
+                    QwenManualHybridLinear(
+                        in_features=int(spec["in_features"]),
+                        out_features=int(spec["out_features"]),
+                        prefill_backend=prefill_backend,
+                        decode_backend=decode_backend,
+                        decode_m_threshold=decode_m_threshold,
+                        modules=modules,
+                    ),
+                )
             for backend in needed:
                 backend_counts[backend] = backend_counts.get(backend, 0) + 1
             replaced += 1
@@ -943,7 +1110,17 @@ def _module_specs_from_packed_model(model: nn.Module, method: str) -> list[dict[
             specs.append(_packed_spec(name, module))
         elif method in QWEN3_5_HYBRID_NVFP4_METHODS and isinstance(module, QwenHybridDenseNVFP4Linear):
             specs.append(_packed_spec(name, module))
-        elif method in QWEN3_5_MANUAL_HYBRID_METHODS and isinstance(module, QwenManualHybridLinear):
+        elif method in QWEN3_5_PREDICTOR_HYBRID_METHODS and isinstance(module, QwenHybridDenseNVFP4Linear):
+            spec = _packed_spec(name, module)
+            spec["prefill_backend"] = module.prefill_backend
+            spec["decode_backend"] = module.decode_backend
+            spec["shared_nvfp4"] = True
+            specs.append(spec)
+        elif (
+            method in QWEN3_5_MANUAL_HYBRID_METHODS
+            or method in QWEN3_5_SWH_METHODS
+            or method in QWEN3_5_PREDICTOR_HYBRID_METHODS
+        ) and isinstance(module, QwenManualHybridLinear):
             spec = _packed_spec(name, module)
             spec["prefill_backend"] = module.prefill_backend
             spec["decode_backend"] = module.decode_backend
@@ -1034,6 +1211,7 @@ def _build_manual_backend_module(
     activation_dtype: torch.dtype,
 ) -> nn.Module:
     wrapper = _load_wrapper()
+    backend = _policy_backend_to_manual(backend)
     if backend == "bf16":
         dense = nn.Linear(linear.in_features, linear.out_features, bias=linear.bias is not None)
         dense = dense.to(device=linear.weight.device, dtype=torch.bfloat16)
@@ -1076,6 +1254,7 @@ def _manual_backend_from_state(
     activation_dtype: torch.dtype,
 ) -> nn.Module:
     wrapper = _load_wrapper()
+    backend = _policy_backend_to_manual(backend)
     prefix = f"{module_name}.backends.{backend}"
     in_features = int(spec["in_features"])
     out_features = int(spec["out_features"])
@@ -1138,6 +1317,16 @@ def _manual_backend_from_state(
         )
         return PaddedSparseNVFP4Linear(wrapper.SparseNVFP4Linear(weight), 32)
     raise ValueError(f"Unsupported manual backend: {backend}")
+
+
+def _policy_backend_to_manual(backend: str) -> str:
+    if backend == "dense_bf16":
+        return "bf16"
+    return backend
+
+
+def _is_shared_nvfp4_policy(prefill_backend: str, decode_backend: str) -> bool:
+    return {prefill_backend, decode_backend} == {"dense_nvfp4", "marlin_nvfp4"}
 
 
 def _manual_decode_m_threshold(hybrid_scheme: str) -> int:

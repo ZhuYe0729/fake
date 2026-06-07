@@ -29,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--variant", choices=QWEN3_5_VARIANTS, default=DEFAULT_QWEN3_5_VARIANT)
     parser.add_argument("--model-path", default=None)
     parser.add_argument("--output", default=None)
+    parser.add_argument("--policy-json", default=None, help="Offline hybrid policy JSON for predictor_hybrid.")
     parser.add_argument("--dtype", choices=["bf16", "fp16"], default="bf16")
     parser.add_argument("--device-map", default=None, help='Optional Transformers device_map, e.g. "auto".')
     parser.add_argument(
@@ -55,6 +56,8 @@ def _parse_max_memory(entries: list[str] | None) -> dict[int | str, str] | None:
 
 def main() -> None:
     args = parse_args()
+    if args.method == "predictor_hybrid" and args.policy_json is None:
+        raise ValueError("--policy-json is required when --method predictor_hybrid")
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required to prepare Qwen3.5 real-kernel checkpoints.")
 
@@ -87,6 +90,7 @@ def main() -> None:
         variant=args.variant,
         model_path=model_path,
         activation_dtype=dtype,
+        policy_path=args.policy_json,
     )
     metadata = {
         **result.metadata,

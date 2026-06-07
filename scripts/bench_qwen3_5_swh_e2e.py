@@ -8,6 +8,7 @@ then runs prefill + decode with KV cache.
 from __future__ import annotations
 
 import argparse
+import csv
 import gc
 import sys
 from pathlib import Path
@@ -30,6 +31,10 @@ def parse_args():
     p.add_argument("--attn", default="flash_attention_2")
     p.add_argument("--gpu", type=int, default=0)
     p.add_argument("--warmup-iters", type=int, default=3)
+    p.add_argument("--policy-json", default=None, help="Offline policy JSON for predictor_hybrid.")
+    p.add_argument("--methods", nargs="+", default=None, help="Methods to benchmark; defaults to all methods.")
+    p.add_argument("--output-csv", default=None, help="Optional CSV path for benchmark rows.")
+    p.add_argument("--scenario-name", default="custom", help="Scenario label written to --output-csv.")
     return p.parse_args()
 
 
@@ -52,13 +57,13 @@ def load_dense(variant: str, dtype: torch.dtype):
     return model
 
 
-def convert_inplace(model: nn.Module, method: str, dtype: torch.dtype):
+def convert_inplace(model: nn.Module, method: str, dtype: torch.dtype, policy_json: str | None = None):
     """Apply kernel replacement to model in-memory."""
     from fake.kernels.cutlass_nvfp4 import CutlassNVFP4Config, replace_linear_with_cutlass_nvfp4
     from fake.kernels.cutlass_sparse_bf16 import CutlassSparseBF16Config, replace_linear_with_cutlass_sparse_bf16
     from fake.kernels.cutlass_sparse_nvfp4 import CutlassSparseNVFP4Config, replace_linear_with_cutlass_sparse_nvfp4
     from fake.kernels.marlin_nvfp4 import MarlinNVFP4Config, prepare_marlin_nvfp4_packed_model
-    from fake.models.qwen3_5_kernels import replace_linear_with_qwen_swh
+    from fake.models.qwen3_5_kernels import replace_linear_with_qwen_predictor_hybrid, replace_linear_with_qwen_swh
 
     if method == "dense":
         return {"replaced_linear_count": "N/A", "skipped_linear_count": 0}
@@ -74,6 +79,14 @@ def convert_inplace(model: nn.Module, method: str, dtype: torch.dtype):
         )
     elif method == "shape_workload_hybrid":
         report = replace_linear_with_qwen_swh(model, activation_dtype=dtype)
+    elif method == "predictor_hybrid":
+        if policy_json is None:
+            raise ValueError("--policy-json is required for predictor_hybrid")
+        report = replace_linear_with_qwen_predictor_hybrid(
+            model,
+            policy_path=policy_json,
+            activation_dtype=dtype,
+        )
     else:
         raise ValueError(f"Unknown method: {method}")
 
@@ -135,9 +148,10 @@ def benchmark(model: nn.Module, batch_size: int, input_tokens: int, output_token
 
 def main():
     args = parse_args()
+    torch.cuda.set_device(args.gpu)
     dtype = torch.bfloat16 if args.dtype == "bf16" else torch.float16
 
-    methods = [
+    default_methods = [
         "dense",
         "dense_nvfp4",
         "sparse_bf16",
@@ -145,6 +159,15 @@ def main():
         "marlin_nvfp4",
         "shape_workload_hybrid",
     ]
+    if args.policy_json is not None:
+        default_methods.append("predictor_hybrid")
+    methods = args.methods or default_methods
+    valid_methods = set(default_methods) | {"predictor_hybrid"}
+    unknown_methods = sorted(set(methods) - valid_methods)
+    if unknown_methods:
+        raise ValueError(f"Unknown methods: {unknown_methods}")
+    if "predictor_hybrid" in methods and args.policy_json is None:
+        raise ValueError("--policy-json is required for predictor_hybrid")
 
     print("=" * 75)
     print("Qwen3.5 Shape-Workload Hybrid — Real E2E Inference")
@@ -168,7 +191,7 @@ def main():
             continue
 
         try:
-            report = convert_inplace(model, method, dtype)
+            report = convert_inplace(model, method, dtype, policy_json=args.policy_json)
         except Exception as e:
             print(f"  CONVERT FAILED: {e}")
             failed_methods.append((method, f"convert: {e}"))
@@ -206,13 +229,16 @@ def main():
             print(f"    {name}: {reason}")
 
     if "dense" not in results:
-        print("ERROR: dense baseline failed, cannot compare")
+        print("dense baseline was not run; skipping speedup comparison")
+        write_results_csv(args, results)
         return
 
     dense = results["dense"]
     dense_e2e = dense["prefill_ms"] + args.output_tokens * dense["decode_avg_ms"]
-    hybrid = results["shape_workload_hybrid"]
-    hybrid_e2e = hybrid["prefill_ms"] + args.output_tokens * hybrid["decode_avg_ms"]
+    hybrid = results.get("shape_workload_hybrid")
+    hybrid_e2e = None
+    if hybrid is not None:
+        hybrid_e2e = hybrid["prefill_ms"] + args.output_tokens * hybrid["decode_avg_ms"]
 
     print("\n" + "=" * 75)
     print("E2E COMPARISON  (baseline: dense_bf16 = 1.00x, higher = faster)")
@@ -227,18 +253,60 @@ def main():
         r = results[method]
         e2e = r["prefill_ms"] + args.output_tokens * r["decode_avg_ms"]
         sp = dense_e2e / e2e
-        marker = "  ← fastest" if method == "shape_workload_hybrid" else ""
+        marker = "  ← fastest" if method == "shape_workload_hybrid" and hybrid is not None else ""
         print(f"{method:<24s} {r['prefill_ms']:9.2f}  {r['decode_avg_ms']*args.output_tokens:9.2f}  "
               f"{e2e:9.2f}  {sp:7.4f}x{marker}")
         if method != "shape_workload_hybrid" and sp > best_single_sp:
             best_single_sp = sp
             best_single_name = method
 
-    hybrid_sp = dense_e2e / hybrid_e2e
     print(f"\n  dense_bf16  = 1.00x (baseline)")
-    print(f"  best single = {best_single_sp:.4f}x ({best_single_name})")
-    print(f"  hybrid      = {hybrid_sp:.4f}x  ← fastest")
-    print(f"  hybrid / {best_single_name} = {hybrid_sp / best_single_sp:.4f}x")
+    if best_single_name:
+        print(f"  best single = {best_single_sp:.4f}x ({best_single_name})")
+    if hybrid_e2e is not None:
+        hybrid_sp = dense_e2e / hybrid_e2e
+        print(f"  hybrid      = {hybrid_sp:.4f}x  ← fastest")
+        if best_single_sp:
+            print(f"  hybrid / {best_single_name} = {hybrid_sp / best_single_sp:.4f}x")
+
+    write_results_csv(args, results)
+
+
+def write_results_csv(args, results: dict[str, dict]) -> None:
+    if args.output_csv is None:
+        return
+    if not results:
+        print(f"No successful results; CSV not written: {args.output_csv}")
+        return
+    output = Path(args.output_csv)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    rows = []
+    for method, result in results.items():
+        report = result.get("report")
+        decode_x_n = result["decode_avg_ms"] * args.output_tokens
+        rows.append(
+            {
+                "model": f"Qwen3.5-{args.variant}",
+                "scenario": args.scenario_name,
+                "batch_size": args.batch_size,
+                "input_tokens": args.input_tokens,
+                "output_tokens": args.output_tokens,
+                "method": method,
+                "prefill_ms": f"{result['prefill_ms']:.4f}",
+                "decode_avg_ms": f"{result['decode_avg_ms']:.4f}",
+                "decode_x_n_ms": f"{decode_x_n:.4f}",
+                "e2e_ms": f"{result['prefill_ms'] + decode_x_n:.4f}",
+                "replaced_linear_count": getattr(report, "replaced_linear_count", ""),
+                "skipped_linear_count": getattr(report, "skipped_linear_count", ""),
+                "backend_counts": getattr(report, "backend_counts", ""),
+                "policy_json": args.policy_json or "",
+            }
+        )
+    with output.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"\nWrote CSV: {output}")
 
 
 if __name__ == "__main__":
