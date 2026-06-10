@@ -1,0 +1,27 @@
+{
+  "version": "quality_proxy_v0",
+  "formula": "quality_cost = local_rel_mse * log1p(numel) * layer_weight * module_family_weight",
+  "inputs": [
+    "local_rel_mse",
+    "numel",
+    "layer",
+    "module_family"
+  ],
+  "defaults": {
+    "layer_weight": {
+      "layers_00_07": 1.1,
+      "layers_08_15": 1.0,
+      "layers_16_23": 1.0,
+      "layers_24_31": 1.15,
+      "other": 1.0
+    },
+    "module_family_weight": {
+      "attention": 1.0,
+      "mlp": 1.0,
+      "other": 1.0
+    }
+  },
+  "calibration_status": "first_pass_policy_correlation_available",
+  "module_error_rows": 672,
+  "policy_rows": 115
+}
