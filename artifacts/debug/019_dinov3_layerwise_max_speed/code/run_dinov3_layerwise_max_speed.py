@@ -16,9 +16,14 @@ import torch
 
 
 CODE_DIR = Path(__file__).resolve().parent
-REPO_ROOT = CODE_DIR.parents[3]
+REPO_ROOT = next(
+    (parent for parent in (CODE_DIR, *CODE_DIR.parents) if (parent / "fake").is_dir() and (parent / "artifacts").is_dir()),
+    CODE_DIR.parents[3],
+)
 CUTLASS_WRAPPER_ROOT = REPO_ROOT / "fake/kernels/cutlass/cutlass_wrapper"
-for path in (CODE_DIR, REPO_ROOT, CUTLASS_WRAPPER_ROOT, CUTLASS_WRAPPER_ROOT / "modeling"):
+KERNEL_PREDICTOR_PATHS = list(REPO_ROOT.glob("fake/**/modeling/kernel_predictor.py"))
+MODELING_ROOT = KERNEL_PREDICTOR_PATHS[0].parents[1] if KERNEL_PREDICTOR_PATHS else CUTLASS_WRAPPER_ROOT
+for path in (CODE_DIR, REPO_ROOT, CUTLASS_WRAPPER_ROOT, MODELING_ROOT):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
@@ -38,7 +43,15 @@ from fake.kernels.cutlass_sparse_bf16 import CutlassSparseBF16Config  # noqa: E4
 from fake.kernels.cutlass_sparse_nvfp4 import CutlassSparseNVFP4Config  # noqa: E402
 from fake.models.dinov3 import DEFAULT_DINOV3_BACKBONE_PATH, DEFAULT_DINOV3_HEAD_PATH, model_input_dtype  # noqa: E402
 from fake.utils.csv_io import append_csv_row  # noqa: E402
-from modeling.kernel_predictor import DEFAULT_MODEL_ROOT, KernelLatencyPredictor  # noqa: E402
+try:
+    from modeling.kernel_predictor import DEFAULT_MODEL_ROOT, KernelLatencyPredictor  # noqa: E402
+except ModuleNotFoundError as exc:
+    searched = "\n".join(str(path) for path in (CUTLASS_WRAPPER_ROOT, MODELING_ROOT, *KERNEL_PREDICTOR_PATHS))
+    raise ModuleNotFoundError(
+        "Could not import modeling.kernel_predictor. "
+        "Expected to find fake/kernels/cutlass/cutlass_wrapper/modeling/kernel_predictor.py. "
+        f"Searched:\n{searched}"
+    ) from exc
 
 
 DEFAULT_OUTPUT_ROOT = REPO_ROOT / "artifacts/debug/019_dinov3_layerwise_max_speed"
