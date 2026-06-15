@@ -1,0 +1,6 @@
+batch_size,method_key,method_label,hybrid_scheme,latency_mean_ms,images_per_sec,speedup_vs_dense_fp32,speedup_vs_best_uniform,warmup,iters,timestamp,source_csv
+32,dense_fp32,Dense FP32,,2183.231555,14.657,1.000000,0.179605,5,20,2026-05-16T19:37:26,artifacts/results/dinov3_vit7b16_dense/speed.csv
+32,dense_nvfp4,Dense NVFP4,,476.796582,67.115,4.579041,0.822417,5,20,2026-05-16T19:42:55,artifacts/results/dinov3_vit7b16_cutlass_nvfp4/speed.csv
+32,sparse_bf16,Sparse BF16,,392.121809,81.607,5.567783,1.000000,5,20,2026-05-18T22:41:29,artifacts/results/dinov3_vit7b16_cutlass_sparse_bf16/speed.csv
+32,sparse_nvfp4,Sparse NVFP4,,433.215964,73.866,5.039640,0.905143,5,20,2026-05-16T19:40:48,artifacts/results/dinov3_vit7b16_cutlass_sparse_nvfp4/speed_storage.csv
+32,hybrid,Hybrid,b32,370.534180,86.362,5.892202,1.058267,5,10,2026-05-27T03:49:16,artifacts/results/dinov3_vit7b16_cutlass_hybrid/speed.csv

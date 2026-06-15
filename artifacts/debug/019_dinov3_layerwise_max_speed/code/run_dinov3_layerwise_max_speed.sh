@@ -24,18 +24,56 @@ export CUTLASS_WRAPPER_SPARSE_BF16_EXT_BUILD_DIR="${CUTLASS_WRAPPER_SPARSE_BF16_
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../../.." && pwd)"
+export REPO_ROOT
 cd "${REPO_ROOT}"
-mkdir -p out err artifacts/debug/019_dinov3_layerwise_max_speed
+mkdir -p out err 2>/dev/null || true
 
-BATCH_SIZES="${BATCH_SIZES:-1 2 4 8 16 32 64 128}"
+BATCH_SIZES="${BATCH_SIZES:-32}"
 INPUT_SIZE="${INPUT_SIZE:-3 256 256}"
 WARMUP="${WARMUP:-5}"
 ITERS="${ITERS:-20}"
-OUTPUT_ROOT="${OUTPUT_ROOT:-artifacts/debug/019_dinov3_layerwise_max_speed}"
 BACKBONE_PATH="${BACKBONE_PATH:-/data/home/scxj523/run/wja/data/models/facebook/dinov3-vit7b16-pretrain-lvd1689m}"
 HEAD_PATH="${HEAD_PATH:-/data/home/scxj523/run/wja/data/models/facebook/dinov3_vit7b16_imagenet1k_linear_head/dinov3_vit7b16_imagenet1k_linear_head-90d8ed92.pth}"
 MODEL_ROOT="${MODEL_ROOT:-fake/kernels/cutlass/cutlass_wrapper/artifacts/modeling}"
 GENERATE_ONLY="${GENERATE_ONLY:-0}"
+RUN_ACCURACY="${RUN_ACCURACY:-1}"
+ACCURACY_BATCH_SIZE="${ACCURACY_BATCH_SIZE:-1}"
+ACCURACY_NUM_WORKERS="${ACCURACY_NUM_WORKERS:-4}"
+ACCURACY_LOG_INTERVAL="${ACCURACY_LOG_INTERVAL:-50}"
+HYBRID_SCHEME="${HYBRID_SCHEME:-b32_manual}"
+DATASET_ROOT="${DATASET_ROOT:-/data/home/scxj523/run/wja/data/datasets/imagenet_val}"
+DATASET_CSV="${DATASET_CSV:-val.csv}"
+DATASET_ZIP="${DATASET_ZIP:-imagenet_val.zip}"
+
+if [[ -z "${OUTPUT_ROOT:-}" ]]; then
+  OUTPUT_ROOT="$(PYTHONPATH=. python - <<'PY'
+from pathlib import Path
+import os
+repo = Path(os.environ["REPO_ROOT"])
+candidates = [
+    repo / "artifacts/debug/019_dinov3_layerwise_max_speed",
+]
+submit_dir = os.environ.get("SLURM_SUBMIT_DIR")
+if submit_dir:
+    candidates.append(Path(submit_dir) / "artifacts/debug/019_dinov3_layerwise_max_speed")
+home = os.environ.get("HOME")
+if home:
+    candidates.append(Path(home) / "dinov3_layerwise_max_speed_019")
+for candidate in candidates:
+    try:
+        candidate.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        continue
+    if os.access(candidate, os.W_OK):
+        print(candidate)
+        break
+else:
+    raise SystemExit("No writable OUTPUT_ROOT candidate found")
+PY
+)"
+else
+  mkdir -p "${OUTPUT_ROOT}"
+fi
 
 read -r -a BATCH_ARGS <<< "${BATCH_SIZES}"
 read -r -a INPUT_SIZE_ARGS <<< "${INPUT_SIZE}"
@@ -47,6 +85,7 @@ fi
 python -c "import torch; print(torch.__version__, torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name() if torch.cuda.is_available() else 'no cuda')"
 echo "BATCH_SIZES=${BATCH_SIZES}"
 echo "INPUT_SIZE=${INPUT_SIZE} WARMUP=${WARMUP} ITERS=${ITERS} OUTPUT_ROOT=${OUTPUT_ROOT}"
+echo "RUN_ACCURACY=${RUN_ACCURACY} HYBRID_SCHEME=${HYBRID_SCHEME} ACCURACY_BATCH_SIZE=${ACCURACY_BATCH_SIZE}"
 
 PYTHONPATH=. python artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.py \
   --backbone-path "${BACKBONE_PATH}" \
@@ -58,3 +97,17 @@ PYTHONPATH=. python artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dino
   --output-root "${OUTPUT_ROOT}" \
   --model-root "${MODEL_ROOT}" \
   "${EXTRA_ARGS[@]}"
+
+if [[ "${RUN_ACCURACY}" == "1" ]]; then
+  PYTHONPATH=. python artifacts/debug/019_dinov3_layerwise_max_speed/code/eval_dinov3_hybrid_accuracy.py \
+    --backbone-path "${BACKBONE_PATH}" \
+    --head-path "${HEAD_PATH}" \
+    --dataset-root "${DATASET_ROOT}" \
+    --csv "${DATASET_CSV}" \
+    --zip "${DATASET_ZIP}" \
+    --batch-size "${ACCURACY_BATCH_SIZE}" \
+    --num-workers "${ACCURACY_NUM_WORKERS}" \
+    --log-interval "${ACCURACY_LOG_INTERVAL}" \
+    --hybrid-scheme "${HYBRID_SCHEME}" \
+    --output "${OUTPUT_ROOT}/hybrid_accuracy.csv"
+fi
