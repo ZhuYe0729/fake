@@ -1,0 +1,93 @@
+{
+  "policy_format": "quality_constrained_pareto_normal_02_v1",
+  "scenario": {
+    "name": "normal_02",
+    "batch_size": 1,
+    "input_tokens": 16384,
+    "output_tokens": 256,
+    "m_prefill": 16384,
+    "m_decode": 1
+  },
+  "summary": {
+    "point_index": 4,
+    "quality_budget": 0.010151501910133457,
+    "quality_cost": 0.0027735532657653886,
+    "latency_ms": 37.520067999999995,
+    "speedup_vs_dense_linear": 1.0133869693413136,
+    "dense_latency_ms": 38.022347999999994,
+    "speed_optimal_latency_ms": 37.017787999999996,
+    "speed_gap_to_optimal_ms": 0.502279999999999,
+    "total_prefill_ms": 6.369988,
+    "total_decode_ms": 31.15008,
+    "total_conversion_ms": 0.0,
+    "count_dense_bf16": 3,
+    "count_dense_nvfp4": 0,
+    "count_sparse_bf16": 0,
+    "count_sparse_nvfp4": 0,
+    "count_marlin_nvfp4": 1,
+    "count_dense_nvfp4_prefill_marlin_decode": 0,
+    "quality_budget_bins": 80
+  },
+  "modules": [
+    {
+      "name": "self_attn.q_proj",
+      "module_name": "model.layers.0.self_attn.q_proj",
+      "n": 4096,
+      "k": 4096,
+      "count": 1,
+      "selected_prefill_backend": "marlin_nvfp4",
+      "selected_decode_backend": "marlin_nvfp4",
+      "selected_total_ms": 11.485318,
+      "selected_prefill_ms": 2.398342,
+      "selected_decode_ms": 0.035496,
+      "selected_conversion_ms": 0.0,
+      "quality_cost": 0.0027735532657653886,
+      "reason": "quality_constrained_pareto_normal_02"
+    },
+    {
+      "name": "self_attn.k_proj",
+      "module_name": "model.layers.0.self_attn.k_proj",
+      "n": 1024,
+      "k": 4096,
+      "count": 1,
+      "selected_prefill_backend": "dense_bf16",
+      "selected_decode_backend": "dense_bf16",
+      "selected_total_ms": 7.023576,
+      "selected_prefill_ms": 0.765144,
+      "selected_decode_ms": 0.024447,
+      "selected_conversion_ms": 0.0,
+      "quality_cost": 0.0,
+      "reason": "quality_constrained_pareto_normal_02"
+    },
+    {
+      "name": "self_attn.v_proj",
+      "module_name": "model.layers.0.self_attn.v_proj",
+      "n": 1024,
+      "k": 4096,
+      "count": 1,
+      "selected_prefill_backend": "dense_bf16",
+      "selected_decode_backend": "dense_bf16",
+      "selected_total_ms": 7.023576,
+      "selected_prefill_ms": 0.765144,
+      "selected_decode_ms": 0.024447,
+      "selected_conversion_ms": 0.0,
+      "quality_cost": 0.0,
+      "reason": "quality_constrained_pareto_normal_02"
+    },
+    {
+      "name": "self_attn.o_proj",
+      "module_name": "model.layers.0.self_attn.o_proj",
+      "n": 4096,
+      "k": 4096,
+      "count": 1,
+      "selected_prefill_backend": "dense_bf16",
+      "selected_decode_backend": "dense_bf16",
+      "selected_total_ms": 11.987597999999998,
+      "selected_prefill_ms": 2.441358,
+      "selected_decode_ms": 0.03729,
+      "selected_conversion_ms": 0.0,
+      "quality_cost": 0.0,
+      "reason": "quality_constrained_pareto_normal_02"
+    }
+  ]
+}

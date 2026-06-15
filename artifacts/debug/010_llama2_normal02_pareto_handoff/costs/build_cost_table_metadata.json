@@ -1,0 +1,26 @@
+{
+  "latency_source": "003_pred_candidates_normal_02",
+  "pred_candidates_path": "/root/wja/project/my/cospaq/fake/artifacts/results/main/003_llama2_oracle_summary/pred/normal_02/llama2-7b_pred_candidates.csv",
+  "quality_formula": "local_rel_mse_log_numel_layer_family",
+  "candidate_rows": 1344,
+  "missing_latency_rows": 0,
+  "methods": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "marlin_nvfp4",
+    "dense_nvfp4_prefill_marlin_decode"
+  ],
+  "scenario": {
+    "name": "normal_02",
+    "batch_size": 1,
+    "input_tokens": 16384,
+    "output_tokens": 256,
+    "m_prefill": 16384,
+    "m_decode": 1
+  },
+  "total_ms_formula_verified": "prefill_ms + output_tokens * decode_ms + conversion_ms",
+  "total_ms_formula_ok": true,
+  "total_ms_formula_errors": 0
+}

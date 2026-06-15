@@ -1,0 +1,14 @@
+model,scenario,linear_group,n,k,count,prefill_backend,decode_backend,prefill_ms,decode_ms,conversion_ms,weighted_total_ms,timing_mode
+Qwen3.5-9B,normal_02,linear_attn.in_proj_a,32,4096,24,dense_bf16,dense_bf16,0.2048045,0.023913499999999997,0.0,151.83985199999998,warm_e2e_aligned
+Qwen3.5-9B,normal_02,linear_attn.in_proj_b,32,4096,24,dense_bf16,dense_bf16,0.2048045,0.023913499999999997,0.0,151.83985199999998,warm_e2e_aligned
+Qwen3.5-9B,normal_02,linear_attn.in_proj_qkv,8192,4096,24,dense_nvfp4,marlin_nvfp4,2.460429,0.035089499999999996,0.5021019999999999,286.690632,warm_e2e_aligned
+Qwen3.5-9B,normal_02,linear_attn.in_proj_z,4096,4096,24,marlin_nvfp4,marlin_nvfp4,2.398342,0.035496,0.0,275.647632,warm_e2e_aligned
+Qwen3.5-9B,normal_02,linear_attn.out_proj,4096,4096,24,marlin_nvfp4,marlin_nvfp4,2.398342,0.035496,0.0,275.647632,warm_e2e_aligned
+Qwen3.5-9B,normal_02,mlp.down_proj,4096,12288,32,dense_nvfp4,marlin_nvfp4,5.443133955340522,0.039340869873946756,0.6115375884911045,516.0298954099839,warm_e2e_aligned
+Qwen3.5-9B,normal_02,mlp.gate_proj,12288,4096,32,dense_nvfp4,marlin_nvfp4,3.294211277232814,0.03772280496360337,0.6123426335897382,434.0349434081605,warm_e2e_aligned
+Qwen3.5-9B,normal_02,mlp.up_proj,12288,4096,32,dense_nvfp4,marlin_nvfp4,3.294211277232814,0.03772280496360337,0.6123426335897382,434.0349434081605,warm_e2e_aligned
+Qwen3.5-9B,normal_02,self_attn.k_proj,1024,4096,8,dense_bf16,dense_bf16,0.765144,0.024447,0.0,56.188608,warm_e2e_aligned
+Qwen3.5-9B,normal_02,self_attn.o_proj,4096,4096,8,marlin_nvfp4,marlin_nvfp4,2.398342,0.035496,0.0,91.882544,warm_e2e_aligned
+Qwen3.5-9B,normal_02,self_attn.q_proj,8192,4096,8,dense_nvfp4,marlin_nvfp4,2.460429,0.035089499999999996,0.5021019999999999,95.563544,warm_e2e_aligned
+Qwen3.5-9B,normal_02,self_attn.v_proj,1024,4096,8,dense_bf16,dense_bf16,0.765144,0.024447,0.0,56.188608,warm_e2e_aligned
+Qwen3.5-9B,normal_02,__TOTAL__,,,,,,,,,2825.5886862263046,warm_e2e_aligned

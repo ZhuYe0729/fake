@@ -1,0 +1,5 @@
+# 017
+得到可用的精度建模的消融结果：artifacts/debug/017_global_coef_structural_ablation/favorable_multiplicative_pairs
+
+# 018
+得到了llama2-7B模型的prefill-only场景的帕累托最优图的结果

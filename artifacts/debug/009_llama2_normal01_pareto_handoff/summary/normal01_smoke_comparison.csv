@@ -1,0 +1,4 @@
+row_type,label,point_index,quality_cost,predicted_total_latency_ms,predicted_prefill_latency_ms,predicted_decode_latency_ms,predicted_conversion_latency_ms,e2e_mean_ms,e2e_prefill_ms,e2e_decode_avg_ms,e2e_decode_x_n_ms,e2e_total_ms,e2e_speedup_vs_dense,backend_counts,notes
+pareto,dense_bf16_baseline,0,0.0,1383.66,984.68,398.98,0.0,2437.93,1504.70,29.22,935.04,2437.93,1.00x,"bf16:224",All dense BF16. Prefill 1505ms + 32×29.2ms decode.
+pareto,middle_hybrid_sparse,3,7.35,1019.47,683.18,290.67,45.62,2577.68,1246.77,41.59,1330.88,2577.68,0.95x,"bf16:143,dense_nvfp4:81,sparse_bf16:4",SLOWER than dense. Decode penalty (+43%) outweighs prefill gain (-17%).
+pareto,fastest_sparse_hybrid,7,136.54,814.71,465.94,312.74,36.03,2331.60,1055.62,39.87,1275.84,2331.60,1.05x,"sparse_bf16:160,bf16:160,dense_nvfp4:64",Fastest in E2E. 1.05x speedup vs dense. Sparse prefill + dense decode + hybrid NVFP4.

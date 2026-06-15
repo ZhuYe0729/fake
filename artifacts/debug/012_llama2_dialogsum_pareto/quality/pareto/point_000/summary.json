@@ -1,0 +1,59 @@
+{
+  "kind": "pareto",
+  "item_id": "0",
+  "label": "point_000",
+  "num_samples": 2,
+  "nll_samples": 2,
+  "conditional_nll": 1.5538344109195403,
+  "conditional_ppl": 4.729570575300625,
+  "nll_tokens": 87,
+  "rouge1": 0.309364867442304,
+  "rouge2": 0.08660714285714285,
+  "rougeL": 0.1852946786191112,
+  "results_jsonl": "fake/artifacts/debug/012_llama2_dialogsum_pareto/quality/pareto/point_000/results.jsonl",
+  "point_index": 0,
+  "policy_json": "/root/wja/project/my/cospaq/fake/artifacts/debug/010_llama2_normal02_pareto_handoff/pareto/policies/point_000_budget_0.json",
+  "converted_policy_json": "fake/artifacts/debug/012_llama2_dialogsum_pareto/quality/converted_policies/point_000_offline_hybrid_policy.json",
+  "quality_cost": 0.0,
+  "predicted_latency_ms": 4176.543776162816,
+  "replaced_weight_modules": 0,
+  "timestamp": "2026-06-11T16:03:33.919905+00:00",
+  "dataset": {
+    "name": "knkarthick/dialogsum",
+    "split": "test",
+    "limit": 2
+  },
+  "generation": {
+    "prompt_template": "Summarize the following dialogue.\\n\\n{dialogue}\\n\\nSummary:",
+    "max_new_tokens": 128,
+    "do_sample": false,
+    "num_beams": 1
+  },
+  "compression_metadata": {
+    "replaced_weight_modules": 0,
+    "expected_weight_modules": 0,
+    "weight_source_counts": {},
+    "source_metadata": {}
+  },
+  "runtime_report": {
+    "backend": "llama_predictor_hybrid",
+    "config": {
+      "decode_activation_dtype": "torch.bfloat16",
+      "decode_m_threshold": 1,
+      "policy": "offline_hybrid_policy",
+      "policy_path": "fake/artifacts/debug/012_llama2_dialogsum_pareto/quality/converted_policies/point_000_offline_hybrid_policy.json",
+      "policy_format": "offline_hybrid_policy_v1",
+      "include_conversion_cost": true,
+      "scenario": {
+        "batch_size": 1,
+        "input_tokens": 16384,
+        "output_tokens": 256,
+        "m_prefill": 16384,
+        "m_decode": 1
+      }
+    },
+    "replaced_linear_count": 224,
+    "skipped_linear_count": 0,
+    "skipped": []
+  }
+}

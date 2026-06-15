@@ -1,0 +1,23 @@
+{
+  "scenario": {
+    "name": "normal_02",
+    "batch_size": 1,
+    "input_tokens": 16384,
+    "output_tokens": 256,
+    "m_prefill": 16384,
+    "m_decode": 1
+  },
+  "methods": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "marlin_nvfp4",
+    "dense_nvfp4_prefill_marlin_decode"
+  ],
+  "gpu": 0,
+  "dtype": "bf16",
+  "attn": "sdpa",
+  "warmup_iters": 1,
+  "iters": 3
+}
