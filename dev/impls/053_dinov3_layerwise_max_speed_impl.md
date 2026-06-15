@@ -33,3 +33,9 @@
 - 修改内容：Slurm 脚本默认 `BATCH_SIZES=32`；`out/err` 创建失败不再中断；`OUTPUT_ROOT` 自动选择可写目录，优先仓库 `artifacts/debug/019...`，其次 `SLURM_SUBMIT_DIR`，最后 `$HOME/dinov3_layerwise_max_speed_019`；新增 `eval_dinov3_hybrid_accuracy.py`，默认评估 `b32_manual` Hybrid 并输出 `hybrid_accuracy.csv`。
 - 影响文件：`artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.sh`、`artifacts/debug/019_dinov3_layerwise_max_speed/code/eval_dinov3_hybrid_accuracy.py`。
 - 后续注意：如果希望跳过精度只跑速度，提交时设置 `RUN_ACCURACY=0`；如果希望强制输出到指定位置，设置 `OUTPUT_ROOT=/path/to/writable/dir`。
+
+## 2026-06-15 - Slurm spool 路径修复
+- 开发目的：修复 Slurm 将脚本复制到 spool 后，`BASH_SOURCE[0]` 无法反推出仓库根目录，导致 Python 尝试打开 `//artifacts/...` 的问题。
+- 修改内容：Slurm 脚本优先使用 `PROJECT_ROOT`，默认值为 `/data/home/scxj523/run/wja/project/my/fake`；若该路径不可用，再尝试 `SLURM_SUBMIT_DIR` 和脚本相对路径；Python 入口改为使用 `${REPO_ROOT}/...` 绝对路径。
+- 影响文件：`artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.sh`。
+- 后续注意：如果在其他机器运行，可提交时设置 `PROJECT_ROOT=/your/project/path` 覆盖默认路径。
