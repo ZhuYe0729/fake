@@ -34,6 +34,7 @@ fi
 export REPO_ROOT
 cd "${REPO_ROOT}"
 mkdir -p out err 2>/dev/null || true
+export PYTHONPATH="${REPO_ROOT}:${REPO_ROOT}/fake/kernels/cutlass/cutlass_wrapper:${PYTHONPATH:-}"
 
 BATCH_SIZES="${BATCH_SIZES:-32}"
 INPUT_SIZE="${INPUT_SIZE:-3 256 256}"
@@ -89,12 +90,42 @@ if [[ "${GENERATE_ONLY}" == "1" ]]; then
   EXTRA_ARGS+=(--generate-only)
 fi
 
-python -c "import torch; print(torch.__version__, torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name() if torch.cuda.is_available() else 'no cuda')"
+python - <<'PY'
+from pathlib import Path
+import os
+import sys
+import torch
+import fake
+
+repo = Path(os.environ["REPO_ROOT"]).resolve()
+cutlass_header = repo / "fake/kernels/cutlass/cutlass_wrapper/cutlass/include/cutlass/cutlass.h"
+fallback_headers = list((repo / "fake/kernels/cutlass/cutlass_wrapper").glob("third_party/**/cutlass/include/cutlass/cutlass.h"))
+print("REPO_ROOT=", repo)
+print("fake.__file__=", Path(fake.__file__).resolve())
+print("cutlass_header=", cutlass_header, "exists=", cutlass_header.exists())
+if fallback_headers:
+    print("fallback_cutlass_headers=", [str(path) for path in fallback_headers[:5]])
+print("torch=", torch.__version__, "cuda=", torch.version.cuda)
+print("cuda_available=", torch.cuda.is_available())
+print("device=", torch.cuda.get_device_name() if torch.cuda.is_available() else "no cuda")
+if not str(Path(fake.__file__).resolve()).startswith(str(repo)):
+    raise SystemExit(
+        "Imported fake from a different project tree. "
+        f"fake.__file__={Path(fake.__file__).resolve()} REPO_ROOT={repo}. "
+        "Set PROJECT_ROOT to the project copy with initialized CUTLASS sources."
+    )
+if not cutlass_header.exists():
+    raise SystemExit(
+        "Missing CUTLASS header required by CUTLASS wrapper JIT: "
+        f"{cutlass_header}. Initialize/copy the cutlass submodule under this project tree, "
+        "or set PROJECT_ROOT to the project tree that contains fake/kernels/cutlass/cutlass_wrapper/cutlass/include/cutlass/cutlass.h."
+    )
+PY
 echo "BATCH_SIZES=${BATCH_SIZES}"
 echo "INPUT_SIZE=${INPUT_SIZE} WARMUP=${WARMUP} ITERS=${ITERS} OUTPUT_ROOT=${OUTPUT_ROOT}"
 echo "RUN_ACCURACY=${RUN_ACCURACY} HYBRID_SCHEME=${HYBRID_SCHEME} ACCURACY_BATCH_SIZE=${ACCURACY_BATCH_SIZE}"
 
-PYTHONPATH=. python "${REPO_ROOT}/artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.py" \
+python "${REPO_ROOT}/artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.py" \
   --backbone-path "${BACKBONE_PATH}" \
   --head-path "${HEAD_PATH}" \
   --batch-sizes "${BATCH_ARGS[@]}" \
@@ -106,7 +137,7 @@ PYTHONPATH=. python "${REPO_ROOT}/artifacts/debug/019_dinov3_layerwise_max_speed
   "${EXTRA_ARGS[@]}"
 
 if [[ "${RUN_ACCURACY}" == "1" ]]; then
-  PYTHONPATH=. python "${REPO_ROOT}/artifacts/debug/019_dinov3_layerwise_max_speed/code/eval_dinov3_hybrid_accuracy.py" \
+  python "${REPO_ROOT}/artifacts/debug/019_dinov3_layerwise_max_speed/code/eval_dinov3_hybrid_accuracy.py" \
     --backbone-path "${BACKBONE_PATH}" \
     --head-path "${HEAD_PATH}" \
     --dataset-root "${DATASET_ROOT}" \

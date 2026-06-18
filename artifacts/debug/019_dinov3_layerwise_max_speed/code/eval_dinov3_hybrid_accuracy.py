@@ -19,6 +19,15 @@ for path in (CODE_DIR, REPO_ROOT):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
+def _preflight_cutlass_tree() -> None:
+    header = REPO_ROOT / "fake/kernels/cutlass/cutlass_wrapper/cutlass/include/cutlass/cutlass.h"
+    if not header.exists():
+        raise RuntimeError(
+            "Missing CUTLASS header required by sparse NVFP4 Hybrid evaluation: "
+            f"{header}. Initialize/copy the CUTLASS submodule or set PROJECT_ROOT to the project tree "
+            "that contains fake/kernels/cutlass/cutlass_wrapper/cutlass/include/cutlass/cutlass.h."
+        )
+
 from fake.data.dinov3_transforms import build_dinov3_lvd1689m_transform  # noqa: E402
 from fake.data.imagenet_zip import DEFAULT_IMAGENET_ROOT, ImageNetZipDataset  # noqa: E402
 from fake.evaluation.accuracy import evaluate_topk  # noqa: E402
@@ -50,6 +59,7 @@ def main() -> None:
     args = parse_args()
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required. Submit this script to a GPU compute node.")
+    _preflight_cutlass_tree()
 
     device = torch.device("cuda")
     model, config, report = load_dinov3_vit7b16_cutlass_hybrid_classifier(

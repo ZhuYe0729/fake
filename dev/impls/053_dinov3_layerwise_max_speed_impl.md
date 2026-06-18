@@ -39,3 +39,9 @@
 - 修改内容：Slurm 脚本优先使用 `PROJECT_ROOT`，默认值为 `/data/home/scxj523/run/wja/project/my/fake`；若该路径不可用，再尝试 `SLURM_SUBMIT_DIR` 和脚本相对路径；Python 入口改为使用 `${REPO_ROOT}/...` 绝对路径。
 - 影响文件：`artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.sh`。
 - 后续注意：如果在其他机器运行，可提交时设置 `PROJECT_ROOT=/your/project/path` 覆盖默认路径。
+
+## 2026-06-15 - CUTLASS 头文件预检
+- 开发目的：修复/定位 Hybrid accuracy 运行时 JIT 编译 sparse NVFP4 扩展找不到 `cutlass/cutlass.h` 的问题，并避免 Python 混用 `/data/home/...` 与 `/data/run01/...` 两份项目树。
+- 修改内容：Slurm 脚本强制 `PYTHONPATH=${REPO_ROOT}:...`，启动时打印 `fake.__file__`、`REPO_ROOT`、CUTLASS header 路径和 CUDA 信息；若导入的 `fake` 不在 `REPO_ROOT` 下或 CUTLASS header 缺失，则提前报错退出。Hybrid accuracy 脚本也增加 CUTLASS header preflight。
+- 影响文件：`artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.sh`、`artifacts/debug/019_dinov3_layerwise_max_speed/code/eval_dinov3_hybrid_accuracy.py`。
+- 后续注意：真正修复缺头文件需要在运行机器上初始化/同步 `fake/kernels/cutlass/cutlass_wrapper/cutlass/include/cutlass/cutlass.h`，或提交时设置 `PROJECT_ROOT` 指向已经有完整 CUTLASS 源码的项目副本。
