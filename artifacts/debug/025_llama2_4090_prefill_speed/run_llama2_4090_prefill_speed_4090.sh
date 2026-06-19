@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=llama2_4090_prefill
+#SBATCH --job-name=llama2_4090_speed
 #SBATCH --partition=gpu_4090
 #SBATCH --gpus=1
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --output=out/llama2_4090_prefill_%j.out
-#SBATCH --error=err/llama2_4090_prefill_%j.err
+#SBATCH --output=out/llama2_4090_speed_%j.out
+#SBATCH --error=err/llama2_4090_speed_%j.err
 
 set -euo pipefail
 
@@ -28,8 +28,10 @@ mkdir -p out err
 MODEL_PATH="${MODEL_PATH:-/data/home/scxj523/run/wja/data/models/LLM-Research/llama-2-7b}"
 OUTPUT_DIR="${OUTPUT_DIR:-artifacts/debug/025_llama2_4090_prefill_speed}"
 METHODS="${METHODS:-dense_bf16 sparse_bf16 marlin_nvfp4}"
+SCENARIOS="${SCENARIOS:-prefill_only decode_heavy prefill_decode}"
 BATCH_SIZE="${BATCH_SIZE:-16}"
 INPUT_TOKENS="${INPUT_TOKENS:-1024}"
+OUTPUT_TOKENS="${OUTPUT_TOKENS:-0}"
 WARMUP_ITERS="${WARMUP_ITERS:-1}"
 MEASURE_ITERS="${MEASURE_ITERS:-5}"
 LINEAR_WARMUP_ITERS="${LINEAR_WARMUP_ITERS:-3}"
@@ -42,8 +44,10 @@ PYTHONPATH=. python artifacts/debug/025_llama2_4090_prefill_speed/scripts/bench_
   --model-path "${MODEL_PATH}" \
   --output-dir "${OUTPUT_DIR}" \
   --methods ${METHODS} \
+  --scenarios ${SCENARIOS} \
   --batch-size "${BATCH_SIZE}" \
   --input-tokens "${INPUT_TOKENS}" \
+  --output-tokens "${OUTPUT_TOKENS}" \
   --warmup-iters "${WARMUP_ITERS}" \
   --measure-iters "${MEASURE_ITERS}" \
   --linear-warmup-iters "${LINEAR_WARMUP_ITERS}" \
