@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+import fcntl
 import json
 import math
 import os
@@ -56,13 +57,17 @@ def append_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     if not rows:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
-    exists = path.exists() and path.stat().st_size > 0
     fields = list(rows[0])
-    with path.open("a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fields)
-        if not exists:
-            writer.writeheader()
-        writer.writerows(rows)
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("w", encoding="utf-8") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        exists = path.exists() and path.stat().st_size > 0
+        with path.open("a", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fields)
+            if not exists:
+                writer.writeheader()
+            writer.writerows(rows)
+        fcntl.flock(lock, fcntl.LOCK_UN)
 
 
 def read_json(path: Path) -> Any:
@@ -221,4 +226,3 @@ def local_cuda_index(requested_gpu: int) -> int:
     if os.environ.get("CUDA_VISIBLE_DEVICES"):
         return 0
     raise RuntimeError(f"requested gpu {requested_gpu}, but torch sees {count} CUDA devices")
-

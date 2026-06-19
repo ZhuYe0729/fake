@@ -115,9 +115,10 @@ def main() -> None:
             max_samples=args.calib_samples,
         )
 
-    inputs_by_module = collect_module_inputs(model, selected_infos, loader, device, max_samples=args.sample_limit)
     rows: list[dict[str, Any]] = []
     for start in range(0, len(modules), args.module_chunk_size):
+        chunk_infos = selected_infos[start : start + args.module_chunk_size]
+        inputs_by_module = collect_module_inputs(model, chunk_infos, loader, device, max_samples=args.sample_limit)
         for module_index, spec in enumerate(modules[start : start + args.module_chunk_size], start=start + 1):
             linear = get_module(model, spec.name)
             if not isinstance(linear, nn.Linear):
@@ -143,6 +144,9 @@ def main() -> None:
                 del backend, candidate_linear, out
                 gc.collect()
                 torch.cuda.empty_cache()
+        del inputs_by_module
+        gc.collect()
+        torch.cuda.empty_cache()
         write_csv(output_path, rows)
         print(f"wrote {len(rows)} rows to {output_path}")
 

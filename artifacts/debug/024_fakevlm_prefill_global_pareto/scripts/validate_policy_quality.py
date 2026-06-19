@@ -29,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-root", type=Path, default=DEBUG_ROOT)
     parser.add_argument("--policies", choices=["stratified", "validation"], default="stratified")
     parser.add_argument("--points", default="all", help="For validation mode: all or comma-separated batch:point pairs, e.g. 16:0,16:5")
+    parser.add_argument("--policy-indices", default=None, help="For stratified mode: comma-separated policy indices to run.")
     parser.add_argument("--model-path", default=DEFAULT_MODEL_PATH)
     parser.add_argument("--test-json-file", default=DEFAULT_TEST_JSON)
     parser.add_argument("--image-root", default=DEFAULT_IMAGE_ROOT)
@@ -116,6 +117,10 @@ def main() -> None:
 def select_policies(args: argparse.Namespace) -> list[dict[str, Any]]:
     if args.policies == "stratified":
         rows = read_csv(args.output_root / "stratified" / "quality_policies.csv")
+        wanted = None
+        if args.policy_indices:
+            wanted = {int(item) for item in args.policy_indices.split(",") if item.strip()}
+            rows = [row for row in rows if int(float(row["policy_index"])) in wanted]
         return [
             {
                 "key": f"policy_{int(float(row['policy_index'])):03d}",
