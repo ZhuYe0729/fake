@@ -1,0 +1,52 @@
+{
+  "policy_format": "fakevlm_prefill_global_pareto_v1",
+  "model": "FakeVLM",
+  "family": "pareto_batch_16",
+  "scenario": {
+    "mode": "prefill_only",
+    "batch_size": 16
+  },
+  "summary": {
+    "batch_size": 16,
+    "point_index": 1,
+    "quality_budget": 1.6940146920522857e-07,
+    "quality_cost": 0.0,
+    "latency_ms": 4.882716,
+    "dense_latency_ms": 4.882716,
+    "speedup_vs_dense_linear": 1.0,
+    "count_dense_bf16": 2,
+    "count_dense_nvfp4": 0,
+    "count_sparse_bf16": 0,
+    "count_sparse_nvfp4": 0
+  },
+  "modules": [
+    {
+      "name": "model.language_model.layers.0.self_attn.q_proj",
+      "module_name": "model.language_model.layers.0.self_attn.q_proj",
+      "module_index": 1,
+      "layer": 0,
+      "module_type": "q_proj",
+      "module_family": "attention",
+      "n": 4096,
+      "k": 4096,
+      "selected_method": "dense_bf16",
+      "backend": "dense_bf16",
+      "quality_cost": 0.0,
+      "latency_cost": 2.441358
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.k_proj",
+      "module_name": "model.language_model.layers.0.self_attn.k_proj",
+      "module_index": 2,
+      "layer": 0,
+      "module_type": "k_proj",
+      "module_family": "attention",
+      "n": 4096,
+      "k": 4096,
+      "selected_method": "dense_bf16",
+      "backend": "dense_bf16",
+      "quality_cost": 0.0,
+      "latency_cost": 2.441358
+    }
+  ]
+}

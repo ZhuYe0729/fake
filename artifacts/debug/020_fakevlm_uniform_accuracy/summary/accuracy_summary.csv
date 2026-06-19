@@ -1,0 +1,7 @@
+activation_quant,calibration_used,global_accuracy,method,prepare_elapsed_sec,replaced_linear_count,replacement_backend,skipped_linear_count,status,total_right,total_wrong
+none,False,0.986400,dense_bf16,0.0,0,torch_bf16,0,ok,4932,68
+none,True,0.985200,sparse_bf16,30.0,224,cutlass_sparse_bf16_cusparselt,0,ok,4926,74
+dynamic_tensor_global_scale_online,False,0.987000,dense_nvfp4,1.282,224,cutlass_nvfp4_sm120,0,ok,4935,65
+dynamic_tensor_global_scale_online,True,0.768600,sparse_nvfp4,22.291,224,cutlass_sparse_nvfp4_sm120,0,ok,3843,1157
+none_bf16_activation,False,0.987600,marlin_weight_only,1.374,224,marlin_nvfp4_sm120,0,ok,4938,62
+dynamic_online_for_prefill_bf16_for_decode,False,0.986800,dense_nvfp4_prefill_marlin_decode,0.664,224,dense_nvfp4_prefill_marlin_decode,0,ok,4934,66

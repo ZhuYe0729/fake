@@ -45,3 +45,9 @@
 - 修改内容：Slurm 脚本强制 `PYTHONPATH=${REPO_ROOT}:...`，启动时打印 `fake.__file__`、`REPO_ROOT`、CUTLASS header 路径和 CUDA 信息；若导入的 `fake` 不在 `REPO_ROOT` 下或 CUTLASS header 缺失，则提前报错退出。Hybrid accuracy 脚本也增加 CUTLASS header preflight。
 - 影响文件：`artifacts/debug/019_dinov3_layerwise_max_speed/code/run_dinov3_layerwise_max_speed.sh`、`artifacts/debug/019_dinov3_layerwise_max_speed/code/eval_dinov3_hybrid_accuracy.py`。
 - 后续注意：真正修复缺头文件需要在运行机器上初始化/同步 `fake/kernels/cutlass/cutlass_wrapper/cutlass/include/cutlass/cutlass.h`，或提交时设置 `PROJECT_ROOT` 指向已经有完整 CUTLASS 源码的项目副本。
+
+## 2026-06-18 - 完善 debug artifacts 索引
+- 开发目的：补全 `artifacts/debug/README.md`，让每个 debug 编号目录都有用途和关键内容说明。
+- 修改内容：按 001-019 编号整理各目录 README/summary/handoff 的结论，标注过渡性、负例、out-of-date 或可信结果目录。
+- 影响文件：`artifacts/debug/README.md`、`dev/impls/053_dinov3_layerwise_max_speed_impl.md`
+- 后续注意：014 的 NVFP4 质量建模结论已被 README 标注为无效路径，后续引用应优先使用 015/017/018。

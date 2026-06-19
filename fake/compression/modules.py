@@ -25,6 +25,8 @@ def select_compressible_modules(model: nn.Module, model_name: str) -> list[Modul
         return _select_qwen3_5_modules(model)
     if model_name == "llama":
         return _select_llama_modules(model)
+    if model_name in ("fakevlm", "llava"):
+        return _select_llava_language_modules(model)
     raise ValueError(f"Unsupported model for compression: {model_name}")
 
 
@@ -130,6 +132,28 @@ def _select_llama_modules(model: nn.Module) -> list[ModuleInfo]:
     return modules
 
 
+def _select_llava_language_modules(model: nn.Module) -> list[ModuleInfo]:
+    modules: list[ModuleInfo] = []
+    prefixes = _llava_language_prefixes(model)
+    for name, module in model.named_modules():
+        if not isinstance(module, nn.Linear):
+            continue
+        if name == "lm_head" or name.endswith(".lm_head"):
+            continue
+        if ".vision_tower." in name or name.startswith("vision_tower."):
+            continue
+        if ".multi_modal_projector." in name or name.startswith("multi_modal_projector."):
+            continue
+        if "" in prefixes:
+            in_language_model = bool(name)
+        else:
+            in_language_model = any(name == prefix or name.startswith(f"{prefix}.") for prefix in prefixes)
+        if not in_language_model:
+            continue
+        modules.append(ModuleInfo(name, module, "linear", module.in_features, "llava_language_linear"))
+    return modules
+
+
 def _llama_language_prefixes(model: nn.Module) -> tuple[str, ...]:
     prefixes: list[str] = []
     if hasattr(model, "model") and hasattr(model.model, "layers"):
@@ -151,6 +175,19 @@ def _qwen3_5_language_prefixes(model: nn.Module) -> tuple[str, ...]:
             prefixes.append("model")
     if hasattr(model, "layers"):
         prefixes.append("")
+    return tuple(prefixes)
+
+
+def _llava_language_prefixes(model: nn.Module) -> tuple[str, ...]:
+    prefixes: list[str] = []
+    if hasattr(model, "language_model"):
+        prefixes.append("language_model")
+    inner = getattr(model, "model", None)
+    if inner is not None:
+        if hasattr(inner, "language_model"):
+            prefixes.append("model.language_model")
+        if hasattr(inner, "layers"):
+            prefixes.append("model")
     return tuple(prefixes)
 
 
