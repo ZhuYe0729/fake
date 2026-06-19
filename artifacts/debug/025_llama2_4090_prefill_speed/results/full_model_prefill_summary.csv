@@ -1,0 +1,4 @@
+model,method,scenario,status,error_msg,batch_size,input_tokens,output_tokens,m_prefill,prefill_mean_ms,prefill_min_ms,prefill_max_ms,measure_iters,speedup_vs_dense_bf16,replaced_linear_count,skipped_linear_count,backend_counts,policy_json
+Llama-2-7B,dense_bf16,prefill_only,pass,,16,1024,0,16384,1799.128271484375,1795.5604248046875,1804.6392822265625,5,1.0,,,,
+Llama-2-7B,sparse_bf16,prefill_only,pass,,16,1024,0,16384,1182.168310546875,1181.590576171875,1182.5367431640625,5,1.5218884277587277,224,0,"{""sparse_bf16"": 224}",artifacts/debug/025_llama2_4090_prefill_speed/results/method_policies/sparse_bf16_policy.json
+Llama-2-7B,marlin_nvfp4,prefill_only,pass,,16,1024,0,16384,1799.692919921875,1791.4306640625,1804.031982421875,5,0.999686252898342,0,224,{},artifacts/debug/025_llama2_4090_prefill_speed/results/method_policies/marlin_nvfp4_policy.json
