@@ -1,0 +1,60 @@
+method,backend,linear_group,n,k,count,supported,reason,prefill_ms,decode_ms,weighted_prefill_ms,weighted_decode_total_ms,weighted_e2e_ms,used_fallback,fallback_reason,warmup_iters,measure_iters,model,scenario,batch_size,input_tokens,output_tokens,m_prefill,m_decode,fallback_linear_count
+dense_bf16,dense_bf16,mlp.down_proj,4096,11008,32,True,,8.782588958740234,0.13114240020513535,281.0428466796875,134.2898178100586,415.3326644897461,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+dense_bf16,dense_bf16,mlp.gate_proj,11008,4096,32,True,,8.457596683502198,0.13017919957637786,270.6430938720703,133.30350036621093,403.94659423828125,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+dense_bf16,dense_bf16,mlp.up_proj,11008,4096,32,True,,8.461968040466308,0.12949120104312897,270.78297729492186,132.59898986816407,403.38196716308596,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+dense_bf16,dense_bf16,self_attn.k_proj,4096,4096,32,True,,3.216313624382019,0.07281919941306114,102.9220359802246,74.56686019897461,177.48889617919923,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+dense_bf16,dense_bf16,self_attn.o_proj,4096,4096,32,True,,3.229097604751587,0.07217279970645904,103.33112335205078,73.90494689941406,177.23607025146484,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+dense_bf16,dense_bf16,self_attn.q_proj,4096,4096,32,True,,3.2181023836135862,0.07330560013651848,102.97927627563476,75.06493453979492,178.04421081542966,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+dense_bf16,dense_bf16,self_attn.v_proj,4096,4096,32,True,,3.2235584020614625,0.07159999907016754,103.1538688659668,73.31839904785156,176.47226791381837,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+dense_bf16,,__TOTAL__,,,,,,,,1234.8552223205565,697.0474487304688,1931.9026710510252,,,,,Llama-2-7B,prefill_decode,1,16384,32,16384,1,0
+sparse_bf16,sparse_bf16,mlp.down_proj,4096,11008,32,True,,4.278819227218628,0.35370240211486814,136.9222152709961,362.191259765625,499.1134750366211,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+sparse_bf16,sparse_bf16,mlp.gate_proj,11008,4096,32,True,,4.452665615081787,0.2112512022256851,142.48529968261718,216.32123107910155,358.8065307617187,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+sparse_bf16,sparse_bf16,mlp.up_proj,11008,4096,32,True,,4.45730562210083,0.1921471983194351,142.63377990722657,196.75873107910155,339.39251098632815,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+sparse_bf16,sparse_bf16,self_attn.k_proj,4096,4096,32,True,,1.6813536167144776,0.19082880169153213,53.80331573486328,195.4086929321289,249.21200866699218,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+sparse_bf16,sparse_bf16,self_attn.o_proj,4096,4096,32,True,,1.6814655900001525,0.190863998234272,53.80689888000488,195.44473419189453,249.2516330718994,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+sparse_bf16,sparse_bf16,self_attn.q_proj,4096,4096,32,True,,1.6825600028038026,0.1903807997703552,53.84192008972168,194.94993896484374,248.7918590545654,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+sparse_bf16,sparse_bf16,self_attn.v_proj,4096,4096,32,True,,1.6817727923393249,0.1910368025302887,53.816729354858396,195.62168579101564,249.43841514587405,False,,3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+sparse_bf16,,__TOTAL__,,,,,,,,637.310158920288,1556.696273803711,2194.006432723999,,,,,Llama-2-7B,prefill_decode,1,16384,32,16384,1,0
+marlin_nvfp4,dense_bf16,mlp.down_proj,4096,11008,32,True,,8.774160003662109,0.13155520260334014,280.7731201171875,134.7125274658203,415.4856475830078,True,"AcceleratorError:CUDA error: no kernel image is available for execution on the device
+Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+",3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+marlin_nvfp4,dense_bf16,mlp.gate_proj,11008,4096,32,True,,8.4662335395813,0.12958719879388808,270.9194732666016,132.6972915649414,403.616764831543,True,"AcceleratorError:CUDA error: no kernel image is available for execution on the device
+Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+",3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+marlin_nvfp4,dense_bf16,mlp.up_proj,11008,4096,32,True,,8.458476734161376,0.12982400208711625,270.67125549316404,132.93977813720704,403.6110336303711,True,"AcceleratorError:CUDA error: no kernel image is available for execution on the device
+Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+",3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+marlin_nvfp4,dense_bf16,self_attn.k_proj,4096,4096,32,True,,3.2205439805984497,0.07247360050678253,103.05740737915039,74.21296691894531,177.2703742980957,True,"AcceleratorError:CUDA error: no kernel image is available for execution on the device
+Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+",3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+marlin_nvfp4,dense_bf16,self_attn.o_proj,4096,4096,32,True,,3.217612791061401,0.07174399942159652,102.96360931396484,73.46585540771484,176.42946472167966,True,"AcceleratorError:CUDA error: no kernel image is available for execution on the device
+Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+",3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+marlin_nvfp4,dense_bf16,self_attn.q_proj,4096,4096,32,True,,3.2168384313583376,0.07176960036158561,102.9388298034668,73.49207077026367,176.43090057373047,True,"AcceleratorError:CUDA error: no kernel image is available for execution on the device
+Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+",3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+marlin_nvfp4,dense_bf16,self_attn.v_proj,4096,4096,32,True,,3.463980770111084,0.07263040095567704,110.84738464355469,74.37353057861328,185.22091522216797,True,"AcceleratorError:CUDA error: no kernel image is available for execution on the device
+Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+",3,10,Llama-2-7B,prefill_decode,1,16384,32,16384,1,
+marlin_nvfp4,,__TOTAL__,,,,,,,,1242.17108001709,695.8940208435059,1938.065100860596,,,,,Llama-2-7B,prefill_decode,1,16384,32,16384,1,224
