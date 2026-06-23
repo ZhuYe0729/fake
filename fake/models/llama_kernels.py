@@ -80,6 +80,9 @@ def replace_linear_with_llama_predictor_hybrid(
 
         prefill_backend = _policy_backend_to_manual(decision.selected_prefill_backend)
         decode_backend = _policy_backend_to_manual(decision.selected_decode_backend)
+        if prefill_backend == decode_backend == "bf16":
+            backend_counts["bf16"] = backend_counts.get("bf16", 0) + 1
+            continue
         try:
             if _is_shared_nvfp4_policy(prefill_backend, decode_backend):
                 canonical = wrapper.canonical_from_linear(linear, device=linear.weight.device)

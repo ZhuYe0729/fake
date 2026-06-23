@@ -1,5 +1,7 @@
 # FakeVLM Prefill Global Pareto
 
+> **Quality-model warning:** NLL artifacts generated with the legacy `assistant_answer_token_nll` definition are invalid because labels targeted expanded image tokens under left padding. Regenerate them with `assistant_answer_token_nll_v2_active_prefix_aligned` before fitting or interpreting the quality model. See `prediction_vs_actual/QUALITY_MODEL_INVALID_NOTICE.md`.
+
 This debug run mirrors the `018_llama2_prefill_global_pareto` workflow for FakeVLM.
 
 ## Scope
@@ -25,24 +27,29 @@ python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/collect_local_e
 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/generate_quality_policies.py \
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto
 
-# 3. Measure FakeVLM quality for those policies.
+# 3. Measure FakeVLM downstream accuracy for those policies.
 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/validate_policy_quality.py \
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto \
   --policies stratified
 
-# 4. Fit multiplicative coefficients from measured quality rows.
+# 4. Measure teacher-forcing answer loss for quality modeling.
+python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/validate_policy_loss.py \
+  --output-root artifacts/debug/024_fakevlm_prefill_global_pareto \
+  --policies stratified
+
+# 5. Fit multiplicative coefficients from measured NLL-delta rows.
 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/fit_quality_model.py \
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto
 
-# 5. Build per-module quality/latency costs from fitted quality model and 021 latency data.
+# 6. Build per-module quality/latency costs from fitted quality model and 021 latency data.
 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/build_cost_table.py \
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto
 
-# 6. Optimize one Pareto frontier per batch size.
+# 7. Optimize one Pareto frontier per batch size.
 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/optimize_pareto.py \
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto
 
-# 7. Select representative points and validate real speed/accuracy.
+# 8. Select representative points and validate real speed/accuracy.
 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/select_validation_policies.py \
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto
 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/validate_pareto_speed.py \
@@ -52,9 +59,12 @@ python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/validate_policy
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto \
   --policies validation
 
-# 8. Summarize.
+# 9. Summarize.
 MPLCONFIGDIR=/tmp/matplotlib-024 python artifacts/debug/024_fakevlm_prefill_global_pareto/scripts/summarize_validation.py \
   --output-root artifacts/debug/024_fakevlm_prefill_global_pareto
 ```
 
 Use `--max-modules`, `--sample-limit`, `--max-policies`, and `--points` for smoke runs.
+
+The Pareto quality model should be fitted from `quality/stratified_loss.csv`.
+`quality/stratified_quality.csv` remains a downstream FakeClue accuracy validation artifact, not the quality-model target.

@@ -12,20 +12,26 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-root", type=Path, default=DEBUG_ROOT)
     parser.add_argument("--batches", default="all")
     parser.add_argument("--points-per-batch", type=int, default=8)
+    parser.add_argument("--include-points", default="", help="Additional comma-separated point indices for each selected batch.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     rows = []
+    included_points = {int(item) for item in args.include_points.split(",") if item.strip()}
     for batch in parse_batches(args.batches):
         frontier = read_csv(args.output_root / "pareto" / f"batch_{batch}" / "pareto_unique_points.csv")
         selected = select_even(frontier, args.points_per_batch)
+        selected_points = {int(f(row, "point_index")) for row in selected}
+        selected.extend(row for row in frontier if int(f(row, "point_index")) in included_points - selected_points)
+        selected.sort(key=lambda row: int(f(row, "point_index")))
         for row in selected:
             point = int(f(row, "point_index"))
             budget = f(row, "quality_budget")
             path = find_policy(args.output_root, batch, point, budget)
-            rows.append({**row, "policy_json": str(path), "selection_reason": "even_quality_grid"})
+            reason = "explicit_frontier_refinement" if point in included_points else "even_quality_grid"
+            rows.append({**row, "policy_json": str(path), "selection_reason": reason})
     write_csv(args.output_root / "validation" / "selected_pareto_points.csv", rows)
     write_json(args.output_root / "validation" / "selected_pareto_points.json", rows)
     print(f"selected {len(rows)} policies")
