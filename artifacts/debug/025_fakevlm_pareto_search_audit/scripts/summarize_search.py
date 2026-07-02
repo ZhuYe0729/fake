@@ -7,7 +7,7 @@ from typing import Any
 
 import matplotlib.pyplot as plt
 
-from common_search_audit import DEBUG_ROOT, DEFAULT_BATCH_SIZE, f, read_csv, report_024_rows, write_csv, write_json
+from common_search_audit import DEBUG_ROOT, DEFAULT_BATCH_SIZE, SOURCE_024_ROOT, f, read_csv, report_024_rows, write_csv, write_json
 
 
 def parse_args() -> argparse.Namespace:
@@ -33,6 +33,7 @@ def main() -> None:
     write_report(args.output_root, rows, searched, frontier, reference, gap, bool(measured_reference))
     plot(args.output_root, searched, frontier, reference)
     plot_speedup(args.output_root, searched, frontier, reference)
+    plot_speedup_with_uniform(args.output_root, searched, frontier, reference, uniform_024_rows(args.batch_size))
     write_json(
         args.output_root / "summary" / "summary_metadata.json",
         {
@@ -219,6 +220,72 @@ def plot_speedup(output_root: Path, rows: list[dict[str, Any]], frontier: list[d
     fig.tight_layout()
     fig.savefig(output_root / "summary" / "search_speedup_vs_accuracy.png", dpi=200)
     plt.close(fig)
+
+
+def plot_speedup_with_uniform(
+    output_root: Path,
+    rows: list[dict[str, Any]],
+    frontier: list[dict[str, Any]],
+    reference: list[dict[str, Any]],
+    uniform: list[dict[str, Any]],
+) -> None:
+    complete = [row for row in rows if row.get("global_accuracy") and row.get("e2e_prefill_mean_ms")]
+    baseline_latency = measured_dense_latency(reference) or measured_dense_latency(complete)
+    if not complete or baseline_latency <= 0:
+        return
+    fig, ax = plt.subplots(figsize=(8.2, 5.2))
+    families = sorted({row.get("family", "") for row in complete})
+    for family in families:
+        subset = [row for row in complete if row.get("family", "") == family]
+        ax.scatter([speedup(row, baseline_latency) for row in subset], [f(row, "global_accuracy") for row in subset], s=24, alpha=0.65, label=family)
+    if reference:
+        ax.plot([speedup(row, baseline_latency) for row in reference], [f(row, "fakeclue_accuracy") for row in reference], color="black", marker="o", linewidth=1.8, label="ours")
+    if uniform:
+        xs = [speedup(row, baseline_latency) for row in uniform]
+        ys = [f(row, "fakeclue_accuracy") for row in uniform]
+        ax.scatter(xs, ys, marker="s", color="#7b3294", edgecolor="white", linewidth=0.6, s=54, label="uniform baselines", zorder=4)
+        for x, y, row in zip(xs, ys, uniform):
+            label = short_uniform_label(row.get("label", ""))
+            offset, va = uniform_label_offset(label)
+            ax.annotate(label, (x, y), xytext=offset, textcoords="offset points", fontsize=8, color="#5e2a7e", va=va)
+    if frontier:
+        ax.scatter([speedup(row, baseline_latency) for row in frontier], [f(row, "global_accuracy") for row in frontier], marker="x", color="red", s=64, label="searched frontier", zorder=5)
+    ax.axvline(1.0, color="gray", linewidth=1.0, linestyle="--", alpha=0.5)
+    ax.set_xlabel("Real prefill E2E speedup vs dense BF16 (x)")
+    ax.set_ylabel("FakeClue accuracy")
+    ax.grid(True, alpha=0.25)
+    ax.legend(loc="lower left", framealpha=0.85, ncol=2)
+    (output_root / "summary").mkdir(parents=True, exist_ok=True)
+    fig.tight_layout()
+    fig.savefig(output_root / "summary" / "search_speedup_vs_accuracy_with_uniform.png", dpi=220)
+    fig.savefig(output_root / "summary" / "search_speedup_vs_accuracy_with_uniform.pdf")
+    plt.close(fig)
+
+
+def uniform_024_rows(batch_size: int) -> list[dict[str, Any]]:
+    path = SOURCE_024_ROOT / "report" / "final_fakevlm_report_refined_sparse_bf16_v4.csv"
+    if not path.exists():
+        return []
+    rows = [row for row in read_csv(path) if row.get("row_type") == "uniform" and int(f(row, "batch_size")) == batch_size]
+    return sorted(rows, key=lambda row: f(row, "point_index"))
+
+
+def short_uniform_label(label: str) -> str:
+    return (
+        label.replace("Uniform ", "")
+        .replace("dense BF16", "dense BF16")
+        .replace("dense NVFP4", "dense NVFP4")
+        .replace("sparse BF16", "sparse BF16")
+        .replace("sparse NVFP4", "sparse NVFP4")
+    )
+
+
+def uniform_label_offset(label: str) -> tuple[tuple[int, int], str]:
+    if label in {"dense BF16", "dense NVFP4"}:
+        return (6, -12), "top"
+    if label == "sparse BF16":
+        return (6, 8), "bottom"
+    return (6, 6), "bottom"
 
 
 def measured_dense_latency(rows: list[dict[str, Any]]) -> float:

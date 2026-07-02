@@ -57,3 +57,9 @@
 - 修改内容：确认归档 random policy 与当前 active random policy 的 module backend map 完全一致；恢复 30 个 random 实测 CSV/JSON；调整 summary 读取逻辑，用当前 `search_policies.csv` 覆盖策略元数据并保留实测 speed/accuracy；刷新 summary 和 speedup/latency 图。
 - 影响文件：`artifacts/debug/025_fakevlm_pareto_search_audit/scripts/summarize_search.py`，`artifacts/debug/025_fakevlm_pareto_search_audit/validation/policies/random_random_*`，`artifacts/debug/025_fakevlm_pareto_search_audit/summary/`。
 - 后续注意：当前图为 60 个搜索点 + 11 个 `refined_sparse_bf16_v4` reference；random 实测结果来自归档，但 backend 分配与当前 random policies 一致，预测元数据由 current search table 覆盖。
+
+## 2026-06-23 - Add presentation plot with uniform baselines
+- 开发目的：为项目汇报/论文汇报补充包含 uniform baseline 的 speedup-accuracy 图，并将 reference 图例改为 `ours`。
+- 修改内容：在 summary 脚本中新增 `search_speedup_vs_accuracy_with_uniform.png/pdf` 输出；从 024 `final_fakevlm_report_refined_sparse_bf16_v4.csv` 读取 uniform baseline 点，用紫色方块和方法名标注；保留原审计图不覆盖。
+- 影响文件：`artifacts/debug/025_fakevlm_pareto_search_audit/scripts/summarize_search.py`，`artifacts/debug/025_fakevlm_pareto_search_audit/summary/search_speedup_vs_accuracy_with_uniform.png`，`artifacts/debug/025_fakevlm_pareto_search_audit/summary/search_speedup_vs_accuracy_with_uniform.pdf`。
+- 后续注意：uniform baseline 点来自 024 refined sparse-BF16 v4 report；search/reference 点仍来自 025 固定 20% subset 同口径实测。

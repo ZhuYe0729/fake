@@ -88,7 +88,7 @@ def _select_mirror_modules(model: nn.Module) -> list[ModuleInfo]:
     for name, module in model.named_modules():
         if not isinstance(module, nn.Linear):
             continue
-        if not name.startswith("backbone.dino.layer."):
+        if not (name.startswith("backbone.dino.layer.") or name.startswith("backbone.dino.model.layer.")):
             continue
         if not name.endswith(suffixes):
             continue

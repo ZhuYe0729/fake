@@ -29,8 +29,23 @@ def load_mirror_dense_detector(
 
     model = build_mirror(memory_path=str(memory_path), backbone_path=str(backbone_path))
     checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
-    state_dict = checkpoint.get("model", checkpoint.get("state_dict", checkpoint))
+    state_dict = _normalize_mirror_checkpoint_keys(checkpoint.get("model", checkpoint.get("state_dict", checkpoint)))
     incompatible = model.load_state_dict(state_dict, strict=False)
+    if incompatible.unexpected_keys:
+        raise RuntimeError(
+            "Unexpected MIRROR checkpoint keys after normalization: "
+            f"{incompatible.unexpected_keys[:10]} total={len(incompatible.unexpected_keys)}"
+        )
+    meaningful_missing = [
+        key
+        for key in incompatible.missing_keys
+        if not key.startswith("memory_bank.") and key not in {"norm.mean", "norm.std"}
+    ]
+    if meaningful_missing:
+        raise RuntimeError(
+            "Missing MIRROR checkpoint keys after normalization: "
+            f"{meaningful_missing[:10]} total={len(meaningful_missing)}"
+        )
     if torch_dtype is not None:
         model = model.to(dtype=torch_dtype)
     model = model.to(device)
@@ -44,6 +59,17 @@ def load_mirror_dense_detector(
         "unexpected_keys": len(incompatible.unexpected_keys),
     }
     return model, config
+
+
+def _normalize_mirror_checkpoint_keys(state_dict: dict[str, Any]) -> dict[str, Any]:
+    normalized = {}
+    for key, value in state_dict.items():
+        if key.startswith("module."):
+            key = key.removeprefix("module.")
+        if key.startswith("backbone.dino.layer."):
+            key = key.replace("backbone.dino.layer.", "backbone.dino.model.layer.", 1)
+        normalized[key] = value
+    return normalized
 
 
 def load_mirror_compressed_detector(
