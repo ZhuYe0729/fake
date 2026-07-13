@@ -1,0 +1,24 @@
+{
+  "backend": "vllm",
+  "method": "sparse_bf16",
+  "dataset": "dsum",
+  "split": "test",
+  "num_questions": 1500,
+  "model_path": "/root/wja/project/my/cospaq/fake/artifacts/exports/vllm/baselines/llama3.1-8b-instruct/checkpoints/uniform_sparse_bf16",
+  "max_new_tokens": 256,
+  "max_input_tokens": 3840,
+  "question_begin": null,
+  "question_end": null,
+  "bertscore_model": "/home/agent/wja/data/models/bert_score/roberta-large",
+  "bertscore_num_layers": 17,
+  "iwslt_filter_tokenizer": "/home/agent/wja/data/models/shakechen/Llama-2-7b-chat-hf",
+  "resume": true,
+  "resumed_records": 335,
+  "cnn_dm_note": "",
+  "pmpd_style": {
+    "batch_size": 1,
+    "decoding": "vllm greedy temperature=0",
+    "prompt_template": "FastChat Claude-style ADD_COLON_SINGLE plus PMPD role-play prefix",
+    "iwslt_direction": "French to English"
+  }
+}

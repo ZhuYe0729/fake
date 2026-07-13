@@ -1,0 +1,30 @@
+{
+  "scenario": "prefill_decode",
+  "features": "mean fused local_rel_mse; 4 layer buckets; no numel",
+  "models": {
+    "normalized_pooled": {
+      "train": {
+        "mae": 0.6081783902291464,
+        "rmse": 0.8041617375479018,
+        "spearman": 0.7357313234809592
+      },
+      "holdout": {
+        "mae": 0.7378725848643506,
+        "rmse": 0.8184269410140927,
+        "spearman": 0.7744360902255639
+      }
+    },
+    "phase_separated": {
+      "train": {
+        "mae": 8.055847202615485,
+        "rmse": 9.04825050715605,
+        "spearman": 0.7119549662588076
+      },
+      "holdout": {
+        "mae": 9.945604081287817,
+        "rmse": 9.964981941602577,
+        "spearman": 0.2631578947368421
+      }
+    }
+  }
+}

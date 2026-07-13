@@ -1,0 +1,21 @@
+{
+  "train": {
+    "count": 21,
+    "mae": 29752179.649953276,
+    "rmse": 36546609.74570723,
+    "spearman": 0.056511857478721214
+  },
+  "holdout": {
+    "count": 9,
+    "mae": 29980197.483589366,
+    "rmse": 30059682.0087467,
+    "spearman": -0.48333333333333334
+  },
+  "scenario": "prefill_decode",
+  "formula": "bias + sum(local_rel_mse*numel*exp(global+method+layer+type))",
+  "phase_weights": {
+    "prefill": 1.0,
+    "decode": 80.0
+  },
+  "source_local_errors": "artifacts/debug/007_llama2_quality_modeling/sensitivity/module_method_errors.csv"
+}

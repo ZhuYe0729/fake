@@ -1,0 +1,25 @@
+{
+  "device": "4",
+  "enforce_eager": true,
+  "gpu_memory_utilization": 0.9,
+  "iters": 5,
+  "methods": [
+    "marlin_nvfp4"
+  ],
+  "scenarios": [
+    {
+      "batch": 8,
+      "input_seq": 2048,
+      "name": "prefill_only",
+      "output_seq": 1
+    },
+    {
+      "batch": 16,
+      "input_seq": 2048,
+      "name": "prefill_decode",
+      "output_seq": 80
+    }
+  ],
+  "ttft_tpot_note": "TTFT is measured with output_seq=1. TPOT for output_seq>1 is (e2e_ms - ttft_ms)/(output_seq - 1).",
+  "warmup_iters": 1
+}

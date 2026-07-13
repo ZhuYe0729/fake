@@ -1,0 +1,61 @@
+{
+  "device": "1",
+  "enforce_eager": true,
+  "errors": [],
+  "gpu_memory_utilization": 0.9,
+  "iters": 5,
+  "methods": [
+    "dense_nvfp4"
+  ],
+  "scenarios": [
+    {
+      "batch_size": 1,
+      "input_len": 8192,
+      "name": "single_long_prefill_short_decode",
+      "output_tokens": 16
+    },
+    {
+      "batch_size": 2,
+      "input_len": 4096,
+      "name": "small_batch_long_prefill",
+      "output_tokens": 16
+    },
+    {
+      "batch_size": 4,
+      "input_len": 2048,
+      "name": "b4_medium_prefill",
+      "output_tokens": 16
+    },
+    {
+      "batch_size": 4,
+      "input_len": 4096,
+      "name": "b4_long_prefill",
+      "output_tokens": 32
+    },
+    {
+      "batch_size": 8,
+      "input_len": 2048,
+      "name": "b8_mixed_long_prefill",
+      "output_tokens": 64
+    },
+    {
+      "batch_size": 16,
+      "input_len": 1024,
+      "name": "b16_mixed",
+      "output_tokens": 64
+    },
+    {
+      "batch_size": 32,
+      "input_len": 512,
+      "name": "b32_throughput_mixed",
+      "output_tokens": 64
+    },
+    {
+      "batch_size": 64,
+      "input_len": 256,
+      "name": "b64_high_batch",
+      "output_tokens": 128
+    }
+  ],
+  "warmup_iters": 1
+}
