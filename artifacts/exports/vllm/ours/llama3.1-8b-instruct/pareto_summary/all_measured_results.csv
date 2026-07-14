@@ -1,0 +1,24 @@
+scenario,family,policy,recommendation,e2e_ms,speedup,speed_source,arc_norm_pct,cnn_rougel,dsum_rougel,iwslt_bleu,delta_nll,task_status
+"prefill-only (B=8, S=2048)",uniform,dense_bf16,baseline,1187.124164775014,1.0,fresh 5-repeat closure,55.37542662116041,,,,,
+"prefill-only (B=8, S=2048)",uniform,dense_nvfp4,,687.1499121189117,1.7276057870899957,fresh 5-repeat closure,54.09556313993175,,,,,
+"prefill-only (B=8, S=2048)",uniform,sparse_bf16,,766.0693563520908,1.5496301410983515,fresh 5-repeat closure,38.737201365187715,,,,,
+"prefill-only (B=8, S=2048)",uniform,sparse_nvfp4,,618.4626184403896,1.919476019049702,fresh 5-repeat closure,26.791808873720136,,,,,
+"prefill-only (B=8, S=2048)",uniform,marlin_nvfp4,,1156.2783624976873,1.0266767962436798,fresh 5-repeat closure,54.09556313993175,,,,,
+"prefill-only (B=8, S=2048)",ours,ours_point_3,,969.6506038308144,1.2242803336428847,fresh 5-repeat closure,54.778156996587036,,,,,
+"prefill-only (B=8, S=2048)",ours,ours_point_5,,826.1113222688437,1.4370026566331031,fresh 5-repeat closure,54.09556313993175,,,,,
+"prefill-only (B=8, S=2048)",ours,ours_point_6,recommended: near-lossless,760.7574313879013,1.5604503035997466,fresh 5-repeat closure,54.863481228668945,,,,,
+"prefill-only (B=8, S=2048)",ours,ours_point_8,recommended: dense-NVFP4-cover,663.9810800552368,1.7878885414570196,fresh 5-repeat closure,52.64505119453925,,,,,
+"prefill-only (B=8, S=2048)",ours,ours_point_9,,639.6167483180761,1.8559929331066654,fresh 5-repeat closure,49.40273037542662,,,,,
+"prefill-only (B=8, S=2048)",ours,ours_point_11,optional: high-speed trade-off,583.413228392601,2.0347913057195077,fresh 5-repeat closure,44.53924914675768,,,,,
+"prefill-only (B=8, S=2048)",ours,ours_point_13,,547.455171123147,2.1684408649196536,fresh 5-repeat closure,33.105802047781566,,,,,
+"prefill-decode (B=16, S=2048, O=80)",uniform,dense_bf16,baseline,3432.1603514254093,1.0,fresh continuous closure,,19.486646011844265,13.783951364337065,10.680476355207592,0.0,
+"prefill-decode (B=16, S=2048, O=80)",uniform,dense_nvfp4,,3242.6806557923555,1.058433042209873,fresh continuous closure,,16.344504766563386,8.203298439632116,10.312041924822964,2.881882331371311,
+"prefill-decode (B=16, S=2048, O=80)",uniform,marlin_nvfp4,,3134.7033604979515,1.1577846654409465,frozen legacy runner*,,16.10773075852231,8.804901982066879,10.402559279928408,2.881882331371311,
+"prefill-decode (B=16, S=2048, O=80)",uniform,sparse_bf16,,2926.3356253504753,1.172852601626771,fresh continuous closure,,12.833600396952004,4.048546159014087,3.2758777819110736,55.305652369260784,
+"prefill-decode (B=16, S=2048, O=80)",uniform,sparse_nvfp4,,4589.6831545978785,0.7907542545404118,frozen legacy runner*,,0.8038018032944585,0.1255593501235601,0.014353592937392537,113.59980490326882,
+"prefill-decode (B=16, S=2048, O=80)",ours,point_000,identity / dense reference,3432.1603514254093,1.0,fresh continuous closure,,19.486646011844265,13.783951364337065,10.680476355207592,0.0,same policy as dense BF16
+"prefill-decode (B=16, S=2048, O=80)",ours,point_002,recommended: high-quality,3132.484497502446,1.0956671466888015,fresh continuous closure,,20.27401203829553,13.472990224401924,10.585816011062366,0.38710308909417535,evaluated on all three tasks
+"prefill-decode (B=16, S=2048, O=80)",ours,point_004,recommended: primary balanced,2708.3872128278017,1.2672339963686075,fresh continuous closure,,18.746917451759614,13.265827406967567,10.653937451241116,0.5428128159046224,evaluated on all three tasks
+"prefill-decode (B=16, S=2048, O=80)",ours,point_006,recommended: fast task-validated,2312.2293185442686,1.4843511947103178,fresh continuous closure,,16.674979194340423,11.122224335460306,10.582138590556474,1.6379492187500067,evaluated on all three tasks
+"prefill-decode (B=16, S=2048, O=80)",ours,point_008,recommended: high-speed task-validated,2165.022535249591,1.5852769638860773,fresh continuous closure,,16.2737276042479,8.957160033437916,10.54627275905532,2.821402908563612,evaluated on all three tasks
+"prefill-decode (B=16, S=2048, O=80)",ours,point_009_max_speed,recommended: max-speed endpoint,2028.5285357385874,1.691945807494278,fresh continuous closure,,16.839715330676142,9.084611043846671,10.570334865217028,2.881882331371311,pre-existing max-speed task run

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One fresh vLLM process per PMPD batch for a single policy/data shard.
+# One fresh vLLM process per policy/data shard; batches reuse that process.
 set -euo pipefail
 
 REPO="/root/wja/project/my/cospaq/fake"

@@ -25,7 +25,9 @@ def fresh_speed(root: Path) -> dict:
     runs = root / "max_speed/prefill_decode/fresh_process_speed/runs"
     def values(pattern: str) -> list[float]: return [float(read_json(x)["generate_s"]) for x in sorted(runs.glob(pattern))]
     o1, o80 = values("measured_o1_r*.json"), values("measured_o80_r*.json")
-    if not o1 or not o80: return {}
+    if not o1 or not o80:
+        rows = rows_from_csv(root / "max_speed/prefill_decode/results/speed/summary.csv")
+        return rows[0] if rows else {}
     return {"speed_protocol": "phase_fresh_process", "repeats": len(o80), "ttft_median_ms": 1000 * statistics.median(o1), "e2e_median_ms": 1000 * statistics.median(o80), "e2e_mean_ms": 1000 * statistics.mean(o80), "tpot_ms": 1000 * (statistics.median(o80) - statistics.median(o1)) / 79}
 
 def main() -> None:
@@ -52,7 +54,8 @@ def main() -> None:
         same = [x for x in baseline_speed if x.get("scenario") == ours_row["scenario"]]
         dense = next((x for x in same if x.get("method") == "dense_bf16"), None)
         best = min(same, key=lambda x: float(x["e2e_median_ms"])) if same else None
-        comparison.append({**ours_row, "speedup_vs_dense": float(dense["e2e_median_ms"]) / ours_row["e2e_median_ms"] if dense and ours_row.get("e2e_median_ms") else None, "speedup_vs_best_uniform": float(best["e2e_median_ms"]) / ours_row["e2e_median_ms"] if best and ours_row.get("e2e_median_ms") else None, "best_uniform_method": best.get("method") if best else None})
+        ours_ms = float(ours_row["e2e_median_ms"]) if ours_row.get("e2e_median_ms") else None
+        comparison.append({**ours_row, "speedup_vs_dense": float(dense["e2e_median_ms"]) / ours_ms if dense and ours_ms else None, "speedup_vs_best_uniform": float(best["e2e_median_ms"]) / ours_ms if best and ours_ms else None, "best_uniform_method": best.get("method") if best else None})
     write_csv(summary / "comparison_summary.csv", comparison)
     (summary / "summary.md").write_text("# Llama-3.1-8B-Instruct Ours Max-Speed Summary\n\n`ours_max_speed` is unconstrained by task quality; use the quality table to assess its trade-off.\n", encoding="utf-8")
 

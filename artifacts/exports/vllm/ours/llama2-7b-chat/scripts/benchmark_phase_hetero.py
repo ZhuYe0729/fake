@@ -41,6 +41,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--single-phase", choices=("ttft", "main"))
     parser.add_argument("--single-output", type=Path)
+    parser.add_argument("--single-samples-dir", type=Path,
+                        help="Optional directory for per-sample JSON files in single mode.")
+    parser.add_argument("--reuse-llm", action="store_true",
+                        help="Run repeated phase-E2E samples in one LLM instance.")
     return parser.parse_args()
 
 
@@ -75,8 +79,15 @@ def run_single_process(args: argparse.Namespace, scenario: Scenario) -> None:
     overrides = {"max_position_embeddings": scenario.input_seq + scenario.output_seq} if scenario.input_seq + scenario.output_seq > int(getattr(config, "max_position_embeddings", 0) or 0) else None
     prompts = make_prompts(scenario, 32000, args.seed, TokensPrompt, torch)
     output_seq = 1 if args.single_phase == "ttft" else scenario.output_seq
-    summary, _rows = timed_phase_runs(args, scenario, output_seq, prompts, LLM, SamplingParams, phase_hetero_mytest, torch, overrides, args.single_phase)
+    runner = timed_reuse_phase_runs if args.reuse_llm else timed_phase_runs
+    summary, rows = runner(args, scenario, output_seq, prompts, LLM, SamplingParams, phase_hetero_mytest, torch, overrides, args.single_phase)
     args.single_output.write_text(json.dumps({"elapsed_ms": summary["mean_ms"]}) + "\n")
+    if args.single_samples_dir:
+        args.single_samples_dir.mkdir(parents=True, exist_ok=True)
+        measured = [row for row in rows if not row["warmup"]]
+        for index, row in enumerate(measured):
+            (args.single_samples_dir / f"measured_{index}.json").write_text(
+                json.dumps({"elapsed_ms": row["elapsed_ms"]}) + "\n")
 
 
 def run_isolated_phase(args: argparse.Namespace, scenario: Scenario, output_seq: int, phase: str) -> tuple[dict[str, float], list[dict[str, Any]]]:
@@ -126,6 +137,52 @@ def timed_phase_runs(args: Any, scenario: Scenario, output_seq: int, prompts: li
         is_warmup = index < args.warmup_iters
         rows.append({"method": "ours_max_speed", "scenario": scenario.name, "phase": phase, "iteration": index, "warmup": is_warmup, "batch": scenario.batch, "input_seq": scenario.input_seq, "output_seq": output_seq, "elapsed_ms": elapsed})
         if not is_warmup: values.append(elapsed)
+    return {"mean_ms": statistics.mean(values), "median_ms": statistics.median(values)}, rows
+
+
+def timed_reuse_phase_runs(args: Any, scenario: Scenario, output_seq: int,
+                          prompts: list[Any], llm_type: Any, sampling_type: Any,
+                          phase_runtime: Any, torch: Any, overrides: Any,
+                          phase: str) -> tuple[dict[str, float], list[dict[str, Any]]]:
+    """Measure consecutive requests after restoring prefill weights in-place."""
+    values, rows = [], []
+    sampling = sampling_type(max_tokens=output_seq, min_tokens=output_seq,
+                             temperature=0.0, ignore_eos=True, detokenize=False)
+    llm = llm_type(model=str(args.checkpoint), dtype="bfloat16",
+                   tensor_parallel_size=1,
+                   max_model_len=scenario.input_seq + scenario.output_seq,
+                   max_num_seqs=scenario.batch,
+                   gpu_memory_utilization=args.gpu_memory_utilization,
+                   enforce_eager=True, enable_prefix_caching=False,
+                   enable_chunked_prefill=False,
+                   max_num_batched_tokens=scenario.batch * scenario.input_seq,
+                   hf_overrides=overrides)
+    phase_runtime.enable_phase_hetero()
+    try:
+        total = args.warmup_iters + args.iters
+        for index in range(total):
+            torch.cuda.synchronize()
+            started = time.perf_counter()
+            outputs = llm.generate(prompts, sampling, use_tqdm=False)
+            torch.cuda.synchronize()
+            elapsed = (time.perf_counter() - started) * 1000.0
+            del outputs
+            warmup = index < args.warmup_iters
+            rows.append({"method": "ours_max_speed", "scenario": scenario.name,
+                         "phase": phase, "iteration": index, "warmup": warmup,
+                         "batch": scenario.batch, "input_seq": scenario.input_seq,
+                         "output_seq": output_seq, "elapsed_ms": elapsed})
+            if not warmup:
+                values.append(elapsed)
+            if index + 1 < total:
+                phase_runtime.prepare_next_prefill()
+                phase_runtime.wait_for_prefill_ready()
+    finally:
+        llm.llm_engine.engine_core.shutdown()
+        del llm
+        gc.collect()
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
     return {"mean_ms": statistics.mean(values), "median_ms": statistics.median(values)}, rows
 
 
