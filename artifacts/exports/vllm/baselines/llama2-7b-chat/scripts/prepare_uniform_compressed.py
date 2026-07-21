@@ -57,7 +57,11 @@ common.MODELS[MODEL_KEY] = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+<<<<<<< Updated upstream
     parser.add_argument("--model-path", type=Path, default=Path(os.environ.get("COSPAQ_MODEL_PATH", MODEL_PATH)))
+=======
+    parser.add_argument("--model-path", type=Path, default=MODEL_PATH)
+>>>>>>> Stashed changes
     parser.add_argument("--methods", default=",".join(METHODS))
     parser.add_argument("--output-root", type=Path, default=BASELINE_ROOT)
     parser.add_argument("--gpu", type=int, default=0)
@@ -76,6 +80,7 @@ def parse_args() -> argparse.Namespace:
         default="four_over_six_mse",
     )
     parser.add_argument("--cache-dir", default="/home/agent/wja/.cache/huggingface")
+    parser.add_argument("--dataset-arrow", type=Path, default=None)
     parser.add_argument("--skip-existing", action="store_true")
     parser.add_argument(
         "--sparse-nvfp4-prequant-only",
@@ -90,6 +95,10 @@ def main() -> None:
     args = parse_args()
     common.MODELS[MODEL_KEY]["path"] = str(args.model_path)
     methods = parse_methods(args.methods)
+    model_path = args.model_path.resolve()
+    if not (model_path / "config.json").exists():
+        raise FileNotFoundError(f"missing model config: {model_path / 'config.json'}")
+    common.MODELS[MODEL_KEY]["path"] = str(model_path)
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required for Llama compression")
     local_gpu = local_cuda_index(args.gpu)
@@ -138,7 +147,9 @@ def prepare_one_method(args: argparse.Namespace, method: str, *, device: str) ->
         seed=args.seed,
         cache_dir=args.cache_dir,
     )
-    blocks, calib_metadata = build_wikitext2_blocks(calib, model_key=MODEL_KEY)
+    blocks, calib_metadata = build_wikitext2_blocks(
+        calib, model_key=MODEL_KEY, dataset_arrow_path=args.dataset_arrow
+    )
     write_json(args.output_root / "calibration" / "wikitext2_metadata.json", calib_metadata)
     loader = build_calib_loader(blocks, batch_size=args.calib_batch_size)
     config = CompressionConfig(

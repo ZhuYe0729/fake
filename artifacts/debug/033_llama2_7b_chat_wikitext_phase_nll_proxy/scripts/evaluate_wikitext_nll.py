@@ -12,7 +12,7 @@ MODEL=Path('/home/agent/wja/data/models/shakechen/Llama-2-7b-chat-hf')
 PREPARED=Path('/home/agent/wja/project/my/cospaq/fake/artifacts/exports/vllm/baselines/llama2-7b-chat/prepared')
 STATE={'dense_nvfp4':'dense_nvfp4','sparse_bf16':'sparse_bf16','sparse_nvfp4':'sparse_nvfp4','w4a16_ours':'marlin_nvfp4'}
 def parse():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--scenario',choices=('prefill_only','prefill_decode'),required=True);p.add_argument('--policy',required=True);p.add_argument('--policy-json',type=Path);p.add_argument('--output-root',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--output-csv',type=Path,required=True);p.add_argument('--gpu',type=int,default=0);p.add_argument('--batch-size',type=int,default=1);p.add_argument('--blocks',type=int,default=100);return p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--scenario',choices=('prefill_only','prefill_decode'),required=True);p.add_argument('--policy',required=True);p.add_argument('--policy-json',type=Path);p.add_argument('--output-root',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--output-csv',type=Path,required=True);p.add_argument('--gpu',type=int,default=0);p.add_argument('--batch-size',type=int,default=1);p.add_argument('--blocks',type=int,default=100);p.add_argument('--model-path',type=Path,default=MODEL);p.add_argument('--prepared-root',type=Path,default=PREPARED);return p.parse_args()
 def parent(model,name):
  obj=model
  for part in name.split('.')[:-1]:obj=getattr(obj,part)
@@ -52,7 +52,8 @@ def write(path,row):
  with path.open('w',newline='') as f:w=csv.DictWriter(f,row.keys());w.writeheader();w.writerow(row)
 def main():
  a=parse();torch.cuda.set_device(a.gpu);device=f'cuda:{a.gpu}';blocks=torch.load(a.output_root/'samples/wikitext_2048_80.pt',map_location='cpu')[:a.blocks];policy=json.loads(a.policy_json.read_text()) if a.policy_json else json.loads((a.output_root/'policies'/a.scenario/f'{a.policy}.json').read_text())
- model=AutoModelForCausalLM.from_pretrained(MODEL,torch_dtype=torch.bfloat16,local_files_only=True,attn_implementation='eager').to(device).eval();dense_pre=nll(model,blocks,'prefill',device,a.batch_size);dense_dec=nll(model,blocks,'decode',device,a.batch_size)
+ global PREPARED;PREPARED=a.prepared_root
+ model=AutoModelForCausalLM.from_pretrained(a.model_path,torch_dtype=torch.bfloat16,local_files_only=True,attn_implementation='eager').to(device).eval();dense_pre=nll(model,blocks,'prefill',device,a.batch_size);dense_dec=nll(model,blocks,'decode',device,a.batch_size)
  saved=install(model,policy,'prefill')
  try:pre=nll(model,blocks,'prefill',device,a.batch_size)
  finally:restore(saved);torch.cuda.empty_cache()

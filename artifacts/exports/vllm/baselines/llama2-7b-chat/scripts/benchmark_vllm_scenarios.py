@@ -22,7 +22,9 @@ from vllm.inputs import TokensPrompt
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 BASELINE_ROOT = SCRIPT_DIR.parent
-MODEL_PATH = Path("/home/agent/wja/data/models/shakechen/Llama-2-7b-chat-hf")
+MODEL_PATH = Path(
+    os.environ.get("LLAMA2_7B_CHAT_MODEL_PATH", "/root/data/models/Llama-2-7b-chat-hf")
+)
 
 METHOD_PATHS = {
     "dense_bf16": MODEL_PATH,

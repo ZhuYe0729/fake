@@ -7,33 +7,38 @@ IWSLT uses the Llama-2-chat tokenizer for length filtering because the PMPD Vicu
 
 | method | scenario | e2e median ms | TTFT ms | TPOT ms | total tok/s | status |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| dense_bf16 | prefill_only | 1079.536 | 1076.834 | 0.000 | 15184.303 | OK |
-| dense_bf16 | prefill_decode | 4868.068 | 2151.099 | 34.392 | 6994.151 | OK |
-| dense_nvfp4 | prefill_only | 578.163 | 580.941 | 0.000 | 28351.847 | OK |
-| dense_nvfp4 | prefill_decode | 4293.725 | 1157.180 | 39.703 | 7929.712 | OK |
-| marlin_nvfp4 | prefill_only | 1034.992 | 1033.006 | 0.000 | 15837.807 | OK |
-| marlin_nvfp4 | prefill_decode | 3495.347 | 2062.112 | 18.142 | 9740.951 | OK |
-| sparse_bf16 | prefill_only | 660.948 | 656.414 | 0.000 | 24800.727 | OK |
-| sparse_bf16 | prefill_decode | 3424.870 | 1299.185 | 26.907 | 9941.400 | OK |
-| sparse_nvfp4 | prefill_only | 520.632 | 520.293 | 0.000 | 31484.826 | OK |
-| sparse_nvfp4 | prefill_decode | 4723.443 | 1051.052 | 46.486 | 7208.302 | OK |
+| dense_bf16 | prefill_only | 648.935 | 647.594 | 0.000 | 25259.854 | OK |
+| dense_bf16 | prefill_decode | 3140.451 | 1290.921 | 23.412 | 10841.756 | OK |
+| dense_nvfp4 | prefill_only | 573.107 | 572.440 | 0.000 | 28602.008 | OK |
+| dense_nvfp4 | prefill_decode | 3599.334 | 1162.686 | 30.844 | 9459.529 | OK |
+| sparse_bf16 | prefill_only | 482.397 | 480.714 | 0.000 | 33980.309 | OK |
+| sparse_bf16 | prefill_decode | 2719.011 | 957.652 | 22.296 | 12522.201 | OK |
+| sparse_nvfp4 | prefill_only | 515.776 | 512.589 | 0.000 | 31781.209 | OK |
+| sparse_nvfp4 | prefill_decode | 3769.722 | 1031.205 | 34.665 | 9031.965 | OK |
+| marlin_nvfp4 | prefill_only | 703.348 | 705.357 | 0.000 | 23305.663 | OK |
+| marlin_nvfp4 | prefill_decode | 2744.262 | 1404.979 | 16.953 | 12406.980 | OK |
 
 ## Quality
 
-| method | dataset | samples | empty | Rouge-L | BERTScore | SacreBLEU |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| dense_bf16 | IWSLT | 333 | 0 | 46.701 |  | 19.296 |
-| dense_bf16 | cnn_dm_1000 | 1000 | 0 | 23.671 | 87.185 |  |
-| dense_bf16 | dsum | 1500 | 0 | 21.688 | 87.176 |  |
-| dense_nvfp4 | IWSLT | 333 | 0 | 44.969 |  | 16.835 |
-| dense_nvfp4 | cnn_dm_1000 | 1000 | 0 | 24.273 | 87.204 |  |
-| dense_nvfp4 | dsum | 1500 | 0 | 20.592 | 86.691 |  |
-| marlin_nvfp4 | IWSLT | 333 | 0 | 46.772 |  | 18.200 |
-| marlin_nvfp4 | cnn_dm_1000 | 1000 | 0 | 24.579 | 87.251 |  |
-| marlin_nvfp4 | dsum | 1500 | 0 | 21.368 | 87.053 |  |
-| sparse_bf16 | IWSLT | 333 | 0 | 15.798 |  | 3.900 |
-| sparse_bf16 | cnn_dm_1000 | 1000 | 23 | 15.350 | 82.131 |  |
-| sparse_bf16 | dsum | 1500 | 156 | 13.539 | 75.392 |  |
-| sparse_nvfp4 | IWSLT | 333 | 288 | 1.133 |  | 0.238 |
-| sparse_nvfp4 | cnn_dm_1000 | 1000 | 886 | 2.047 | 9.626 |  |
-| sparse_nvfp4 | dsum | 1500 | 399 | 9.388 | 61.906 |  |
+| method | dataset | samples | empty | Rouge-L | BERTScore | SacreBLEU | ARC acc_norm (%) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| dense_bf16 | IWSLT | 343 | 0 | 46.425 |  | 19.113 |  |
+| dense_bf16 | arc_challenge | 1172 |  |  |  |  | 43.174 |
+| dense_bf16 | cnn_dm_1000 | 1000 | 0 | 23.682 | 87.410 |  |  |
+| dense_bf16 | dsum | 1500 | 0 | 21.688 | 87.669 |  |  |
+| dense_nvfp4 | IWSLT | 343 | 0 | 44.828 |  | 16.757 |  |
+| dense_nvfp4 | arc_challenge | 1172 |  |  |  |  | 42.833 |
+| dense_nvfp4 | cnn_dm_1000 | 1000 | 0 | 24.273 | 87.433 |  |  |
+| dense_nvfp4 | dsum | 1500 | 0 | 20.592 | 87.088 |  |  |
+| marlin_nvfp4 | IWSLT | 343 | 0 | 46.788 |  | 18.019 |  |
+| marlin_nvfp4 | arc_challenge | 1172 |  |  |  |  | 42.833 |
+| marlin_nvfp4 | cnn_dm_1000 | 1000 | 0 | 24.505 | 87.476 |  |  |
+| marlin_nvfp4 | dsum | 1500 | 0 | 21.241 | 87.403 |  |  |
+| sparse_bf16 | IWSLT | 343 | 0 | 27.626 |  | 7.834 |  |
+| sparse_bf16 | arc_challenge | 1172 |  |  |  |  | 34.471 |
+| sparse_bf16 | cnn_dm_1000 | 1000 | 0 | 15.368 | 84.935 |  |  |
+| sparse_bf16 | dsum | 1500 | 189 | 13.452 | 74.311 |  |  |
+| sparse_nvfp4 | IWSLT | 343 | 34 | 7.279 |  | 0.889 |  |
+| sparse_nvfp4 | arc_challenge | 1172 |  |  |  |  | 23.720 |
+| sparse_nvfp4 | cnn_dm_1000 | 1000 | 886 | 1.907 | 9.592 |  |  |
+| sparse_nvfp4 | dsum | 1500 | 885 | 5.961 | 34.898 |  |  |

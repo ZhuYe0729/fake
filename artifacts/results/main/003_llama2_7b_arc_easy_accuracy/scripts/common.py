@@ -152,16 +152,32 @@ def load_tokenizer(model_key: str):
     )
 
 
-def build_wikitext2_blocks(config: CalibConfig, *, model_key: str) -> tuple[torch.Tensor, dict[str, Any]]:
-    from datasets import load_dataset
+def build_wikitext2_blocks(
+    config: CalibConfig,
+    *,
+    model_key: str,
+    tokenizer_path: str | Path | None = None,
+    dataset_arrow_path: str | Path | None = None,
+) -> tuple[torch.Tensor, dict[str, Any]]:
+    from datasets import Dataset, load_dataset
 
-    tokenizer = load_tokenizer(model_key)
-    dataset = load_dataset(
-        config.dataset_name,
-        config.dataset_config,
-        split=config.dataset_split,
-        cache_dir=config.cache_dir,
-    )
+    if tokenizer_path is None:
+        tokenizer = load_tokenizer(model_key)
+    else:
+        from transformers import AutoTokenizer
+
+        tokenizer = AutoTokenizer.from_pretrained(
+            str(tokenizer_path), local_files_only=True, use_fast=True
+        )
+    if dataset_arrow_path is None:
+        dataset = load_dataset(
+            config.dataset_name,
+            config.dataset_config,
+            split=config.dataset_split,
+            cache_dir=config.cache_dir,
+        )
+    else:
+        dataset = Dataset.from_file(str(dataset_arrow_path))
     texts = [row["text"] for row in dataset if row.get("text") and row["text"].strip()]
     if not texts:
         raise RuntimeError("WikiText-2 returned no non-empty calibration text")
@@ -184,6 +200,8 @@ def build_wikitext2_blocks(config: CalibConfig, *, model_key: str) -> tuple[torc
         "samples": config.samples,
         "seq_len": config.seq_len,
         "seed": config.seed,
+        "tokenizer_path": str(tokenizer_path) if tokenizer_path is not None else model_spec(model_key)["path"],
+        "dataset_arrow_path": str(dataset_arrow_path) if dataset_arrow_path is not None else "",
         "token_count": int(tokenized.numel()),
         "sample_starts": starts,
         "timestamp": utc_now(),

@@ -14,7 +14,7 @@ METHODS=("dense_bf16","dense_nvfp4","sparse_bf16","sparse_nvfp4","w4a16_ours")
 TYPES=("qkv_proj","o_proj","gate_up_proj","down_proj")
 
 def args():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output-root',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--policies',type=int,default=72);p.add_argument('--blocks',type=int,default=300);p.add_argument('--seed',type=int,default=86);return p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output-root',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--model-path',type=Path,required=True);p.add_argument('--cache-dir',type=Path,required=True);p.add_argument('--dataset-arrow',type=Path,required=True);p.add_argument('--policies',type=int,default=72);p.add_argument('--blocks',type=int,default=300);p.add_argument('--seed',type=int,default=86);return p.parse_args()
 def names():
  out=[]
  for layer in range(32):
@@ -41,7 +41,7 @@ def methods_for(index, scenario):
 def main():
  a=args();
  if a.policies!=72: raise ValueError('the controlled design is defined for 72 policies')
- cfg=QualityConfig(calib_samples=a.blocks,seq_len=2129,seed=a.seed,output_root=a.output_root)
+ cfg=QualityConfig(calib_samples=a.blocks,seq_len=2129,seed=a.seed,output_root=a.output_root,tokenizer_path=a.model_path,dataset_arrow_path=a.dataset_arrow,cache_dir=str(a.cache_dir))
  blocks,meta=load_calibration_blocks(cfg)
  if tuple(blocks.shape)!=(a.blocks,2129): raise RuntimeError(f'unexpected WikiText blocks {tuple(blocks.shape)}')
  (a.output_root/'samples').mkdir(parents=True,exist_ok=True);torch.save(blocks.cpu(),a.output_root/'samples/wikitext_2048_80.pt');(a.output_root/'samples/metadata.json').write_text(json.dumps({'blocks':a.blocks,'prefill_tokens':2048,'decode_tokens':80,'source':meta},indent=2,default=str)+'\n')

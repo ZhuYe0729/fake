@@ -13,13 +13,13 @@ PREPARED=Path('/home/agent/wja/project/my/cospaq/fake/artifacts/exports/vllm/bas
 ARTIFACT={'dense_nvfp4':'dense_nvfp4','sparse_bf16':'sparse_bf16','sparse_nvfp4':'sparse_nvfp4','w4a16_ours':'marlin_nvfp4'}
 LINEARS={'q_proj','k_proj','v_proj','o_proj','gate_proj','up_proj','down_proj'}
 def parse():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--phase',choices=('prefill','decode'),required=True);p.add_argument('--method',choices=tuple(ARTIFACT),required=True);p.add_argument('--gpu',type=int,required=True);p.add_argument('--blocks',type=int,default=16);p.add_argument('--max-modules',type=int,default=0);p.add_argument('--module-chunk-size',type=int,default=16);p.add_argument('--output-root',type=Path,default=Path(__file__).resolve().parents[1]);return p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--phase',choices=('prefill','decode'),required=True);p.add_argument('--method',choices=tuple(ARTIFACT),required=True);p.add_argument('--gpu',type=int,required=True);p.add_argument('--blocks',type=int,default=16);p.add_argument('--max-modules',type=int,default=0);p.add_argument('--module-chunk-size',type=int,default=16);p.add_argument('--output-root',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--model-path',type=Path,default=MODEL);p.add_argument('--prepared-root',type=Path,default=PREPARED);return p.parse_args()
 def bucket(name):return int(name.split('.')[2])//8
 def fused_type(name):
  t=name.rsplit('.',1)[-1]
  return 'qkv_proj' if t in {'q_proj','k_proj','v_proj'} else 'gate_up_proj' if t in {'gate_proj','up_proj'} else t
 def main():
- a=parse();torch.cuda.set_device(a.gpu);device=f'cuda:{a.gpu}';blocks=torch.load(a.output_root/'samples/wikitext_2048_80.pt',map_location='cpu')[:a.blocks];state=torch.load(PREPARED/ARTIFACT[a.method]/'model.pt',map_location='cpu')['state_dict'];model=AutoModelForCausalLM.from_pretrained(MODEL,torch_dtype=torch.bfloat16,local_files_only=True,attn_implementation='eager').to(device).eval();acc={}
+ a=parse();torch.cuda.set_device(a.gpu);device=f'cuda:{a.gpu}';blocks=torch.load(a.output_root/'samples/wikitext_2048_80.pt',map_location='cpu')[:a.blocks];state=torch.load(a.prepared_root/ARTIFACT[a.method]/'model.pt',map_location='cpu')['state_dict'];model=AutoModelForCausalLM.from_pretrained(a.model_path,torch_dtype=torch.bfloat16,local_files_only=True,attn_implementation='eager').to(device).eval();acc={}
  def hook(name):
   def fn(module,inputs,output):
    if not inputs or not isinstance(output,torch.Tensor):return

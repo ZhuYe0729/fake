@@ -44,15 +44,22 @@ def read_quality(root: Path) -> list[dict[str, Any]]:
         payload = json.loads(metrics_path.read_text())
         method = metrics_path.parents[1].name
         dataset = metrics_path.parent.name
+        samples = payload.get("num_samples")
+        if isinstance(samples, dict):
+            samples = samples.get("effective", samples.get("original"))
         rows.append(
             {
                 "method": method,
                 "dataset": dataset,
-                "num_samples": payload.get("num_samples"),
-                "empty_predictions": payload.get("empty_predictions"),
+                "num_samples": samples,
+                # ARC is answer-likelihood evaluation, not generation; an
+                # empty-output count is therefore not applicable.
+                "empty_predictions": payload.get("empty_predictions", ""),
                 "rougeL_percent": payload.get("rougeL_percent"),
                 "bert_score_percent": payload.get("bert_score_percent"),
                 "sacre_bleu": payload.get("sacre_bleu"),
+                "acc": payload.get("acc"),
+                "acc_norm": payload.get("acc_norm"),
                 "tokens_per_second": payload.get("tokens_per_second"),
                 "metrics_path": str(metrics_path),
             }
@@ -105,11 +112,11 @@ def write_markdown(path: Path, speed_rows: list[dict[str, Any]], quality_rows: l
 
     lines.extend(["", "## Quality", ""])
     if quality_rows:
-        lines.append("| method | dataset | samples | empty | Rouge-L | BERTScore | SacreBLEU |")
-        lines.append("| --- | --- | ---: | ---: | ---: | ---: | ---: |")
+        lines.append("| method | dataset | samples | empty | Rouge-L | BERTScore | SacreBLEU | ARC acc_norm (%) |")
+        lines.append("| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |")
         for row in quality_rows:
             lines.append(
-                "| {method} | {dataset} | {samples} | {empty} | {rouge} | {bert} | {bleu} |".format(
+                "| {method} | {dataset} | {samples} | {empty} | {rouge} | {bert} | {bleu} | {arc} |".format(
                     method=row.get("method", ""),
                     dataset=row.get("dataset", ""),
                     samples=row.get("num_samples", ""),
@@ -117,6 +124,7 @@ def write_markdown(path: Path, speed_rows: list[dict[str, Any]], quality_rows: l
                     rouge=fmt(row.get("rougeL_percent")),
                     bert=fmt(row.get("bert_score_percent")),
                     bleu=fmt(row.get("sacre_bleu")),
+                    arc=fmt_percent(row.get("acc_norm")),
                 )
             )
     else:
@@ -129,6 +137,15 @@ def fmt(value: Any) -> str:
         return ""
     try:
         return f"{float(value):.3f}"
+    except (TypeError, ValueError):
+        return str(value)
+
+
+def fmt_percent(value: Any) -> str:
+    if value in (None, ""):
+        return ""
+    try:
+        return f"{100.0 * float(value):.3f}"
     except (TypeError, ValueError):
         return str(value)
 

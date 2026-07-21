@@ -25,7 +25,9 @@ if str(PMPD_ROOT) not in sys.path:
 import pmpd_eval  # noqa: E402
 
 
-MODEL_PATH = Path("/home/agent/wja/data/models/shakechen/Llama-2-7b-chat-hf")
+MODEL_PATH = Path(
+    os.environ.get("LLAMA2_7B_CHAT_MODEL_PATH", "/home/agent/wja/data/models/shakechen/Llama-2-7b-chat-hf")
+)
 DEFAULT_DATA_ROOT = Path("/home/agent/wja/data/datasets/flaxquant")
 DEFAULT_BERTSCORE_MODEL = Path("/home/agent/wja/data/models/bert_score/roberta-large")
 DEFAULT_IWSLT_FILTER_TOKENIZER = Path("/home/agent/wja/data/models/lmsys/vicuna-7b-v1.5")

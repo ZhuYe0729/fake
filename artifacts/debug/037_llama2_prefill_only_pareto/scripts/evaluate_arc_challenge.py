@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import gc
 import json
+import os
 from pathlib import Path
 
 import torch
@@ -21,14 +22,58 @@ STATE = {
 }
 
 
+def install_local_arc_dataset() -> callable:
+    """Route lm-eval's ARC request to the immutable local Arrow files.
+
+    The cache was produced by an older datasets release, whose ``List``
+    metadata now conflicts with datasets 3.x cache reconstruction.  Reading
+    the Arrow splits directly preserves the exact ARC data and avoids cache
+    locks and schema reconstruction altogether.
+    """
+    import datasets
+    from datasets import Dataset, DatasetDict
+    from datasets.features import features
+
+    if "List" not in features._FEATURE_TYPES:
+        features._FEATURE_TYPES["List"] = features.Sequence
+    cache = Path(os.environ.get("HF_DATASETS_CACHE", "/root/data/huggingface/datasets"))
+    candidates = sorted(cache.glob("allenai___ai2_arc/ARC-Challenge/*/*"))
+    source = next((path for path in candidates if (path / "ai2_arc-test.arrow").is_file()), None)
+    if source is None:
+        raise FileNotFoundError(f"ARC-Challenge Arrow cache not found below {cache}")
+    local = DatasetDict({
+        split: Dataset.from_file(str(source / f"ai2_arc-{split}.arrow"))
+        for split in ("train", "validation", "test")
+    })
+    original = datasets.load_dataset
+
+    def load_dataset(*args, **kwargs):
+        path = kwargs.get("path", args[0] if args else None)
+        name = kwargs.get("name", args[1] if len(args) > 1 else None)
+        if path == "allenai/ai2_arc" and name == "ARC-Challenge":
+            return local
+        return original(*args, **kwargs)
+
+    datasets.load_dataset = load_dataset
+
+    def restore() -> None:
+        datasets.load_dataset = original
+
+    return restore
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--policy-json', type=Path, required=True)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--policy-json', type=Path)
+    group.add_argument('--uniform-method', choices=('dense_bf16', 'dense_nvfp4', 'sparse_bf16', 'sparse_nvfp4', 'marlin_nvfp4'))
     parser.add_argument('--label', required=True)
     parser.add_argument('--output-json', type=Path, required=True)
     parser.add_argument('--gpu', type=int, required=True)
     parser.add_argument('--batch-size', default='4')
     parser.add_argument('--limit', type=int, default=None)
+    parser.add_argument('--model-path', type=Path, default=MODEL)
+    parser.add_argument('--prepared-root', type=Path, default=PREPARED)
     return parser.parse_args()
 
 
@@ -48,7 +93,9 @@ def sources(fused: str) -> list[str]:
     return [fused]
 
 
-def install_prefill_policy(model: nn.Module, policy: dict) -> list[tuple[nn.Module, str, nn.Module]]:
+def install_prefill_policy(
+    model: nn.Module, policy: dict, prepared_root: Path
+) -> list[tuple[nn.Module, str, nn.Module]]:
     saved = []
     for method, artifact in STATE.items():
         selected = [
@@ -57,7 +104,7 @@ def install_prefill_policy(model: nn.Module, policy: dict) -> list[tuple[nn.Modu
         ]
         if not selected:
             continue
-        state = torch.load(PREPARED / artifact / 'model.pt', map_location='cpu')['state_dict']
+        state = torch.load(prepared_root / artifact / 'model.pt', map_location='cpu')['state_dict']
         for fused in selected:
             for name in sources(fused):
                 obj, child = parent(model, name)
@@ -80,18 +127,34 @@ def main() -> None:
     args = parse_args()
     torch.cuda.set_device(args.gpu)
     device = f'cuda:{args.gpu}'
-    policy = json.loads(args.policy_json.read_text())
+    if args.policy_json:
+        policy = json.loads(args.policy_json.read_text())
+        policy_source = str(args.policy_json)
+    else:
+        method = 'w4a16_ours' if args.uniform_method == 'marlin_nvfp4' else args.uniform_method
+        names = [
+            f'model.layers.{layer}.{part}.{kind}'
+            for layer in range(32)
+            for part, kind in (
+                ('self_attn', 'qkv_proj'), ('self_attn', 'o_proj'),
+                ('mlp', 'gate_up_proj'), ('mlp', 'down_proj'),
+            )
+        ]
+        policy = {'method_map': {name: {'prefill_method': method} for name in names}}
+        policy_source = f'uniform:{args.uniform_method}'
     model = AutoModelForCausalLM.from_pretrained(
-        MODEL, torch_dtype=torch.bfloat16, local_files_only=True,
+        args.model_path, torch_dtype=torch.bfloat16, local_files_only=True,
         attn_implementation='eager',
     ).to(device).eval()
-    saved = install_prefill_policy(model, policy)
+    saved = install_prefill_policy(model, policy, args.prepared_root)
+    restore_dataset_loader = None
     try:
+        restore_dataset_loader = install_local_arc_dataset()
         import lm_eval
         from lm_eval.models.huggingface import HFLM
 
         lm = HFLM(
-            pretrained=model, tokenizer=str(MODEL), backend='causal', dtype=torch.bfloat16,
+            pretrained=model, tokenizer=str(args.model_path), backend='causal', dtype=torch.bfloat16,
             device=device, batch_size=args.batch_size, trust_remote_code=False,
         )
         result = lm_eval.simple_evaluate(
@@ -103,9 +166,10 @@ def main() -> None:
         metrics = result['results']['arc_challenge']
         row = {
             'label': args.label,
-            'policy_json': str(args.policy_json),
+            'policy_json': policy_source,
             'limit': args.limit,
             'batch_size': args.batch_size,
+            'num_samples': result.get('n-samples', {}).get('arc_challenge'),
             'acc': metrics.get('acc,none'),
             'acc_norm': metrics.get('acc_norm,none'),
             'raw_metrics': metrics,
@@ -114,6 +178,8 @@ def main() -> None:
         args.output_json.write_text(json.dumps(row, indent=2, sort_keys=True) + '\n')
         print(json.dumps(row, sort_keys=True), flush=True)
     finally:
+        if restore_dataset_loader is not None:
+            restore_dataset_loader()
         for obj, child, old in saved:
             setattr(obj, child, old)
         del model

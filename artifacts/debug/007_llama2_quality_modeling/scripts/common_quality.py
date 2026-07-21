@@ -51,6 +51,8 @@ class QualityConfig:
     cache_dir: str = "/home/agent/wja/.cache/huggingface"
     source_root: Path = SOURCE_003_ROOT
     output_root: Path = DEBUG_ROOT
+    tokenizer_path: Path | None = None
+    dataset_arrow_path: Path | None = None
 
 
 def local_cuda_index(requested_gpu: int) -> int:
@@ -97,7 +99,12 @@ def load_calibration_blocks(config: QualityConfig) -> tuple[torch.Tensor, dict[s
         seed=config.seed,
         cache_dir=config.cache_dir,
     )
-    blocks, metadata = build_wikitext2_blocks(calib, model_key=MODEL_KEY)
+    blocks, metadata = build_wikitext2_blocks(
+        calib,
+        model_key=MODEL_KEY,
+        tokenizer_path=config.tokenizer_path,
+        dataset_arrow_path=config.dataset_arrow_path,
+    )
     return blocks, metadata
 
 

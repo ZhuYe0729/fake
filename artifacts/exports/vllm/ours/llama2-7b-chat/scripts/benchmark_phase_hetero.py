@@ -68,8 +68,13 @@ def main() -> None:
         run_single_process(args, scenario)
         return
     output_dir = args.output_dir; output_dir.mkdir(parents=True, exist_ok=True)
-    ttft, ttft_rows = run_isolated_phase(args, scenario, 1, "ttft")
-    main_stats, main_rows = run_isolated_phase(args, scenario, scenario.output_seq, "main")
+    if args.reuse_llm:
+        ttft, ttft_rows, main_stats, main_rows = run_reuse_benchmark(args, scenario)
+        execution = "one_vllm_process_one_llm"
+    else:
+        ttft, ttft_rows = run_isolated_phase(args, scenario, 1, "ttft")
+        main_stats, main_rows = run_isolated_phase(args, scenario, scenario.output_seq, "main")
+        execution = "one_vllm_process_per_sample"
     tpot = 0.0 if scenario.output_seq <= 1 else (main_stats["median_ms"] - ttft["median_ms"]) / (scenario.output_seq - 1)
     summary = {"method": "ours_max_speed", "scenario": scenario.name, "checkpoint": str(args.checkpoint), "status": "OK",
                "batch": scenario.batch, "input_seq": scenario.input_seq, "output_seq": scenario.output_seq,
@@ -77,7 +82,11 @@ def main() -> None:
                "tpot_ms": tpot, "total_tokens_per_s": scenario.batch * (scenario.input_seq + scenario.output_seq) * 1000.0 / main_stats["mean_ms"]}
     write_csv(output_dir / "iterations.csv", ttft_rows + main_rows)
     write_csv(output_dir / "summary.csv", [summary])
+<<<<<<< Updated upstream
     (output_dir / "metadata.json").write_text(json.dumps({"scenario": scenario.__dict__, "warmup_iters": args.warmup_iters, "iters": args.iters, "phase_runtime": "phase_hetero_mytest", "execution": "one_vllm_process_per_sample", "kv_cache_memory_bytes": args.kv_cache_memory_bytes, "kv_cache_dtype": args.kv_cache_dtype}, indent=2) + "\n")
+=======
+    (output_dir / "metadata.json").write_text(json.dumps({"scenario": scenario.__dict__, "warmup_iters": args.warmup_iters, "iters": args.iters, "phase_runtime": "phase_hetero_mytest", "execution": execution}, indent=2) + "\n")
+>>>>>>> Stashed changes
 
 
 def run_single_process(args: argparse.Namespace, scenario: Scenario) -> None:
@@ -126,6 +135,68 @@ def run_isolated_phase(args: argparse.Namespace, scenario: Scenario, output_seq:
         rows.append({"method": "ours_max_speed", "scenario": scenario.name, "phase": phase, "iteration": index, "warmup": warmup, "batch": scenario.batch, "input_seq": scenario.input_seq, "output_seq": output_seq, "elapsed_ms": elapsed})
         if not warmup:
             values.append(elapsed)
+    return {"mean_ms": statistics.mean(values), "median_ms": statistics.median(values)}, rows
+
+
+def run_reuse_benchmark(args: argparse.Namespace, scenario: Scenario) -> tuple[dict[str, float], list[dict[str, Any]], dict[str, float], list[dict[str, Any]]]:
+    """Match the baseline lifecycle: one LLM for TTFT and main measurements."""
+    configure_runtime(args)
+    from transformers import AutoConfig
+    from vllm import LLM, SamplingParams
+    from vllm.inputs import TokensPrompt
+    from vllm.model_executor.layers.quantization import phase_hetero_mytest
+    import torch
+
+    config = AutoConfig.from_pretrained(args.checkpoint, local_files_only=True)
+    overrides = {"max_position_embeddings": scenario.input_seq + scenario.output_seq} if scenario.input_seq + scenario.output_seq > int(getattr(config, "max_position_embeddings", 0) or 0) else None
+    prompts = make_prompts(scenario, 32000, args.seed, TokensPrompt, torch)
+    llm = LLM(model=str(args.checkpoint), dtype="bfloat16", tensor_parallel_size=1,
+              max_model_len=scenario.input_seq + scenario.output_seq,
+              max_num_seqs=scenario.batch,
+              gpu_memory_utilization=args.gpu_memory_utilization,
+              enforce_eager=True, enable_prefix_caching=False,
+              enable_chunked_prefill=False,
+              max_num_batched_tokens=scenario.batch * scenario.input_seq,
+              hf_overrides=overrides)
+    phase_hetero_mytest.enable_phase_hetero()
+    try:
+        ttft, ttft_rows = timed_reuse_phase_with_llm(args, scenario, 1, "ttft", prompts, llm, SamplingParams, phase_hetero_mytest, torch)
+        phase_hetero_mytest.prepare_next_prefill()
+        phase_hetero_mytest.wait_for_prefill_ready()
+        main_stats, main_rows = timed_reuse_phase_with_llm(args, scenario, scenario.output_seq, "main", prompts, llm, SamplingParams, phase_hetero_mytest, torch)
+        return ttft, ttft_rows, main_stats, main_rows
+    finally:
+        llm.llm_engine.engine_core.shutdown()
+        del llm
+        gc.collect()
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+
+
+def timed_reuse_phase_with_llm(args: Any, scenario: Scenario, output_seq: int, phase: str, prompts: list[Any], llm: Any, sampling_type: Any, phase_runtime: Any, torch: Any) -> tuple[dict[str, float], list[dict[str, Any]]]:
+    values, rows = [], []
+    sampling = sampling_type(max_tokens=output_seq, min_tokens=output_seq,
+                             temperature=0.0, ignore_eos=True, detokenize=False)
+    total = args.warmup_iters + args.iters
+    for index in range(total):
+        torch.cuda.synchronize()
+        started = time.perf_counter()
+        outputs = llm.generate(prompts, sampling, use_tqdm=False)
+        torch.cuda.synchronize()
+        elapsed = (time.perf_counter() - started) * 1000.0
+        generated = sum(len(output.outputs[0].token_ids) for output in outputs)
+        del outputs
+        warmup = index < args.warmup_iters
+        rows.append({"method": "ours_max_speed", "scenario": scenario.name,
+                     "phase": phase, "iteration": index, "warmup": warmup,
+                     "batch": scenario.batch, "input_seq": scenario.input_seq,
+                     "output_seq": output_seq, "elapsed_ms": elapsed,
+                     "generated_tokens": generated})
+        if not warmup:
+            values.append(elapsed)
+        if index + 1 < total:
+            phase_runtime.prepare_next_prefill()
+            phase_runtime.wait_for_prefill_ready()
     return {"mean_ms": statistics.mean(values), "median_ms": statistics.median(values)}, rows
 
 
