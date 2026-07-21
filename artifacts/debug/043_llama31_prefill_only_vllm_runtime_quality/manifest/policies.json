@@ -1,0 +1,139 @@
+{
+  "model_path": "/home/agent/wja/data/models/LLM-Research/Meta-Llama-3.1-8B-Instruct",
+  "policies": [
+    {
+      "label": "dense_bf16",
+      "family": "uniform",
+      "recommended_use": "baseline",
+      "e2e_ms": 1187.12,
+      "speedup": 1.0,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "uniform",
+      "checkpoint": "/home/agent/wja/data/models/LLM-Research/Meta-Llama-3.1-8B-Instruct"
+    },
+    {
+      "label": "dense_nvfp4",
+      "family": "uniform",
+      "recommended_use": "",
+      "e2e_ms": 687.15,
+      "speedup": 1.728,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "uniform",
+      "checkpoint": "artifacts/exports/vllm/baselines/llama3.1-8b-instruct/checkpoints/uniform_dense_nvfp4"
+    },
+    {
+      "label": "sparse_bf16",
+      "family": "uniform",
+      "recommended_use": "",
+      "e2e_ms": 766.07,
+      "speedup": 1.55,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "uniform",
+      "checkpoint": "artifacts/exports/vllm/baselines/llama3.1-8b-instruct/checkpoints/uniform_sparse_bf16"
+    },
+    {
+      "label": "sparse_nvfp4",
+      "family": "uniform",
+      "recommended_use": "",
+      "e2e_ms": 618.46,
+      "speedup": 1.919,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "uniform",
+      "checkpoint": "artifacts/exports/vllm/baselines/llama3.1-8b-instruct/checkpoints/uniform_sparse_nvfp4"
+    },
+    {
+      "label": "marlin_nvfp4",
+      "family": "uniform",
+      "recommended_use": "",
+      "e2e_ms": 1156.28,
+      "speedup": 1.027,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "uniform",
+      "checkpoint": "artifacts/exports/vllm/baselines/llama3.1-8b-instruct/checkpoints/uniform_marlin_nvfp4"
+    },
+    {
+      "label": "ours_point_3",
+      "family": "ours",
+      "recommended_use": "",
+      "e2e_ms": 969.65,
+      "speedup": 1.224,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "ours",
+      "checkpoint": "artifacts/debug/043_llama31_prefill_only_vllm_runtime_quality/checkpoints/ours_point_3",
+      "policy_json": "artifacts/debug/038_llama31_8b_instruct_prefill_only_pareto/pareto/policies/point_003.json",
+      "policy_sha256": "1330ae395ab80ff4332a6ea370ed9a1e858827227233de30764db0f7c6986d48"
+    },
+    {
+      "label": "ours_point_5",
+      "family": "ours",
+      "recommended_use": "",
+      "e2e_ms": 826.11,
+      "speedup": 1.437,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "ours",
+      "checkpoint": "artifacts/debug/043_llama31_prefill_only_vllm_runtime_quality/checkpoints/ours_point_5",
+      "policy_json": "artifacts/debug/038_llama31_8b_instruct_prefill_only_pareto/pareto/policies/point_005.json",
+      "policy_sha256": "aac3980b173fe823107de810fbf0d67459043c2fde2fdded0964309c211f0099"
+    },
+    {
+      "label": "ours_point_6",
+      "family": "ours",
+      "recommended_use": "recommended: near-lossless",
+      "e2e_ms": 760.76,
+      "speedup": 1.56,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "ours",
+      "checkpoint": "artifacts/debug/043_llama31_prefill_only_vllm_runtime_quality/checkpoints/ours_point_6",
+      "policy_json": "artifacts/debug/038_llama31_8b_instruct_prefill_only_pareto/pareto/policies/point_006.json",
+      "policy_sha256": "c965f0bf48f6ca99f3602277d931a7c0457abb8a6fe3488cc773991250c1728d"
+    },
+    {
+      "label": "ours_point_8",
+      "family": "ours",
+      "recommended_use": "recommended: dense-NVFP4-cover",
+      "e2e_ms": 663.98,
+      "speedup": 1.788,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "ours",
+      "checkpoint": "artifacts/debug/043_llama31_prefill_only_vllm_runtime_quality/checkpoints/ours_point_8",
+      "policy_json": "artifacts/debug/038_llama31_8b_instruct_prefill_only_pareto/pareto/policies/point_008.json",
+      "policy_sha256": "27fe7568a597d577b7deee410f78d9e101fdfc7d9e1c808ae99629d59b8b7ea6"
+    },
+    {
+      "label": "ours_point_9",
+      "family": "ours",
+      "recommended_use": "",
+      "e2e_ms": 639.62,
+      "speedup": 1.856,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "ours",
+      "checkpoint": "artifacts/debug/043_llama31_prefill_only_vllm_runtime_quality/checkpoints/ours_point_9",
+      "policy_json": "artifacts/debug/038_llama31_8b_instruct_prefill_only_pareto/pareto/policies/point_009.json",
+      "policy_sha256": "29c8d31ee5a9dab82e2b211479cf9bc579f55965df231d0185a7ebaa97004717"
+    },
+    {
+      "label": "ours_point_11",
+      "family": "ours",
+      "recommended_use": "optional: high-speed trade-off",
+      "e2e_ms": 583.41,
+      "speedup": 2.035,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "ours",
+      "checkpoint": "artifacts/debug/043_llama31_prefill_only_vllm_runtime_quality/checkpoints/ours_point_11",
+      "policy_json": "artifacts/debug/038_llama31_8b_instruct_prefill_only_pareto/pareto/policies/point_011.json",
+      "policy_sha256": "fc586833cee5f42ef432cb23031629a2267e31ed978738e9e8196d79814cfacc"
+    },
+    {
+      "label": "ours_point_13",
+      "family": "ours",
+      "recommended_use": "",
+      "e2e_ms": 547.46,
+      "speedup": 2.168,
+      "speed_source": "fresh 5-repeat closure",
+      "kind": "ours",
+      "checkpoint": "artifacts/debug/043_llama31_prefill_only_vllm_runtime_quality/checkpoints/ours_point_13",
+      "policy_json": "artifacts/debug/038_llama31_8b_instruct_prefill_only_pareto/pareto/policies/point_013.json",
+      "policy_sha256": "3880ea3b4946c7c3dd43b633f387e9fd67d0a05adae350630308389a89d2e74a"
+    }
+  ]
+}

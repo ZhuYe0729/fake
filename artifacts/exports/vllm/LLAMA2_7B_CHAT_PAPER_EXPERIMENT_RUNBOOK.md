@@ -1,5 +1,7 @@
 # Llama2-7B-Chat：vLLM 论文实验端到端运行手册
 
+> **已废弃：不要用本文档复现最终论文实验。** 本文档保留早期 B=16/O=80、native-uniform 等历史口径。当前 B=8/S=2048/O=64、uniform/ours 统一 phase runtime、canonical SparseGPT 的可执行流程见 `artifacts/debug/063_llama2_two_scenario_reproduction_workflow/README.md`。
+
 本文档面向把本仓库迁移到另一台机器、由另一位实验执行者完成一个模型全套论文实验的情形。它以 Llama2-7B-Chat 为具体示例；新模型应复制流程和检查点，而不是复制 Llama2 的数值、策略 JSON 或 kernel profile。
 
 目标产物不是某个“预测最优策略”，而是两类场景下由**实测速度和实测质量**组成的论文表、Pareto 图和可追溯的原始文件：

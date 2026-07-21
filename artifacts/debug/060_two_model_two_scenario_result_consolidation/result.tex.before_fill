@@ -1,0 +1,60 @@
+\begin{table*}[t]
+\centering
+\caption{Quality and speedup on the RTX~5090 and RTX~PRO~6000. TTFT, TPOT, and E2E speedups are measured relative to BF16 on the same GPU.}
+\label{tab:overall_results}
+\setlength{\tabcolsep}{2.2pt}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{llccccc|cccccc}
+\toprule
+& &
+\multicolumn{5}{c}{\textbf{Prefill-only}} &
+\multicolumn{6}{c}{\textbf{Prefill--Decode}} \\
+Model & Method &
+ARC-C & ARC-E & Wino. & MMLU & TTFT &
+CNN/DM & DialogSum & IWSLT'17 & TTFT & TPOT & E2E \\
+& &
+Acc. & Acc. & Acc. & Acc. & $\times$ &
+R-L & R-L & BLEU & $\times$ & $\times$ & $\times$ \\
+\midrule
+\multicolumn{13}{l}{\textbf{(a) NVIDIA RTX 5090}} \\
+\midrule
+\multirow{7}{*}{\shortstack[c]{Llama-2\\7B-Chat}}
+& BF16                & 43.34 & 69.39 & 68.27 & 46.57 & 1.00 & -- & -- & -- & 1.00 & 1.00 & 1.00 \\
+& Dense NVFP4         & 43.17 & 67.63 & 67.80 & 44.94 & 1.71   & -- & -- & -- & --   & --   & -- \\
+& Sparse BF16         & 35.07 & 58.21 & 63.85 & 28.24 & 1.53   & -- & -- & -- & --   & --   & -- \\
+& Sparse NVFP4        & 23.38 & 35.65 & 50.43 & 23.09 & 1.86   & -- & -- & -- & --   & --   & -- \\
+& W4A16 Marlin        & 43.09 & 67.30 & 68.82 & 45.66 & 1.02   & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_1$) & 27.73 & 48.06 & 56.75 & 23.51 & 2.08  & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_2$) & 43.69 & 67.63 & 67.32 & 44.35 & 1.74   & -- & -- & -- & --   & --   & -- \\
+\midrule
+\multirow{7}{*}{\shortstack[c]{Llama-3.1\\8B-Instruct}}
+& BF16                & -- & -- & -- & -- & 1.00 & -- & -- & -- & 1.00 & 1.00 & 1.00 \\
+& Dense NVFP4         & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Sparse BF16         & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Sparse NVFP4        & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& W4A16 Marlin        & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_1$) & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_2$) & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+\midrule
+\multicolumn{13}{l}{\textbf{(b) NVIDIA RTX PRO 6000}} \\
+\midrule
+\multirow{7}{*}{\shortstack[c]{Llama-2\\7B-Chat}}
+& BF16                & -- & -- & -- & -- & 1.00 & -- & -- & -- & 1.00 & 1.00 & 1.00 \\
+& Dense NVFP4         & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Sparse BF16         & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Sparse NVFP4        & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& W4A16 Marlin        & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_1$) & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_2$) & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+\midrule
+\multirow{7}{*}{\shortstack[c]{Llama-3.1\\8B-Instruct}}
+& BF16                & -- & -- & -- & -- & 1.00 & -- & -- & -- & 1.00 & 1.00 & 1.00 \\
+& Dense NVFP4         & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Sparse BF16         & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Sparse NVFP4        & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& W4A16 Marlin        & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_1$) & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+& Ours ($\epsilon_2$) & -- & -- & -- & -- & --   & -- & -- & -- & --   & --   & -- \\
+\bottomrule
+\end{tabular}}
+\end{table*}

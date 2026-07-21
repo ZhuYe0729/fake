@@ -32,12 +32,22 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--scenario", choices=tuple(SCENARIOS), required=True)
+    parser.add_argument("--batch", type=int,
+                        help="Override the scenario batch size for a diagnostic run.")
+    parser.add_argument("--input-seq", type=int,
+                        help="Override the scenario input length for a diagnostic run.")
+    parser.add_argument("--output-seq", type=int,
+                        help="Override the scenario output length for a diagnostic run.")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--vllm-root", type=Path, default=VLLM_ROOT)
     parser.add_argument("--cutlass-wrapper-path", type=Path, default=CUTLASS_ROOT)
     parser.add_argument("--warmup-iters", type=int, default=1)
     parser.add_argument("--iters", type=int, default=5)
     parser.add_argument("--gpu-memory-utilization", type=float, default=0.9)
+    parser.add_argument("--kv-cache-memory-bytes", type=int,
+                        help="Fix V1 KV-cache capacity across policies.")
+    parser.add_argument("--kv-cache-dtype",
+                        help="Optional vLLM KV-cache dtype, e.g. fp8.")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--single-phase", choices=("ttft", "main"))
     parser.add_argument("--single-output", type=Path)
@@ -50,7 +60,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    scenario = Scenario(args.scenario, *SCENARIOS[args.scenario])
+    default_batch, default_input, default_output = SCENARIOS[args.scenario]
+    scenario = Scenario(args.scenario, args.batch or default_batch,
+                        args.input_seq or default_input,
+                        args.output_seq or default_output)
     if args.single_phase:
         run_single_process(args, scenario)
         return
@@ -64,7 +77,7 @@ def main() -> None:
                "tpot_ms": tpot, "total_tokens_per_s": scenario.batch * (scenario.input_seq + scenario.output_seq) * 1000.0 / main_stats["mean_ms"]}
     write_csv(output_dir / "iterations.csv", ttft_rows + main_rows)
     write_csv(output_dir / "summary.csv", [summary])
-    (output_dir / "metadata.json").write_text(json.dumps({"scenario": scenario.__dict__, "warmup_iters": args.warmup_iters, "iters": args.iters, "phase_runtime": "phase_hetero_mytest", "execution": "one_vllm_process_per_sample"}, indent=2) + "\n")
+    (output_dir / "metadata.json").write_text(json.dumps({"scenario": scenario.__dict__, "warmup_iters": args.warmup_iters, "iters": args.iters, "phase_runtime": "phase_hetero_mytest", "execution": "one_vllm_process_per_sample", "kv_cache_memory_bytes": args.kv_cache_memory_bytes, "kv_cache_dtype": args.kv_cache_dtype}, indent=2) + "\n")
 
 
 def run_single_process(args: argparse.Namespace, scenario: Scenario) -> None:
@@ -81,6 +94,7 @@ def run_single_process(args: argparse.Namespace, scenario: Scenario) -> None:
     output_seq = 1 if args.single_phase == "ttft" else scenario.output_seq
     runner = timed_reuse_phase_runs if args.reuse_llm else timed_phase_runs
     summary, rows = runner(args, scenario, output_seq, prompts, LLM, SamplingParams, phase_hetero_mytest, torch, overrides, args.single_phase)
+    args.single_output.parent.mkdir(parents=True, exist_ok=True)
     args.single_output.write_text(json.dumps({"elapsed_ms": summary["mean_ms"]}) + "\n")
     if args.single_samples_dir:
         args.single_samples_dir.mkdir(parents=True, exist_ok=True)
@@ -95,6 +109,16 @@ def run_isolated_phase(args: argparse.Namespace, scenario: Scenario, output_seq:
     for index in range(args.warmup_iters + args.iters):
         result = args.output_dir / f".{phase}_{index}.json"
         command = [sys.executable, str(Path(__file__).resolve()), "--checkpoint", str(args.checkpoint), "--scenario", scenario.name, "--output-dir", str(args.output_dir), "--vllm-root", str(args.vllm_root), "--cutlass-wrapper-path", str(args.cutlass_wrapper_path), "--gpu-memory-utilization", str(args.gpu_memory_utilization), "--seed", str(args.seed), "--warmup-iters", "0", "--iters", "1", "--single-phase", phase, "--single-output", str(result)]
+        command.extend(["--batch", str(scenario.batch), "--input-seq",
+                        str(scenario.input_seq), "--output-seq",
+                        str(scenario.output_seq)])
+        if args.reuse_llm:
+            command.append("--reuse-llm")
+        if args.kv_cache_memory_bytes is not None:
+            command.extend(["--kv-cache-memory-bytes",
+                            str(args.kv_cache_memory_bytes)])
+        if args.kv_cache_dtype is not None:
+            command.extend(["--kv-cache-dtype", args.kv_cache_dtype])
         subprocess.run(command, check=True)
         elapsed = float(json.loads(result.read_text())["elapsed_ms"])
         result.unlink()
@@ -124,7 +148,12 @@ def timed_phase_runs(args: Any, scenario: Scenario, output_seq: int, prompts: li
     values, rows = [], []
     sampling = sampling_type(max_tokens=output_seq, min_tokens=output_seq, temperature=0.0, ignore_eos=True, detokenize=False)
     for index in range(args.warmup_iters + args.iters):
-        llm = llm_type(model=str(args.checkpoint), dtype="bfloat16", tensor_parallel_size=1, max_model_len=scenario.input_seq + scenario.output_seq, max_num_seqs=scenario.batch, gpu_memory_utilization=args.gpu_memory_utilization, enforce_eager=True, enable_prefix_caching=False, enable_chunked_prefill=False, max_num_batched_tokens=scenario.batch * scenario.input_seq, hf_overrides=overrides)
+        llm_kwargs = dict(model=str(args.checkpoint), dtype="bfloat16", tensor_parallel_size=1, max_model_len=scenario.input_seq + scenario.output_seq, max_num_seqs=scenario.batch, gpu_memory_utilization=args.gpu_memory_utilization, enforce_eager=True, enable_prefix_caching=False, enable_chunked_prefill=False, max_num_batched_tokens=scenario.batch * scenario.input_seq, hf_overrides=overrides)
+        if args.kv_cache_memory_bytes is not None:
+            llm_kwargs["kv_cache_memory_bytes"] = args.kv_cache_memory_bytes
+        if args.kv_cache_dtype is not None:
+            llm_kwargs["kv_cache_dtype"] = args.kv_cache_dtype
+        llm = llm_type(**llm_kwargs)
         phase_runtime.enable_phase_hetero()
         torch.cuda.synchronize(); started = time.perf_counter(); outputs = llm.generate(prompts, sampling, use_tqdm=False); torch.cuda.synchronize()
         elapsed = (time.perf_counter() - started) * 1000.0
@@ -148,7 +177,7 @@ def timed_reuse_phase_runs(args: Any, scenario: Scenario, output_seq: int,
     values, rows = [], []
     sampling = sampling_type(max_tokens=output_seq, min_tokens=output_seq,
                              temperature=0.0, ignore_eos=True, detokenize=False)
-    llm = llm_type(model=str(args.checkpoint), dtype="bfloat16",
+    llm_kwargs = dict(model=str(args.checkpoint), dtype="bfloat16",
                    tensor_parallel_size=1,
                    max_model_len=scenario.input_seq + scenario.output_seq,
                    max_num_seqs=scenario.batch,
@@ -157,6 +186,11 @@ def timed_reuse_phase_runs(args: Any, scenario: Scenario, output_seq: int,
                    enable_chunked_prefill=False,
                    max_num_batched_tokens=scenario.batch * scenario.input_seq,
                    hf_overrides=overrides)
+    if args.kv_cache_memory_bytes is not None:
+        llm_kwargs["kv_cache_memory_bytes"] = args.kv_cache_memory_bytes
+    if args.kv_cache_dtype is not None:
+        llm_kwargs["kv_cache_dtype"] = args.kv_cache_dtype
+    llm = llm_type(**llm_kwargs)
     phase_runtime.enable_phase_hetero()
     try:
         total = args.warmup_iters + args.iters

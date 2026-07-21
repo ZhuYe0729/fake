@@ -1,0 +1,39 @@
+ninja_required_version = 1.3
+cxx = c++
+nvcc = /usr/local/cuda/bin/nvcc
+
+cflags = -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_bf16_backends -DTORCH_API_INCLUDE_EXTENSION_H -I/home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/nvidia/cusparselt/include -I/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/include -I/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src -isystem /home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/include -isystem /home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /home/agent/wja/miniconda3/envs/vllm/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17
+post_cflags = 
+cuda_cflags = -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_bf16_backends -DTORCH_API_INCLUDE_EXTENSION_H -I/home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/nvidia/cusparselt/include -I/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/include -I/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src -isystem /home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/include -isystem /home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /home/agent/wja/miniconda3/envs/vllm/include/python3.12 --expt-relaxed-constexpr -gencode=arch=compute_120a,code=sm_120a --compiler-options '-fPIC' -O3 -std=c++17 -maxrregcount=255 --use_fast_math
+cuda_post_cflags = 
+cuda_dlink_post_cflags = 
+sycl_dlink_post_cflags = 
+ldflags = -shared /home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/nvidia/cusparselt/lib/libcusparseLt.so.0 -Wl,-rpath,/home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/nvidia/cusparselt/lib -lcublas -lcusparse -L/home/agent/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/usr/local/cuda/lib64 -lcudart
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  depfile = $out.d
+  deps = gcc
+  command = $nvcc --generate-dependencies-with-compile --dependency-output $out.d $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+
+
+rule link
+  command = $cxx $in $ldflags -o $out
+
+build sparse_bf16_bindings.o: compile /root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/csrc/sparse_bf16_bindings.cpp
+build spinfer_api.cuda.o: cuda_compile /root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src/spinfer_api.cu
+
+
+
+
+
+build _cutlass_wrapper_sparse_bf16_backends.so: link sparse_bf16_bindings.o spinfer_api.cuda.o
+
+default _cutlass_wrapper_sparse_bf16_backends.so

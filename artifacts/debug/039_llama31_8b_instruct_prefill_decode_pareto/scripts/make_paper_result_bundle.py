@@ -56,7 +56,8 @@ def prefill_rows() -> list[dict]:
             "e2e_ms": float(source["e2e_median_ms"]), "speedup": float(source["speedup_vs_dense"]),
             "speed_source": "fresh 5-repeat closure",
             "arc_norm_pct": 100 * float(source["arc_acc_norm"]),
-            "cnn_rougel": None, "dsum_rougel": None, "iwslt_bleu": None, "delta_nll": None,
+            "cnn_rougel": None, "cnn_bertscore": None, "dsum_rougel": None, "dsum_bertscore": None,
+            "iwslt_rougel": None, "iwslt_bleu": None, "delta_nll": None,
         })
     return rows
 
@@ -90,7 +91,10 @@ def decode_rows() -> list[dict]:
             "recommendation": "baseline" if method == "dense_bf16" else "",
             "e2e_ms": e2e, "speedup": speedup, "speed_source": speed_source,
             "arc_norm_pct": None, "cnn_rougel": float(metrics["cnn_dm_1000"]["rougeL_percent"]),
+            "cnn_bertscore": float(metrics["cnn_dm_1000"]["bert_score_percent"]),
             "dsum_rougel": float(metrics["dsum"]["rougeL_percent"]),
+            "dsum_bertscore": float(metrics["dsum"]["bert_score_percent"]),
+            "iwslt_rougel": float(metrics["IWSLT"]["rougeL_percent"]),
             "iwslt_bleu": float(metrics["IWSLT"]["sacre_bleu"]),
             "delta_nll": nll[nll_policy[method]],
         })
@@ -114,7 +118,10 @@ def decode_rows() -> list[dict]:
             "speedup": float(source["speedup_vs_dense"]), "speed_source": "fresh continuous closure",
             "arc_norm_pct": None,
             "cnn_rougel": float(metrics["cnn_dm_1000"]["rougeL_percent"]) if metrics else None,
+            "cnn_bertscore": float(metrics["cnn_dm_1000"]["bert_score_percent"]) if metrics else None,
             "dsum_rougel": float(metrics["dsum"]["rougeL_percent"]) if metrics else None,
+            "dsum_bertscore": float(metrics["dsum"]["bert_score_percent"]) if metrics else None,
+            "iwslt_rougel": float(metrics["IWSLT"]["rougeL_percent"]) if metrics else None,
             "iwslt_bleu": float(metrics["IWSLT"]["sacre_bleu"]) if metrics else None,
             "delta_nll": float(source["actual_delta_nll"]), "task_status": task_status,
         })
@@ -199,23 +206,25 @@ def draw_nll(rows: list[dict]) -> None:
 
 def write_table(rows: list[dict]) -> None:
     fields = ["scenario", "family", "policy", "recommendation", "e2e_ms", "speedup", "speed_source",
-              "arc_norm_pct", "cnn_rougel", "dsum_rougel", "iwslt_bleu", "delta_nll", "task_status"]
+              "arc_norm_pct", "cnn_rougel", "cnn_bertscore", "dsum_rougel", "dsum_bertscore", "iwslt_rougel",
+              "iwslt_bleu", "delta_nll", "task_status"]
     with (OUT / "all_measured_results.csv").open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader(); writer.writerows(rows)
     lines = ["# Llama-3.1-8B-Instruct measured result table", "",
              "All listed rows have a measured speed. All six prefill-decode closure points have measured WikiText NLL; five selected points have full downstream task scores. `recommended` labels are suggestions, not filtering.",
-             "", "| scenario | family | policy | recommended use | E2E ms | speedup | ARC norm. | CNN R-L | DSum R-L | IWSLT BLEU | ΔNLL | task status | speed source |",
-             "|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|"]
+             "", "| scenario | family | policy | recommended use | E2E ms | speedup | ARC norm. | CNN R-L | CNN BERTScore | DSum R-L | DSum BERTScore | IWSLT R-L | IWSLT BLEU | ΔNLL | task status | speed source |",
+             "|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|"]
     for r in rows:
-        lines.append("| {scenario} | {family} | {policy} | {recommendation} | {e2e} | {speedup} | {arc} | {cnn} | {dsum} | {iwslt} | {nll} | {task_status} | {source} |".format(
+        lines.append("| {scenario} | {family} | {policy} | {recommendation} | {e2e} | {speedup} | {arc} | {cnn} | {cnn_bert} | {dsum} | {dsum_bert} | {iwslt_rougel} | {iwslt} | {nll} | {task_status} | {source} |".format(
             scenario=r["scenario"], family=r["family"], policy=r["policy"], recommendation=r["recommendation"] or "",
             e2e=number(r["e2e_ms"], 2), speedup=number(r["speedup"]), arc=number(r["arc_norm_pct"]),
-            cnn=number(r["cnn_rougel"]), dsum=number(r["dsum_rougel"]), iwslt=number(r["iwslt_bleu"]),
+            cnn=number(r["cnn_rougel"]), cnn_bert=number(r["cnn_bertscore"]), dsum=number(r["dsum_rougel"]),
+            dsum_bert=number(r["dsum_bertscore"]), iwslt_rougel=number(r["iwslt_rougel"]), iwslt=number(r["iwslt_bleu"]),
             nll=number(r["delta_nll"]), task_status=r.get("task_status", "evaluated"), source=r["speed_source"]))
     lines.extend(["", "## Notes", "",
                   "- Prefill-only uses ARC-Challenge normalized accuracy over 1172 examples.",
-                  "- Prefill-decode uses CNN/DM-1000 and DialogSum-1500 ROUGE-L, and IWSLT-333 SacreBLEU.",
+                  "- Prefill-decode retains both measured metrics per dataset: ROUGE-L/BERTScore for CNN/DM and DialogSum, ROUGE-L/SacreBLEU for IWSLT.",
                   "- `fresh continuous closure` denotes the 6-warmup / 5-measurement phase-continuous protocol.  "
                   "`frozen legacy runner*` is retained because no continuous remeasurement exists for those two uniform methods; "
                   "they are visibly distinguished in the task figures and should not be used for a fine-grained speed claim.",
@@ -231,7 +240,10 @@ def main() -> None:
     write_table(prefill + decode)
     draw_prefill(prefill)
     draw_decode(decode, "cnn_rougel", "CNN/DM ROUGE-L", "pareto_prefill_decode_cnn_dm.png")
+    draw_decode(decode, "cnn_bertscore", "CNN/DM BERTScore (%)", "pareto_prefill_decode_cnn_dm_bertscore.png")
     draw_decode(decode, "dsum_rougel", "DialogSum ROUGE-L", "pareto_prefill_decode_dsum.png")
+    draw_decode(decode, "dsum_bertscore", "DialogSum BERTScore (%)", "pareto_prefill_decode_dsum_bertscore.png")
+    draw_decode(decode, "iwslt_rougel", "IWSLT ROUGE-L", "pareto_prefill_decode_iwslt_rougel.png")
     draw_decode(decode, "iwslt_bleu", "IWSLT SacreBLEU", "pareto_prefill_decode_iwslt.png")
     draw_nll(decode)
 

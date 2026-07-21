@@ -57,6 +57,7 @@ common.MODELS[MODEL_KEY] = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--model-path", type=Path, default=Path(os.environ.get("COSPAQ_MODEL_PATH", MODEL_PATH)))
     parser.add_argument("--methods", default=",".join(METHODS))
     parser.add_argument("--output-root", type=Path, default=BASELINE_ROOT)
     parser.add_argument("--gpu", type=int, default=0)
@@ -76,11 +77,18 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--cache-dir", default="/home/agent/wja/.cache/huggingface")
     parser.add_argument("--skip-existing", action="store_true")
+    parser.add_argument(
+        "--sparse-nvfp4-prequant-only",
+        action="store_true",
+        help=("For sparse_nvfp4, retain the calibrated SparseGPT BF16 weights "
+              "and leave the single final NVFP4 conversion to the phase exporter."),
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    common.MODELS[MODEL_KEY]["path"] = str(args.model_path)
     methods = parse_methods(args.methods)
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required for Llama compression")
@@ -110,6 +118,8 @@ def local_cuda_index(requested_gpu: int) -> int:
 
 
 def prepare_one_method(args: argparse.Namespace, method: str, *, device: str) -> None:
+    if args.sparse_nvfp4_prequant_only and method != "sparse_nvfp4":
+        raise ValueError("--sparse-nvfp4-prequant-only requires --methods sparse_nvfp4")
     out_dir = args.output_root / "prepared" / method
     model_out = out_dir / "model.pt"
     metadata_out = out_dir / "metadata.json"
@@ -165,7 +175,13 @@ def prepare_one_method(args: argparse.Namespace, method: str, *, device: str) ->
             for info in layer_modules:
                 index += 1
                 hessian, hessian_samples = hessians[info.name]
-                row = compress_sparse_module(info, hessian, hessian_samples, config=config)
+                row = compress_sparse_module(
+                    info,
+                    hessian,
+                    hessian_samples,
+                    config=config,
+                    skip_nvfp4_quantization=args.sparse_nvfp4_prequant_only,
+                )
                 row.update({"index": index, "name": info.name, "layer": layer_name})
                 append_jsonl(log_path, row)
                 module_records.append(row)
@@ -183,6 +199,7 @@ def prepare_one_method(args: argparse.Namespace, method: str, *, device: str) ->
             "model_path": spec["path"],
             "model_family": spec["family"],
             "method": method,
+            "sparse_nvfp4_prequant_only": args.sparse_nvfp4_prequant_only,
             "dtype": args.dtype,
             "compression_config": config.__dict__,
             "calibration": calib_metadata,
@@ -252,6 +269,7 @@ def compress_sparse_module(
     hessian_samples: int,
     *,
     config: CompressionConfig,
+    skip_nvfp4_quantization: bool = False,
 ) -> dict[str, Any]:
     pattern = "dense_2_4" if config.method == "sparse_bf16" else "nvfp4_pair_2_4_over_8"
     try:
@@ -271,7 +289,7 @@ def compress_sparse_module(
             "prune": prune_stats,
             "mask_shape": list(mask.shape),
         }
-        if config.method == "sparse_nvfp4":
+        if config.method == "sparse_nvfp4" and not skip_nvfp4_quantization:
             qweight, scales, qstats = nvfp4_quantize_weight(
                 info.module.weight.data, config, torch.diag(hessian).detach().cpu()
             )
@@ -287,6 +305,8 @@ def compress_sparse_module(
                 info.module.weight.data.copy_(qweight.reshape_as(info.module.weight.data))
                 row["quant"] = qstats
                 row["scale_shape"] = list(scales.shape) if scales is not None else None
+        elif config.method == "sparse_nvfp4":
+            row["quant"] = {"status": "deferred_to_phase_exporter"}
         return row
     except Exception as exc:
         return {"status": "skipped", "reason": f"{type(exc).__name__}:{exc}"}

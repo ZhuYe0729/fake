@@ -1,0 +1,36 @@
+{
+  "scenario": "prefill_decode",
+  "selection": [
+    "p00",
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p07",
+    "p21",
+    "p37",
+    "p05",
+    "p24",
+    "p18",
+    "p23"
+  ],
+  "train_policies": [
+    "p00",
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p07",
+    "p21"
+  ],
+  "holdout_policies": [
+    "p37",
+    "p05",
+    "p24",
+    "p18",
+    "p23"
+  ],
+  "raw_cost": "sum of KernelLatencyPredictor phase latencies, Mpre=32768 + 80*Mdecode=16; conversion excluded",
+  "legal_projection": "only actions marked unsupported by the kernel predictor are replaced with dense_nvfp4",
+  "runner": "five reused-LLM phase-heterogeneous vLLM samples per policy, b=16 input=2048 output=80"
+}

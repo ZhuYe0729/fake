@@ -1,0 +1,42 @@
+{
+  "model": "llama2",
+  "label_backend": "real vLLM direct prompt-logprob",
+  "feature_backend": "existing local-error table",
+  "proxy": "positive normalized local-error aggregation + global/method/bucket/type factors",
+  "fit_split": "p00-p53",
+  "sample_blocks": 100,
+  "metrics": {
+    "train": {
+      "mae": 0.10758997627469212,
+      "rmse": 0.2672250111594448,
+      "mean_signed_error": -3.389135679917651e-18,
+      "spearman": 0.9097388984181437
+    },
+    "holdout": {
+      "mae": 0.12141874756059605,
+      "rmse": 0.14930476476516916,
+      "mean_signed_error": -0.05420143642677402,
+      "spearman": 0.8204334365325078
+    }
+  },
+  "metrics_by_policy_kind": {
+    "balanced_mixed": {
+      "mae": 0.11257156285536854,
+      "rmse": 0.14750994906244433,
+      "mean_signed_error": -0.04572957005244277,
+      "spearman": 0.7554621848739496
+    },
+    "controlled": {
+      "mae": 0.08829450944037041,
+      "rmse": 0.3011245730873768,
+      "mean_signed_error": 0.05720102427237405,
+      "spearman": 0.8607038123167156
+    },
+    "uniform": {
+      "mae": 0.24599343457887018,
+      "rmse": 0.3447166476407796,
+      "mean_signed_error": -0.241104736112481,
+      "spearman": 0.9
+    }
+  }
+}

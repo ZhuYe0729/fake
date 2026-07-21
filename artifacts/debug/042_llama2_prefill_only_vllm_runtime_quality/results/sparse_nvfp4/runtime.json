@@ -1,0 +1,21 @@
+{
+  "backend": "lm_eval.VLLM/vllm-runtime",
+  "checkpoint": "/root/wja/project/my/cospaq/fake/artifacts/exports/vllm/baselines/llama2-7b-chat/checkpoints/uniform_sparse_nvfp4",
+  "kind": "uniform",
+  "quantization_config": {
+    "modules_to_not_convert": [
+      "lm_head"
+    ],
+    "quant_method": "sparse_nvfp4_mytest"
+  },
+  "phase_hetero_prefill_enabled": false,
+  "max_model_len": 2048,
+  "vllm_root": "/home/agent/wja/project/my/cospaq/test/vllm",
+  "cutlass_wrapper": "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper",
+  "environment": {
+    "python": "3.12.13",
+    "lm_eval": "0.4.12",
+    "vllm": "0.11.1.dev0+gb8b302cde.d20260624",
+    "cuda_visible_devices": "4"
+  }
+}
