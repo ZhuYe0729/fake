@@ -82,11 +82,7 @@ def main() -> None:
                "tpot_ms": tpot, "total_tokens_per_s": scenario.batch * (scenario.input_seq + scenario.output_seq) * 1000.0 / main_stats["mean_ms"]}
     write_csv(output_dir / "iterations.csv", ttft_rows + main_rows)
     write_csv(output_dir / "summary.csv", [summary])
-<<<<<<< Updated upstream
     (output_dir / "metadata.json").write_text(json.dumps({"scenario": scenario.__dict__, "warmup_iters": args.warmup_iters, "iters": args.iters, "phase_runtime": "phase_hetero_mytest", "execution": "one_vllm_process_per_sample", "kv_cache_memory_bytes": args.kv_cache_memory_bytes, "kv_cache_dtype": args.kv_cache_dtype}, indent=2) + "\n")
-=======
-    (output_dir / "metadata.json").write_text(json.dumps({"scenario": scenario.__dict__, "warmup_iters": args.warmup_iters, "iters": args.iters, "phase_runtime": "phase_hetero_mytest", "execution": execution}, indent=2) + "\n")
->>>>>>> Stashed changes
 
 
 def run_single_process(args: argparse.Namespace, scenario: Scenario) -> None:

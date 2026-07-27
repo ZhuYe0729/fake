@@ -57,11 +57,7 @@ common.MODELS[MODEL_KEY] = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-<<<<<<< Updated upstream
     parser.add_argument("--model-path", type=Path, default=Path(os.environ.get("COSPAQ_MODEL_PATH", MODEL_PATH)))
-=======
-    parser.add_argument("--model-path", type=Path, default=MODEL_PATH)
->>>>>>> Stashed changes
     parser.add_argument("--methods", default=",".join(METHODS))
     parser.add_argument("--output-root", type=Path, default=BASELINE_ROOT)
     parser.add_argument("--gpu", type=int, default=0)

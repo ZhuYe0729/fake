@@ -1,0 +1,42 @@
+{
+  "model": "llama2",
+  "label_backend": "canonical phase-vLLM direct prompt-logprob",
+  "feature_backend": "064 canonical sparse plus frozen non-sparse local-error table",
+  "proxy": "positive normalized local-error aggregation + global/method/bucket/type factors",
+  "fit_split": "p00-p53",
+  "sample_blocks": 100,
+  "metrics": {
+    "train": {
+      "mae": 0.07994824862433231,
+      "rmse": 0.09976620449111137,
+      "mean_signed_error": 1.6704744583480364e-18,
+      "spearman": 0.8811511339813226
+    },
+    "holdout": {
+      "mae": 0.08301274405563797,
+      "rmse": 0.10124248014194905,
+      "mean_signed_error": -0.073548921181945,
+      "spearman": 0.9380804953560371
+    }
+  },
+  "metrics_by_policy_kind": {
+    "balanced_mixed": {
+      "mae": 0.07761715675894816,
+      "rmse": 0.09787044217703626,
+      "mean_signed_error": -0.06665247643493499,
+      "spearman": 0.9366946778711485
+    },
+    "controlled": {
+      "mae": 0.07632737179609173,
+      "rmse": 0.08494957004338882,
+      "mean_signed_error": 0.0440673170120512,
+      "spearman": 0.7104105571847508
+    },
+    "uniform": {
+      "mae": 0.1304716869354615,
+      "rmse": 0.17652258385958536,
+      "mean_signed_error": -0.08023961008758482,
+      "spearman": 1.0
+    }
+  }
+}

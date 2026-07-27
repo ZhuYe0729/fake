@@ -1,0 +1,76 @@
+{
+  "gpu_argument": 0,
+  "gpu_inventory": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=index,name,memory.total,compute_cap",
+      "--format=csv,noheader,nounits"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "0, NVIDIA RTX PRO 6000 Blackwell Server Edition, 97887, 12.0\n1, NVIDIA RTX PRO 6000 Blackwell Server Edition, 97887, 12.0"
+  },
+  "protocol": {
+    "batch": 8,
+    "enable_chunked_prefill": false,
+    "enable_prefix_caching": false,
+    "gpu_memory_utilization": 0.9,
+    "input_tokens": 2048,
+    "kv_cache_dtype": "auto",
+    "measured_runs": 5,
+    "output_tokens": 1,
+    "vllm_v1": true,
+    "warmups": 1
+  },
+  "shapes": [
+    [
+      16384,
+      6144,
+      4096
+    ],
+    [
+      16384,
+      4096,
+      4096
+    ],
+    [
+      16384,
+      28672,
+      4096
+    ],
+    [
+      16384,
+      4096,
+      14336
+    ]
+  ],
+  "updated_conversions": [
+    "canonical_to_cutlass",
+    "canonical_to_marlin"
+  ],
+  "updated_kernels": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "marlin_nvfp4"
+  ],
+  "weight_shapes": [
+    [
+      6144,
+      4096
+    ],
+    [
+      4096,
+      4096
+    ],
+    [
+      28672,
+      4096
+    ],
+    [
+      4096,
+      14336
+    ]
+  ]
+}

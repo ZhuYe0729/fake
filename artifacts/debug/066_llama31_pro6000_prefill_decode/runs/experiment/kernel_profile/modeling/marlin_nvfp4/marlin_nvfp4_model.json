@@ -1,0 +1,77 @@
+{
+  "model": "quantized_kernel_baseline_residual",
+  "kernel": "marlin_nvfp4",
+  "display_name": "Marlin NVFP4 W4A16",
+  "support_mods": {
+    "n": 64,
+    "k": 128
+  },
+  "baseline_params": {
+    "effective_work_tps": 375.26980496709905,
+    "effective_bandwidth_tbps": 1.8713858682522662,
+    "launch_floor_ms": 0.023486,
+    "k_floor_log2": [
+      12.0,
+      13.807354922057604
+    ],
+    "k_floor_ms": [
+      0.023962749999999998,
+      0.2832583
+    ],
+    "n_floor_log2": [
+      12.0,
+      12.584962500721156,
+      14.807354922057604
+    ],
+    "n_floor_ms": [
+      0.02431295,
+      0.14865675,
+      0.5637621500000001
+    ]
+  },
+  "feature_columns": [
+    "log2_m",
+    "log2_n",
+    "log2_k",
+    "log2_mn",
+    "log2_mk",
+    "log2_nk",
+    "log2_mnk",
+    "log2_ai",
+    "log2_n_over_k",
+    "log2_m_over_n",
+    "log2_m_over_k",
+    "m_le_16",
+    "m_le_64",
+    "m_ge_256",
+    "n_le_1024",
+    "k_le_1024",
+    "ceil_m_tiles",
+    "ceil_n_tiles",
+    "ceil_k_tiles",
+    "log2_total_tiles",
+    "m_tail_frac",
+    "n_tail_frac",
+    "k_tail_frac",
+    "output_log2",
+    "weight_reuse_log2",
+    "bytes_activation_log2",
+    "bytes_weight_log2",
+    "bytes_scale_log2"
+  ],
+  "neighbors": 4,
+  "ranges": {
+    "m": [
+      8,
+      16384
+    ],
+    "n": [
+      4096,
+      28672
+    ],
+    "k": [
+      4096,
+      14336
+    ]
+  }
+}

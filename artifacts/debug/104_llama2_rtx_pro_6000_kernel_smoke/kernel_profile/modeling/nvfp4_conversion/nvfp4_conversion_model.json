@@ -1,0 +1,32 @@
+{
+  "model": "nvfp4_conversion_latency",
+  "conversions": [
+    "canonical_to_cutlass",
+    "canonical_to_marlin"
+  ],
+  "feature_columns": [
+    "is_cutlass",
+    "is_marlin",
+    "log2_n",
+    "log2_k",
+    "log2_nk",
+    "log2_weight_bytes",
+    "log2_scale_bytes",
+    "n_le_1024",
+    "k_le_1024",
+    "n_ge_4096",
+    "k_ge_4096",
+    "log2_n_over_k"
+  ],
+  "neighbors": 8,
+  "ranges": {
+    "n": [
+      4096,
+      22016
+    ],
+    "k": [
+      4096,
+      11008
+    ]
+  }
+}

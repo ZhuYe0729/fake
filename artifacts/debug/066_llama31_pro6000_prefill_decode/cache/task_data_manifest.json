@@ -1,0 +1,55 @@
+{
+  "bertscore_model": "/root/data/models/bert_score/roberta-large",
+  "complete": true,
+  "datasets": [
+    {
+      "dataset": "cnn_dm_1000",
+      "first_question_id": 0,
+      "last_question_id": 999,
+      "samples": 1000
+    },
+    {
+      "dataset": "dsum",
+      "first_question_id": 0,
+      "last_question_id": 1499,
+      "samples": 1500
+    },
+    {
+      "dataset": "IWSLT",
+      "first_question_id": 6,
+      "last_question_id": 8595,
+      "samples": 333
+    }
+  ],
+  "iwslt_filter_tokenizer": "/root/data/models/lmsys/vicuna-7b-v1.5",
+  "payload_files": [
+    {
+      "bytes": 326,
+      "path": "/root/data/datasets/flaxquant/cnn_dailymail_3.0.0_test_random1000_seed42/subset_metadata.json",
+      "sha256": "1ca213de27957946027e09fa4526cb60ed2328fce07c586dba1d8bba9c2789d0"
+    },
+    {
+      "bytes": 1353147,
+      "path": "/root/data/datasets/flaxquant/dialogsum_repo/test.csv",
+      "sha256": "e76d1299c28cb1b21def1c9b2b2caee9ee385609d06b9f1dd800634db39c45a4"
+    },
+    {
+      "bytes": 27699724,
+      "path": "/root/data/datasets/flaxquant/iwslt2017_en_fr_repo/data/2017-01-trnted/texts/en/fr/en-fr.zip",
+      "sha256": "aa5b3b622e9389dfebc9b99ad22d7b21cdccb49be4c67e3e0a9f22573a1b500d"
+    }
+  ],
+  "prompt_protocol": "PMPD Claude-style raw text; no model chat template",
+  "protocol": {
+    "batch_size": 4,
+    "datasets": {
+      "IWSLT": 333,
+      "cnn_dm_1000": 1000,
+      "dsum": 1500
+    },
+    "gpu_memory_utilization": 0.75,
+    "max_input_tokens": 3840,
+    "max_new_tokens": 256
+  },
+  "task_template": "legacy"
+}

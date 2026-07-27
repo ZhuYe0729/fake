@@ -1,0 +1,146 @@
+{
+  "disk_free_gib": 5260.06,
+  "errors": [],
+  "git": {
+    "fake": {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "M AGENTS.md\n T fake/kernels/cutlass/cutlass_wrapper\n?? artifacts/debug/040_llama2_current_gpu_kernel_profile/\n?? artifacts/debug/040_llama2_current_gpu_max_speed/\n?? artifacts/debug/040_llama2_current_gpu_pareto_solver/\n?? artifacts/debug/064_llama2_pro6000_prefill_only/\n?? artifacts/debug/104_llama2_rtx_pro_6000_kernel_smoke/\n?? artifacts/debug/llama2_rtx_pro_6000_20260717_072358/\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/lm_eval/\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/quality/dense_bf16/arc_challenge/\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/quality/dense_nvfp4/arc_challenge/\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/quality/marlin_nvfp4/arc_challenge/\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/quality/sparse_bf16/arc_challenge/\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/quality/sparse_nvfp4/arc_challenge/\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/speed/iterations.csv\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/results/speed/metadata.json\n?? artifacts/exports/vllm/baselines/llama2-7b-chat/scripts/smoke_vllm_generate.py\n?? dev/impls/102_llama2_vllm_smoke_impl.md\n?? dev/impls/104_llama2_current_gpu_proxy_pipeline_impl.md\n?? dev/plans/102_llama2_vllm_smoke_plan.md\n?? dev/plans/104_llama2_current_gpu_proxy_pipeline_plan.md\n?? dev/plans/126_llama2_pro6000_prefill_only_plan.md"
+    },
+    "fake_commit": {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "27a14387b1d32c65a192d7e1ea5ed98d0cb9b292"
+    },
+    "vllm": {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "M vllm/vllm/transformers_utils/tokenizer.py\n?? dev/impls/014_transformers5_tokenizer_compat_impl.md\n?? dev/plans/014_transformers5_tokenizer_compat_plan.md"
+    },
+    "vllm_commit": {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "679527f6fffdc51ee79a92b4d9b0749a8855e5b6"
+    },
+    "vllm_diff": {
+      "command": [
+        "git",
+        "diff",
+        "--binary"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "diff --git a/vllm/vllm/transformers_utils/tokenizer.py b/vllm/vllm/transformers_utils/tokenizer.py\nindex 9aaac66..3ab4fa5 100644\n--- a/vllm/vllm/transformers_utils/tokenizer.py\n+++ b/vllm/vllm/transformers_utils/tokenizer.py\n@@ -95,8 +95,8 @@ def get_cached_tokenizer(tokenizer: AnyTokenizer) -> AnyTokenizer:\n \n     tokenizer_all_special_ids = tokenizer.all_special_ids\n     tokenizer_all_special_tokens = tokenizer.all_special_tokens\n-    tokenizer_all_special_tokens_extended = (\n-        tokenizer.all_special_tokens_extended)\n+    tokenizer_all_special_tokens_extended = getattr(\n+        tokenizer, \"all_special_tokens_extended\", tokenizer.all_special_tokens)\n     tokenizer_vocab = tokenizer.get_vocab()\n     tokenizer_len = len(tokenizer)"
+    }
+  },
+  "gpu": null,
+  "model": {
+    "_name_or_path": "meta-llama/Llama-2-7b-chat-hf",
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "bos_token_id": 1,
+    "eos_token_id": 2,
+    "hidden_act": "silu",
+    "hidden_size": 4096,
+    "initializer_range": 0.02,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "pretraining_tp": 1,
+    "rms_norm_eps": 1e-05,
+    "rope_scaling": null,
+    "tie_word_embeddings": false,
+    "torch_dtype": "float16",
+    "transformers_version": "4.32.0.dev0",
+    "use_cache": true,
+    "vocab_size": 32000
+  },
+  "ok": true,
+  "paths": {
+    "cospaq_python": "/root/miniconda3/envs/cospaq/bin/python",
+    "cutlass": "/root/workspaces/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper",
+    "exporter": "/root/workspaces/cospaq/vllm-cospaq/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py",
+    "model_config": "/root/data/models/Llama-2-7b-chat-hf/config.json",
+    "repo": "/root/workspaces/cospaq/fake",
+    "vllm_python": "/root/miniconda3/envs/vllm/bin/python",
+    "vllm_root": "/root/workspaces/cospaq/vllm-cospaq",
+    "vllm_source": "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm",
+    "wikitext_arrow": "/root/data/huggingface/datasets/Salesforce___wikitext/wikitext-2-raw-v1/0.0.0/b08601e04326c79dfdd32d625aee71d232d685c3/wikitext-train.arrow"
+  },
+  "python": [
+    {
+      "command": [
+        "/root/miniconda3/envs/cospaq/bin/python",
+        "-c",
+        "import importlib,json,sys; names='torch,transformers,datasets,numpy,pandas'.split(','); out={'executable':sys.executable};[(out.__setitem__(n,getattr(importlib.import_module(n),'__version__','ok'))) for n in names];print(json.dumps(out))"
+      ],
+      "returncode": 0,
+      "role": "cospaq",
+      "stderr": "",
+      "stdout": "{\"executable\": \"/root/miniconda3/envs/cospaq/bin/python\", \"torch\": \"2.9.0+cu128\", \"transformers\": \"5.9.0\", \"datasets\": \"5.0.0\", \"numpy\": \"2.4.4\", \"pandas\": \"3.0.3\"}"
+    },
+    {
+      "command": [
+        "/root/miniconda3/envs/vllm/bin/python",
+        "-c",
+        "import importlib,json,sys; names='torch,transformers,vllm,lm_eval'.split(','); out={'executable':sys.executable};[(out.__setitem__(n,getattr(importlib.import_module(n),'__version__','ok'))) for n in names];print(json.dumps(out))"
+      ],
+      "returncode": 0,
+      "role": "vllm",
+      "stderr": "",
+      "stdout": "{\"executable\": \"/root/miniconda3/envs/vllm/bin/python\", \"torch\": \"2.9.0+cu128\", \"transformers\": \"5.13.1\", \"vllm\": \"0.11.0\", \"lm_eval\": \"0.4.12\"}"
+    }
+  ],
+  "runtime_hits": {
+    "marlin_nvfp4_mytest": [
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/__init__.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/marlin_nvfp4_mytest.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/hetero_mytest.py"
+    ],
+    "nvfp4_mytest": [
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/__init__.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/sparse_nvfp4_mytest.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/hetero_mytest.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/nvfp4_mytest.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/marlin_nvfp4_mytest.py"
+    ],
+    "phase_hetero_mytest": [
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/__init__.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/phase_hetero_mytest.py"
+    ],
+    "sparse_bf16_mytest": [
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/__init__.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/sparse_bf16_mytest.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/hetero_mytest.py"
+    ],
+    "sparse_nvfp4_mytest": [
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/__init__.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/sparse_nvfp4_mytest.py",
+      "/root/workspaces/cospaq/vllm-cospaq/vllm/vllm/model_executor/layers/quantization/hetero_mytest.py"
+    ]
+  }
+}

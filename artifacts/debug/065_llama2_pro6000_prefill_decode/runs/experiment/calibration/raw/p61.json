@@ -1,0 +1,1064 @@
+{
+  "label": "p61",
+  "total_nll": 12809.548140933985,
+  "token_count": 6400,
+  "avg_nll": 2.001491897020935,
+  "perplexity": 7.4000880369236794,
+  "elapsed_seconds": 43.54683311586268,
+  "runtime": {
+    "backend": "vllm-v1-teacher-forced-decode",
+    "model": "/root/workspaces/cospaq/fake/artifacts/debug/065_llama2_pro6000_prefill_decode/runs/experiment/temporary/calibration/p61",
+    "tokenizer": "/root/data/models/Llama-2-7b-chat-hf",
+    "quantization_config": {
+      "default_decode_method": "dense_bf16",
+      "default_prefill_method": "dense_bf16",
+      "method_map": {
+        "model.layers.0.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.0.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.0.self_attn.o_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.0.self_attn.qkv_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.1.mlp.down_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.1.mlp.gate_up_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.1.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.1.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.10.mlp.down_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.10.mlp.gate_up_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.10.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.10.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.11.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.11.mlp.gate_up_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.11.self_attn.o_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.11.self_attn.qkv_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.12.mlp.down_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.12.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.12.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.12.self_attn.qkv_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.13.mlp.down_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.13.mlp.gate_up_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.13.self_attn.o_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.13.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.14.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.14.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.14.self_attn.o_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.14.self_attn.qkv_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.15.mlp.down_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.15.mlp.gate_up_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.15.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.15.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.16.mlp.down_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.16.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.16.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.16.self_attn.qkv_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.17.mlp.down_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.17.mlp.gate_up_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.17.self_attn.o_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.17.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.18.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.18.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.18.self_attn.o_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.18.self_attn.qkv_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.19.mlp.down_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.19.mlp.gate_up_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.19.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.19.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.2.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.2.mlp.gate_up_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.2.self_attn.o_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.2.self_attn.qkv_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.20.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.20.mlp.gate_up_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.20.self_attn.o_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.20.self_attn.qkv_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.21.mlp.down_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.21.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.21.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.21.self_attn.qkv_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.22.mlp.down_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.22.mlp.gate_up_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.22.self_attn.o_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.22.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.23.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.23.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.23.self_attn.o_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.23.self_attn.qkv_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.24.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.24.mlp.gate_up_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.24.self_attn.o_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.24.self_attn.qkv_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.25.mlp.down_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.25.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.25.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.25.self_attn.qkv_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.26.mlp.down_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.26.mlp.gate_up_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.26.self_attn.o_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.26.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.27.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.27.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.27.self_attn.o_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.27.self_attn.qkv_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.28.mlp.down_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.28.mlp.gate_up_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.28.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.28.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.29.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.29.mlp.gate_up_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.29.self_attn.o_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.29.self_attn.qkv_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.3.mlp.down_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.3.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.3.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.3.self_attn.qkv_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.30.mlp.down_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.30.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.30.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.30.self_attn.qkv_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.31.mlp.down_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.31.mlp.gate_up_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.31.self_attn.o_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.31.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.4.mlp.down_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.4.mlp.gate_up_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.4.self_attn.o_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.4.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.5.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.5.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.5.self_attn.o_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.5.self_attn.qkv_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.6.mlp.down_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.6.mlp.gate_up_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.6.self_attn.o_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.6.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.7.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.7.mlp.gate_up_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.7.self_attn.o_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.7.self_attn.qkv_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.8.mlp.down_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "sparse_nvfp4"
+        },
+        "model.layers.8.mlp.gate_up_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "dense_nvfp4"
+        },
+        "model.layers.8.self_attn.o_proj": {
+          "decode_method": "w4a16_ours",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.8.self_attn.qkv_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.9.mlp.down_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "w4a16_ours"
+        },
+        "model.layers.9.mlp.gate_up_proj": {
+          "decode_method": "dense_nvfp4",
+          "prefill_method": "sparse_bf16"
+        },
+        "model.layers.9.self_attn.o_proj": {
+          "decode_method": "dense_bf16",
+          "prefill_method": "dense_bf16"
+        },
+        "model.layers.9.self_attn.qkv_proj": {
+          "decode_method": "sparse_bf16",
+          "prefill_method": "sparse_nvfp4"
+        }
+      },
+      "modules_to_not_convert": [
+        "lm_head"
+      ],
+      "quant_method": "phase_hetero_mytest"
+    },
+    "phase_hetero": true,
+    "input_tokens": 2048,
+    "decode_tokens": 64,
+    "batch_size": 8,
+    "max_num_batched_tokens": 16896,
+    "expected_max_num_batched_tokens": 16896,
+    "gpu_memory_utilization": 0.8,
+    "blocks": 100,
+    "sample_sha256": "d807966dbb776dfcd43239bfc0cbaed40518d1bb1103b29e521af80f3219dfc3",
+    "policy_json": "/root/workspaces/cospaq/fake/artifacts/debug/065_llama2_pro6000_prefill_decode/runs/experiment/policies/prefill_decode/p61.json",
+    "policy_sha256": "11ff2a7eba81cb023d907fec151a030bf177566372ea970de395b055e224e3b1",
+    "chunked_prefill_enabled": false,
+    "chunked_prefill_guard": "065_process_local_vllm_0.11_compat",
+    "prefix_caching_enabled": false,
+    "sparse_bf16_cache_entries": "16",
+    "phase_trace": "/root/workspaces/cospaq/fake/artifacts/debug/065_llama2_pro6000_prefill_decode/runs/experiment/calibration/raw/p61.phase_trace.json",
+    "phase_trace_events": {
+      "enable": 1,
+      "apply_prefill": 1664,
+      "schedule_decode_copy": 1339,
+      "release_prefill": 1339,
+      "reuse_decode_weight": 325,
+      "enter_decode": 13,
+      "apply_decode": 104832,
+      "prepare_next_prefill": 12,
+      "prefill_ready": 12
+    }
+  },
+  "blocks": [
+    {
+      "block": 0,
+      "nll": 32.13274530312128,
+      "avg_nll": 0.50207414536127
+    },
+    {
+      "block": 1,
+      "nll": 72.81452199788419,
+      "avg_nll": 1.1377269062169404
+    },
+    {
+      "block": 2,
+      "nll": 139.457453659772,
+      "avg_nll": 2.1790227134339375
+    },
+    {
+      "block": 3,
+      "nll": 138.91714017509366,
+      "avg_nll": 2.1705803152358385
+    },
+    {
+      "block": 4,
+      "nll": 127.70673913360224,
+      "avg_nll": 1.995417798962535
+    },
+    {
+      "block": 5,
+      "nll": 122.77551181610033,
+      "avg_nll": 1.9183673721265677
+    },
+    {
+      "block": 6,
+      "nll": 112.18392333472457,
+      "avg_nll": 1.7528738021050714
+    },
+    {
+      "block": 7,
+      "nll": 117.46806510682791,
+      "avg_nll": 1.835438517294186
+    },
+    {
+      "block": 8,
+      "nll": 79.61617873602518,
+      "avg_nll": 1.2440027927503934
+    },
+    {
+      "block": 9,
+      "nll": 101.92987237862144,
+      "avg_nll": 1.59265425591596
+    },
+    {
+      "block": 10,
+      "nll": 204.86141931219026,
+      "avg_nll": 3.200959676752973
+    },
+    {
+      "block": 11,
+      "nll": 143.96942265774123,
+      "avg_nll": 2.2495222290272068
+    },
+    {
+      "block": 12,
+      "nll": 140.2348329241504,
+      "avg_nll": 2.19116926443985
+    },
+    {
+      "block": 13,
+      "nll": 166.5754968371184,
+      "avg_nll": 2.602742138079975
+    },
+    {
+      "block": 14,
+      "nll": 100.61754795129673,
+      "avg_nll": 1.5721491867390114
+    },
+    {
+      "block": 15,
+      "nll": 123.47454937483417,
+      "avg_nll": 1.9292898339817839
+    },
+    {
+      "block": 16,
+      "nll": 179.51565154831042,
+      "avg_nll": 2.8049320554423502
+    },
+    {
+      "block": 17,
+      "nll": 144.72208623978077,
+      "avg_nll": 2.2612825974965745
+    },
+    {
+      "block": 18,
+      "nll": 179.91686387082154,
+      "avg_nll": 2.8112009979815866
+    },
+    {
+      "block": 19,
+      "nll": 95.08118271856802,
+      "avg_nll": 1.4856434799776252
+    },
+    {
+      "block": 20,
+      "nll": 76.89431749341293,
+      "avg_nll": 1.201473710834577
+    },
+    {
+      "block": 21,
+      "nll": 144.29205971727788,
+      "avg_nll": 2.254563433082467
+    },
+    {
+      "block": 22,
+      "nll": 161.66585934973045,
+      "avg_nll": 2.5260290523395383
+    },
+    {
+      "block": 23,
+      "nll": 88.32509404233133,
+      "avg_nll": 1.380079594411427
+    },
+    {
+      "block": 24,
+      "nll": 161.92314259748673,
+      "avg_nll": 2.53004910308573
+    },
+    {
+      "block": 25,
+      "nll": 164.51769458215858,
+      "avg_nll": 2.570588977846228
+    },
+    {
+      "block": 26,
+      "nll": 217.69041675352491,
+      "avg_nll": 3.401412761773827
+    },
+    {
+      "block": 27,
+      "nll": 173.39445749741571,
+      "avg_nll": 2.7092883983971205
+    },
+    {
+      "block": 28,
+      "nll": 107.30871495924293,
+      "avg_nll": 1.6766986712381708
+    },
+    {
+      "block": 29,
+      "nll": 60.82228185591521,
+      "avg_nll": 0.9503481539986751
+    },
+    {
+      "block": 30,
+      "nll": 108.70743060284804,
+      "avg_nll": 1.6985536031695005
+    },
+    {
+      "block": 31,
+      "nll": 131.4017566965049,
+      "avg_nll": 2.053152448382889
+    },
+    {
+      "block": 32,
+      "nll": 145.90614901762456,
+      "avg_nll": 2.2797835784003837
+    },
+    {
+      "block": 33,
+      "nll": 151.44660096315056,
+      "avg_nll": 2.3663531400492275
+    },
+    {
+      "block": 34,
+      "nll": 128.00463197562203,
+      "avg_nll": 2.0000723746190943
+    },
+    {
+      "block": 35,
+      "nll": 181.0953898448911,
+      "avg_nll": 2.8296154663264232
+    },
+    {
+      "block": 36,
+      "nll": 130.23377914317825,
+      "avg_nll": 2.03490279911216
+    },
+    {
+      "block": 37,
+      "nll": 150.15930017513165,
+      "avg_nll": 2.346239065236432
+    },
+    {
+      "block": 38,
+      "nll": 205.60241485683946,
+      "avg_nll": 3.2125377321381166
+    },
+    {
+      "block": 39,
+      "nll": 144.72576335135818,
+      "avg_nll": 2.2613400523649716
+    },
+    {
+      "block": 40,
+      "nll": 110.72601968212985,
+      "avg_nll": 1.7300940575332788
+    },
+    {
+      "block": 41,
+      "nll": 178.5770168363524,
+      "avg_nll": 2.7902658880680065
+    },
+    {
+      "block": 42,
+      "nll": 196.20415580789268,
+      "avg_nll": 3.065689934498323
+    },
+    {
+      "block": 43,
+      "nll": 94.25051376868214,
+      "avg_nll": 1.4726642776356584
+    },
+    {
+      "block": 44,
+      "nll": 136.2235202182137,
+      "avg_nll": 2.128492503409589
+    },
+    {
+      "block": 45,
+      "nll": 144.73096409079153,
+      "avg_nll": 2.2614213139186177
+    },
+    {
+      "block": 46,
+      "nll": 141.9142318016966,
+      "avg_nll": 2.217409871901509
+    },
+    {
+      "block": 47,
+      "nll": 103.4492878227029,
+      "avg_nll": 1.6163951222297328
+    },
+    {
+      "block": 48,
+      "nll": 140.7799042457973,
+      "avg_nll": 2.1996860038405828
+    },
+    {
+      "block": 49,
+      "nll": 114.85363365246667,
+      "avg_nll": 1.7945880258197917
+    },
+    {
+      "block": 50,
+      "nll": 79.71314787352185,
+      "avg_nll": 1.2455179355237789
+    },
+    {
+      "block": 51,
+      "nll": 156.18478412185323,
+      "avg_nll": 2.4403872519039567
+    },
+    {
+      "block": 52,
+      "nll": 67.15120704816945,
+      "avg_nll": 1.0492376101276477
+    },
+    {
+      "block": 53,
+      "nll": 161.7238206679467,
+      "avg_nll": 2.5269346979366674
+    },
+    {
+      "block": 54,
+      "nll": 72.22108678268705,
+      "avg_nll": 1.1284544809794852
+    },
+    {
+      "block": 55,
+      "nll": 50.5321331428313,
+      "avg_nll": 0.789564580356739
+    },
+    {
+      "block": 56,
+      "nll": 130.87773730201297,
+      "avg_nll": 2.0449646453439527
+    },
+    {
+      "block": 57,
+      "nll": 146.29011524581438,
+      "avg_nll": 2.2857830507158496
+    },
+    {
+      "block": 58,
+      "nll": 127.46726798466989,
+      "avg_nll": 1.991676062260467
+    },
+    {
+      "block": 59,
+      "nll": 115.6611672287836,
+      "avg_nll": 1.8072057379497437
+    },
+    {
+      "block": 60,
+      "nll": 152.87630540133978,
+      "avg_nll": 2.388692271895934
+    },
+    {
+      "block": 61,
+      "nll": 109.10598170675803,
+      "avg_nll": 1.7047809641680942
+    },
+    {
+      "block": 62,
+      "nll": 131.34619617994758,
+      "avg_nll": 2.052284315311681
+    },
+    {
+      "block": 63,
+      "nll": 121.05174579955201,
+      "avg_nll": 1.8914335281180001
+    },
+    {
+      "block": 64,
+      "nll": 135.5127125249328,
+      "avg_nll": 2.117386133202075
+    },
+    {
+      "block": 65,
+      "nll": 137.15323349647224,
+      "avg_nll": 2.1430192733823787
+    },
+    {
+      "block": 66,
+      "nll": 131.3735097728204,
+      "avg_nll": 2.0527110902003187
+    },
+    {
+      "block": 67,
+      "nll": 94.77403262115695,
+      "avg_nll": 1.4808442597055773
+    },
+    {
+      "block": 68,
+      "nll": 143.4653411462059,
+      "avg_nll": 2.241645955409467
+    },
+    {
+      "block": 69,
+      "nll": 118.12048334857536,
+      "avg_nll": 1.84563255232149
+    },
+    {
+      "block": 70,
+      "nll": 124.1518054898188,
+      "avg_nll": 1.9398719607784187
+    },
+    {
+      "block": 71,
+      "nll": 99.4609782549669,
+      "avg_nll": 1.5540777852338579
+    },
+    {
+      "block": 72,
+      "nll": 157.38073557689495,
+      "avg_nll": 2.4590739933889836
+    },
+    {
+      "block": 73,
+      "nll": 106.87068135534355,
+      "avg_nll": 1.669854396177243
+    },
+    {
+      "block": 74,
+      "nll": 127.6063401781721,
+      "avg_nll": 1.9938490652839391
+    },
+    {
+      "block": 75,
+      "nll": 166.91942372743506,
+      "avg_nll": 2.608115995741173
+    },
+    {
+      "block": 76,
+      "nll": 123.03200715533876,
+      "avg_nll": 1.9223751118021681
+    },
+    {
+      "block": 77,
+      "nll": 130.94720156505355,
+      "avg_nll": 2.0460500244539617
+    },
+    {
+      "block": 78,
+      "nll": 151.06047177448636,
+      "avg_nll": 2.3603198714763494
+    },
+    {
+      "block": 79,
+      "nll": 115.69207619915687,
+      "avg_nll": 1.8076886906118261
+    },
+    {
+      "block": 80,
+      "nll": 111.76597499677518,
+      "avg_nll": 1.7463433593246123
+    },
+    {
+      "block": 81,
+      "nll": 110.1991557940928,
+      "avg_nll": 1.7218618092827
+    },
+    {
+      "block": 82,
+      "nll": 141.57003794905904,
+      "avg_nll": 2.2120318429540475
+    },
+    {
+      "block": 83,
+      "nll": 109.74384408979677,
+      "avg_nll": 1.7147475639030745
+    },
+    {
+      "block": 84,
+      "nll": 106.834709222534,
+      "avg_nll": 1.6692923316020938
+    },
+    {
+      "block": 85,
+      "nll": 101.6765564858506,
+      "avg_nll": 1.5886961950914156
+    },
+    {
+      "block": 86,
+      "nll": 129.3895927613994,
+      "avg_nll": 2.0217123868968656
+    },
+    {
+      "block": 87,
+      "nll": 157.38457262708835,
+      "avg_nll": 2.4591339472982554
+    },
+    {
+      "block": 88,
+      "nll": 141.92583553952863,
+      "avg_nll": 2.217591180305135
+    },
+    {
+      "block": 89,
+      "nll": 99.63904753799034,
+      "avg_nll": 1.556860117781099
+    },
+    {
+      "block": 90,
+      "nll": 105.58363032120542,
+      "avg_nll": 1.6497442237688347
+    },
+    {
+      "block": 91,
+      "nll": 104.93196263860227,
+      "avg_nll": 1.6395619162281605
+    },
+    {
+      "block": 92,
+      "nll": 151.4706506212242,
+      "avg_nll": 2.366728915956628
+    },
+    {
+      "block": 93,
+      "nll": 86.07852265489055,
+      "avg_nll": 1.3449769164826648
+    },
+    {
+      "block": 94,
+      "nll": 73.64733353859629,
+      "avg_nll": 1.150739586540567
+    },
+    {
+      "block": 95,
+      "nll": 126.35099860530681,
+      "avg_nll": 1.974234353207919
+    },
+    {
+      "block": 96,
+      "nll": 101.68848127214005,
+      "avg_nll": 1.5888825198771883
+    },
+    {
+      "block": 97,
+      "nll": 179.79907421243843,
+      "avg_nll": 2.8093605345693504
+    },
+    {
+      "block": 98,
+      "nll": 170.51347923728463,
+      "avg_nll": 2.6642731130825723
+    },
+    {
+      "block": 99,
+      "nll": 93.83324167650608,
+      "avg_nll": 1.4661444011954075
+    }
+  ]
+}
