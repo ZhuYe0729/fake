@@ -1,0 +1,90 @@
+{
+  "scenario": "prefill_decode",
+  "family": "neighborhood",
+  "policy_id": "neighborhood_011",
+  "policy_json": "/root/wja/project/my/cospaq/fake/artifacts/debug/069_llama31_pareto_search_audit/llama31_8b_instruct/prefill_decode/policies/neighborhood/neighborhood_011.json",
+  "policy_sha256": "27590f5407f0b0bf6121125a1511336715d8fd2b1d59f842d96a9b65a6ea8852",
+  "parent": "point_011",
+  "replacement_ratio": "",
+  "mutation_rate": 0.05,
+  "suspicious_module_count": "",
+  "prefill_count_dense_bf16": 0,
+  "prefill_count_dense_nvfp4": 4,
+  "prefill_count_sparse_bf16": 60,
+  "prefill_count_sparse_nvfp4": 63,
+  "prefill_count_w4a16_ours": 1,
+  "decode_count_dense_bf16": 30,
+  "decode_count_dense_nvfp4": 3,
+  "decode_count_sparse_bf16": 0,
+  "decode_count_sparse_nvfp4": 0,
+  "decode_count_w4a16_ours": 95,
+  "replacement_for": "neighborhood_009",
+  "mutations": [
+    {
+      "module": "model.layers.27.self_attn.qkv_proj",
+      "from": [
+        "sparse_nvfp4",
+        "w4a16_ours"
+      ],
+      "to": [
+        "dense_nvfp4",
+        "dense_nvfp4"
+      ]
+    },
+    {
+      "module": "model.layers.30.self_attn.o_proj",
+      "from": [
+        "sparse_bf16",
+        "dense_bf16"
+      ],
+      "to": [
+        "dense_nvfp4",
+        "dense_nvfp4"
+      ]
+    },
+    {
+      "module": "model.layers.24.self_attn.o_proj",
+      "from": [
+        "sparse_bf16",
+        "dense_bf16"
+      ],
+      "to": [
+        "dense_nvfp4",
+        "w4a16_ours"
+      ]
+    },
+    {
+      "module": "model.layers.12.mlp.down_proj",
+      "from": [
+        "sparse_bf16",
+        "w4a16_ours"
+      ],
+      "to": [
+        "sparse_bf16",
+        "dense_bf16"
+      ]
+    },
+    {
+      "module": "model.layers.18.self_attn.o_proj",
+      "from": [
+        "sparse_bf16",
+        "dense_bf16"
+      ],
+      "to": [
+        "w4a16_ours",
+        "dense_nvfp4"
+      ]
+    },
+    {
+      "module": "model.layers.15.self_attn.o_proj",
+      "from": [
+        "sparse_bf16",
+        "dense_bf16"
+      ],
+      "to": [
+        "dense_nvfp4",
+        "dense_bf16"
+      ]
+    }
+  ]
+}

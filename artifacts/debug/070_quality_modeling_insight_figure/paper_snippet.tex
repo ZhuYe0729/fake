@@ -1,0 +1,20 @@
+% Replacement for the current Figure 3 block and its following opening sentence.
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{Figures/draft/quality.png}
+\caption{Why local perturbation requires structure-aware calibration. Using
+Llama-2-7B with sparse NVFP4 on WikiText-2, (a) compares the median-normalized
+layer profiles of local output error and measured single-Linear
+$\Delta\mathrm{NLL}$, whose trends do not align. (b) The measured
+single-Linear impact varies across both the full 32-layer depth and projection
+types.}
+\label{fig:local-error-factors}
+\end{figure*}
+
+The local error $e_{r,i,a}$ captures perturbation magnitude, but cannot directly
+predict model-level $\Delta\mathrm{NLL}$. As
+Figure~\ref{fig:local-error-factors} shows, even under the same compression
+action, similar local errors can have markedly different consequences depending
+on projection type and depth. This observation motivates a structured mapping
+that additionally learns systematic differences across compression actions and
+inference phases:

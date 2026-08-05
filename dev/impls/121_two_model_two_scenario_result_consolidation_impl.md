@@ -10,3 +10,9 @@
 - 开发目的：使汇总目录中的 `results/source_summary.md` 便于论文结果审阅，而非按数据集重复同一 policy。
 - 修改内容：新增 summary 重建脚本；四个场景均按 “uniform references → ours/solved policy points” 顺序输出，每个 policy 一行，原始逐数据集长表继续保留在 `data/task_summary_long.csv`。
 - 验证结果：Llama3 decode 的 `p00`–`p04` uniform 行置顶，随后为 `point_000`–`point_011`；Llama2 decode 置顶 canonical dense-BF16 anchor `b8o64000`，随后为 `b8o64001`–`b8o64009`。无独立 retained uniform 行的字段明确保持为空。
+
+## 2026-07-22 - Rebuild Llama2 prefill-decode figures with complete uniform baselines
+- 开发目的：修复 p03/p04 下游指标补测完成后，060 中旧图仍只包含早期 uniform 子集的问题。
+- 修改内容：新增可复现画图脚本，统一读取最终 ours 表与 `uniform_baseline_results.csv`；三项主指标均绘制 p00--p04，ours 全部实测点作为淡色散点，仅连接非支配边界；同步覆盖原图名及 `_with_uniform_056` 兼容图名。
+- 影响文件：`artifacts/debug/060_two_model_two_scenario_result_consolidation/scripts/rebuild_llama2_decode_figures.py` 及 Llama2 prefill-decode 的六张 PNG。
+- 后续注意：p03 是 decode 阶段不支持 sparse NVFP4 时的 legal projection，图中明确标记为 `Sparse NVFP4 projection`。

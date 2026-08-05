@@ -37,3 +37,10 @@ This is a compact consolidation of `artifacts/debug/057_llama31_8b_instruct_b8_o
 ## Caveat
 
 `point_007` is retained as measured data but its source report marks its speed as anomalous; do not use it as an envelope point.
+
+## Paper-facing matched figure
+
+The corrected strict non-dominated frontier and the matched Llama3.1
+prefill-only/prefill-decode paper figure are generated in
+`artifacts/debug/068_llama31_prefill_uniform_coverage_refinement/llama31_8b_instruct/report/paper/`.
+The source table here remains unchanged.

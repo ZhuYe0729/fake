@@ -1,0 +1,851 @@
+{
+  "artifact": "067_llama31_ablation_consolidation",
+  "model": "Llama3.1-8B-Instruct",
+  "source_experiments": [
+    "064_llama31_modeling_ablation",
+    "065_llama31_quality_calibration_size_sensitivity",
+    "066_llama31_vllm_overlap_ablation"
+  ],
+  "files": [
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/quality/metrics.csv",
+      "destination": "data/modeling/quality_metrics.csv",
+      "bytes": 678,
+      "sha256": "1eff5acffc707827a26ef6758094fb6d7254074cebc38f9674f39f68ac2a2859"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/quality/predictions.csv",
+      "destination": "data/modeling/quality_predictions.csv",
+      "bytes": 12244,
+      "sha256": "d6c86ece5adf22f1652e28855d0ed9cb714f95431930bf4a68770efc0520eaf4"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/quality/validation.json",
+      "destination": "data/modeling/quality_validation.json",
+      "bytes": 1062,
+      "sha256": "bdf97baea0587670a5fd0e77767222ec44a7ad9e91295b4a61ac2b84c88fbad6"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/quality/model_local_sum.json",
+      "destination": "data/modeling/model_local_sum.json",
+      "bytes": 190,
+      "sha256": "565d3dc404247525e5f9a2f3eb5a97778ccc0f0e902fc90a70968990c2cd061b"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/quality/model_structure_aware.json",
+      "destination": "data/modeling/model_structure_aware.json",
+      "bytes": 3372,
+      "sha256": "46a65566c4c67c962e9e5d9471c099fcc6b55841ee2600c0953585669b67f207"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/quality/model_full_phase_aware.json",
+      "destination": "data/modeling/model_full_phase_aware.json",
+      "bytes": 6291,
+      "sha256": "c8950b0f7555e12f9a9e5040fbc0bc3fe52e735f49466a39317da7e862ef2d6d"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/kernel_generalization_metrics.csv",
+      "destination": "data/modeling/kernel_generalization_metrics.csv",
+      "bytes": 2745,
+      "sha256": "3879d3430f08f507fa09755f53fb9553553f1268d5af35e83ab68fd714487f8d"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/kernel_generalization_predictions.csv",
+      "destination": "data/modeling/kernel_generalization_predictions.csv",
+      "bytes": 723623,
+      "sha256": "e0186072ba100e4e2ec9a5020f2843fb9c73c3aa279241dd503469353d2ec85a"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/kernel_generalization_validation.json",
+      "destination": "data/modeling/kernel_generalization_validation.json",
+      "bytes": 345,
+      "sha256": "0e4420ebfc13f67e2edd4f7e6097664da3cedf34d3a364ffe3a8587e4f1e5754"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/local_metrics.csv",
+      "destination": "data/modeling/local_latency_metrics.csv",
+      "bytes": 278,
+      "sha256": "0c34f38ece200abe251ad7e02c3b2f120d76adcc8feaf344098493b250ad7237"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/local_predictions.csv",
+      "destination": "data/modeling/local_latency_predictions.csv",
+      "bytes": 1839,
+      "sha256": "9a8c48b9b0dd6c1bd66378f6d89c73e79d4ae4b4087f26eb657b69d9d97aff9c"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/validation.json",
+      "destination": "data/modeling/latency_validation.json",
+      "bytes": 1220,
+      "sha256": "3d0650f2026e5312f7aca105938cc497f63f8378a167f7f6c9b8a1f860575fe5"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/metrics.csv",
+      "destination": "data/modeling/e2e_latency_metrics.csv",
+      "bytes": 1182,
+      "sha256": "91732bc546a967436bb5df3c19874800112b8d894851dd0ff1e7eb7fb486a06f"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/speed/predictions.csv",
+      "destination": "data/modeling/e2e_latency_predictions.csv",
+      "bytes": 3149,
+      "sha256": "0056d7afb96247f7f0a69e9650e46c3a9afe14ad9ff6a890a24ad4d607587c69"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/modeling_ablation.png",
+      "destination": "figures/modeling_ablation.png",
+      "bytes": 171257,
+      "sha256": "8f3fc58ba758341d49cec1e7f98396000bfc408ea05bf31ef02cedd94d0aeb10"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/modeling_ablation.pdf",
+      "destination": "figures/modeling_ablation.pdf",
+      "bytes": 20453,
+      "sha256": "ac9bc30f4e95db7144a549d7797f6c52e647faf6480447a32007c5a0640df168"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/modeling_ablation_detailed.png",
+      "destination": "figures/modeling_ablation_detailed.png",
+      "bytes": 453764,
+      "sha256": "6072e16fc33bd50a7f98181d89dc982e98f61a0220b909bbbf4497896bc7eeb2"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/modeling_ablation_detailed.pdf",
+      "destination": "figures/modeling_ablation_detailed.pdf",
+      "bytes": 27114,
+      "sha256": "6d8b0447ce113d4ef959cc75c862dc2252168ba564e36e6f9bc9a9b166650557"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/ablation_tables.tex",
+      "destination": "tables/modeling_ablation.tex",
+      "bytes": 638,
+      "sha256": "e8dadf6a48d40bb77d4085fed8ef29f6520a93e6efd8b561fcf13386a5c1d168"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/modeling_design_and_ablation.md",
+      "destination": "docs/modeling_design_and_ablation.md",
+      "bytes": 21109,
+      "sha256": "b2ac56176318681b93f027e656f021fc3ac2daad2728fb1fdf0779bd047e7b17"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/paper_text.md",
+      "destination": "docs/modeling_paper_text.md",
+      "bytes": 628,
+      "sha256": "b2bccc6cc308d4bce25ed8ac9735ec9b082e99c1bf2df70b8eedf496c31dd7b7"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/summary.md",
+      "destination": "docs/modeling_summary.md",
+      "bytes": 1858,
+      "sha256": "0d5a65a08e1fd9c99cb54bc0b6afa2e23c314897cdd546b79535b6a81476656c"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/detailed_caption.md",
+      "destination": "docs/modeling_detailed_caption.md",
+      "bytes": 499,
+      "sha256": "4829a7ce5a219642085ea9a712aa65aff5e1a8dc3b3ac23ea7e8539655e4295e"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/report/reproducibility.json",
+      "destination": "docs/modeling_reproducibility.json",
+      "bytes": 1529,
+      "sha256": "c9d87324840bd4a49d99524d0ab053a45d7e36c9a40c034bfafaee3039ed9c8f"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/results/learning_curve_repeats.csv",
+      "destination": "data/calibration/learning_curve_repeats.csv",
+      "bytes": 41162,
+      "sha256": "2db7d3710c1e983816e985134fdadcbb80a7a6e17607b36d46651e2fa93b7d1c"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/results/learning_curve_summary.csv",
+      "destination": "data/calibration/learning_curve_summary.csv",
+      "bytes": 5189,
+      "sha256": "856d12d57f9f9a36683cffc3243f1b78c6fe9ba1dad679f2acbb8953d9c8f3f6"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/results/validation.json",
+      "destination": "data/calibration/validation.json",
+      "bytes": 2996,
+      "sha256": "6dac54b1dbd13c461debb3bc2f8ec3433ae56f0d31200a57254d53e3f3cf04d5"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/nll/extension.csv",
+      "destination": "data/calibration/extension_nll.csv",
+      "bytes": 1984,
+      "sha256": "2fb60f500ef2650e52b5b5f5d98246a857080b78638cdbc766ab8dfed51f2ceb"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policy_audit.json",
+      "destination": "data/calibration/extension_policy_audit.json",
+      "bytes": 196,
+      "sha256": "b9b9c2671ba2f79243d8c2438ccc15b20e780c8b6efeba9b5ea9080fe191b2e7"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/manifest.json",
+      "destination": "data/calibration/extension_policy_manifest.json",
+      "bytes": 6087,
+      "sha256": "6caeb820da181fe947a5622b478f49699df0198a9acb284235633ed0d9457d4a"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/report/calibration_size_sensitivity.png",
+      "destination": "figures/calibration_size_sensitivity.png",
+      "bytes": 168548,
+      "sha256": "d961fe85133a3b1b5935ef082a057e7d26760e8c81ff7a1f6c9b335ba2c2d49f"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/report/calibration_size_sensitivity.pdf",
+      "destination": "figures/calibration_size_sensitivity.pdf",
+      "bytes": 22595,
+      "sha256": "342f518f4578ffe500e5a1f626c7e79df9d8de750aeed4635d87c4d9bf1d86bc"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/report/calibration_size_sensitivity_full.png",
+      "destination": "figures/calibration_size_sensitivity_full.png",
+      "bytes": 200242,
+      "sha256": "9633a5f783034a723b682f0c395c6b7f052679e263fd339dbad8c9dd7dadb362"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/report/calibration_size_sensitivity_full.pdf",
+      "destination": "figures/calibration_size_sensitivity_full.pdf",
+      "bytes": 25347,
+      "sha256": "a9211a090aac225e6e81a1b430d11029410eeec505c24106b7044aa607a88321"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/report/paper_text.md",
+      "destination": "docs/calibration_paper_text.md",
+      "bytes": 781,
+      "sha256": "a6a3c379345c890416e7f627f47410907654c9c3e29bde013eddd3412230f9b9"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/report/summary.md",
+      "destination": "docs/calibration_summary.md",
+      "bytes": 2100,
+      "sha256": "82a77f55a881a2cd5c88719347d08627598d65f2154102640ec39ef1234fa889"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw_samples.csv",
+      "destination": "data/runtime/raw_samples.csv",
+      "bytes": 1920,
+      "sha256": "9ec93f94b86f27c64cf866121a192b3e7851bc7c468c01a8f9070f5a7cb575fb"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/run_metadata.json",
+      "destination": "data/runtime/run_metadata.json",
+      "bytes": 340,
+      "sha256": "b800bf62addf0941caa3b24cafa118993b916c6a6296ed84afa03942a016018d"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/config_audit.json",
+      "destination": "data/runtime/config_audit.json",
+      "bytes": 903,
+      "sha256": "cc44decd3ef2e9ffc8b6490b9de904ff0590f9afa61cad97dc9e84251f32b312"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/summary.json",
+      "destination": "data/runtime/e2e_summary.json",
+      "bytes": 765,
+      "sha256": "80692e3b689c2a243ce098f78640fb1225b725eca757aaea0afa110f5ce6ce6e"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/overlap_profile.json",
+      "destination": "data/runtime/overlap_profile.json",
+      "bytes": 1732,
+      "sha256": "da579098144e23f23f5d285346fc36715e37bb0ca866d141695b6a3aaf731bc0"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/overlap_ablation.png",
+      "destination": "figures/overlap_ablation.png",
+      "bytes": 51295,
+      "sha256": "13c9e73a22ab6dfe82bb188b50d9d2a7d31c7005502a27504060a3ce00fd3bd3"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/overlap_ablation.pdf",
+      "destination": "figures/overlap_ablation.pdf",
+      "bytes": 14073,
+      "sha256": "17f372909ef740ca96490158ffd3291d9ca4efb391a172f92edba7ac77fe131e"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/ablation_table.tex",
+      "destination": "tables/runtime_e2e_ablation.tex",
+      "bytes": 364,
+      "sha256": "bf4ef28af2a0e52278f4d9fc94f51d6afad77b677fa65674d5a67f062942724a"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/overlap_profile_table.tex",
+      "destination": "tables/runtime_overlap_profile.tex",
+      "bytes": 359,
+      "sha256": "525b0f983d7a1a9c00fec951a857588342adb6aadf04c147747e5e794f820a3c"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/summary.md",
+      "destination": "docs/runtime_summary.md",
+      "bytes": 1619,
+      "sha256": "f77cfdb2ad3b7ac7fb9d3993de6177301d47dd75f53ff972acf43e7e25aff05c"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/overlap_profile.md",
+      "destination": "docs/runtime_overlap_profile.md",
+      "bytes": 597,
+      "sha256": "adcd5a38941800f807c08e9239b34ba695008eb038d01080f6fee0e5498e8012"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/report/paper_text.md",
+      "destination": "docs/runtime_paper_text.md",
+      "bytes": 1136,
+      "sha256": "b2047312fe67011f006f1ffc76ca9fd0a40ce6fd258b78596dd084e20e404992"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/config_audit.json",
+      "destination": "docs/runtime_config_audit.json",
+      "bytes": 903,
+      "sha256": "cc44decd3ef2e9ffc8b6490b9de904ff0590f9afa61cad97dc9e84251f32b312"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/checkpoint/point_011/phase_hetero_export_provenance.json",
+      "destination": "data/runtime/policy/phase_hetero_export_provenance.json",
+      "bytes": 416,
+      "sha256": "d673412507e253159cd983fa178512b1b03e2b5df5917af1fb5fcdfce7d53f6d"
+    },
+    {
+      "source": "artifacts/debug/057_llama31_8b_instruct_b8_o64_canonical_pareto/llama31_8b_instruct/pareto/policies/point_011.json",
+      "destination": "data/runtime/policy/point_011.json",
+      "bytes": 16118,
+      "sha256": "0bff2c39b6601a0ed7b1608908760e8c1a2d9dccbedc7410659e8302d61212d9"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e00.json",
+      "destination": "data/calibration/extension_policies/e00.json",
+      "bytes": 15966,
+      "sha256": "1094d43262eae8dbc751c95df0302384b564ee90408654b7d06c759513b31b25"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e01.json",
+      "destination": "data/calibration/extension_policies/e01.json",
+      "bytes": 15975,
+      "sha256": "c67b9fc8cab1796961da38420398f068311eb909bb5f6ca672b0f3fe49651217"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e02.json",
+      "destination": "data/calibration/extension_policies/e02.json",
+      "bytes": 16074,
+      "sha256": "1207487b67ac627e2c16649190a60876e568427cab05f0cf91aee648e8311e20"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e03.json",
+      "destination": "data/calibration/extension_policies/e03.json",
+      "bytes": 16026,
+      "sha256": "c8234b80908296ea8dec9a68ab8cfc7afeebcccbfcc2fa3645538542ab8f04b1"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e04.json",
+      "destination": "data/calibration/extension_policies/e04.json",
+      "bytes": 16051,
+      "sha256": "eae622a2617d5c9174901e11b4b93ce51f7e745aa89ded8398ff92c64f77cbd7"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e05.json",
+      "destination": "data/calibration/extension_policies/e05.json",
+      "bytes": 15952,
+      "sha256": "268c5e396b7eaa473bc8fb8b1a2fff133433bd058f3700079009460ad5b4eb04"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e06.json",
+      "destination": "data/calibration/extension_policies/e06.json",
+      "bytes": 16082,
+      "sha256": "85b247b7a77fcd7ef26d5ce33ca97f8b17cf7e12e88b9dfbac36fbb7654390af"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e07.json",
+      "destination": "data/calibration/extension_policies/e07.json",
+      "bytes": 16015,
+      "sha256": "a6ef488224682bfe83fe0eed101b8c06022a192d51fee58215e50f94310f5c02"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e08.json",
+      "destination": "data/calibration/extension_policies/e08.json",
+      "bytes": 16276,
+      "sha256": "b710807fae8fbbac101ba8c141a46ee48c6e7d07a3f93ad6e79cb7dfe9984234"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e09.json",
+      "destination": "data/calibration/extension_policies/e09.json",
+      "bytes": 16022,
+      "sha256": "50e9e2a5ea66dc1266ff61942538bf0a59d126f891bcf1d9c3998bf1684ec499"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e10.json",
+      "destination": "data/calibration/extension_policies/e10.json",
+      "bytes": 15971,
+      "sha256": "57fc5dbc19f077066068d0631c404283b77146ec371e403c67213e180a7b78f2"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e11.json",
+      "destination": "data/calibration/extension_policies/e11.json",
+      "bytes": 16031,
+      "sha256": "2da5d085f538a34817b4a0a5707de5a234643d73a056ddd4d8a7db8082190d76"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e12.json",
+      "destination": "data/calibration/extension_policies/e12.json",
+      "bytes": 16083,
+      "sha256": "9826d78f9bd6a2802da1ef738bbac73ab2b9d31ddfad26220a59bda1170bc3a4"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e13.json",
+      "destination": "data/calibration/extension_policies/e13.json",
+      "bytes": 16018,
+      "sha256": "9f52c2bacc29905c42f17d03daea795c251e9e339661433a8c73ed4b54717b3e"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e14.json",
+      "destination": "data/calibration/extension_policies/e14.json",
+      "bytes": 16068,
+      "sha256": "6b78b4b02df00fb114fa63a04f3c87fd760b83ef21a1990af43f7eee00b6df37"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e15.json",
+      "destination": "data/calibration/extension_policies/e15.json",
+      "bytes": 16044,
+      "sha256": "89cf41bb6d2964ef0c0da04632281ae56de9fd1fbdf11416262a82419e7ee2ac"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e16.json",
+      "destination": "data/calibration/extension_policies/e16.json",
+      "bytes": 16011,
+      "sha256": "81bc43fafc697f5df74dfb8605b78d78c94e4f54d03ec3902734ac45a17db6f8"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/policies/e17.json",
+      "destination": "data/calibration/extension_policies/e17.json",
+      "bytes": 15988,
+      "sha256": "be7cbc9ef6796fb0f364c7cf3410d1f42b6459eb4888f8f93a793a79927f64e6"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e00.log",
+      "destination": "data/calibration/extension_logs/e00.log",
+      "bytes": 6663,
+      "sha256": "37d03d771f483d02bd9ff27a76037ac5221d19dc7127de4cb605ca612f0f0031"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e01.log",
+      "destination": "data/calibration/extension_logs/e01.log",
+      "bytes": 6750,
+      "sha256": "a19079b7bfd57038ff1632aa37d317dbe2a0a50aa92853ac520ce8f1456dfef1"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e02.log",
+      "destination": "data/calibration/extension_logs/e02.log",
+      "bytes": 7153,
+      "sha256": "e7a560fe44ad28c32f8864c9d8cf11ca241d699e1357c84e16dcb684fd2b6906"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e03.log",
+      "destination": "data/calibration/extension_logs/e03.log",
+      "bytes": 7304,
+      "sha256": "15f5dafa900a91271d662e60f93e12fa9128efa60a18a054c0bc2a658bb6b1a4"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e04.log",
+      "destination": "data/calibration/extension_logs/e04.log",
+      "bytes": 7068,
+      "sha256": "6f3fd361d5070c24db4ea78892f6982b9c3b02f414373726d70cfd158bfbde58"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e05.log",
+      "destination": "data/calibration/extension_logs/e05.log",
+      "bytes": 6747,
+      "sha256": "ec5cf16e99bdfb7bb8fc3c8ee71fa737afdb5c890891f608eae2b37f2dc3812c"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e06.log",
+      "destination": "data/calibration/extension_logs/e06.log",
+      "bytes": 7122,
+      "sha256": "c5012eb28687bb887326856a581df3db0fd987f28a3b41bb963befa2dc913de7"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e07.log",
+      "destination": "data/calibration/extension_logs/e07.log",
+      "bytes": 7088,
+      "sha256": "aaf669525a8aec291d1fbc8a17c34d1d176681268a66b65d746efdfab90e7f83"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e08.log",
+      "destination": "data/calibration/extension_logs/e08.log",
+      "bytes": 6611,
+      "sha256": "3bdcace0dbd2093b0343f621ce1007f1c9d280880093a00222019ba163cc61bc"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e09.log",
+      "destination": "data/calibration/extension_logs/e09.log",
+      "bytes": 6998,
+      "sha256": "8c2095857b4580cbf49e41bad2e427b382f46497fc642af444aed569388a07f1"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e10.log",
+      "destination": "data/calibration/extension_logs/e10.log",
+      "bytes": 7178,
+      "sha256": "76a8e5983256cce8802287f78178e34c03697abee50d105ce97d0228937ec321"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e11.log",
+      "destination": "data/calibration/extension_logs/e11.log",
+      "bytes": 7394,
+      "sha256": "a41f25d0a84ec81ad2c542ec0b76efbd2fc624fb5d1ac0a24b0c6d3e65611b36"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e12.log",
+      "destination": "data/calibration/extension_logs/e12.log",
+      "bytes": 7122,
+      "sha256": "4ac0e791a3cf7e44fedeb37fd7e3e1de4a81209eb813ef197d200aaa7c809f25"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e13.log",
+      "destination": "data/calibration/extension_logs/e13.log",
+      "bytes": 7027,
+      "sha256": "2350af8918f460af8dbaefca9ce86f4b42ac0542c55c2795c6c4ce3fcb076a1c"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e14.log",
+      "destination": "data/calibration/extension_logs/e14.log",
+      "bytes": 7061,
+      "sha256": "d926f092e1a74c616f56438bf38e736883de60ad17669884942aeaf396f96243"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e15.log",
+      "destination": "data/calibration/extension_logs/e15.log",
+      "bytes": 7089,
+      "sha256": "94aa8464620a7b6bc525e650a7acfedf110c1461e845207e7aa5aaa539ea8c35"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e16.log",
+      "destination": "data/calibration/extension_logs/e16.log",
+      "bytes": 7272,
+      "sha256": "3d527e4e382664db1990c669bed13cd89fc19c554c3ff1fe6e0511997f583c88"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/extension/logs/e17.log",
+      "destination": "data/calibration/extension_logs/e17.log",
+      "bytes": 6995,
+      "sha256": "4d8f91fc40f117f1848fe491e80b15174c11f1d691a9899231348614bd4f3028"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/profile/sample_01.json",
+      "destination": "data/runtime/profile/sample_01.json",
+      "bytes": 432,
+      "sha256": "b28b67d511e97ad65f0bcc0f03c6745869115ac256dca19fb2e3a33dec277275"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/profile/sample_02.json",
+      "destination": "data/runtime/profile/sample_02.json",
+      "bytes": 431,
+      "sha256": "71d8fb640f3fc5ef36b21ed0d46cdab584fe54905e291c8fe319464df117c073"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/profile/sample_03.json",
+      "destination": "data/runtime/profile/sample_03.json",
+      "bytes": 431,
+      "sha256": "d6c3792899ee19cdc1579c08d98024ef88680bb82ccc05b5018596fb710a7fd0"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_01_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/measured/pair_01_asynchronous_overlap.json",
+      "bytes": 35,
+      "sha256": "1b725983e350b4fd529bf7843a3a65ccfef13e5c68de068c86c670a4d095bd2e"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_01_synchronous_copy.json",
+      "destination": "data/runtime/raw/measured/pair_01_synchronous_copy.json",
+      "bytes": 35,
+      "sha256": "0aa9564e6b2607f410b801c434bf4922ea8acb80b264f6fb9ae6f52ede54935e"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_02_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/measured/pair_02_asynchronous_overlap.json",
+      "bytes": 35,
+      "sha256": "134df90b11a59619d42cc8e529495c41c0f6eee3aae7248651d69dc58f26235d"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_02_synchronous_copy.json",
+      "destination": "data/runtime/raw/measured/pair_02_synchronous_copy.json",
+      "bytes": 35,
+      "sha256": "cb890184ab5081617230bdcd22a24ac02e5e988f80fa6df9eb8c80efebe33a0b"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_03_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/measured/pair_03_asynchronous_overlap.json",
+      "bytes": 35,
+      "sha256": "c7afbe536c72d45db2bb08c377adb915118964ef089c9eabd28306f8ec4d77ab"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_03_synchronous_copy.json",
+      "destination": "data/runtime/raw/measured/pair_03_synchronous_copy.json",
+      "bytes": 35,
+      "sha256": "9fa0b62b42ae3b215193b44e8a11b111dd9678c60335f5b79412c21a04c0770d"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_04_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/measured/pair_04_asynchronous_overlap.json",
+      "bytes": 35,
+      "sha256": "4396135f27346bfc65a29524a545b4e06642a49be2df1012919aa9d7b08ea6e4"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_04_synchronous_copy.json",
+      "destination": "data/runtime/raw/measured/pair_04_synchronous_copy.json",
+      "bytes": 35,
+      "sha256": "bd4a4f2070dc7be90b6f0a9f7ceea91915fa52cf147cce71d3b40b8385fe98dc"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_05_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/measured/pair_05_asynchronous_overlap.json",
+      "bytes": 35,
+      "sha256": "55b96d5bb447d6c9d431c8c383d618b2722f6a45e5e7396fad34459ada4fc650"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_05_synchronous_copy.json",
+      "destination": "data/runtime/raw/measured/pair_05_synchronous_copy.json",
+      "bytes": 35,
+      "sha256": "680f52dbdd7e3957f822bd466da2389a5c6669f02cdf9bf93ab293a34bec43ce"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_06_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/measured/pair_06_asynchronous_overlap.json",
+      "bytes": 35,
+      "sha256": "d31486dd3bdfab573148ddd3589d4565fc33d87a321e4c3744546de1eb1b467e"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_06_synchronous_copy.json",
+      "destination": "data/runtime/raw/measured/pair_06_synchronous_copy.json",
+      "bytes": 34,
+      "sha256": "961418b7f82e654f890102514d8b9dfe48b4584fb5dbbf78e742e547fa84adc4"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_07_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/measured/pair_07_asynchronous_overlap.json",
+      "bytes": 35,
+      "sha256": "adc86c7c3215599ec6d4a5e4249ecf210213ebfe5cb174cdf7f5bdb936c549e4"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_07_synchronous_copy.json",
+      "destination": "data/runtime/raw/measured/pair_07_synchronous_copy.json",
+      "bytes": 35,
+      "sha256": "ff23c69348977c4602dc1274edf53771cb265d56e8b42411cea619ed1ecb584c"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/warmup/pair_00_asynchronous_overlap.json",
+      "destination": "data/runtime/raw/warmup/pair_00_asynchronous_overlap.json",
+      "bytes": 34,
+      "sha256": "16df55a6d793f4e6050af3bf39ab1e8b3f60714ee74fa0dc9923c81a25a47edd"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/warmup/pair_00_synchronous_copy.json",
+      "destination": "data/runtime/raw/warmup/pair_00_synchronous_copy.json",
+      "bytes": 35,
+      "sha256": "2b3a09b051dcdab0af09867bb3308fbc7a222ae048d5e04ea3a6bbcd406498ad"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_01_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/measured/pair_01_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "2689bad8e1768cda40422de3278821082366bdaf620ba63e9c20d5f41a515dfe"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_01_synchronous_copy.log",
+      "destination": "data/runtime/raw/measured/pair_01_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "71db34bed288d086d36aedfd6de05e75d20ce0437e6d57c465bbe3d3abd02a3e"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_02_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/measured/pair_02_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "2f5e82699d016beb0cfc52bc1ed7c7543020eeb700750276a9b11d449db90be8"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_02_synchronous_copy.log",
+      "destination": "data/runtime/raw/measured/pair_02_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "0f1d1afc926bdf8b315c972d4d7df4c63b74507a5b67a11dfaad8a69daf7e621"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_03_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/measured/pair_03_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "2b8ffdb9649436e7a993f6a3781b9b9ed20d3afbc82de5de30964aff4e1684bd"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_03_synchronous_copy.log",
+      "destination": "data/runtime/raw/measured/pair_03_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "ef54421bf7c2971ff24a131ab7be2c7f046bd99430ec1273e9c1511a4052dad8"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_04_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/measured/pair_04_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "1da3e01d5d0640b156efc964cd34459db3f6337e8a29897731628cff202430c5"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_04_synchronous_copy.log",
+      "destination": "data/runtime/raw/measured/pair_04_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "d043036f39c5b86e50fa3d02d99b05cc13a121362186a6afda00d5a14d0957de"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_05_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/measured/pair_05_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "bd395526fddbb963df6f75fc3aa24eb5bc2a2c9baf9c2fb2ce8e6025356f9ecb"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_05_synchronous_copy.log",
+      "destination": "data/runtime/raw/measured/pair_05_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "dcfe482fead3f3496b5dc613e332515fc35964dd0d84387cf6654600ad0b16f4"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_06_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/measured/pair_06_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "11673aa2feca5d878c15e4ab886ec5921dfca9ce9b7029e0550e5173e2c51326"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_06_synchronous_copy.log",
+      "destination": "data/runtime/raw/measured/pair_06_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "64ed9b2a58d858f1c7fecd0f4bd1ad713f1dd85ec588c7fbfcd1c34729b6ad82"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_07_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/measured/pair_07_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "c54db831586f38452f0369340e54094089ec177e3bb6da0433af3d36313c885b"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/measured/pair_07_synchronous_copy.log",
+      "destination": "data/runtime/raw/measured/pair_07_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "f706f086a95972f4d9856928a026360b41e1d50c0f89b5d9f87ea713ae199665"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/warmup/pair_00_asynchronous_overlap.log",
+      "destination": "data/runtime/raw/warmup/pair_00_asynchronous_overlap.log",
+      "bytes": 5146,
+      "sha256": "506c5139ed49cf7b748769cd279f907e7b5865748ffc81a045b3e02fad22a71b"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/raw/warmup/pair_00_synchronous_copy.log",
+      "destination": "data/runtime/raw/warmup/pair_00_synchronous_copy.log",
+      "bytes": 5146,
+      "sha256": "97a9ae4ce29cb732b0547982ad7f6766db046b60ae73dc7282a89b8caef367a2"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/scripts/build_detailed_report.py",
+      "destination": "reproduction/modeling/build_detailed_report.py",
+      "bytes": 7139,
+      "sha256": "69cfe300a5a5caa37cc7345abf6aa5f632678389773affe1ebe8dc124a474693"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/scripts/build_report.py",
+      "destination": "reproduction/modeling/build_report.py",
+      "bytes": 11235,
+      "sha256": "0dbf25142d6168c7695e3e09de4036a7debf1f0fda32bcf11fc879dd0591db4d"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/scripts/run_all.py",
+      "destination": "reproduction/modeling/run_all.py",
+      "bytes": 1536,
+      "sha256": "590035ae8ffea9749d58fc6bc30693b51264b5162d0fda93ac6aff989c26303d"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/scripts/run_kernel_generalization_ablation.py",
+      "destination": "reproduction/modeling/run_kernel_generalization_ablation.py",
+      "bytes": 9417,
+      "sha256": "4ba86a2cfa09c6265b8ca813544225ef3e7d0e37a684a600e2afdeb7249eb9fd"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/scripts/run_quality_ablation.py",
+      "destination": "reproduction/modeling/run_quality_ablation.py",
+      "bytes": 9797,
+      "sha256": "87148b8c2f9d1d1c77c571e5cf8c85b578c829782bf7799e7ace614ab6b695c2"
+    },
+    {
+      "source": "artifacts/debug/064_llama31_modeling_ablation/scripts/run_speed_ablation.py",
+      "destination": "reproduction/modeling/run_speed_ablation.py",
+      "bytes": 14826,
+      "sha256": "75a7ac6debeaefad79ee1e20cdf922917b23160dfa3f0467a8b5f32f2634c018"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/scripts/build_report.py",
+      "destination": "reproduction/calibration/build_report.py",
+      "bytes": 9122,
+      "sha256": "ec315c091fa170c05daa24b691c6f1f567fc7654ca7f16556d73caae24c0d10d"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/scripts/generate_extension_policies.py",
+      "destination": "reproduction/calibration/generate_extension_policies.py",
+      "bytes": 4639,
+      "sha256": "ff520eb6e3816159e822ada389268359ac764c781785278f985b37556768e085"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/scripts/merge_extension_nll.py",
+      "destination": "reproduction/calibration/merge_extension_nll.py",
+      "bytes": 2383,
+      "sha256": "ac39821a4d019e1a401333b47e070d1a98f8df94fdef4d73f793a897678e0762"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/scripts/run_all.py",
+      "destination": "reproduction/calibration/run_all.py",
+      "bytes": 631,
+      "sha256": "8e0b670aef08fbe2fb96460891c802121716e2362c08c995a287a8a9095fe35f"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/scripts/run_extension_nll.py",
+      "destination": "reproduction/calibration/run_extension_nll.py",
+      "bytes": 4709,
+      "sha256": "29d6fcf380ee0b8b9a66fe86663a329a21408eec0c9c36b51f7704d3d80fa183"
+    },
+    {
+      "source": "artifacts/debug/065_llama31_quality_calibration_size_sensitivity/scripts/run_sensitivity.py",
+      "destination": "reproduction/calibration/run_sensitivity.py",
+      "bytes": 10264,
+      "sha256": "88e25d23c51f775ffa5c27a77319dfe26f4d53c2fe3f8eb5c97511203ab67b87"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/scripts/audit_config.py",
+      "destination": "reproduction/runtime/audit_config.py",
+      "bytes": 1821,
+      "sha256": "19b4b1f7d1a216ac29f710c49659730f250bccb07cc02c9ec3324a4edebc49a2"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/scripts/profile_overlap.py",
+      "destination": "reproduction/runtime/profile_overlap.py",
+      "bytes": 4610,
+      "sha256": "698ea246a3390299ca2d4180110bea53fbe81794d70f6f3b0812d6363d993a83"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/scripts/run_paired_latency.py",
+      "destination": "reproduction/runtime/run_paired_latency.py",
+      "bytes": 6016,
+      "sha256": "154cbfb477bb27b326d1b2e9dcf8c761061ffabc840dd758937989be9b9ada9a"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/scripts/summarize.py",
+      "destination": "reproduction/runtime/summarize.py",
+      "bytes": 5741,
+      "sha256": "88d70a801b34dad3638d1466d8d226f65e3fdfa166638084e0605990913c0859"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/scripts/summarize_overlap_profile.py",
+      "destination": "reproduction/runtime/summarize_overlap_profile.py",
+      "bytes": 2459,
+      "sha256": "6843cadf956dba4dfc39ffc80607ef41fa1283f28295f871ce339d8a9710dd64"
+    },
+    {
+      "source": "artifacts/debug/066_llama31_vllm_overlap_ablation/scripts/materialize_checkpoint.sh",
+      "destination": "reproduction/runtime/materialize_checkpoint.sh",
+      "bytes": 844,
+      "sha256": "5cbedc6c82cac1e5a35609bcdf6883884c56e528925844181a8222ce121120ea"
+    }
+  ]
+}

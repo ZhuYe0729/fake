@@ -1,0 +1,35 @@
+{
+  "model": "Llama3.1-8B-Instruct",
+  "scenario": {
+    "batch": 8,
+    "input_seq": 2048,
+    "output_seq": 64
+  },
+  "policy": "/root/wja/project/my/cospaq/fake/artifacts/debug/057_llama31_8b_instruct_b8_o64_canonical_pareto/llama31_8b_instruct/pareto/policies/point_011.json",
+  "policy_sha256": "0bff2c39b6601a0ed7b1608908760e8c1a2d9dccbedc7410659e8302d61212d9",
+  "linear_modules": 128,
+  "phase_switched_linear_modules": 128,
+  "method_pairs": [
+    {
+      "prefill": "sparse_bf16",
+      "decode": "dense_bf16",
+      "count": 32
+    },
+    {
+      "prefill": "sparse_bf16",
+      "decode": "w4a16_ours",
+      "count": 32
+    },
+    {
+      "prefill": "sparse_nvfp4",
+      "decode": "w4a16_ours",
+      "count": 64
+    }
+  ],
+  "formal_timing_trace": false,
+  "controlled_variable": "PHASE_HETERO_SYNC_COPY",
+  "variants": {
+    "synchronous_copy": "1",
+    "asynchronous_overlap": "0"
+  }
+}
