@@ -1,0 +1,45 @@
+qkv_proj dense_bf16 done 0.9
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/015/code/profile_actions.py", line 62, in main
+    out = current(x)
+          ^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py", line 270, in forward
+    out = nvfp4_gemm_bf16(
+          ^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py", line 176, in nvfp4_gemm_bf16
+    return _load_ext().nvfp4_gemm_bf16(a_data, sfa, b_data, sfb, alpha, int(m), int(n), int(k))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/015/code/profile_actions.py", line 106, in <module>
+    main()
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/015/code/profile_actions.py", line 60, in main
+    with torch.cuda.graph(graph):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/cuda/graphs.py", line 265, in __exit__
+    self.cuda_graph.capture_end()
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/cuda/graphs.py", line 128, in capture_end
+    super().capture_end()
+torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

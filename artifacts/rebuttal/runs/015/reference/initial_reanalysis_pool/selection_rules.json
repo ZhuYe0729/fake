@@ -1,0 +1,27 @@
+{
+  "quality_budgets": [
+    0.005,
+    0.01,
+    0.02,
+    0.04,
+    0.07
+  ],
+  "inverse_latency_fractions": [
+    0.95,
+    0.8,
+    0.65
+  ],
+  "quality_guard": {
+    "z": 2.0,
+    "additive_delta_nll": 0.005
+  },
+  "latency_guard_fraction": 0.05,
+  "speed_calibration_seed": 148015771,
+  "speed_test_seed": 144983,
+  "quality_windows": 64,
+  "quality_batch": 8,
+  "selection": "Only independent validation NLL and calibration E2E; baseline BF16 guard is exact zero. Test labels do not choose candidates.",
+  "quality_sources": "Frozen WikiText validation/test windows from run005; same-map prior labels may be inherited with signature checks.",
+  "pool_sha256": "b2eafcf2015b9f65cb53c25cd9bfb13a03b6ed192f6ade6a73748036136ed4b8",
+  "scope": "New timing profile, unchanged quality surrogate; exact means additive surrogate only. Existing-map runtime probes are retained and not selection data."
+}

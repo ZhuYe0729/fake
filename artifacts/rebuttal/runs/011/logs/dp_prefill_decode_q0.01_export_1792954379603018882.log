@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/011/code/export_model.py", line 45, in <module>
+    main()
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/011/code/export_model.py", line 41, in main
+    original.main()
+  File "/root/wja/project/my/cospaq/test/vllm/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py", line 436, in main
+    convert(f"{prefix}.self_attn.qkv_proj", qkv_names)
+  File "/root/wja/project/my/cospaq/test/vllm/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py", line 411, in convert
+    prefill = convert_method(prefill_method, base_name, prefill_weight,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/011/code/export_model.py", line 23, in convert_method
+    quantized, scale, smooth = pack(method, name, weight.to('cuda',dtype=torch.bfloat16))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/011/code/eightbit.py", line 81, in pack
+    act_scales = torch.load(RUN/'data/activation_scales.pt', weights_only=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/serialization.py", line 1484, in load
+    with _open_file_like(f, "rb") as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/serialization.py", line 759, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/serialization.py", line 740, in __init__
+    super().__init__(open(name, mode))
+                     ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/011/data/activation_scales.pt'

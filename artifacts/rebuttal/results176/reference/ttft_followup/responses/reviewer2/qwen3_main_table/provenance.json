@@ -1,0 +1,1785 @@
+{
+  "created_utc": "2026-10-28T05:44:42.283749+00:00",
+  "rows": [
+    {
+      "method": "BF16",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_dense_bf16",
+        "map_sha256": "7aafcc63be76e1d5a0835a4e612fb9ef1ea2117614a8474b4f414889a1a9d06e",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "BF16",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "f7e1e4a220d2a95895cbb49b9de590ea201876fb2d75f8935e58ca6c20d2c163"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "4832c7d811541d087c18ac24d7f9bb11d3d76b047d5845225645898c61583120"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "8806426af3d6e54c28a8f79dc12717bb3a7f667270c23bce5f1fcb021d5766dd"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "a306a7194e81284d8cf028d67d3c67c15a7e882db3b120b74d0feb6f9533e93c"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.0,
+            "campaign_speedups": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "min_campaign_speedup": 1.0,
+            "max_campaign_speedup": 1.0,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_dense_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_dense_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_dense_bf16.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "uniform_dense_bf16",
+        "map_sha256": "7aafcc63be76e1d5a0835a4e612fb9ef1ea2117614a8474b4f414889a1a9d06e",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "c497f6e65357d8202f766cd64502fe8fa8d4ed78a2e7cbc63bf367e9a61fac55"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "8b98f8aceeb1851542fa2ee373dabe997bd464a104e4d45d8ec7ce5183bf406b"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "4807d0195ef9dcd749927e0496b90a30e0e1d2866e9effaa051c838018b7c590"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 1.0,
+          "pd_tpot_speedup": 1.0,
+          "pd_e2e_speedup": 1.0
+        },
+        "e2e_vs_int8_range": [
+          0.5996367790461962,
+          0.6017564567596593
+        ]
+      },
+      "point_definition": null
+    },
+    {
+      "method": "Dense NVFP4",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_dense_nvfp4",
+        "map_sha256": "3a62a5271181cc1bb4c421c25612ca05e1958a030e177ea43955760719030e84",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "Dense NVFP4",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "b2a14dd3ca13ee3fcd173ca565d82da3fcb3023ac4bf69087737f0d678a27c09"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "23a052dc5cf360286d3a596c46adda8af6ca51d59246acd6712765f28b75f79d"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "ecbc1b3df6864813f5452fd10edcdc41540a2d76f842f5de88e590fdffe99c1f"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "166fd17f5339d28d129114ef6b753f1a7dfd1be2af754de3d885a26892f7107e"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.703367991399419,
+            "campaign_speedups": [
+              1.7023618010155932,
+              1.703367991399419,
+              1.704856331909446
+            ],
+            "min_campaign_speedup": 1.7023618010155932,
+            "max_campaign_speedup": 1.704856331909446,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_dense_nvfp4.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "015",
+        "policy": "uniform_dense_nvfp4",
+        "map_sha256": "3a62a5271181cc1bb4c421c25612ca05e1958a030e177ea43955760719030e84",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "Dense NVFP4",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_dense_nvfp4/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "c0b22064add0eca4326685bcf8f3bcfe17f20a9e43c6911be5c1c7e422db685f"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_dense_nvfp4/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "f3d422d172ecf66829e62ff4835670740ce1cb8e2f9514a58d7ef2cc51bb8ff9"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_dense_nvfp4/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "31fb3006eafc76cc14a255159bf2153871e9236f9ce32e1f3f0629fdbba07e62"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": {
+            "value": 1.7003154607146316,
+            "campaign_speedups": [
+              1.7062104168862529,
+              1.6995461599948305,
+              1.7003154607146316
+            ],
+            "min_campaign_speedup": 1.6995461599948305,
+            "max_campaign_speedup": 1.7062104168862529,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_dense_nvfp4.json"
+            ]
+          },
+          "pd_tpot_speedup": {
+            "value": 1.103262302475993,
+            "campaign_speedups": [
+              1.1640615059911905,
+              1.0952263487988665,
+              1.103262302475993
+            ],
+            "min_campaign_speedup": 1.0952263487988665,
+            "max_campaign_speedup": 1.1640615059911905,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_dense_nvfp4.json"
+            ]
+          },
+          "pd_e2e_speedup": {
+            "value": 1.3807066499891842,
+            "campaign_speedups": [
+              1.419170761793153,
+              1.3756418694137378,
+              1.3807066499891842
+            ],
+            "min_campaign_speedup": 1.3756418694137378,
+            "max_campaign_speedup": 1.419170761793153,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_dense_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_dense_nvfp4.json"
+            ]
+          }
+        }
+      },
+      "point_definition": null
+    },
+    {
+      "method": "W4A16 (FP4)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_w4a16_ours",
+        "map_sha256": "0f7f08baf9153b2904ca44de930890597ed03e6be5705ffc3ee1a1a399a84264",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "W4A16 NVFP4",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "ac34c307c78d039e9a14a2b09e76b16ab8396b1970d6d07d6b1761fffccf3cd2"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "4325989c0f2d22c33af66295f51cb6848068f4765ff9733246e34cdefefae67e"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "48d505a6cac7db8c5b387ee515883e78cfcb1d8d38936100a1b3c77a2e6826e2"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "d36c73eec4b178eafdf7d9746772294e15c59a8ea7ed2d8b1cdd6c8dd1778640"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 0.9884112363964311,
+            "campaign_speedups": [
+              0.9868931506593853,
+              0.9884112363964311,
+              0.9900607348684302
+            ],
+            "min_campaign_speedup": 0.9868931506593853,
+            "max_campaign_speedup": 0.9900607348684302,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_w4a16_ours.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "015",
+        "policy": "uniform_w4a16_ours",
+        "map_sha256": "0f7f08baf9153b2904ca44de930890597ed03e6be5705ffc3ee1a1a399a84264",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "W4A16 NVFP4",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_w4a16_ours/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "82731986c198766fb74c4ccefabd6e0c1f0b5396e30e4dd37fddc4ab76fd6958"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_w4a16_ours/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "213328a814dba65ee8af31e33090daa26b28f9b849c67b92d4ee8e525159c05d"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_w4a16_ours/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "d98197edaed7ce691e1de973eeafe2ba7069a06c2395d03584f8959a65b3f166"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": {
+            "value": 0.9873261000473073,
+            "campaign_speedups": [
+              0.9873261000473073,
+              0.988102655542713,
+              0.9863897179105138
+            ],
+            "min_campaign_speedup": 0.9863897179105138,
+            "max_campaign_speedup": 0.988102655542713,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_w4a16_ours.json"
+            ]
+          },
+          "pd_tpot_speedup": {
+            "value": 1.8306285798774953,
+            "campaign_speedups": [
+              1.8306285798774953,
+              1.8389280376358008,
+              1.8009871608227086
+            ],
+            "min_campaign_speedup": 1.8009871608227086,
+            "max_campaign_speedup": 1.8389280376358008,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_w4a16_ours.json"
+            ]
+          },
+          "pd_e2e_speedup": {
+            "value": 1.2334969853399593,
+            "campaign_speedups": [
+              1.2334969853399593,
+              1.233617032273079,
+              1.2222843931202259
+            ],
+            "min_campaign_speedup": 1.2222843931202259,
+            "max_campaign_speedup": 1.233617032273079,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_w4a16_ours.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_w4a16_ours.json"
+            ]
+          }
+        }
+      },
+      "point_definition": null
+    },
+    {
+      "method": "W4A16 (INT4)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_marlin_int4",
+        "map_sha256": "4f8e418a8de8dfe0b35a03509deb7d3d438cfb3e2f0d0eb406871690d5a0bd4a",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "W4A16 INT4 Marlin",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "d7cf4451a24dee5b9c7401e62548c914aeabb4fa36b5c5ff4ec82afc6548b554"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "bcbded24a9a0479800fa679e331b6a590c67b6d80f041c4d0cf89977dc4b4e7c"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "c7c3eb73a8e4e3130c4dadf3861e6167a79399a0b7c5fbd62e0c3301fcaddda7"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "80fc8091599a85b4053285c8d3bca589ebf06e8ea64e2d0f28d7dbfc1a90503f"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 0.9957876986878703,
+            "campaign_speedups": [
+              0.9944263808292608,
+              0.9958607728227976,
+              0.9957876986878703
+            ],
+            "min_campaign_speedup": 0.9944263808292608,
+            "max_campaign_speedup": 0.9958607728227976,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_marlin_int4.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "015",
+        "policy": "uniform_marlin_int4",
+        "map_sha256": "4f8e418a8de8dfe0b35a03509deb7d3d438cfb3e2f0d0eb406871690d5a0bd4a",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "W4A16 INT4 Marlin",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_marlin_int4/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "5f9a3fe0160436d75f0cd5d8ccbe3bbab0d587827269301327497ad996e10d00"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_marlin_int4/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "574bb1698d9aec3cde1dcd86a7754e3fd043678b19006b64d6ffaea3b9e65bf1"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_marlin_int4/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "66a2bf67a3c96c699b018a0262f8a820dbd4215bbf7f1a6bb209dd0e1a099f04"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": {
+            "value": 0.995057304700172,
+            "campaign_speedups": [
+              0.995057304700172,
+              0.9943591957909804,
+              0.9956457116619544
+            ],
+            "min_campaign_speedup": 0.9943591957909804,
+            "max_campaign_speedup": 0.9956457116619544,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_marlin_int4.json"
+            ]
+          },
+          "pd_tpot_speedup": {
+            "value": 1.817202297591098,
+            "campaign_speedups": [
+              1.8612800119450659,
+              1.8121653640470936,
+              1.817202297591098
+            ],
+            "min_campaign_speedup": 1.8121653640470936,
+            "max_campaign_speedup": 1.8612800119450659,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_marlin_int4.json"
+            ]
+          },
+          "pd_e2e_speedup": {
+            "value": 1.233937925197363,
+            "campaign_speedups": [
+              1.2464308511705617,
+              1.233937925197363,
+              1.2330324067481953
+            ],
+            "min_campaign_speedup": 1.2330324067481953,
+            "max_campaign_speedup": 1.2464308511705617,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_marlin_int4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_marlin_int4.json"
+            ]
+          }
+        }
+      },
+      "point_definition": null
+    },
+    {
+      "method": "Sparse BF16 (2:4)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_sparse_bf16",
+        "map_sha256": "9a0b493d6f0f8fff98d6aedf357c573b8c96661e896a4894a4586c2966928884",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "Sparse BF16",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "a3c58524f9c79703d04e97f651f39e53449df26cc44f680baa133620f6a43c2a"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "2a477415629b7728451ece0ba11ba697827fc76a986ceecc25491b3edf3213b2"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "d26b6e33e0c2a0aecf9fcf33156df7f9c0b5c5f4a674aaf1c5321bd8291d828b"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "dac89c0416ec15baa4e619368ec354ef13bdd66d945a15816142c2407443d0be"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.527773525275685,
+            "campaign_speedups": [
+              1.5257708839067243,
+              1.5290431853435742,
+              1.527773525275685
+            ],
+            "min_campaign_speedup": 1.5257708839067243,
+            "max_campaign_speedup": 1.5290431853435742,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_bf16.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "015",
+        "policy": "uniform_sparse_bf16",
+        "map_sha256": "9a0b493d6f0f8fff98d6aedf357c573b8c96661e896a4894a4586c2966928884",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "Sparse BF16",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_bf16/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "1716dd838ae07294557b3ce3bdf3f7727430c8393ff2b4b4c1b658c7a46f0d34"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_bf16/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "6b4b274acf093abbbe1c530bb898dee89a569ecb3aece8953c77b6e07bf75a47"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_bf16/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "eb1c7eeb0e1f3adeea523b2286a7fe16a299f5948f03fc64d2f13e1253bd7301"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": {
+            "value": 1.5357712783280173,
+            "campaign_speedups": [
+              1.536132609837889,
+              1.5357712783280173,
+              1.5338255667673393
+            ],
+            "min_campaign_speedup": 1.5338255667673393,
+            "max_campaign_speedup": 1.536132609837889,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_bf16.json"
+            ]
+          },
+          "pd_tpot_speedup": {
+            "value": 0.7736912690467745,
+            "campaign_speedups": [
+              0.7955316485625868,
+              0.7733902184773342,
+              0.7736912690467745
+            ],
+            "min_campaign_speedup": 0.7733902184773342,
+            "max_campaign_speedup": 0.7955316485625868,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_bf16.json"
+            ]
+          },
+          "pd_e2e_speedup": {
+            "value": 1.081240747860931,
+            "campaign_speedups": [
+              1.0941379749014237,
+              1.081240747860931,
+              1.0804757921052834
+            ],
+            "min_campaign_speedup": 1.0804757921052834,
+            "max_campaign_speedup": 1.0941379749014237,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_bf16.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_bf16.json"
+            ]
+          }
+        }
+      },
+      "point_definition": null
+    },
+    {
+      "method": "Sparse NVFP4 (2:4)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_sparse_nvfp4",
+        "map_sha256": "0395692930043072ac404bc92616f175b28b7a8ad95ce1e5222fdcf352be8b43",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "Sparse NVFP4",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "d3434290980f33d26c1ce538ec7e282e90dffb0309f46b3d8792be94d68267d4"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "6758aa97fd2bf9b765062cd7abdabe077da8aef5fd1842adf55e6264dbdb984c"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "6a418d61e9c3ab1ae8c574d64b61c60cabb9300fcf23ed76a3071af3ae1c1777"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "924c38a0c1f7c4a429cb7580a05cb6045f9bee38fcfcc8bbcf570179253294ba"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.8567752601628107,
+            "campaign_speedups": [
+              1.853093356235072,
+              1.8567752601628107,
+              1.857058348565019
+            ],
+            "min_campaign_speedup": 1.853093356235072,
+            "max_campaign_speedup": 1.857058348565019,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_nvfp4.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "015",
+        "policy": "uniform_sparse_nvfp4",
+        "map_sha256": "0395692930043072ac404bc92616f175b28b7a8ad95ce1e5222fdcf352be8b43",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "Sparse NVFP4",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_nvfp4/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "4b01f881c817655af155277d3cacddebc6e01dc5f277e6f15f7273c947c64d4e"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_nvfp4/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "6564bac41c7c5bacefa293e3625ad096fc003926db0e6721280400cb658e52b4"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_nvfp4/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "7b5b578534806bb608797069d166e2a662344f016726aac3296bc05dc8f324af"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": {
+            "value": 1.8538431395575818,
+            "campaign_speedups": [
+              1.8538431395575818,
+              1.8540238316822928,
+              1.852980220693548
+            ],
+            "min_campaign_speedup": 1.852980220693548,
+            "max_campaign_speedup": 1.8540238316822928,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_nvfp4.json"
+            ]
+          },
+          "pd_tpot_speedup": {
+            "value": 1.1818398287003293,
+            "campaign_speedups": [
+              1.1999694256194635,
+              1.167911792493268,
+              1.1818398287003293
+            ],
+            "min_campaign_speedup": 1.167911792493268,
+            "max_campaign_speedup": 1.1999694256194635,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_nvfp4.json"
+            ]
+          },
+          "pd_e2e_speedup": {
+            "value": 1.4907824634085656,
+            "campaign_speedups": [
+              1.499435725636245,
+              1.483094068465673,
+              1.4907824634085656
+            ],
+            "min_campaign_speedup": 1.483094068465673,
+            "max_campaign_speedup": 1.499435725636245,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sparse_nvfp4.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sparse_nvfp4.json"
+            ]
+          }
+        }
+      },
+      "point_definition": null
+    },
+    {
+      "method": "INT8 (W8A8)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "016",
+        "policy": "uniform_int8",
+        "map_sha256": "e617c822e1c64a1eeadb1bf30eca475223420a1270d006da332150fed1c9866f",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.01",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "25695045be9d334e9e0da9a7cba8fee57f08601172a16ec80070d1b3fc329951"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "cc514379e9fc40f136ae442e7aa43f199013e73b3accb4b2c644839b70318225"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "faf4a8acc9c2decfe3ee1af12f3ae8902919495ee88933ba8050d80dd2332e83"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "ddae964b3c6c1b0c89e66510d72b3ecee1d03e81b477dec82fd53772bf880f55"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": 1.863169160512458,
+          "range": {
+            "min": 1.8587408083899877,
+            "max": 1.8689560790063897
+          }
+        },
+        "selection": {
+          "label": "daso8_verified_prefill_only_q0.01",
+          "scenario": "prefill_only",
+          "quality_budget": 0.01,
+          "policy": "uniform_int8",
+          "validation": {
+            "policy": "uniform_int8",
+            "scenario": "prefill_only",
+            "validation_delta_nll": -0.009883505790001398,
+            "paired_se": 0.001655358598643258,
+            "guarded_delta_nll": -0.0015727885927148818,
+            "calibration_e2e_ms": 614.3978098407388,
+            "calibration_cycle_ms": 614.5019251853228
+          },
+          "feasible_candidates": 3
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "uniform_int8",
+        "map_sha256": "e617c822e1c64a1eeadb1bf30eca475223420a1270d006da332150fed1c9866f",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_int8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "2bf1b1b736ada53dabe7267af51b84d1b3f7c3c933ddabb68f782341849332ab"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_int8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "03b4752f3d568dfc35a689f1317adcec7fcc2a8ce32dd3b2f0b68cde9701eb5c"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_int8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "bb73a471fca2fc7ebd4c1381b915ea549b1d97cd28702c8b52bd99d154ffe63e"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 1.9583588040842483,
+          "pd_tpot_speedup": 1.3917815473908601,
+          "pd_e2e_speedup": 1.6646773092800753
+        },
+        "e2e_vs_int8_range": [
+          1.0,
+          1.0
+        ]
+      },
+      "point_definition": null
+    },
+    {
+      "method": "SmoothQuant INT8",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_sq_int8",
+        "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant INT8",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "e8c7c5301d33bfb8450f147258b8557f8c17dc5da0f2883989793f6b51027336"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "f7f15bffc0b7a26ae41a136d9ced3560a020db980326dfe1156da637192208de"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "9c549439a6fc1ad936da75e1f318a1e4df5c22fb004d729da734d85025aa97a6"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "6147f8c2897fb30bda6c3157371370ad269dcbde1e0450f1cb818d5c65854609"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.8901380008683246,
+            "campaign_speedups": [
+              1.8907699269076552,
+              1.8901380008683246,
+              1.8891352302079754
+            ],
+            "min_campaign_speedup": 1.8891352302079754,
+            "max_campaign_speedup": 1.8907699269076552,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sq_int8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sq_int8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sq_int8.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "uniform_sq_int8",
+        "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_sq_int8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "4c2e62f2b8e9d8ea880f97784c0f50f747466793f1cd4bc1e66b8371ba266d69"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_sq_int8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "996c00c9fc31f2fb749cfb93de514c6d613f7c5105ac4d1a8b6acfc81dbb29c7"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_sq_int8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "6a8e652bed5a31ad61a31a623d7460450d6be2384108feb04b7aed8b4f525ad4"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 1.9532471852047655,
+          "pd_tpot_speedup": 1.3885414016081379,
+          "pd_e2e_speedup": 1.6614573872699196
+        },
+        "e2e_vs_int8_range": [
+          0.9967183751746794,
+          0.9989935880648134
+        ]
+      },
+      "point_definition": null
+    },
+    {
+      "method": "FP8 (W8A8)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_fp8",
+        "map_sha256": "0406a7e7f71cf42e1ed98d257bbc069a87d9eb284bfe2fb60ce3e619125585fb",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "FP8 W8A8",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "6db818c0c67086bf16f5b88d19f08c38350d8799fb2e4ff3b0119b016c60e249"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "482ccfa17f42ea8c27dc67e8008766cabf7e6d5a200b41c2840bd3f29e5a7553"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "1a9a340678bc35c69cf35e6468effcaf4349e412649c45115f1eb8e3756137fb"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "efe30ab686eb728664f3ad78e8cf8b50f49fa0e70b5f84e6bde88e3cd75ffbe6"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.6882895939255715,
+            "campaign_speedups": [
+              1.6869934294120539,
+              1.6888182234896982,
+              1.6882895939255715
+            ],
+            "min_campaign_speedup": 1.6869934294120539,
+            "max_campaign_speedup": 1.6888182234896982,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_fp8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_fp8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_fp8.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "uniform_fp8",
+        "map_sha256": "0406a7e7f71cf42e1ed98d257bbc069a87d9eb284bfe2fb60ce3e619125585fb",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_fp8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "c6b96249f1575544871c1e87341a85379e15ca8b3fffb700087989d88b228996"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_fp8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "97b04655a353e006cacc9dcbfc65a95df96548c91f0c771910f5e2623a80968f"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_fp8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "2e32ef918ebcdef04fb61d0c8355aed8af7166865c249b140c2557797b8a7cf3"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 1.698595309025012,
+          "pd_tpot_speedup": 0.7655218637249578,
+          "pd_e2e_speedup": 1.1124022260025568
+        },
+        "e2e_vs_int8_range": [
+          0.6611429331927765,
+          0.6721694458590064
+        ]
+      },
+      "point_definition": null
+    },
+    {
+      "method": "SmoothQuant FP8",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_sq_fp8",
+        "map_sha256": "ec5e6a344eb8d277189522b22a4cbc7971633a238e6ec453f0642c27ee4d4183",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant FP8",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "b907f6e7d2822bc01cd85f5b6ea2d5ecb894b83e90af92a553765dd4ab73cfe3"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "fe74fa2b5a83f4bf08a20e7eff96c1a560aa1a09ce748c6005f7ee4366e48375"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "46940ffa8c8fe930278b086b216dd64738ea569af8772a5359183e82e1ee9130"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "1b2cc729a76215f41fd026bd65f1cdda0055fd2b7d8a37540102f18c868fca25"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.6887338982195617,
+            "campaign_speedups": [
+              1.6887338982195617,
+              1.689302818510689,
+              1.685530660964382
+            ],
+            "min_campaign_speedup": 1.685530660964382,
+            "max_campaign_speedup": 1.689302818510689,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sq_fp8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sq_fp8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sq_fp8.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "uniform_sq_fp8",
+        "map_sha256": "ec5e6a344eb8d277189522b22a4cbc7971633a238e6ec453f0642c27ee4d4183",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_sq_fp8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "92b936e389c61b07619b412ffb2f40a54fd500a69d2f2bb08c8a1ea0025c1533"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_sq_fp8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "eaa2b0334aae2c3a6f4ce20b53c63ca95d2f35b63fc2fed945bc8a41a1edc679"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/uniform_sq_fp8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "1992798dfa281f62b78123cb6994ae95019be5f2bf5d48b95ba7d80e0490adb7"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 1.6941427983794832,
+          "pd_tpot_speedup": 0.7535718211090933,
+          "pd_e2e_speedup": 1.1010725088505529
+        },
+        "e2e_vs_int8_range": [
+          0.6611318690054023,
+          0.6618492560360274
+        ]
+      },
+      "point_definition": null
+    },
+    {
+      "method": "SQ-INT8 → W4A16",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_sq_int8",
+        "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant INT8",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "e8c7c5301d33bfb8450f147258b8557f8c17dc5da0f2883989793f6b51027336"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "f7f15bffc0b7a26ae41a136d9ced3560a020db980326dfe1156da637192208de"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "9c549439a6fc1ad936da75e1f318a1e4df5c22fb004d729da734d85025aa97a6"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "6147f8c2897fb30bda6c3157371370ad269dcbde1e0450f1cb818d5c65854609"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.8901380008683246,
+            "campaign_speedups": [
+              1.8907699269076552,
+              1.8901380008683246,
+              1.8891352302079754
+            ],
+            "min_campaign_speedup": 1.8891352302079754,
+            "max_campaign_speedup": 1.8907699269076552,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sq_int8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sq_int8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sq_int8.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "fixed_sq_int8_w4a16",
+        "map_sha256": "9cbf5295521b7b3c63c803978ffebdfc99e314b9cf93078a74c3c23fe1535ddb",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/fixed_sq_int8_w4a16/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "ea2d73b3d4d3fb3b8d861b2a53f855b693030184131efb94c0b78fd0ad707e31"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/fixed_sq_int8_w4a16/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "d53f26016fb61344e6715b4cc8b384ddfb38d96ea7ba985cf35dfaf54cda7833"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/fixed_sq_int8_w4a16/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "9b772dc2b95a6ac50785ca6da5a8f9bc0e5490ac104e5595ecf2d9ea21e8183e"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 1.9503553780697178,
+          "pd_tpot_speedup": 1.9120968741124358,
+          "pd_e2e_speedup": 1.9341300319649053
+        },
+        "e2e_vs_int8_range": [
+          1.1492797759572224,
+          1.1689808569905917
+        ]
+      },
+      "point_definition": "Fixed uniform prefill/decode baseline."
+    },
+    {
+      "method": "HAWQ-V3 (Balanced)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "graph_hawq_fp4_prefill_only_r0.8",
+        "map_sha256": "fa9968b0d47160442a94e8956292b999297f696c95be8ff7ff9bf89d0ee1a5f5",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "HAWQ-v3 FP4, latency target=.80 BF16 (PTQ)",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "a0f7fe587c4d7fa7956d0b3b53ff0f553aa48140adb23ebc9f0f5cb489bf13da"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "468d59c92bc9e79a83ccc037034494f570643e63ea80069791cd758c52ba45b3"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "95e01c5e53905d63166834a9c31f3d8a26e0562e066149729b1ad3fb28e8d19c"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "5bf0786540bca9abacaa2d296b05fba032cbb1780b4bab89fd2d97d3085f1ea0"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.3176710951404953,
+            "campaign_speedups": [
+              1.3176710951404953,
+              1.319489609543255,
+              1.3165392297493472
+            ],
+            "min_campaign_speedup": 1.3165392297493472,
+            "max_campaign_speedup": 1.319489609543255,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/graph_hawq_fp4_prefill_only_r0.8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/graph_hawq_fp4_prefill_only_r0.8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/graph_hawq_fp4_prefill_only_r0.8.json"
+            ]
+          }
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+        "map_sha256": "cf73ed5a97d3d17181cacd4cf22751f40ff506f3609bbc00fbb955e2eada8e8d",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "c12446f253b7e705d6694dad1f6f83ef952ad4624ba65e0a975e9a32105b216a"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "33a8b5ea5025d69b3e716caa2cab10ed8c4d88ee779a3a2f0d3a3584f2fe0dd3"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "8d1cc4e0008ff2ab218477bca2dc5165ba1cad8fbb3f37041c6fef9e2f22ed40"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 1.4141093512207439,
+          "pd_tpot_speedup": 1.2120257714353635,
+          "pd_e2e_speedup": 1.3193182203012974
+        },
+        "e2e_vs_int8_range": [
+          0.7922062559140531,
+          0.7927477910896086
+        ]
+      },
+      "point_definition": "FP4/INT8/BF16 PTQ adaptation; Hessian objective under r=.80 latency cap, separately for both scenarios."
+    },
+    {
+      "method": "HAWQ-V3 (Max-speed)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "016",
+        "policy": "hardware_minimum_prefill_only_same_operator",
+        "map_sha256": "8bd60e611755a10699c2f4e3e0c43ef553e8a7725d2488af15a5246925f7a585",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.04",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "cfa01afa6dc1a45780d6d726ab2b235cc80ba670760992411e6844e876cacdb3"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "f37ecb9faed71f10a711a0beccfce6e5618e2797a0a42cb6609be98e4e4f9294"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "6dab0cd91f07565c4a207c1b25f5d2f1d9647d59022a5cb063facae6b71233a8"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "5d46975f93641864e972e9551f8f7b3ebd74a439cc82567a04ecd31c745a2e25"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": 2.166511621682537,
+          "range": {
+            "min": 2.155631844879283,
+            "max": 2.168828039011131
+          }
+        },
+        "selection": {
+          "label": "daso8_verified_prefill_only_q0.04",
+          "scenario": "prefill_only",
+          "quality_budget": 0.04,
+          "policy": "hardware_minimum_prefill_only_same_operator",
+          "validation": {
+            "policy": "hardware_minimum_prefill_only_same_operator",
+            "scenario": "prefill_only",
+            "validation_delta_nll": 0.009920116663069342,
+            "paired_se": 0.0027528984899445347,
+            "guarded_delta_nll": 0.020425913642958413,
+            "calibration_e2e_ms": 527.8398278169334,
+            "calibration_cycle_ms": 527.9744938015938
+          },
+          "feasible_candidates": 8
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "hardware_minimum_prefill_decode_phase_pair",
+        "map_sha256": "78cc66d64f2c7ec10c44e8ac54b09ba08036b638bbba34238ce19c86620e3978",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/hardware_minimum_prefill_decode_phase_pair/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "8b3a6ac0076751161861aa57a9ec19a6c414bb50d1261475558cea0cdbb48f26"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/hardware_minimum_prefill_decode_phase_pair/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "120d6d40d476224ecab1a830a1bf18608b87d73c0f95538389f216bf634230af"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/hardware_minimum_prefill_decode_phase_pair/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "db30161ba0791fa645de4dffb21ca4cf077da6085fb3af5149e6ad8358e303d2"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 2.216924992050627,
+          "pd_tpot_speedup": 1.6094319744208272,
+          "pd_e2e_speedup": 1.9050039550351645
+        },
+        "e2e_vs_int8_range": [
+          1.1429208086344431,
+          1.1458370972554641
+        ]
+      },
+      "point_definition": {
+        "definition": "Archived Hessian/ILP output at the minimum feasible Linear-latency cap; not the infeasible original request.",
+        "endpoint_solver_records": {
+          "prefill_only": {
+            "label": "graph_hawq_fp4_prefill_only_q0.07",
+            "policy_id": "hawq_fp4_phase_pair_signed_prefill_only_q0.07",
+            "scenario": "prefill_only",
+            "family": "fresh HAWQ PTQ adaptation",
+            "paired_quality_budget": 0.07,
+            "requested_linear_limit_ms": 351.4338492726286,
+            "minimum_linear_ms": 363.9117004349828,
+            "relaxed_infeasible": true,
+            "linear_limit_ms": 363.9117005349828,
+            "predicted_linear_ms": 363.9117004349828,
+            "sensitivity_objective": 0.04577092749191268
+          },
+          "prefill_decode": {
+            "label": "graph_hawq_fp4_prefill_decode_q0.07",
+            "policy_id": "graph_hawq_fp4_prefill_decode_q0.01",
+            "scenario": "prefill_decode",
+            "family": "fresh HAWQ PTQ adaptation",
+            "paired_quality_budget": 0.07,
+            "requested_linear_limit_ms": 529.0006775002678,
+            "minimum_linear_ms": 620.8473293561015,
+            "relaxed_infeasible": true,
+            "linear_limit_ms": 620.8473294561014,
+            "predicted_linear_ms": 620.8473293561015,
+            "sensitivity_objective": 0.04577092749191268
+          }
+        },
+        "shared_prefill_measurement": "Identical full method_map to DASO speed point; reuse one measurement."
+      }
+    },
+    {
+      "method": "DASO (Balanced)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "015",
+        "policy": "uniform_sq_int8",
+        "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant INT8",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "e8c7c5301d33bfb8450f147258b8557f8c17dc5da0f2883989793f6b51027336"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "f7f15bffc0b7a26ae41a136d9ced3560a020db980326dfe1156da637192208de"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "9c549439a6fc1ad936da75e1f318a1e4df5c22fb004d729da734d85025aa97a6"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "6147f8c2897fb30bda6c3157371370ad269dcbde1e0450f1cb818d5c65854609"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": {
+            "value": 1.8901380008683246,
+            "campaign_speedups": [
+              1.8907699269076552,
+              1.8901380008683246,
+              1.8891352302079754
+            ],
+            "min_campaign_speedup": 1.8891352302079754,
+            "max_campaign_speedup": 1.8907699269076552,
+            "sources": [
+              "artifacts/rebuttal/runs/015/results/speed/node0/round0/uniform_sq_int8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round1/uniform_sq_int8.json",
+              "artifacts/rebuttal/runs/015/results/speed/node0/round2/uniform_sq_int8.json"
+            ]
+          }
+        },
+        "selection": {
+          "label": "graph_verified_prefill_only_q0.01",
+          "scenario": "prefill_only",
+          "policy_id": "uniform_sq_int8",
+          "quality_budget": 0.01,
+          "family": "validation-selected",
+          "validation": {
+            "policy_id": "uniform_sq_int8",
+            "scenario": "prefill_only",
+            "delta_nll": -0.014012608657259302,
+            "paired_se": 0.001523932579277546,
+            "guarded_delta_nll": -0.005964743498704209,
+            "calibration_median_ms": 600.4471799824387,
+            "calibration_max_ms": 601.6534578520805,
+            "guarded_calibration_ms": 631.7361307446845,
+            "calibration_cycle_ms": 600.5620779469609,
+            "baseline_calibration_ms": 1131.2029629480094
+          },
+          "feasible_candidates": 2
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "w1_e0.01",
+        "map_sha256": "b3a7766fdbdffaa772843ce303dc2cd4473d5c4d9019daef1f6c547334b72489",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/w1_e0.01/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "d40a03472e05c6304d4a75055e3aa697e51e550664e4120b3a6e2c075997e2cb"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/w1_e0.01/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "51c4ef120fed0748f72432cad1d0d7e114ce9fea9fa1e1f5055a01374c12d93c"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/w1_e0.01/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "2f4f8cba96b7a72c11c3a8a6af8cd9944ea2e0477d909f3724838033f2fb9e13"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 2.2181630622366537,
+          "pd_tpot_speedup": 1.8026334902453955,
+          "pd_e2e_speedup": 2.017484455010006
+        },
+        "e2e_vs_int8_range": [
+          1.2096876323349626,
+          1.2138797905754317
+        ]
+      },
+      "point_definition": "Representative quality-oriented reported point; prefill selected SQ-INT8, P+D frozen D1; no common actual epsilon claimed."
+    },
+    {
+      "method": "DASO (Max-speed)",
+      "prefill_only": {
+        "scenario": "prefill_only",
+        "policy_run": "016",
+        "policy": "hardware_minimum_prefill_only_same_operator",
+        "map_sha256": "8bd60e611755a10699c2f4e3e0c43ef553e8a7725d2488af15a5246925f7a585",
+        "source_table": "responses/reviewer2/qwen3_table2_night161/main_table.csv",
+        "source_row": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.04",
+        "quality": {
+          "arc_c": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172,
+            "sha256": "cfa01afa6dc1a45780d6d726ab2b235cc80ba670760992411e6844e876cacdb3"
+          },
+          "arc_e": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376,
+            "sha256": "f37ecb9faed71f10a711a0beccfce6e5618e2797a0a42cb6609be98e4e4f9294"
+          },
+          "wino": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267,
+            "sha256": "6dab0cd91f07565c4a207c1b25f5d2f1d9647d59022a5cb063facae6b71233a8"
+          },
+          "mmlu": {
+            "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042,
+            "sha256": "5d46975f93641864e972e9551f8f7b3ebd74a439cc82567a04ecd31c745a2e25"
+          }
+        },
+        "speed": {
+          "prefill_ttft_speedup": 2.166511621682537,
+          "range": {
+            "min": 2.155631844879283,
+            "max": 2.168828039011131
+          }
+        },
+        "selection": {
+          "label": "daso8_verified_prefill_only_q0.04",
+          "scenario": "prefill_only",
+          "quality_budget": 0.04,
+          "policy": "hardware_minimum_prefill_only_same_operator",
+          "validation": {
+            "policy": "hardware_minimum_prefill_only_same_operator",
+            "scenario": "prefill_only",
+            "validation_delta_nll": 0.009920116663069342,
+            "paired_se": 0.0027528984899445347,
+            "guarded_delta_nll": 0.020425913642958413,
+            "calibration_e2e_ms": 527.8398278169334,
+            "calibration_cycle_ms": 527.9744938015938
+          },
+          "feasible_candidates": 8
+        }
+      },
+      "prefill_decode": {
+        "scenario": "prefill_decode",
+        "policy_run": "048",
+        "policy": "w32_e0.03",
+        "map_sha256": "24dbc084d3f627e894638003273e3e0c70edd995b5f116256b5363f79891fb7c",
+        "source_table": "responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv",
+        "quality": {
+          "cnn_dm": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/w32_e0.03/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000,
+            "sha256": "6d38f61cbc44cdb954baaee65b6a0f63244d2d3b3fabfe6a2511db470b48b5ff"
+          },
+          "dialogsum": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/w32_e0.03/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500,
+            "sha256": "0d91e7d1880e948074dea25dccae3485cea641aec53c4e566b539e2ed7798039"
+          },
+          "iwslt": {
+            "source": "artifacts/rebuttal/runs/048/results/generation/w32_e0.03/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333,
+            "sha256": "a198fb2f47fd52750ed241a54ccb587ba0840da05bbebce3e526c9791fd742ea"
+          }
+        },
+        "speed": {
+          "pd_ttft_speedup": 2.185163486633644,
+          "pd_tpot_speedup": 1.8609797185454173,
+          "pd_e2e_speedup": 2.0324653931672003
+        },
+        "e2e_vs_int8_range": [
+          1.2188587492003542,
+          1.2230164597639759
+        ]
+      },
+      "point_definition": "Representative speed-oriented reported point; prefill minimum-cost incumbent, P+D frozen D32. Faster displayed point, not a global maximum over all archived budgets."
+    }
+  ],
+  "source_sha256": {
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2_night161/main_table.csv": "94914d3d6e0d308396cd74930bc3c495a342663d9bf470d0bc104a651ec6dd38",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2/provenance.json": "e86cfd83f3b0d06b95c75b0be1cb97e6cf592105a4e8767593e8e50c05793609",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/provenance.json": "880778de952966ba298759248ccd382890afa71f006e8fbcf2d20252743dbb44",
+    "artifacts/rebuttal/responses/reviewer2/qwen_full_repeat_run048/repeated_pd.csv": "50bc180f9a00ab1ed9a7375d9cf5b85ed5163b70982766a804f80ebff00de8f1",
+    "artifacts/rebuttal/runs/015/configs/reanalysis_pool.json": "2bc67dd7e1762e481306d66ce9ca24b51b9374349e22f605fdfbe3602867edb8",
+    "artifacts/rebuttal/runs/015/configs/policies/hawq_fp4_phase_pair_signed_prefill_only_q0.07.json": "5f5cd6fe63b5e3163cbbec6deece0ceb65d7e29d6c562b6ded108bada0862a73",
+    "artifacts/rebuttal/runs/016/configs/policies/hardware_minimum_prefill_only_same_operator.json": "18954d12b31c6cd3849050f6eb30f3b727b42532697070ecec7615b149321ee8",
+    "artifacts/rebuttal/runs/015/configs/policies/graph_hawq_fp4_prefill_decode_q0.01.json": "0b839bba5147a743bfbd1d89af91f799f2a644f1e167f576f896b7d1e1854f58",
+    "artifacts/rebuttal/runs/048/configs/policies/hardware_minimum_prefill_decode_phase_pair.json": "0c092a3b2ed1414fb54cfc7dfa4f612a614c67353ba09bcb7639c9f1f5ed7785",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/arc_challenge/full/result.json": "f7e1e4a220d2a95895cbb49b9de590ea201876fb2d75f8935e58ca6c20d2c163",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/arc_easy/full/result.json": "4832c7d811541d087c18ac24d7f9bb11d3d76b047d5845225645898c61583120",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/winogrande/full/result.json": "8806426af3d6e54c28a8f79dc12717bb3a7f667270c23bce5f1fcb021d5766dd",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_bf16/mmlu/full/result.json": "a306a7194e81284d8cf028d67d3c67c15a7e882db3b120b74d0feb6f9533e93c",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_dense_bf16.json": "ca97e90376f1d97b65e778a669a04691117f765647356863b824ac25053138ab",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_dense_bf16.json": "beb0114dac4e4ecb44b988300978cabf7624a2e908e2c73ce5c88c37842bd79f",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json": "c497f6e65357d8202f766cd64502fe8fa8d4ed78a2e7cbc63bf367e9a61fac55",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json": "8b98f8aceeb1851542fa2ee373dabe997bd464a104e4d45d8ec7ce5183bf406b",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json": "4807d0195ef9dcd749927e0496b90a30e0e1d2866e9effaa051c838018b7c590",
+    "artifacts/rebuttal/runs/048/configs/policies/uniform_dense_bf16.json": "beb0114dac4e4ecb44b988300978cabf7624a2e908e2c73ce5c88c37842bd79f",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/arc_challenge/full/result.json": "b2a14dd3ca13ee3fcd173ca565d82da3fcb3023ac4bf69087737f0d678a27c09",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/arc_easy/full/result.json": "23a052dc5cf360286d3a596c46adda8af6ca51d59246acd6712765f28b75f79d",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/winogrande/full/result.json": "ecbc1b3df6864813f5452fd10edcdc41540a2d76f842f5de88e590fdffe99c1f",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_dense_nvfp4/mmlu/full/result.json": "166fd17f5339d28d129114ef6b753f1a7dfd1be2af754de3d885a26892f7107e",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_dense_nvfp4.json": "25b5805cb3e118bff7dcba1b5f14750c2ebfb344f093e95c6099a00ea4762539",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_dense_nvfp4.json": "25b5805cb3e118bff7dcba1b5f14750c2ebfb344f093e95c6099a00ea4762539",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_dense_nvfp4/cnn_dm_1000/metrics_0000_end.json": "c0b22064add0eca4326685bcf8f3bcfe17f20a9e43c6911be5c1c7e422db685f",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_dense_nvfp4/dsum/metrics_0000_end.json": "f3d422d172ecf66829e62ff4835670740ce1cb8e2f9514a58d7ef2cc51bb8ff9",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_dense_nvfp4/IWSLT/metrics_0000_end.json": "31fb3006eafc76cc14a255159bf2153871e9236f9ce32e1f3f0629fdbba07e62",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/arc_challenge/full/result.json": "ac34c307c78d039e9a14a2b09e76b16ab8396b1970d6d07d6b1761fffccf3cd2",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/arc_easy/full/result.json": "4325989c0f2d22c33af66295f51cb6848068f4765ff9733246e34cdefefae67e",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/winogrande/full/result.json": "48d505a6cac7db8c5b387ee515883e78cfcb1d8d38936100a1b3c77a2e6826e2",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_w4a16_ours/mmlu/full/result.json": "d36c73eec4b178eafdf7d9746772294e15c59a8ea7ed2d8b1cdd6c8dd1778640",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_w4a16_ours.json": "633f6cfaa7d0438e9ba05dc33defb5bb617d6cd2700c8a0bd0e5f68724f9ca3c",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_w4a16_ours.json": "633f6cfaa7d0438e9ba05dc33defb5bb617d6cd2700c8a0bd0e5f68724f9ca3c",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_w4a16_ours/cnn_dm_1000/metrics_0000_end.json": "82731986c198766fb74c4ccefabd6e0c1f0b5396e30e4dd37fddc4ab76fd6958",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_w4a16_ours/dsum/metrics_0000_end.json": "213328a814dba65ee8af31e33090daa26b28f9b849c67b92d4ee8e525159c05d",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_w4a16_ours/IWSLT/metrics_0000_end.json": "d98197edaed7ce691e1de973eeafe2ba7069a06c2395d03584f8959a65b3f166",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/arc_challenge/full/result.json": "d7cf4451a24dee5b9c7401e62548c914aeabb4fa36b5c5ff4ec82afc6548b554",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/arc_easy/full/result.json": "bcbded24a9a0479800fa679e331b6a590c67b6d80f041c4d0cf89977dc4b4e7c",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/winogrande/full/result.json": "c7c3eb73a8e4e3130c4dadf3861e6167a79399a0b7c5fbd62e0c3301fcaddda7",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_marlin_int4/mmlu/full/result.json": "80fc8091599a85b4053285c8d3bca589ebf06e8ea64e2d0f28d7dbfc1a90503f",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_marlin_int4.json": "1d1cf886cc17d9b24c5ab9ef11ef930edf980c1e48c58c5fe2f0bd5bf9345a41",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_marlin_int4.json": "1d1cf886cc17d9b24c5ab9ef11ef930edf980c1e48c58c5fe2f0bd5bf9345a41",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_marlin_int4/cnn_dm_1000/metrics_0000_end.json": "5f9a3fe0160436d75f0cd5d8ccbe3bbab0d587827269301327497ad996e10d00",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_marlin_int4/dsum/metrics_0000_end.json": "574bb1698d9aec3cde1dcd86a7754e3fd043678b19006b64d6ffaea3b9e65bf1",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_marlin_int4/IWSLT/metrics_0000_end.json": "66a2bf67a3c96c699b018a0262f8a820dbd4215bbf7f1a6bb209dd0e1a099f04",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/arc_challenge/full/result.json": "a3c58524f9c79703d04e97f651f39e53449df26cc44f680baa133620f6a43c2a",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/arc_easy/full/result.json": "2a477415629b7728451ece0ba11ba697827fc76a986ceecc25491b3edf3213b2",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/winogrande/full/result.json": "d26b6e33e0c2a0aecf9fcf33156df7f9c0b5c5f4a674aaf1c5321bd8291d828b",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_bf16/mmlu/full/result.json": "dac89c0416ec15baa4e619368ec354ef13bdd66d945a15816142c2407443d0be",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_sparse_bf16.json": "e52dc51fa2bbf29402a82d45734f3a108cab44e007459645ebaddfafb4fd4cd5",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_sparse_bf16.json": "e52dc51fa2bbf29402a82d45734f3a108cab44e007459645ebaddfafb4fd4cd5",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_bf16/cnn_dm_1000/metrics_0000_end.json": "1716dd838ae07294557b3ce3bdf3f7727430c8393ff2b4b4c1b658c7a46f0d34",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_bf16/dsum/metrics_0000_end.json": "6b4b274acf093abbbe1c530bb898dee89a569ecb3aece8953c77b6e07bf75a47",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_bf16/IWSLT/metrics_0000_end.json": "eb1c7eeb0e1f3adeea523b2286a7fe16a299f5948f03fc64d2f13e1253bd7301",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/arc_challenge/full/result.json": "d3434290980f33d26c1ce538ec7e282e90dffb0309f46b3d8792be94d68267d4",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/arc_easy/full/result.json": "6758aa97fd2bf9b765062cd7abdabe077da8aef5fd1842adf55e6264dbdb984c",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/winogrande/full/result.json": "6a418d61e9c3ab1ae8c574d64b61c60cabb9300fcf23ed76a3071af3ae1c1777",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sparse_nvfp4/mmlu/full/result.json": "924c38a0c1f7c4a429cb7580a05cb6045f9bee38fcfcc8bbcf570179253294ba",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_sparse_nvfp4.json": "8c102c1a183a78c8376b54f2622409b3a0db49fc486032286a6b606f1944f3a5",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_sparse_nvfp4.json": "8c102c1a183a78c8376b54f2622409b3a0db49fc486032286a6b606f1944f3a5",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_nvfp4/cnn_dm_1000/metrics_0000_end.json": "4b01f881c817655af155277d3cacddebc6e01dc5f277e6f15f7273c947c64d4e",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_nvfp4/dsum/metrics_0000_end.json": "6564bac41c7c5bacefa293e3625ad096fc003926db0e6721280400cb658e52b4",
+    "artifacts/rebuttal/runs/002/results/generation/uniform_sparse_nvfp4/IWSLT/metrics_0000_end.json": "7b5b578534806bb608797069d166e2a662344f016726aac3296bc05dc8f324af",
+    "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_challenge/full/result.json": "25695045be9d334e9e0da9a7cba8fee57f08601172a16ec80070d1b3fc329951",
+    "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_easy/full/result.json": "cc514379e9fc40f136ae442e7aa43f199013e73b3accb4b2c644839b70318225",
+    "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/winogrande/full/result.json": "faf4a8acc9c2decfe3ee1af12f3ae8902919495ee88933ba8050d80dd2332e83",
+    "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/mmlu/full/result.json": "ddae964b3c6c1b0c89e66510d72b3ecee1d03e81b477dec82fd53772bf880f55",
+    "artifacts/rebuttal/runs/016/configs/policies/uniform_int8.json": "ca803bfb2caa1c66a45581823b6831ccbb9045a24a739af39a559cc45b59726c",
+    "artifacts/rebuttal/runs/016/configs/selected_policies.json": "64a27f2bbb1ce0ae19a7ba89a1ca4671d44ce95e4d7175124cba219cbd373ed3",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_int8/cnn_dm_1000/metrics_0000_end.json": "2bf1b1b736ada53dabe7267af51b84d1b3f7c3c933ddabb68f782341849332ab",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_int8/dsum/metrics_0000_end.json": "03b4752f3d568dfc35a689f1317adcec7fcc2a8ce32dd3b2f0b68cde9701eb5c",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_int8/IWSLT/metrics_0000_end.json": "bb73a471fca2fc7ebd4c1381b915ea549b1d97cd28702c8b52bd99d154ffe63e",
+    "artifacts/rebuttal/runs/048/configs/policies/uniform_int8.json": "ca995f3e6afcbfb927a080b8b84c7fd1b0fb1ce68d894d1b296ee24f0bd2a676",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_challenge/full/result.json": "e8c7c5301d33bfb8450f147258b8557f8c17dc5da0f2883989793f6b51027336",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/arc_easy/full/result.json": "f7f15bffc0b7a26ae41a136d9ced3560a020db980326dfe1156da637192208de",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/winogrande/full/result.json": "9c549439a6fc1ad936da75e1f318a1e4df5c22fb004d729da734d85025aa97a6",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_int8/mmlu/full/result.json": "6147f8c2897fb30bda6c3157371370ad269dcbde1e0450f1cb818d5c65854609",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_sq_int8.json": "7122f2aaa3510d452b2af6d3c82f722914d4c4ecf27371a5e330554f82ef88a5",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_sq_int8.json": "a6e5e60873925cf5e27220e34874ea8231e23e699232610fa46ff5dedd9f119c",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_sq_int8/cnn_dm_1000/metrics_0000_end.json": "4c2e62f2b8e9d8ea880f97784c0f50f747466793f1cd4bc1e66b8371ba266d69",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_sq_int8/dsum/metrics_0000_end.json": "996c00c9fc31f2fb749cfb93de514c6d613f7c5105ac4d1a8b6acfc81dbb29c7",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_sq_int8/IWSLT/metrics_0000_end.json": "6a8e652bed5a31ad61a31a623d7460450d6be2384108feb04b7aed8b4f525ad4",
+    "artifacts/rebuttal/runs/048/configs/policies/uniform_sq_int8.json": "6c968742a500ec6c5c5eb7f078594dad270bba2ebb2718a1675a47b51e9a00b2",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/arc_challenge/full/result.json": "6db818c0c67086bf16f5b88d19f08c38350d8799fb2e4ff3b0119b016c60e249",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/arc_easy/full/result.json": "482ccfa17f42ea8c27dc67e8008766cabf7e6d5a200b41c2840bd3f29e5a7553",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/winogrande/full/result.json": "1a9a340678bc35c69cf35e6468effcaf4349e412649c45115f1eb8e3756137fb",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_fp8/mmlu/full/result.json": "efe30ab686eb728664f3ad78e8cf8b50f49fa0e70b5f84e6bde88e3cd75ffbe6",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_fp8.json": "0540ef63bd10744f82c6a18e73aef699f9bc246a9ce18dac671dafb49014a22c",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_fp8.json": "e8845030485bd599b779dad2c11af51fee363650037ec00d39e30dff5c17f003",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_fp8/cnn_dm_1000/metrics_0000_end.json": "c6b96249f1575544871c1e87341a85379e15ca8b3fffb700087989d88b228996",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_fp8/dsum/metrics_0000_end.json": "97b04655a353e006cacc9dcbfc65a95df96548c91f0c771910f5e2623a80968f",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_fp8/IWSLT/metrics_0000_end.json": "2e32ef918ebcdef04fb61d0c8355aed8af7166865c249b140c2557797b8a7cf3",
+    "artifacts/rebuttal/runs/048/configs/policies/uniform_fp8.json": "0540ef63bd10744f82c6a18e73aef699f9bc246a9ce18dac671dafb49014a22c",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/arc_challenge/full/result.json": "b907f6e7d2822bc01cd85f5b6ea2d5ecb894b83e90af92a553765dd4ab73cfe3",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/arc_easy/full/result.json": "fe74fa2b5a83f4bf08a20e7eff96c1a560aa1a09ce748c6005f7ee4366e48375",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/winogrande/full/result.json": "46940ffa8c8fe930278b086b216dd64738ea569af8772a5359183e82e1ee9130",
+    "artifacts/rebuttal/runs/002/results/tasks/uniform_sq_fp8/mmlu/full/result.json": "1b2cc729a76215f41fd026bd65f1cdda0055fd2b7d8a37540102f18c868fca25",
+    "artifacts/rebuttal/runs/015/configs/policies/uniform_sq_fp8.json": "f4dff7fc8cae2db4837fcf87c70ba18c2f010a64e1edb71ed09ddaa35051459c",
+    "artifacts/rebuttal/runs/002/configs/policies/uniform_sq_fp8.json": "f4dff7fc8cae2db4837fcf87c70ba18c2f010a64e1edb71ed09ddaa35051459c",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_sq_fp8/cnn_dm_1000/metrics_0000_end.json": "92b936e389c61b07619b412ffb2f40a54fd500a69d2f2bb08c8a1ea0025c1533",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_sq_fp8/dsum/metrics_0000_end.json": "eaa2b0334aae2c3a6f4ce20b53c63ca95d2f35b63fc2fed945bc8a41a1edc679",
+    "artifacts/rebuttal/runs/048/results/generation/uniform_sq_fp8/IWSLT/metrics_0000_end.json": "1992798dfa281f62b78123cb6994ae95019be5f2bf5d48b95ba7d80e0490adb7",
+    "artifacts/rebuttal/runs/048/configs/policies/uniform_sq_fp8.json": "ac98e531813bb987a728ce0da7a381e2b23e648ca45ba0e720ec02aaac6a05e3",
+    "artifacts/rebuttal/runs/048/results/generation/fixed_sq_int8_w4a16/cnn_dm_1000/metrics_0000_end.json": "ea2d73b3d4d3fb3b8d861b2a53f855b693030184131efb94c0b78fd0ad707e31",
+    "artifacts/rebuttal/runs/048/results/generation/fixed_sq_int8_w4a16/dsum/metrics_0000_end.json": "d53f26016fb61344e6715b4cc8b384ddfb38d96ea7ba985cf35dfaf54cda7833",
+    "artifacts/rebuttal/runs/048/results/generation/fixed_sq_int8_w4a16/IWSLT/metrics_0000_end.json": "9b772dc2b95a6ac50785ca6da5a8f9bc0e5490ac104e5595ecf2d9ea21e8183e",
+    "artifacts/rebuttal/runs/048/configs/policies/fixed_sq_int8_w4a16.json": "cf024e1188e1f2a18a46f7cded271125e82bb0bc713ad82284aab9aa51daf559",
+    "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/arc_challenge/full/result.json": "a0f7fe587c4d7fa7956d0b3b53ff0f553aa48140adb23ebc9f0f5cb489bf13da",
+    "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/arc_easy/full/result.json": "468d59c92bc9e79a83ccc037034494f570643e63ea80069791cd758c52ba45b3",
+    "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/winogrande/full/result.json": "95e01c5e53905d63166834a9c31f3d8a26e0562e066149729b1ad3fb28e8d19c",
+    "artifacts/rebuttal/runs/015/results/tasks/graph_hawq_fp4_prefill_only_r0.8/mmlu/full/result.json": "5bf0786540bca9abacaa2d296b05fba032cbb1780b4bab89fd2d97d3085f1ea0",
+    "artifacts/rebuttal/runs/015/configs/policies/graph_hawq_fp4_prefill_only_r0.8.json": "e59c9143ffebca46d0e739c719186e4eb26a0bb21296f3f5d7d4a96eb04ea1c4",
+    "artifacts/rebuttal/runs/048/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/cnn_dm_1000/metrics_0000_end.json": "c12446f253b7e705d6694dad1f6f83ef952ad4624ba65e0a975e9a32105b216a",
+    "artifacts/rebuttal/runs/048/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/dsum/metrics_0000_end.json": "33a8b5ea5025d69b3e716caa2cab10ed8c4d88ee779a3a2f0d3a3584f2fe0dd3",
+    "artifacts/rebuttal/runs/048/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/IWSLT/metrics_0000_end.json": "8d1cc4e0008ff2ab218477bca2dc5165ba1cad8fbb3f37041c6fef9e2f22ed40",
+    "artifacts/rebuttal/runs/048/configs/policies/hawq_signed_prefill_decode_phase_pair_r0.8.json": "d18f0020359247933c8e4e96113f499e8eaf11b1837cf2e1e70cfe3a520f3caf",
+    "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_challenge/full/result.json": "cfa01afa6dc1a45780d6d726ab2b235cc80ba670760992411e6844e876cacdb3",
+    "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_easy/full/result.json": "f37ecb9faed71f10a711a0beccfce6e5618e2797a0a42cb6609be98e4e4f9294",
+    "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/winogrande/full/result.json": "6dab0cd91f07565c4a207c1b25f5d2f1d9647d59022a5cb063facae6b71233a8",
+    "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/mmlu/full/result.json": "5d46975f93641864e972e9551f8f7b3ebd74a439cc82567a04ecd31c745a2e25",
+    "artifacts/rebuttal/runs/048/results/generation/hardware_minimum_prefill_decode_phase_pair/cnn_dm_1000/metrics_0000_end.json": "8b3a6ac0076751161861aa57a9ec19a6c414bb50d1261475558cea0cdbb48f26",
+    "artifacts/rebuttal/runs/048/results/generation/hardware_minimum_prefill_decode_phase_pair/dsum/metrics_0000_end.json": "120d6d40d476224ecab1a830a1bf18608b87d73c0f95538389f216bf634230af",
+    "artifacts/rebuttal/runs/048/results/generation/hardware_minimum_prefill_decode_phase_pair/IWSLT/metrics_0000_end.json": "db30161ba0791fa645de4dffb21ca4cf077da6085fb3af5149e6ad8358e303d2",
+    "artifacts/rebuttal/runs/015/configs/selected_reanalysis.json": "e41341adc4a814d5e4a3806db5281c76dc4c2b03f9e50b5556f96db385f32b0e",
+    "artifacts/rebuttal/runs/048/results/generation/w1_e0.01/cnn_dm_1000/metrics_0000_end.json": "d40a03472e05c6304d4a75055e3aa697e51e550664e4120b3a6e2c075997e2cb",
+    "artifacts/rebuttal/runs/048/results/generation/w1_e0.01/dsum/metrics_0000_end.json": "51c4ef120fed0748f72432cad1d0d7e114ce9fea9fa1e1f5055a01374c12d93c",
+    "artifacts/rebuttal/runs/048/results/generation/w1_e0.01/IWSLT/metrics_0000_end.json": "2f4f8cba96b7a72c11c3a8a6af8cd9944ea2e0477d909f3724838033f2fb9e13",
+    "artifacts/rebuttal/runs/048/configs/policies/w1_e0.01.json": "7993275e61bd9414bcaebb11176cfa6e2113b6edfe5f43b49b0af81b7a3011f8",
+    "artifacts/rebuttal/runs/048/results/generation/w32_e0.03/cnn_dm_1000/metrics_0000_end.json": "6d38f61cbc44cdb954baaee65b6a0f63244d2d3b3fabfe6a2511db470b48b5ff",
+    "artifacts/rebuttal/runs/048/results/generation/w32_e0.03/dsum/metrics_0000_end.json": "0d91e7d1880e948074dea25dccae3485cea641aec53c4e566b539e2ed7798039",
+    "artifacts/rebuttal/runs/048/results/generation/w32_e0.03/IWSLT/metrics_0000_end.json": "a198fb2f47fd52750ed241a54ccb587ba0840da05bbebce3e526c9791fd742ea",
+    "artifacts/rebuttal/runs/048/configs/policies/w32_e0.03.json": "9ba1239dac83f30057a584ae1586425d658f25123f5f43bc916b3cbba01c149c",
+    "artifacts/rebuttal/runs/015/results/manifest.json": "f2373064e52549bdb23fe4748df4130c4df6d5dee90637b6929eed08df5e19b1",
+    "artifacts/rebuttal/runs/016/results/manifest.json": "7366eec8710a81650875c630c85ba679b8b1116a4d426d1912e44b042286e334",
+    "artifacts/rebuttal/runs/048/results/final_audit.json": "dc24a7365f7f144ebca337116a8d7965f10364163605f462966724cfb9b5e67d"
+  },
+  "derived_metrics": {
+    "prefill_avg_acc": "arithmetic mean of four unrounded percentage accuracies",
+    "pd_avg_score": "arithmetic mean of two ROUGE-L percentages and corpus BLEU; descriptive summary"
+  },
+  "scope": "Curated complete Qwen table, independent scenario configurations and cross-campaign BF16 normalization; not all rows remeasured together.",
+  "reporting_point_scope": "Balanced/Max-speed label the two displayed representative points; no common actual epsilon or global optimum claim.",
+  "hawq_endpoint_verified": true,
+  "shared_prefill_map_verified": true,
+  "prefill_balanced_selection_source": "run015 verified SQ-INT8 point",
+  "parent_manifests_unchanged": {
+    "015": "f2373064e52549bdb23fe4748df4130c4df6d5dee90637b6929eed08df5e19b1",
+    "016": "7366eec8710a81650875c630c85ba679b8b1116a4d426d1912e44b042286e334"
+  }
+}

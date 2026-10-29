@@ -1,0 +1,41 @@
+{
+  "command": [
+    "numactl",
+    "--all",
+    "--physcpubind=16-23",
+    "--membind=0",
+    "/root/wja/miniconda3/envs/vllm/bin/python",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/030/code/export_model.py",
+    "--model-path",
+    "/root/wja/data/models/Qwen/Qwen3-8B",
+    "--policy-json",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/030/configs/policies/group_3ec1.json",
+    "--output-dir",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/030/data/checkpoints/group_3ec1",
+    "--cutlass-wrapper-path",
+    "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper"
+  ],
+  "gpu": 2,
+  "design_sha256": "875c324d6d844aa31ac7ef84f54a67dd29775c1076c80918663cfefb6863653a",
+  "code_sha256": {
+    "prepare.py": "ea3ee8ecb1ba6350fecb88e11241d8bb35a4c40f2d786717e7b9b6b1475f6595",
+    "common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "telemetry.py": "161c9da2fa1e1d25cc02112f8f76bb67ec4d3e3f4f67642b8b2f0fc0f0177b85",
+    "export_model.py": "e3ba193f87df657ee808bc386525bf6a78b844b5e103b07e7b155b4b47bbffbd",
+    "generate_tasks.py": "30194f3a282f6612677255e1706f0f918a2c1f2d4168979f1633bd51a03774c0",
+    "score_nll.py": "7d7c07b537f9acb9d5400d3e4668e6d90e087e528e5c9e0f2e0d2251006d7486",
+    "resources.py": "4ac653035ced60f05c63be3cb6118ac11ab7454ff1b6304ea01678baf1e08a72",
+    "selection.py": "dda3bab87cc2d0adde870dcb5447c0b816082d7afb684bcf0c00382aabd5cb7d",
+    "benchmark.py": "fff18249d275e2a9edcb7501df076e3a5c1d3024ae6c191206e0960c8c7484bd",
+    "score.py": "05804d65173e59834ea3c3589a8f3d3d29ccee08573c758af9c4abc49553bd2e",
+    "ops.py": "e7c29205cade3b7a4511b0d768cb17335c3c90b57786243d7483007c688dd985",
+    "driver.py": "bec604639a18903db4bc8602665cb4e400428ad27e1ab4efc9913925e45599ab",
+    "report.py": "1af8f7dfdd5a391d3850ace5c669c1388cdda210605e1670490909075f86d92c"
+  },
+  "code_version": "ad963f98bfb64147"
+}

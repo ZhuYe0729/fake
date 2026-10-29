@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{@{}lcS|cSSS@{}}
+\toprule
+& \multicolumn{2}{c|}{\textbf{Prefill-only}}
+& \multicolumn{4}{c}{\textbf{Prefill--Decode}} \\
+Method & Acc. & \multicolumn{1}{c|}{TTFT} & Score &
+\multicolumn{1}{c}{TTFT} & \multicolumn{1}{c}{TPOT} &
+\multicolumn{1}{c}{E2E} \\
+\midrule
+BF16             & 57.69 & 1.00 & 21.53 & 1.00 & 1.00 & 1.00 \\
+Dense NVFP4      & 56.76 & 1.08 & 20.77 & 1.07 & 0.71 & 0.81 \\
+W4A16 Marlin     & 57.25 & 0.90 & 21.57 & 0.90 & 1.52 & 1.21 \\
+Sparse BF16      & 47.06 & 1.31 & 12.34 & 1.31 & 1.08 & 1.16 \\
+Sparse NVFP4     & 34.59 & 1.19 & 11.84 & 1.18 & 0.68 & 0.81 \\
+DASO (Max speed) & 40.10 & 1.49 & 12.45 & 1.33 & 1.53 & 1.45 \\
+DASO (Balanced)  & 56.91 & 1.25 & 19.13 & 1.16 & 1.44 & 1.32 \\
+\bottomrule
+\end{tabular}
+\caption{Results for Llama-2-7B-Chat on RTX~PRO~6000.}
+\label{tab:pro6000_results}
+\end{table}

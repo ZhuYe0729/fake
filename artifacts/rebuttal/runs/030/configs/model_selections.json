@@ -1,0 +1,77 @@
+{
+  "choices": [
+    {
+      "model": "mean_only",
+      "quality_budget": 0.01,
+      "policy": "uniform_int8",
+      "objective": "e2e_ms",
+      "feasible_candidates": 3,
+      "validation_and_calibration": {
+        "policy": "uniform_int8",
+        "delta_nll": -0.01891431265268896,
+        "paired_se": 0.004929045645094507,
+        "guarded_delta_nll": -0.004056221362499946,
+        "e2e_ms": 1230.9348108246922,
+        "ttft_ms": 605.9040739201009,
+        "restore_ms": 0.19780825823545456,
+        "cycle_ms": 1231.0817358084023,
+        "tpot_ms": 9.89273123975311
+      }
+    },
+    {
+      "model": "mean_only",
+      "quality_budget": 0.04,
+      "policy": "group_7fff",
+      "objective": "e2e_ms",
+      "feasible_candidates": 6,
+      "validation_and_calibration": {
+        "policy": "group_7fff",
+        "delta_nll": -0.0027286909381349428,
+        "paired_se": 0.005178969226514133,
+        "guarded_delta_nll": 0.012629247514893324,
+        "e2e_ms": 1179.6465497463942,
+        "ttft_ms": 605.7615531608462,
+        "restore_ms": 128.19149810820818,
+        "cycle_ms": 1307.8380478546023,
+        "tpot_ms": 9.113944837793944
+      }
+    },
+    {
+      "model": "guard_aware",
+      "quality_budget": 0.01,
+      "policy": "group_3ee5",
+      "objective": "e2e_ms",
+      "feasible_candidates": 6,
+      "validation_and_calibration": {
+        "policy": "group_3ee5",
+        "delta_nll": -0.01252219550073505,
+        "paired_se": 0.004658688779911171,
+        "guarded_delta_nll": 0.0017951820590872908,
+        "e2e_ms": 1134.264521766454,
+        "ttft_ms": 605.4479102604091,
+        "restore_ms": 96.70937433838844,
+        "cycle_ms": 1229.802327696234,
+        "tpot_ms": 8.398237793395916
+      }
+    },
+    {
+      "model": "guard_aware",
+      "quality_budget": 0.04,
+      "policy": "group_3ee5",
+      "objective": "e2e_ms",
+      "feasible_candidates": 10,
+      "validation_and_calibration": {
+        "policy": "group_3ee5",
+        "delta_nll": -0.01252219550073505,
+        "paired_se": 0.004658688779911171,
+        "guarded_delta_nll": 0.0017951820590872908,
+        "e2e_ms": 1134.264521766454,
+        "ttft_ms": 605.4479102604091,
+        "restore_ms": 96.70937433838844,
+        "cycle_ms": 1229.802327696234,
+        "tpot_ms": 8.398237793395916
+      }
+    }
+  ],
+  "scope": "Each model uses only its own proposals plus common anchors; calibration comparisons are not all formal test timings."
+}

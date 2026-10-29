@@ -1,0 +1,16 @@
+{
+  "blocks": 128,
+  "scale_tokens_per_block": 2048,
+  "local_error_blocks": 16,
+  "alpha": 0.5,
+  "smoothing_scope": [
+    "qkv_proj",
+    "gate_up_proj"
+  ],
+  "elapsed_seconds": 97.85784008610062,
+  "source": "https://github.com/mit-han-lab/smoothquant/blob/main/smoothquant/smooth.py",
+  "formula": "s=clamp(act_max**0.5 / weight_input_channel_max**0.5,1e-5)",
+  "activation_scale_sha256": "336fd3727be6b6b86c152082d9421a6d9c782b6863d5648b1307265748f5e2ad",
+  "rows": 2016,
+  "runtime": "candidate-local x/s fused into dynamic per-token activation quantization"
+}

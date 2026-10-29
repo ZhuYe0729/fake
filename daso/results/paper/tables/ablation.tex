@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Ablation type & Variant & Result \\
+\midrule
+\multirow{3}{*}{Kernel modeling} & Direct fit & 14.80\% \\
+ & + Roofline & 10.78\% \\
+ & + Shape corr. & \textbf{8.01\%} \\
+\midrule
+\multirow{3}{*}{Quality modeling} & Local aggregation & 0.0571 \\
+ & + Structure-aware & 0.0468 \\
+ & + Phase-aware & \textbf{0.0413} \\
+\midrule
+\multirow{2}{*}{Runtime deployment} & Cumulative transfer & 354.94\,ms \\
+ & Exposed after overlap & \textbf{1.92\,ms} (99.46\%) \\
+\bottomrule
+\end{tabular}
+\caption{Ablation from cost modeling to runtime deployment. Kernel modeling reports MAPE, quality modeling reports $\Delta\mathrm{NLL}$ MAE, and runtime deployment reports phase-switch transfer work and its exposed portion after overlap.}
+\label{tab:modeling-ablation}
+\end{table}

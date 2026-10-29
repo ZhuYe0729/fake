@@ -1,0 +1,53 @@
+INFO 10-27 02:14:56 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-27 02:15:00 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair] to model_path [/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair]
+INFO 10-27 02:15:00 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair] to model_path [/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair]
+INFO 10-27 02:15:00 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 6442450944, 'max_num_batched_tokens': 32768, 'max_num_seqs': 8, 'disable_log_stats': True, 'enable_chunked_prefill': False, 'compilation_config': {"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[8],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': '/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair'}
+WARNING 10-27 02:15:00 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-27 02:15:00 [model.py:547] Resolved architecture: LlamaForCausalLM
+INFO 10-27 02:15:00 [model.py:1510] Using max model len 4096
+INFO 10-27 02:15:01 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair', speculative_config=None, tokenizer='/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[8],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":8,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-27 02:15:01 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-27 02:15:01 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-27 02:15:01 [gpu_model_runner.py:2602] Starting to load model /dev/shm/daso_rebuttal_017_20261026/checkpoints/hardware_minimum_prefill_decode_phase_pair...
+INFO 10-27 02:15:01 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-27 02:15:01 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:02<00:00,  2.88s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:02<00:00,  2.88s/it]
+
+INFO 10-27 02:15:05 [default_loader.py:267] Loading weights took 3.35 seconds
+INFO 10-27 02:15:05 [gpu_model_runner.py:2653] Model loading took 6.9906 GiB and 3.607940 seconds
+INFO 10-27 02:15:07 [gpu_worker.py:251] Initial free memory 30.68707275390625 GiB, reserved 6.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-27 02:15:07 [kv_cache_utils.py:1087] GPU KV cache size: 49,152 tokens
+INFO 10-27 02:15:07 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 12.00x
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  3.94it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  3.93it/s]
+INFO 10-27 02:15:08 [gpu_model_runner.py:3480] Graph capturing finished in 1 secs, took -0.08 GiB
+INFO 10-27 02:15:08 [core.py:210] init engine (profile, create kv cache, warmup model) took 2.47 seconds
+INFO 10-27 02:15:08 [llm.py:306] Supported_tasks: ('generate',)
+hardware_minimum_prefill_decode_phase_pair dsum 8 / 1500 seconds 1.7236842820420861
+hardware_minimum_prefill_decode_phase_pair dsum 88 / 1500 seconds 18.71560023492202
+hardware_minimum_prefill_decode_phase_pair dsum 168 / 1500 seconds 35.78982798662037
+hardware_minimum_prefill_decode_phase_pair dsum 248 / 1500 seconds 52.859487283974886
+hardware_minimum_prefill_decode_phase_pair dsum 328 / 1500 seconds 70.28524040989578
+hardware_minimum_prefill_decode_phase_pair dsum 408 / 1500 seconds 87.44054414890707
+hardware_minimum_prefill_decode_phase_pair dsum 488 / 1500 seconds 104.43704438162968
+hardware_minimum_prefill_decode_phase_pair dsum 568 / 1500 seconds 121.51349364500493
+hardware_minimum_prefill_decode_phase_pair dsum 648 / 1500 seconds 138.56933553190902
+hardware_minimum_prefill_decode_phase_pair dsum 728 / 1500 seconds 155.6760950256139
+hardware_minimum_prefill_decode_phase_pair dsum 808 / 1500 seconds 172.81496290303767
+hardware_minimum_prefill_decode_phase_pair dsum 888 / 1500 seconds 189.87450020667166
+hardware_minimum_prefill_decode_phase_pair dsum 968 / 1500 seconds 206.84768857480958
+hardware_minimum_prefill_decode_phase_pair dsum 1048 / 1500 seconds 223.923759508878
+hardware_minimum_prefill_decode_phase_pair dsum 1128 / 1500 seconds 240.87573598278686
+hardware_minimum_prefill_decode_phase_pair dsum 1208 / 1500 seconds 258.0155524578877
+hardware_minimum_prefill_decode_phase_pair dsum 1288 / 1500 seconds 275.07956147100776
+hardware_minimum_prefill_decode_phase_pair dsum 1368 / 1500 seconds 292.31728919269517
+hardware_minimum_prefill_decode_phase_pair dsum 1448 / 1500 seconds 309.5173811670393
+{'policy_id': 'hardware_minimum_prefill_decode_phase_pair', 'dataset': 'dsum', 'samples': 1500, 'begin': 0, 'end': None, 'generation_seconds': 321.4847300359979, 'rougeL_percent': 12.256663861495893, 'empty_predictions': 0, 'input_sha256': '3e57864e8ee294aa8dd9e1e09308efb1cd6bd6110cc3d44d309f111bcc790506', 'kv_cache_memory_bytes': 6442450944, 'quality_batch': 8, 'admission': {'kv_capacity_tokens': 49152, 'required_tokens': 32768, 'block_size': 16, 'whole_batch_fits': True}, 'max_new_tokens': 256, 'chat_template': 'original paper PMPD Claude wrapper; model tokenizer; greedy max256 EOS', 'peak_allocated_bytes': 14809444864, 'peak_reserved_bytes': 15934160896}
+[rank0]:[W1027 02:20:33.807616614 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

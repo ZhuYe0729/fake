@@ -1,0 +1,10 @@
+{
+  "source": "fake/kernels/cutlass/cutlass_wrapper/cutlass/include/cutlass/subbyte_reference.h",
+  "source_sha256": "850bf8cbaef038159b147c5ea380bc417b022c50be094d0341e6c8ef233094ce",
+  "overlay": "artifacts/rebuttal/runs/001/code/compat/include/cutlass/subbyte_reference.h",
+  "change": {
+    "old": "__nv_atomic_load_n(ptr_, __NV_ATOMIC_RELAXED)",
+    "new": "__nv_atomic_load_n(ptr_, __NV_ATOMIC_RELAXED, __NV_THREAD_SCOPE_SYSTEM)"
+  },
+  "documentation": "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#nv-atomic-load-n"
+}

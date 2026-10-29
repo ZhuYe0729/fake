@@ -1,0 +1,25 @@
+{
+  "command": [
+    "numactl",
+    "--all",
+    "--physcpubind=0-7",
+    "--membind=0",
+    "/root/wja/miniconda3/envs/vllm/bin/python",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/017/code/export_model.py",
+    "--model-path",
+    "/root/wja/data/models/LLM-Research/Meta-Llama-3.1-8B-Instruct",
+    "--policy-json",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/022/reference/017/daso8_exact_prefill_only_q0.04.json",
+    "--output-dir",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/022/data/checkpoints/017/daso8_exact_prefill_only_q0.04",
+    "--cutlass-wrapper-path",
+    "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper",
+    "--canonical-sparse-nvfp4-state",
+    "/root/wja/project/my/cospaq/fake/artifacts/debug/057_llama31_8b_instruct_b8_o64_canonical_pareto/llama31_8b_instruct/canonical/prepared/sparse_nvfp4/model.pt"
+  ],
+  "gpu": 0,
+  "local_code_sha256": {
+    "speed_worker.py": "a48c8d3dcbe14b306325720a125b36a693f8ac07e4afb0e1dc65a3f384a11177",
+    "driver.py": "40abc70ee5d99b99e0704e508590b74a9da70f7d0bf68855e60209888e22729e"
+  }
+}

@@ -1,0 +1,51 @@
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                            FixedDecode        21.97%      32.776ms        99.55%     148.517ms      49.506ms       0.000us         0.00%      18.982ms       6.327ms             3  
+                                            aten::empty        15.33%      22.877ms        15.33%      22.877ms       4.602us       0.000us         0.00%       0.000us       0.000us          4971  
+                                       cudaLaunchKernel        11.92%      17.786ms        11.92%      17.786ms       8.630us       0.000us         0.00%       0.000us       0.000us          2061  
+                                   _C::gptq_marlin_gemm         6.15%       9.178ms        20.63%      30.772ms      71.232us       8.599ms        45.30%       8.599ms      19.904us           432  
+                    vllm::unified_attention_with_output         5.42%       8.092ms        22.71%      33.873ms     313.638us       0.000us         0.00%       6.255ms      57.919us           108  
+                                            aten::copy_         3.04%       4.540ms         6.87%      10.254ms      18.884us     822.605us         4.33%     823.917us       1.517us           543  
+                                _vllm_fa2_C::varlen_fwd         2.80%       4.179ms        13.30%      19.845ms     183.746us       5.577ms        29.38%       6.073ms      56.235us           108  
+                                    aten::empty_strided         1.92%       2.863ms         1.92%       2.863ms       6.538us       0.000us         0.00%       0.000us       0.000us           438  
+                                          aten::reshape         1.69%       2.519ms         6.73%      10.040ms       7.151us       0.000us         0.00%     295.861us       0.211us          1404  
+                                             aten::view         1.58%       2.353ms         1.58%       2.353ms       1.038us       0.000us         0.00%       0.000us       0.000us          2268  
+                                       aten::empty_like         1.39%       2.076ms         4.91%       7.325ms       8.448us       0.000us         0.00%       0.000us       0.000us           867  
+                                            aten::clone         1.03%       1.540ms         8.50%      12.673ms      29.337us       0.000us         0.00%     617.383us       1.429us           432  
+                                       aten::as_strided         0.99%       1.475ms         0.99%       1.475ms       1.048us       0.000us         0.00%       0.000us       0.000us          1407  
+                                 _C::fused_add_rms_norm         0.74%       1.111ms         2.01%       2.995ms      13.868us     451.774us         2.38%     451.774us       2.092us           216  
+                                           _C::rms_norm         0.65%     964.534us         1.81%       2.704ms      12.345us     339.227us         1.79%     339.227us       1.549us           219  
+                                Activity Buffer Request         0.57%     856.430us         0.57%     856.430us     856.430us       1.312us         0.01%       1.312us       1.312us             1  
+                                           aten::select         0.52%     780.005us         0.71%       1.062ms       4.916us       0.000us         0.00%       0.000us       0.000us           216  
+                                           aten::expand         0.52%     772.547us         0.75%       1.113ms       3.436us       0.000us         0.00%       0.000us       0.000us           324  
+                                            aten::fill_         0.48%     715.879us         1.08%       1.616ms      14.961us      75.398us         0.40%      75.398us       0.698us           108  
+                                        aten::transpose         0.47%     704.140us         0.69%       1.031ms       3.153us       0.000us         0.00%       0.000us       0.000us           327  
+                  _C_cache_ops::reshape_and_cache_flash         0.46%     687.091us         1.07%       1.597ms      14.791us     181.848us         0.96%     181.848us       1.684us           108  
+                                  cudaDeviceSynchronize         0.45%     669.851us         0.45%     669.851us     334.926us       0.000us         0.00%       0.000us       0.000us             2  
+                                   cudaFuncSetAttribute         0.42%     629.242us         0.42%     629.242us       1.165us       0.000us         0.00%       0.000us       0.000us           540  
+                                           aten::unbind         0.40%     602.222us         1.12%       1.664ms      15.408us       0.000us         0.00%       0.000us       0.000us           108  
+                                   _C::rotary_embedding         0.40%     593.363us         1.01%       1.501ms      13.899us     270.424us         1.42%     270.424us       2.504us           108  
+                                 cudaDeviceGetAttribute         0.38%     564.942us         0.38%     564.942us       0.474us       0.000us         0.00%       0.000us       0.000us          1191  
+                                       _C::silu_and_mul         0.34%     499.819us         0.96%       1.430ms      13.236us     424.287us         2.24%     424.287us       3.929us           108  
+                                 aten::split_with_sizes         0.32%     479.662us         0.54%     805.246us       7.456us       0.000us         0.00%       0.000us       0.000us           108  
+                                            aten::zeros         0.27%     407.111us         2.06%       3.072ms      28.447us       0.000us         0.00%      75.398us       0.698us           108  
+                                            aten::zero_         0.27%     403.284us         1.35%       2.019ms      18.695us       0.000us         0.00%      75.398us       0.698us           108  
+               Linear/model.layers.0.self_attn.qkv_proj         0.27%     396.852us         0.49%     725.091us     241.697us       0.000us         0.00%      36.831us      12.277us             3  
+                                            aten::slice         0.26%     384.657us         0.39%     584.129us       2.704us       0.000us         0.00%       0.000us       0.000us           216  
+                                       aten::contiguous         0.24%     355.386us         4.70%       7.017ms      32.485us       0.000us         0.00%     321.522us       1.489us           216  
+                 Linear/model.layers.0.self_attn.o_proj         0.20%     296.140us         0.39%     581.080us     193.693us       0.000us         0.00%      32.416us      10.805us             3  
+                                     aten::_unsafe_view         0.18%     265.445us         0.18%     265.445us       1.229us       0.000us         0.00%       0.000us       0.000us           216  
+                 Linear/model.layers.2.self_attn.o_proj         0.17%     252.660us         0.35%     517.354us     172.451us       0.000us         0.00%      32.064us      10.688us             3  
+                 Linear/model.layers.1.self_attn.o_proj         0.16%     238.642us         0.34%     508.352us     169.451us       0.000us         0.00%      31.264us      10.421us             3  
+                 Linear/model.layers.3.self_attn.o_proj         0.15%     226.448us         0.33%     494.164us     164.721us       0.000us         0.00%      32.000us      10.667us             3  
+                 Linear/model.layers.0.mlp.gate_up_proj         0.15%     224.553us         0.33%     493.226us     164.409us       0.000us         0.00%     109.024us      36.341us             3  
+                 Linear/model.layers.5.self_attn.o_proj         0.15%     216.567us         0.32%     470.137us     156.712us       0.000us         0.00%      31.455us      10.485us             3  
+                 Linear/model.layers.6.self_attn.o_proj         0.14%     214.731us         0.33%     497.045us     165.682us       0.000us         0.00%      31.488us      10.496us             3  
+                Linear/model.layers.11.self_attn.o_proj         0.14%     211.144us         0.30%     444.545us     148.182us       0.000us         0.00%      31.136us      10.379us             3  
+                                               aten::mm         0.14%     211.141us         0.16%     244.509us      81.503us       2.227ms        11.73%       2.227ms     742.354us             3  
+                 Linear/model.layers.7.self_attn.o_proj         0.14%     206.249us         0.30%     451.140us     150.380us       0.000us         0.00%      32.256us      10.752us             3  
+                 Linear/model.layers.4.self_attn.o_proj         0.14%     203.832us         0.36%     543.178us     181.059us       0.000us         0.00%      31.232us      10.411us             3  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 149.186ms
+Self CUDA time total: 18.981ms

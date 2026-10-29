@@ -1,0 +1,35 @@
+{
+  "mode": "prefill_nll",
+  "arguments": [
+    "/root/wja/project/my/cospaq/fake/daso/workflows/paper/runtime/evaluate_prefill_nll.py",
+    "--checkpoint",
+    "/dev/shm/daso_rebuttal_002_20261025/calibration_checkpoints/cal8_prefill_only_p41",
+    "--samples",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/data/calibration_train_100_2048.pt",
+    "--policy-json",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/configs/policies/cal8_prefill_only_p41.json",
+    "--tokenizer",
+    "/root/wja/data/models/Qwen/Qwen3-8B",
+    "--output",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/results/calibration/prefill_only/cal8_prefill_only_p41.json",
+    "--label",
+    "cal8_prefill_only_p41",
+    "--blocks",
+    "100",
+    "--phase-hetero",
+    "--vllm-root",
+    "/root/wja/project/my/cospaq/test/vllm",
+    "--cutlass-wrapper-path",
+    "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper"
+  ],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "kv_cache_memory_bytes": 3221225472,
+  "host_weight_cache_bytes": {
+    "prefill_bytes": 0,
+    "decode_bytes": 0,
+    "pinned_bytes": 0
+  },
+  "peak_host_rss_bytes": 17782333440,
+  "peak_allocated_bytes": 22667154432,
+  "peak_reserved_bytes": 23819452416
+}

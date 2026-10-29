@@ -1,0 +1,189 @@
+"""Full task and speed sensitivity; no winner selected from benchmark scores."""
+import csv
+import hashlib
+import json
+import statistics
+from collections import Counter
+from pathlib import Path
+
+from common import RUN, write_json
+from selection import guard
+
+read = lambda p: json.loads(p.read_text())
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def save(name, rows):
+    with (RUN / 'results' / name).open('w') as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def main():
+    design = read(RUN / 'configs/design.json')
+    device_path = RUN / 'configs/formal_device.json'
+    formal_device = read(device_path) if device_path.exists() else {'physical_gpu': 0}
+    formal_gpu = formal_device['physical_gpu']
+    formal_cpus = list(range(formal_gpu * 8, formal_gpu * 8 + 8))
+    for path, digest in design['source_sha256'].items():
+        assert sha(Path(path)) == digest, path
+    for path, digest in design['canonical_sha256'].items():
+        with Path(path).open('rb') as handle:
+            assert hashlib.file_digest(handle, 'sha256').hexdigest() == digest
+    for name, key in [('policy_registry', 'registry_sha256'), ('points', 'points_sha256'), ('selected_policies', 'selected_sha256')]:
+        assert sha(RUN / f'configs/{name}.json') == design[key]
+    registry = read(RUN / 'configs/policy_registry.json')
+    for pid, spec in registry.items():
+        assert sha(RUN / f'configs/policies/{pid}.json') == spec['policy_sha256']
+    selected = read(RUN / 'configs/selected_policies.json')
+    base = read(RUN / 'results/confirmation/uniform_dense_bf16/prefill_decode.json')['blocks']
+    nll = {}
+    for pid in registry:
+        path = RUN / f'results/confirmation/{pid}/prefill_decode.json'
+        value = read(path)
+        assert len(value['blocks']) == 100 and value['data_sha256'] == design['dataset']['sha256']
+        assert value['data_role'] == 'fixed_benchmark_test'
+        assert pid in design['anchors'] or path.stat().st_mtime >= selected['frozen_at_unix']
+        ds = [a['avg_nll'] - b['avg_nll'] for a, b in zip(value['blocks'], base, strict=True)]
+        nll[pid] = guard(ds, pid == 'uniform_dense_bf16')
+    save('benchmark_nll.csv', [{'policy': p, **v} for p, v in nll.items()])
+    campaigns, per_policy = [], {}
+    rounds = read(RUN / 'configs/formal_rounds.json')
+    assert rounds['selected_sha256'] == design['selected_sha256']
+    for i, order in enumerate(rounds['rounds']):
+        records = {pid: read(RUN / f'results/measurements/formal_round{i}_{pid}.json') for pid in order}
+        anchor = statistics.mean(records[p]['cases'][0]['medians']['e2e_ms'] for p in [order[0], order[-1]])
+        int8 = records['uniform_int8']['cases'][0]['medians']['e2e_ms']
+        for pid, record in records.items():
+            assert record['input_sha256'] == design['speed_formal_sha256']
+            assert record['placement']['cpu_affinity'] == formal_cpus
+            assert all(v['exact_equal'] for v in record['exact_weight_audit'].values())
+            assert sum(not s['warmup'] for s in record['cases'][0]['samples']) == 5
+            if pid.endswith('_bracket_end'):
+                continue
+            medians = record['cases'][0]['medians']
+            row = {'policy': pid, 'round': i, **medians, 'speedup_bf16': anchor / medians['e2e_ms'],
+                   'speedup_int8': int8 / medians['e2e_ms']}
+            campaigns.append(row)
+            per_policy.setdefault(pid, []).append(row)
+    save('formal_campaigns.csv', campaigns)
+    speed = {pid: {k: statistics.mean(r[k] for r in rows) for k in rows[0] if k not in ['policy', 'round']}
+             for pid, rows in per_policy.items()}
+    save('formal_speed.csv', [{'policy': p, **v} for p, v in speed.items()])
+    generation = read(RUN / 'configs/generation_jobs.json')
+    tasks, origins = {}, {}
+    for item in generation['reused']:
+        assert sha(Path(item['source'])) == item['sha256']
+        tasks[item['policy'], item['dataset']] = read(Path(item['source']))
+        origins.setdefault(item['policy'], set()).add(item['source_run'] + ' same-map Graph')
+    for item in generation['jobs']:
+        tasks[item['policy'], item['dataset']] = read(RUN / f'results/generation/{item["policy"]}/{item["dataset"]}/metrics_0000_end.json')
+        origins.setdefault(item['policy'], set()).add('033 new Graph')
+    gen = {}
+    for pid in registry:
+        row = {}
+        for dataset, key, metric, count in [('cnn_dm_1000', 'cnn_dm', 'rougeL_percent', 1000),
+                ('dsum', 'dialogsum', 'rougeL_percent', 1500), ('IWSLT', 'iwslt', 'sacre_bleu', 333)]:
+            value = tasks[pid, dataset]
+            assert value['samples'] == count and value['input_sha256'] == sha(RUN / f'data/generation_{dataset}.jsonl')
+            row[key] = value[metric]
+        gen[pid] = {**row, 'generation_avg': statistics.mean(row.values()), 'source': ', '.join(sorted(origins[pid]))}
+    save('full_generation.csv', [{'policy': p, **v} for p, v in gen.items()])
+    mc_design = read(RUN / 'configs/mc_jobs.json')
+    mc = {}
+    reused_mc_evidence = {}
+    for pid, source in mc_design['prefill_equivalent_source'].items():
+        target_map = read(RUN / f'configs/policies/{pid}.json')['method_map']
+        source_map = read(RUN / f'configs/policies/{source}.json')['method_map']
+        assert all(target_map[n]['prefill_method'] == source_map[n]['prefill_method'] for n in target_map)
+        row = {}
+        for task, key, metric in [('arc_challenge', 'arc_c', 'acc_norm'), ('arc_easy', 'arc_e', 'acc'),
+                                  ('winogrande', 'wino', 'acc'), ('mmlu', 'mmlu', 'acc')]:
+            root = RUN.parent / '032' if source in mc_design['reused_from_032'] else RUN
+            source_path = root / f'results/tasks/{source}/{task}/full/result.json'
+            value = read(source_path)
+            if root != RUN:
+                reused_mc_evidence[str(source_path)] = sha(source_path)
+            assert value['limit'] is None and value['num_fewshot'] == 0
+            matches = [v for k, v in value['metrics'].items() if k.split(',')[0] == metric]
+            assert len(matches) == 1, (task, value['metrics'])
+            row[key] = matches[0] * 100
+        mc[pid] = {**row, 'mc_avg': statistics.mean(row.values()), 'prefill_source': ('032/' if source in mc_design['reused_from_032'] else '033/') + source}
+    save('full_mc.csv', [{'policy': p, **v} for p, v in mc.items()])
+    counts = {}
+    for pid in registry:
+        mapping = read(RUN / f'configs/policies/{pid}.json')['method_map']
+        counts[pid] = {p: dict(Counter(v[p + '_method'] for v in mapping.values())) for p in ['prefill', 'decode']}
+    write_json(RUN / 'results/policy_counts.json', counts)
+    rows = []
+    points = read(RUN / 'configs/points.json')
+    actions = read(RUN / 'reference/actions.json')
+    w4_column = actions['methods'].index('w4a16_ours')
+    fixed_decode_cost = sum(row[w4_column] for row in actions['quality'][144:])
+    equivalence = [{'label': p['label'], 'prefill_weight': p['prefill_weight'], 'budget': p['budget'],
+        'chosen_decode_all_w4': counts[p['policy']]['decode'] == {'w4a16_ours': 144},
+        'full_w4_decode_cost': fixed_decode_cost,
+        'equivalent_raw_budget_if_decode_fixed_w4': p['budget'] / p['prefill_weight'] +
+            (1 - 1 / p['prefill_weight']) * fixed_decode_cost} for p in points]
+    save('fixed_decode_budget_equivalence.csv', equivalence)
+    for point in points:
+        pid = point['policy']
+        rows.append({'label': point['label'], 'policy': pid, 'prefill_weight': point['prefill_weight'], 'budget': point['budget'],
+            'weighted_prediction': point['weighted_score'], 'original_prediction': point['original_prediction'],
+            'sparse_fp4_prefill': counts[pid]['prefill'].get('sparse_nvfp4', 0),
+            **nll[pid], 'mean_within_nominal_budget': nll[pid]['delta_nll'] <= point['budget'],
+            'guard_within_nominal_budget': nll[pid]['guarded_delta_nll'] <= point['budget'],
+            **speed[pid], **{k:v for k,v in gen[pid].items() if k!='source'}, **mc[pid]})
+    save('sweep_results.csv', rows)
+    baseline_mc, baseline_gen = mc['uniform_int8']['mc_avg'], gen['uniform_int8']['generation_avg']
+    comparison = [{'label': r['label'], 'policy': r['policy'], 'speedup_int8': r['speedup_int8'],
+        'mc_avg_delta_int8': r['mc_avg'] - baseline_mc, 'generation_avg_delta_int8': r['generation_avg'] - baseline_gen,
+        'all_generation_parts_ge_int8': all(gen[r['policy']][k] >= gen['uniform_int8'][k] for k in ['cnn_dm', 'dialogsum', 'iwslt']),
+        'all_mc_parts_ge_int8': all(mc[r['policy']][k] >= mc['uniform_int8'][k] for k in ['arc_c', 'arc_e', 'wino', 'mmlu'])} for r in rows]
+    save('relative_to_int8.csv', comparison)
+    display = [(p['label'], p['policy'], p['prefill_weight'], p['budget']) for p in points]
+    display += [(p, p, None, None) for p in design['anchors']]
+    lines = ['# Qwen3完整空间：prefill权重尺度补充', '',
+        '固定016八候选Qwen代理，BF16零锚定；144模块独立选择64个阶段组合。λ只调整prefill质量代价，不禁止格式。先最小延迟、再同延迟最小预测质量损失。', '',
+        '本补充在已看到032部分预算曲线后提出，不冒充原预定六点或新盲测。原代理gate_up稠密FP4的prefill总成本仅约.000858，全W4 decode约.010915；λ1.5/2不足以明显改变阶段分配。据CPU代价尺度与结构变化固定λ32/128、ε=.03，在读取本补充GPU输出前冻结，全部点保留。λ≠1得分不是重新校准后的真实ΔNLL。', '',
+        '本补充倍率较大，不称为微小调整。NLL/完整生成/MC的BF16和INT8对照按协议及来源从032复用，速度为本轮统一重测；完整生成Avg为两个ROUGE-L百分分数与BLEU的算术摘要，MC Avg为四项准确率等权均值。', '',
+        '对decode固定全W4的子空间，q_decode为常数，λ·q_prefill+q_decode≤ε可等价改写为原得分≤ε/λ+(1−1/λ)q_decode。本轮λ=1.5/2的选点均在该子空间，因此需先与收紧预算区分，不把加权本身宣称为超越预算曲线的新优势；完整搜索仍允许其他decode配置。', '',
+        '## 完整生成与三轮速度', '',
+        '| Label | λ | ε | Prefill sparse FP4 | CNN/DM | DialogSum | IWSLT | Avg | E2E ms | ×INT8 | ×BF16 |',
+        '| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |']
+    for label, pid, weight, budget in display:
+        lines.append(f'| {label} | {weight if weight is not None else "—"} | {budget if budget is not None else "—"} | '
+            f'{counts[pid]["prefill"].get("sparse_nvfp4",0)} | {gen[pid]["cnn_dm"]:.3f} | {gen[pid]["dialogsum"]:.3f} | '
+            f'{gen[pid]["iwslt"]:.3f} | {gen[pid]["generation_avg"]:.3f} | {speed[pid]["e2e_ms"]:.2f} | '
+            f'{speed[pid]["speedup_int8"]:.3f} | {speed[pid]["speedup_bf16"]:.3f} |')
+    lines += ['', '## 对应P+D配置的完整prefill MC精度', '',
+              'MC使用各P+D配置自身的prefill，没有另行求解prefill-only策略。原run016主表的两个场景分别选点，两者需要区分。', '',
+              '| Label | ARC-C | ARC-E | Wino | MMLU | Avg acc |',
+              '| --- | ---: | ---: | ---: | ---: | ---: |']
+    for label, pid, _, _ in display:
+        lines.append('| ' + label + ' | ' + ' | '.join(f'{mc[pid][k]:.3f}' for k in ['arc_c', 'arc_e', 'wino', 'mmlu', 'mc_avg']) + ' |')
+    lines += ['', 'MC只做prompt likelihood，保持原prefill权重/内核，关闭不使用的decode搬运，结束断言没有调度/恢复。四任务完整、0-shot、batch4、eager/3GiB KV；基线来自032同协议结果。生成同map/源码/输入协议复用，来源单列于full_generation.csv。', '',
+        'NLL为既有WikiText test固定100窗口，未称为全新盲测/独立确认；全部点评测，不依据NLL或最终任务分数挑λ/重选赢家。加权得分、原预测与实际NLL分别列于sweep_results.csv；保护值仍mean+2SE+.005，只作预定名义预算的诊断。', '',
+        f'速度GPU{formal_gpu}/NUMA{0 if formal_gpu < 4 else 1}，B8/S2048/O64，6GiB KV/native decode Graph；三轮3warmup+5timed，首尾BF16。E2E含prefill→decode实际切换，不包含下一批恢复；恢复和cycle另存。MC表没有把P+D TTFT冒充额外测过的prefill-only速度。', '',
+        '若发生资源迁移，完整三轮及BF16/INT8对照均在新卡重测，旧卡未完成组仅作诊断保留、不混入正式平均；原因和目录见configs/formal_device.json。', '',
+        '[全部分项](results/sweep_results.csv) · [INT8相对比较](results/relative_to_int8.csv) · [三轮速度](results/formal_campaigns.csv) · [完整生成](results/full_generation.csv) · [MC](results/full_mc.csv) · [NLL](results/benchmark_nll.csv) · [配置分布](results/policy_counts.json)', '']
+    (RUN / 'REPORT.md').write_text('\n'.join(lines))
+    assert not list((RUN / 'data/checkpoints').rglob('*.safetensors'))
+    evidence = [*list((RUN/'results/confirmation').glob('*/*.json')), *list((RUN/'results/measurements').glob('*.json')),
+                *list((RUN/'results/generation').glob('*/*/metrics_*.json')), *list((RUN/'results/tasks').glob('*/*/full/result.json'))]
+    write_json(RUN / 'results/final_audit.json', {'complete': True, 'verified': True, 'unique_maps': len(registry),
+        'formal_device': formal_device,
+        'labels': len(points), 'new_generation_jobs': len(generation['jobs']), 'reused_generation_jobs': len(generation['reused']),
+        'mc_unique_prefill_maps': len(mc_design['prefill_equivalent_source']), 'mc_new_jobs': len(mc_design['jobs']),
+        'reused_mc_evidence_sha256': reused_mc_evidence,
+        'primary032_audit_sha256': sha(RUN.parent/'032/results/final_audit.json'),
+        'code_sha256': {p.name: sha(p) for p in (RUN/'code').glob('*.py')},
+        'evidence_sha256': {str(p.relative_to(RUN)): sha(p) for p in evidence},
+        'csv_sha256': {p.name: sha(p) for p in (RUN/'results').glob('*.csv')},
+        'retained_failures': [p.name for p in (RUN/'results').glob('failure*.json')]})
+    print('Audited budget and weight sweep', comparison, flush=True)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,45 @@
+INFO 10-28 10:50:07 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-28 10:50:15 [utils.py:233] non-default args: {'tokenizer': '/root/wja/data/models/Qwen/Qwen3-8B', 'dtype': 'bfloat16', 'max_model_len': 4232, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 6442450944, 'max_num_batched_tokens': 32768, 'max_num_seqs': 16, 'disable_log_stats': True, 'skip_mm_profiling': True, 'enable_chunked_prefill': False, 'compilation_config': {"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[4,8,16],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': '/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/bf16'}
+WARNING 10-28 10:50:15 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-28 10:50:15 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+INFO 10-28 10:50:15 [model.py:1510] Using max model len 4232
+INFO 10-28 10:50:16 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/bf16', speculative_config=None, tokenizer='/root/wja/data/models/Qwen/Qwen3-8B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4232, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/bf16, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[16,8,4],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":16,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-28 10:50:16 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-28 10:50:17 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-28 10:50:17 [gpu_model_runner.py:2602] Starting to load model /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/bf16...
+INFO 10-28 10:50:17 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-28 10:50:17 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:03<00:00,  3.58s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:03<00:00,  3.58s/it]
+
+INFO 10-28 10:50:21 [default_loader.py:267] Loading weights took 3.97 seconds
+INFO 10-28 10:50:22 [gpu_model_runner.py:2653] Model loading took 15.2683 GiB and 4.167292 seconds
+INFO 10-28 10:50:25 [gpu_worker.py:251] Initial free memory 30.6871337890625 GiB, reserved 6.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-28 10:50:25 [kv_cache_utils.py:1087] GPU KV cache size: 43,680 tokens
+INFO 10-28 10:50:25 [kv_cache_utils.py:1091] Maximum concurrency for 4,232 tokens per request: 10.30x
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/3 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL):  33%|███▎      | 1/3 [00:00<00:00,  8.72it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 3/3 [00:00<00:00, 15.88it/s]
+INFO 10-28 10:50:25 [gpu_model_runner.py:3480] Graph capturing finished in 1 secs, took 0.05 GiB
+INFO 10-28 10:50:25 [core.py:210] init engine (profile, create kv cache, warmup model) took 3.65 seconds
+INFO 10-28 10:50:26 [llm.py:306] Supported_tasks: ('generate',)
+speed_t1_r2_bf16_bracket_start batch4_pp begin
+speed_t1_r2_bf16_bracket_start batch4_pp {'e2e_ms': 578.5573560278863, 'ttft_ms': 578.4408203326166, 'restore_ms': 0.25434745475649834, 'cycle_ms': 578.8291695062071}
+speed_t1_r2_bf16_bracket_start batch4_pd begin
+speed_t1_r2_bf16_bracket_start batch4_pd {'e2e_ms': 1372.8573189582676, 'ttft_ms': 575.7873454131186, 'restore_ms': 0.15397416427731514, 'cycle_ms': 1373.0032804887742, 'tpot_ms': 12.650103918054985}
+speed_t1_r2_bf16_bracket_start prompt4096_pp begin
+speed_t1_r2_bf16_bracket_start prompt4096_pp {'e2e_ms': 2325.3798589576036, 'ttft_ms': 2325.2250333316624, 'restore_ms': 0.210499856621027, 'cycle_ms': 2325.572408735752}
+speed_t1_r2_bf16_bracket_start prompt4096_pd begin
+speed_t1_r2_bf16_bracket_start prompt4096_pd {'e2e_ms': 3270.485799992457, 'ttft_ms': 2323.473125230521, 'restore_ms': 0.15834486111998558, 'cycle_ms': 3270.705748582259, 'tpot_ms': 14.956439793523815}
+speed_t1_r2_bf16_bracket_start output128_pd begin
+speed_t1_r2_bf16_bracket_start output128_pd {'e2e_ms': 2848.1665735598654, 'ttft_ms': 1128.387411357835, 'restore_ms': 0.22020400501787663, 'cycle_ms': 2848.371813306585, 'tpot_ms': 13.542285885691173}
+speed_t1_r2_bf16_bracket_start center_pp begin
+speed_t1_r2_bf16_bracket_start center_pp {'e2e_ms': 1129.5953665394336, 'ttft_ms': 1129.4645590241998, 'restore_ms': 0.1271539367735386, 'cycle_ms': 1129.7313496470451}
+speed_t1_r2_bf16_bracket_start center_pd begin
+speed_t1_r2_bf16_bracket_start center_pd {'e2e_ms': 1968.8045100774616, 'ttft_ms': 1126.1078359093517, 'restore_ms': 0.12556812725961208, 'cycle_ms': 1968.9344640355557, 'tpot_ms': 13.381542475332342}
+[rank0]:[W1028 10:53:51.098252763 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

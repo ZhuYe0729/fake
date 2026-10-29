@@ -1,0 +1,76 @@
+{
+  "policies": [
+    "uniform_dense_bf16",
+    "uniform_sq_int8",
+    "uniform_fp8",
+    "transfer_daso5_measured_prefill_decode_04",
+    "transfer_daso8_prefill_decode_01",
+    "phase_sq_int8_w4a16_ours"
+  ],
+  "warmups": 2,
+  "iterations": 5,
+  "kv_bytes": 6442450944,
+  "cases": [
+    {
+      "id": "chunk1024_b8_s2048_o64",
+      "prompts": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "output": 64,
+      "token_budget": 1024
+    },
+    {
+      "id": "chunk4096_b16_heterogeneous_o64",
+      "prompts": [
+        512,
+        4096,
+        512,
+        4096,
+        512,
+        4096,
+        512,
+        4096,
+        512,
+        4096,
+        512,
+        4096,
+        512,
+        4096,
+        512,
+        4096
+      ],
+      "output": 64,
+      "token_budget": 4096
+    },
+    {
+      "id": "chunk1024_b8_heterogeneous_o256",
+      "prompts": [
+        512,
+        2048,
+        512,
+        2048,
+        512,
+        2048,
+        512,
+        2048
+      ],
+      "output": 256,
+      "token_budget": 1024
+    }
+  ],
+  "engine": {
+    "max_model_len": 4360,
+    "max_num_seqs": 16
+  },
+  "speed_seed": 144907,
+  "scope": "Actual vLLM V1 chunked-prefill scheduler; closed-loop offline burst, all arrivals at t0. Real mixed forwards required; no HTTP/network or open-loop arrival claim.",
+  "runtime": "experiment-local dual-resident representation, rowwise scheduled-token phase routing; original global-phase streaming runtime not claimed mixed-compatible",
+  "quality": "Separate validation-text teacher forcing versus homogeneous, nonchunked execution; numerical routing audits and uniform no-op control first"
+}

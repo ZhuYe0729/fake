@@ -1,0 +1,41 @@
+{
+  "command": [
+    "numactl",
+    "--all",
+    "--physcpubind=48-55",
+    "--membind=1",
+    "/root/wja/miniconda3/envs/vllm/bin/python",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/code/quality_task.py",
+    "--job",
+    "gen_b8_pd_hawq_bal_cnn_dm_1000_0512_1000",
+    "--attempt",
+    "1793193278826872009"
+  ],
+  "physical_gpu": 6,
+  "gpu_uuid": "GPU-f3236115-d02e-e8dc-4c6a-a57ccccf0dfe",
+  "code_version": "34ec2660f811e87b",
+  "code_sha256": {
+    "common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "telemetry.py": "ebd935fae60b05fdbe39e3b3d0cc66e39fe17f566af5bcd7ab5830036f0f559d",
+    "quality_task.py": "7f3a39c12fb4486b6ae3e088a19c8b4b48b385da7c0c97a6c3d57cb3acec9d85",
+    "driver.py": "654b82c0bc29455adb91ddad20b760b0f3d1f661e5d6cff9d02b83cdc194e7d5",
+    "csrc/nvfp4_sm120.cu": "5f6f1dc94be63e59f41d4a73b8484c72057f0c9b3eb9a3361c426286698dbb0a",
+    "csrc/sparse_nvfp4_bindings.cpp": "ffce1b1fe1c768fe003c0a846b4199ef455a6e9b599ca35453109121e0b2137e",
+    "csrc/sparse_nvfp4_sm120.cu": "29b445024efe333d430a44bf7b4c0d99b078fefd83eb894d1e3a18888b23fb69",
+    "compat/include/cutlass/subbyte_reference.h": "ebd115ff62ac8c087522a2393a018fc7c06c1a6a4d6e4e0df941828b65f28451"
+  },
+  "job": {
+    "id": "gen_b8_pd_hawq_bal_cnn_dm_1000_0512_1000",
+    "kind": "generation",
+    "policy": "pd_hawq_bal",
+    "batch": 8,
+    "task": "cnn_dm_1000",
+    "begin": 512,
+    "end": 1000
+  }
+}

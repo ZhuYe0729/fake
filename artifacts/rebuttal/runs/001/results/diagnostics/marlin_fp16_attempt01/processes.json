@@ -1,0 +1,17 @@
+{
+  "reason": "replace avoidable FP16 activation casts with verified native BF16 interface",
+  "processes": [
+    {
+      "pid": 1200157,
+      "command": "/root/wja/miniconda3/envs/vllm/bin/python -u artifacts/rebuttal/runs/001/code/finish_queue.py --queue gpu4 --wait-pid 1195574 "
+    },
+    {
+      "pid": 1195574,
+      "command": "/root/wja/miniconda3/envs/vllm/bin/python -u artifacts/rebuttal/runs/001/code/baseline_worker.py --policies uniform_marlin_int4 --actions export,speed,nll,decode_nll,tasks "
+    },
+    {
+      "pid": 1198488,
+      "command": "/root/wja/miniconda3/envs/vllm/bin/python /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/code/run_workflow.py tasks --manifest /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/configs/manifest_uniform_marlin_int4.json --policy uniform_marlin_int4 --output-root /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/results/tasks --vllm-root /root/wja/project/my/cospaq/test/vllm --cutlass-wrapper-path /root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper --audit "
+    }
+  ]
+}

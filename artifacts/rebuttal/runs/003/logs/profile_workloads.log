@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/003/code/profile_workloads.py", line 79, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/003/code/profile_workloads.py", line 39, in main
+    assert torch.isfinite(actual).all() and mse<1e-6,(name,m,mse)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('model.layers.0.self_attn.o_proj', 4, 1.2472967227949994e-06)

@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Modeling ablation on Llama3.1-8B-Instruct.}
+\begin{tabular}{ccc}
+\toprule
+Ablation type & Variant & Error $\downarrow$ \\
+\midrule
+\multirow{3}{*}{Kernel prediction} & Direct fit & 14.80\% \\
+ & + Roofline prior & 10.78\% \\
+ & + Shape correction & 8.01\% \\
+\midrule
+\multirow{2}{*}{E2E composition} & Raw E2E aggregation & 18.17\% \\
+ & + Monotonic E2E calibration & 8.30\% \\
+\midrule
+\multirow{3}{*}{Quality prediction} & Local aggregation & 0.0571 \\
+ & + Structure awareness & 0.0468 \\
+ & + Phase awareness & 0.0413 \\
+\bottomrule
+\end{tabular}
+\label{tab:modeling-ablation}
+\end{table}

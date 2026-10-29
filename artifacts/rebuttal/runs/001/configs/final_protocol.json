@@ -1,0 +1,98 @@
+{
+  "main_uniform": [
+    "uniform_dense_bf16",
+    "uniform_dense_nvfp4",
+    "uniform_sparse_bf16",
+    "uniform_sparse_nvfp4",
+    "uniform_w4a16_ours",
+    "uniform_int8",
+    "uniform_marlin_int4"
+  ],
+  "diagnostic_only": [
+    "uniform_int4 (prototype W4A4 PTQ)",
+    "FP16-cast Marlin INT4 attempt",
+    "batch-1 task attempts"
+  ],
+  "likelihood_tasks": {
+    "wikitext": "word_perplexity",
+    "winogrande": "acc",
+    "arc_easy": "acc",
+    "arc_challenge": "acc_norm",
+    "mmlu": "acc"
+  },
+  "likelihood_protocol": {
+    "num_fewshot": 0,
+    "full_datasets": true,
+    "batch_size": 4,
+    "wikitext_batch_size": 1,
+    "kv_cache_bytes": 3221225472
+  },
+  "speed_protocol": {
+    "batch": 8,
+    "input_tokens": 2048,
+    "output_tokens": [
+      1,
+      64
+    ],
+    "warmup": 2,
+    "measured_iterations": 5,
+    "fixed_kv_bytes": 3221225472,
+    "final_physical_gpu": 3,
+    "source": "results/speed_common_gpu3; provisional measurements retained in results/speed_fixed_kv3gb"
+  },
+  "nll_protocol": {
+    "split": "test",
+    "blocks": 100,
+    "prefill_tokens": 2048,
+    "decode_tokens": 64,
+    "decode_batch": 8
+  },
+  "generation_protocol": {
+    "prompt": "native Qwen3 chat template; enable_thinking=False",
+    "max_input_tokens": 3840,
+    "max_new_tokens": 256,
+    "truncation": "left truncate encoded prompt, preserving special-token IDs",
+    "sample_filter": "original PMPD Vicuna tokenizer, English reference length > 60",
+    "filter_tokenizer_revision": "3321f76e3f527bd14065daf69dad9344000a201d",
+    "paper_loader_sha256": "2c6c1e5e58d0e9b58078356144298ab45ce0346b893c35932fbcaf6902c9e24d",
+    "tasks": {
+      "cnn_dm_1000": {
+        "count": 1000,
+        "sha256": "9f622de4e989b75fbe4e21a2da355b730488e6a5596678726aea71dff4cd4b03"
+      },
+      "dsum": {
+        "count": 1500,
+        "sha256": "6583d5e4c591798d61fecd0f9ca9d78d5faf0287216d5b31e576e655a329051e"
+      },
+      "IWSLT": {
+        "count": 333,
+        "sha256": "d656a85768adee7a210a83d0aaa44ed8c6c84bf6dc29caf618c9bf660975e672"
+      }
+    }
+  },
+  "hawq_primary": {
+    "source": "official pinned Hessian-weighted perturbation and ILP",
+    "candidates": [
+      "marlin_int4",
+      "int8",
+      "dense_bf16"
+    ],
+    "phase_methods_tied": true,
+    "trace_sign": "original signed estimates retained"
+  },
+  "hawq_control": {
+    "candidates": [
+      "dense_nvfp4",
+      "int8",
+      "dense_bf16"
+    ],
+    "scope": "speed/NLL sweep plus predeclared middle full-task representative"
+  },
+  "daso_calibration": {
+    "train_policies": 54,
+    "heldout_policies": 18,
+    "label_blocks": 100,
+    "depth_bucket": "floor(layer*4/36)"
+  },
+  "deletion_policy": "No code/log/CSV/document removed; only task-owned reproducible candidate weight binaries released after evaluation, with metadata retained."
+}

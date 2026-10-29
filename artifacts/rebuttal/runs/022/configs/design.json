@@ -1,0 +1,81 @@
+{
+  "created_at_unix": 1793056710.9192142,
+  "models": {
+    "017": {
+      "policies": {
+        "daso8_exact_prefill_only_q0.04": [
+          1
+        ],
+        "daso8_exact_prefill_decode_q0.01": [
+          64
+        ]
+      },
+      "rounds": [
+        [
+          "uniform_dense_bf16",
+          "daso8_exact_prefill_decode_q0.01",
+          "daso8_exact_prefill_only_q0.04",
+          "uniform_dense_bf16_bracket_end"
+        ],
+        [
+          "uniform_dense_bf16",
+          "daso8_exact_prefill_only_q0.04",
+          "daso8_exact_prefill_decode_q0.01",
+          "uniform_dense_bf16_bracket_end"
+        ],
+        [
+          "uniform_dense_bf16",
+          "daso8_exact_prefill_decode_q0.01",
+          "daso8_exact_prefill_only_q0.04",
+          "uniform_dense_bf16_bracket_end"
+        ]
+      ],
+      "selection_sha256": "dc14316bceb572f64a2d37ba06af5a834b114203ad9804a164409b5cf18bc1d4",
+      "policy_sha256": {
+        "daso8_exact_prefill_only_q0.04": "1cc7f0cc1c706f05a6bda7de363c6828bd68e93f740c066ef392acb0017a79ae",
+        "daso8_exact_prefill_decode_q0.01": "e346d99f5db1b53282cf1d958a8bda9d4b5f99c797b5af005a0bd1c7b73631f2"
+      }
+    },
+    "018": {
+      "policies": {
+        "daso8_exact_prefill_only_q0.01": [
+          1
+        ],
+        "phase_dense_nvfp4_sq_int8": [
+          64
+        ]
+      },
+      "rounds": [
+        [
+          "uniform_dense_bf16",
+          "daso8_exact_prefill_only_q0.01",
+          "phase_dense_nvfp4_sq_int8",
+          "uniform_dense_bf16_bracket_end"
+        ],
+        [
+          "uniform_dense_bf16",
+          "phase_dense_nvfp4_sq_int8",
+          "daso8_exact_prefill_only_q0.01",
+          "uniform_dense_bf16_bracket_end"
+        ],
+        [
+          "uniform_dense_bf16",
+          "daso8_exact_prefill_only_q0.01",
+          "phase_dense_nvfp4_sq_int8",
+          "uniform_dense_bf16_bracket_end"
+        ]
+      ],
+      "selection_sha256": "9d6f0b679d5880454af9e4f68b11148769ca16fe23b6c7115f85574bbd66aa11",
+      "policy_sha256": {
+        "daso8_exact_prefill_only_q0.01": "d4870d48f8767774c823ddb14153c7ff07d49f2eebf04f946bf148f871dd66d2",
+        "phase_dense_nvfp4_sq_int8": "a27b5babe392fb6dc3361283d573b8ef832452bdeed06553181f68bbf863fb4c"
+      }
+    }
+  },
+  "iterations": 8,
+  "warmups": 3,
+  "gpu": 0,
+  "cpu_affinity": "0-7",
+  "measurement_lock": "night151/measurement.lock",
+  "scope": "Only the four prospectively selected five-budget policies absent from core formal timings. Source policies/validation decisions unchanged; new speed campaigns with their own BF16 brackets. No new independent quality samples."
+}

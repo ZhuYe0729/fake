@@ -1,0 +1,183 @@
+{
+  "complete": true,
+  "rows": 19,
+  "metric_cells": 247,
+  "original_metric_cells": 209,
+  "derived_metric_cells": 38,
+  "derived_metrics": {
+    "prefill_avg_acc": {
+      "operation": "unweighted arithmetic mean of unrounded scores",
+      "inputs": [
+        "arc_c",
+        "arc_e",
+        "wino",
+        "mmlu"
+      ]
+    },
+    "pd_avg_score": {
+      "operation": "unweighted arithmetic mean of unrounded scores",
+      "inputs": [
+        "cnn_dm",
+        "dialogsum",
+        "iwslt"
+      ],
+      "scope": "Mixed ROUGE-L percent and SacreBLEU summary; not a common accuracy measure or NLL constraint."
+    }
+  },
+  "old_rows_source": "artifacts/rebuttal/responses/reviewer2/qwen3_table2/main_table.csv",
+  "old_rows_run": "015",
+  "new_rows": [
+    {
+      "method": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.01",
+      "run": "016",
+      "policies": {
+        "prefill_only": "uniform_int8",
+        "prefill_decode": "uniform_dense_bf16"
+      },
+      "speed_ranges": {
+        "prefill_ttft_speedup": {
+          "min": 1.8587408083899877,
+          "max": 1.8689560790063897
+        },
+        "pd_ttft_speedup": {
+          "min": 1.0,
+          "max": 1.0
+        },
+        "pd_tpot_speedup": {
+          "min": 1.0,
+          "max": 1.0
+        },
+        "pd_e2e_speedup": {
+          "min": 1.0,
+          "max": 1.0
+        }
+      },
+      "prefill_only_quality_sources": {
+        "arc_c": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_challenge/full/result.json",
+          "metric": "acc_norm,none",
+          "samples": 1172
+        },
+        "arc_e": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_easy/full/result.json",
+          "metric": "acc,none",
+          "samples": 2376
+        },
+        "wino": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/winogrande/full/result.json",
+          "metric": "acc,none",
+          "samples": 1267
+        },
+        "mmlu": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/mmlu/full/result.json",
+          "metric": "acc,none",
+          "samples": 14042
+        }
+      },
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      }
+    },
+    {
+      "method": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.04",
+      "run": "016",
+      "policies": {
+        "prefill_only": "hardware_minimum_prefill_only_same_operator",
+        "prefill_decode": "daso8_exact_prefill_decode_q0.04"
+      },
+      "speed_ranges": {
+        "prefill_ttft_speedup": {
+          "min": 2.155631844879283,
+          "max": 2.168828039011131
+        },
+        "pd_ttft_speedup": {
+          "min": 2.2515717609275754,
+          "max": 2.2590205107649606
+        },
+        "pd_tpot_speedup": {
+          "min": 1.8037898291758092,
+          "max": 1.8465794898282029
+        },
+        "pd_e2e_speedup": {
+          "min": 2.04008132747735,
+          "max": 2.0616783050496563
+        }
+      },
+      "prefill_only_quality_sources": {
+        "arc_c": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_challenge/full/result.json",
+          "metric": "acc_norm,none",
+          "samples": 1172
+        },
+        "arc_e": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_easy/full/result.json",
+          "metric": "acc,none",
+          "samples": 2376
+        },
+        "wino": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/winogrande/full/result.json",
+          "metric": "acc,none",
+          "samples": 1267
+        },
+        "mmlu": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/mmlu/full/result.json",
+          "metric": "acc,none",
+          "samples": 14042
+        }
+      },
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/daso8_exact_prefill_decode_q0.04/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/daso8_exact_prefill_decode_q0.04/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/daso8_exact_prefill_decode_q0.04/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      }
+    }
+  ],
+  "sources_sha256": {
+    "artifacts/rebuttal/runs/016/results/final_audit.json": "5e8609aa459e11b3615401aca21c5be5472da1addd1d8f2506b8b84a4b219062",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2/main_table.csv": "7367972f7d211407afa9edd8353e8b0ab5f6c387238529d35cf6a13ea280ec05",
+    "artifacts/rebuttal/runs/016/configs/selected_policies.json": "64a27f2bbb1ce0ae19a7ba89a1ca4671d44ce95e4d7175124cba219cbd373ed3",
+    "artifacts/rebuttal/runs/016/results/full_task_metrics.json": "8a0121797e5a3b0f7b5316d6dd7be61cbeed72f3178fd1b2ac16a3af04065825",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/uniform_int8.json": "219a4085ffa56d56ae19fc688009db303624bfeb4d009498a161b1dc02524da2",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/uniform_dense_bf16.json": "8c3110126ea08be24773506e029228e4ae73d26a45c98d73fed7c6444619a2e5",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/uniform_dense_bf16_bracket_end.json": "8a8f0e00e2cfd7d7a8dc6d12ce7c8048359dfcdd2246827a456ae3c9a0f7e361",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/uniform_int8.json": "d96ad01e8ee1fbbbeec453dae63d1fc04dd8834db9588823c45b2a4f22f66be0",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/uniform_dense_bf16.json": "b607937603230497a7d50ab38c726b9b6a172980489ac2de27a89858fd115efe",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/uniform_dense_bf16_bracket_end.json": "f38bd16be9ed405cd96246b3f20b18b59046dd3682237757750b1b7e3148cf3e",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/uniform_int8.json": "4dccf56e2f570d94e4878ccfd430a0a3f280506df04260cd68b5ae152f99d688",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/uniform_dense_bf16.json": "954783c68244575773ac4f404d6529632ff731ed73f5e6714af2b3f2d6a5f667",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/uniform_dense_bf16_bracket_end.json": "0c9230dd2a2eed2e2def72f44516790c0e5da8316dc532591e5ceb87efc8bb48",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/hardware_minimum_prefill_only_same_operator.json": "1a2b703757ae51e2e057aea351e22de90288760002ae2b08b8e8931393294fc5",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/hardware_minimum_prefill_only_same_operator.json": "f44609eabfcb6f6926114e0d882970cfe4660f7369b02c397c1581137577f3df",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/hardware_minimum_prefill_only_same_operator.json": "16c23765bf2c53a3d7bc7371aae35718f27ce215dd5ac63dc7c42c0e53479bc6",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/daso8_exact_prefill_decode_q0.04.json": "06a0ec1d8a51e2fa2deb6dcdd437f391aca2a510a518c0e844f464efb74b9d54",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/daso8_exact_prefill_decode_q0.04.json": "07f366988760fa4224d0c166358e164714339e5c822bb876f8565ff5f8df5b79",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/daso8_exact_prefill_decode_q0.04.json": "c68b24c93437c01d2612b918b6dab3e942efa5e3c16ea518c69f59e2a14571f0"
+  },
+  "scope": "Cross-campaign complete overview; retain per-campaign normalization and original source provenance."
+}

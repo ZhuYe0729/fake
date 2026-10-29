@@ -1,0 +1,1 @@
+Initial queue.py filename shadowed Python standard-library queue during torch import. All four launch logs retained. Renamed to experiment_queue.py; no GPU evaluations occurred in these failed launches.

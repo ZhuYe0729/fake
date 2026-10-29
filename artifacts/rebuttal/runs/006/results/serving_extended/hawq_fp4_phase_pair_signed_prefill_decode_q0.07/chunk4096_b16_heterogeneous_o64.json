@@ -1,0 +1,4680 @@
+{
+  "policy": "hawq_fp4_phase_pair_signed_prefill_decode_q0.07",
+  "noop": false,
+  "case": {
+    "id": "chunk4096_b16_heterogeneous_o64",
+    "prompts": [
+      512,
+      4096,
+      512,
+      4096,
+      512,
+      4096,
+      512,
+      4096,
+      512,
+      4096,
+      512,
+      4096,
+      512,
+      4096,
+      512,
+      4096
+    ],
+    "output": 64,
+    "token_budget": 4096
+  },
+  "iterations": [
+    {
+      "iteration": 0,
+      "warmup": true,
+      "e2e_ms": 2649.5396581012756,
+      "admission_ms": 2.009388990700245,
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 197.4955580662936,
+          "completion_ms": 2526.115502929315,
+          "tpot_ms": 36.962221347032084
+        },
+        {
+          "request": 1,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 383.0733171198517,
+          "completion_ms": 2539.091284153983,
+          "tpot_ms": 34.22250741324018
+        },
+        {
+          "request": 2,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 383.0733171198517,
+          "completion_ms": 2539.091284153983,
+          "tpot_ms": 34.22250741324018
+        },
+        {
+          "request": 3,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 571.0872509516776,
+          "completion_ms": 2551.9896850455552,
+          "tpot_ms": 31.4428957792679
+        },
+        {
+          "request": 4,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 571.0872509516776,
+          "completion_ms": 2551.9896850455552,
+          "tpot_ms": 31.4428957792679
+        },
+        {
+          "request": 5,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 760.8187780715525,
+          "completion_ms": 2564.863750943914,
+          "tpot_ms": 28.635634490037486
+        },
+        {
+          "request": 6,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 760.8187780715525,
+          "completion_ms": 2564.863750943914,
+          "tpot_ms": 28.635634490037486
+        },
+        {
+          "request": 7,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 952.5048339273781,
+          "completion_ms": 2577.743327943608,
+          "tpot_ms": 25.797436412956035
+        },
+        {
+          "request": 8,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 952.5048339273781,
+          "completion_ms": 2577.743327943608,
+          "tpot_ms": 25.797436412956035
+        },
+        {
+          "request": 9,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1146.6752011328936,
+          "completion_ms": 2590.4985850211233,
+          "tpot_ms": 22.917831490289363
+        },
+        {
+          "request": 10,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1146.6752011328936,
+          "completion_ms": 2590.4985850211233,
+          "tpot_ms": 22.917831490289363
+        },
+        {
+          "request": 11,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1342.7332430146635,
+          "completion_ms": 2603.2579850871116,
+          "tpot_ms": 20.00832923924521
+        },
+        {
+          "request": 12,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1342.7332430146635,
+          "completion_ms": 2603.2579850871116,
+          "tpot_ms": 20.00832923924521
+        },
+        {
+          "request": 13,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1540.562265086919,
+          "completion_ms": 2615.9736840054393,
+          "tpot_ms": 17.070022522516194
+        },
+        {
+          "request": 14,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1739.0807301271707,
+          "completion_ms": 2628.462831955403,
+          "tpot_ms": 14.117176219495752
+        },
+        {
+          "request": 15,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1783.0825329292566,
+          "completion_ms": 2649.5019840076566,
+          "tpot_ms": 13.752689699657143
+        }
+      ],
+      "scheduler": {
+        "steps": [
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4096,
+            "decode_tokens": 0,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4095,
+            "decode_tokens": 1,
+            "requests": 4,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4093,
+            "decode_tokens": 3,
+            "requests": 6,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4091,
+            "decode_tokens": 5,
+            "requests": 8,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4089,
+            "decode_tokens": 7,
+            "requests": 10,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4087,
+            "decode_tokens": 9,
+            "requests": 12,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4085,
+            "decode_tokens": 11,
+            "requests": 14,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4083,
+            "decode_tokens": 13,
+            "requests": 15,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4082,
+            "decode_tokens": 14,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 78,
+            "prefill_tokens": 63,
+            "decode_tokens": 15,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 15,
+            "prefill_tokens": 0,
+            "decode_tokens": 15,
+            "requests": 15,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 13,
+            "prefill_tokens": 0,
+            "decode_tokens": 13,
+            "requests": 13,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 11,
+            "prefill_tokens": 0,
+            "decode_tokens": 11,
+            "requests": 11,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 9,
+            "prefill_tokens": 0,
+            "decode_tokens": 9,
+            "requests": 9,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 7,
+            "prefill_tokens": 0,
+            "decode_tokens": 7,
+            "requests": 7,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 5,
+            "prefill_tokens": 0,
+            "decode_tokens": 5,
+            "requests": 5,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 3,
+            "prefill_tokens": 0,
+            "decode_tokens": 3,
+            "requests": 3,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 2,
+            "prefill_tokens": 0,
+            "decode_tokens": 2,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 1,
+            "prefill_tokens": 0,
+            "decode_tokens": 1,
+            "requests": 1,
+            "mixed": false
+          }
+        ],
+        "linear_counts": {
+          "homogeneous_prefill": 144,
+          "mixed": 1296,
+          "homogeneous_decode": 9072
+        },
+        "teacher_skipped_partial_samples": 0,
+        "mixed_forwards": 9,
+        "total_prefill_rows": 36864,
+        "total_decode_rows": 1008
+      },
+      "output_tokens_per_second": 386.482231684663,
+      "output_sha256": "6646ff4d5cc57652b07c4e28819cdeb98927fcf48fcdd8c4b17ebf898c02238c"
+    },
+    {
+      "iteration": 1,
+      "warmup": true,
+      "e2e_ms": 2535.790615947917,
+      "admission_ms": 1.5576949808746576,
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 158.55104802176356,
+          "completion_ms": 2422.579170903191,
+          "tpot_ms": 35.936954331451226
+        },
+        {
+          "request": 1,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 343.87649199925363,
+          "completion_ms": 2435.3998149745166,
+          "tpot_ms": 33.19878290436925
+        },
+        {
+          "request": 2,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 343.87649199925363,
+          "completion_ms": 2435.3998149745166,
+          "tpot_ms": 33.19878290436925
+        },
+        {
+          "request": 3,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 531.7592120263726,
+          "completion_ms": 2448.115444043651,
+          "tpot_ms": 30.418352889163152
+        },
+        {
+          "request": 4,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 531.7592120263726,
+          "completion_ms": 2448.115444043651,
+          "tpot_ms": 30.418352889163152
+        },
+        {
+          "request": 5,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 721.4679140597582,
+          "completion_ms": 2460.9328620135784,
+          "tpot_ms": 27.61055472942572
+        },
+        {
+          "request": 6,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 721.4679140597582,
+          "completion_ms": 2460.9328620135784,
+          "tpot_ms": 27.61055472942572
+        },
+        {
+          "request": 7,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 913.2256349548697,
+          "completion_ms": 2473.6410409677774,
+          "tpot_ms": 24.76849850814139
+        },
+        {
+          "request": 8,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 913.2256349548697,
+          "completion_ms": 2473.6410409677774,
+          "tpot_ms": 24.76849850814139
+        },
+        {
+          "request": 9,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1107.2926530614495,
+          "completion_ms": 2486.311621963978,
+          "tpot_ms": 21.889189982579815
+        },
+        {
+          "request": 10,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1107.2926530614495,
+          "completion_ms": 2486.311621963978,
+          "tpot_ms": 21.889189982579815
+        },
+        {
+          "request": 11,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1303.1765930354595,
+          "completion_ms": 2498.974652029574,
+          "tpot_ms": 18.98092157133515
+        },
+        {
+          "request": 12,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1303.1765930354595,
+          "completion_ms": 2498.974652029574,
+          "tpot_ms": 18.98092157133515
+        },
+        {
+          "request": 13,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1500.9740309324116,
+          "completion_ms": 2511.5899019874632,
+          "tpot_ms": 16.041521762778597
+        },
+        {
+          "request": 14,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1699.4255259633064,
+          "completion_ms": 2524.0407730452716,
+          "tpot_ms": 13.08913090606294
+        },
+        {
+          "request": 15,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1742.8254699334502,
+          "completion_ms": 2535.7553749345243,
+          "tpot_ms": 12.586188968271017
+        }
+      ],
+      "scheduler": {
+        "steps": [
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4096,
+            "decode_tokens": 0,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4095,
+            "decode_tokens": 1,
+            "requests": 4,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4093,
+            "decode_tokens": 3,
+            "requests": 6,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4091,
+            "decode_tokens": 5,
+            "requests": 8,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4089,
+            "decode_tokens": 7,
+            "requests": 10,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4087,
+            "decode_tokens": 9,
+            "requests": 12,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4085,
+            "decode_tokens": 11,
+            "requests": 14,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4083,
+            "decode_tokens": 13,
+            "requests": 15,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4082,
+            "decode_tokens": 14,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 78,
+            "prefill_tokens": 63,
+            "decode_tokens": 15,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 15,
+            "prefill_tokens": 0,
+            "decode_tokens": 15,
+            "requests": 15,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 13,
+            "prefill_tokens": 0,
+            "decode_tokens": 13,
+            "requests": 13,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 11,
+            "prefill_tokens": 0,
+            "decode_tokens": 11,
+            "requests": 11,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 9,
+            "prefill_tokens": 0,
+            "decode_tokens": 9,
+            "requests": 9,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 7,
+            "prefill_tokens": 0,
+            "decode_tokens": 7,
+            "requests": 7,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 5,
+            "prefill_tokens": 0,
+            "decode_tokens": 5,
+            "requests": 5,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 3,
+            "prefill_tokens": 0,
+            "decode_tokens": 3,
+            "requests": 3,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 2,
+            "prefill_tokens": 0,
+            "decode_tokens": 2,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 1,
+            "prefill_tokens": 0,
+            "decode_tokens": 1,
+            "requests": 1,
+            "mixed": false
+          }
+        ],
+        "linear_counts": {
+          "homogeneous_prefill": 144,
+          "mixed": 1296,
+          "homogeneous_decode": 9072
+        },
+        "teacher_skipped_partial_samples": 0,
+        "mixed_forwards": 9,
+        "total_prefill_rows": 36864,
+        "total_decode_rows": 1008
+      },
+      "output_tokens_per_second": 403.818830135237,
+      "output_sha256": "6646ff4d5cc57652b07c4e28819cdeb98927fcf48fcdd8c4b17ebf898c02238c"
+    },
+    {
+      "iteration": 2,
+      "warmup": false,
+      "e2e_ms": 2535.6775941327214,
+      "admission_ms": 1.44870113581419,
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 158.45499304123223,
+          "completion_ms": 2423.3311421703547,
+          "tpot_ms": 35.95041506554163
+        },
+        {
+          "request": 1,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 343.8207940198481,
+          "completion_ms": 2435.9859011601657,
+          "tpot_ms": 33.208969954608214
+        },
+        {
+          "request": 2,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 343.8207940198481,
+          "completion_ms": 2435.9859011601657,
+          "tpot_ms": 33.208969954608214
+        },
+        {
+          "request": 3,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 532.1269449777901,
+          "completion_ms": 2448.724191170186,
+          "tpot_ms": 30.422178510990406
+        },
+        {
+          "request": 4,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 532.1269449777901,
+          "completion_ms": 2448.724191170186,
+          "tpot_ms": 30.422178510990406
+        },
+        {
+          "request": 5,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 722.1510941162705,
+          "completion_ms": 2461.4824180025607,
+          "tpot_ms": 27.608433712480796
+        },
+        {
+          "request": 6,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 722.1510941162705,
+          "completion_ms": 2461.4824180025607,
+          "tpot_ms": 27.608433712480796
+        },
+        {
+          "request": 7,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 914.1424549743533,
+          "completion_ms": 2474.151829024777,
+          "tpot_ms": 24.76205355635593
+        },
+        {
+          "request": 8,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 914.1424549743533,
+          "completion_ms": 2474.151829024777,
+          "tpot_ms": 24.76205355635593
+        },
+        {
+          "request": 9,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1108.5247481241822,
+          "completion_ms": 2486.7357870098203,
+          "tpot_ms": 21.876365696597432
+        },
+        {
+          "request": 10,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1108.5247481241822,
+          "completion_ms": 2486.7357870098203,
+          "tpot_ms": 21.876365696597432
+        },
+        {
+          "request": 11,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1304.8372080083936,
+          "completion_ms": 2499.313682084903,
+          "tpot_ms": 18.95994403296047
+        },
+        {
+          "request": 12,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1304.8372080083936,
+          "completion_ms": 2499.313682084903,
+          "tpot_ms": 18.95994403296047
+        },
+        {
+          "request": 13,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1502.9271491803229,
+          "completion_ms": 2511.8703690823168,
+          "tpot_ms": 16.014971744476092
+        },
+        {
+          "request": 14,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1701.8375131301582,
+          "completion_ms": 2524.2969440296292,
+          "tpot_ms": 13.054911601578905
+        },
+        {
+          "request": 15,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1747.0026151277125,
+          "completion_ms": 2535.6456141453236,
+          "tpot_ms": 12.518142841549384
+        }
+      ],
+      "scheduler": {
+        "steps": [
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4096,
+            "decode_tokens": 0,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4095,
+            "decode_tokens": 1,
+            "requests": 4,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4093,
+            "decode_tokens": 3,
+            "requests": 6,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4091,
+            "decode_tokens": 5,
+            "requests": 8,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4089,
+            "decode_tokens": 7,
+            "requests": 10,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4087,
+            "decode_tokens": 9,
+            "requests": 12,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4085,
+            "decode_tokens": 11,
+            "requests": 14,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4083,
+            "decode_tokens": 13,
+            "requests": 15,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4082,
+            "decode_tokens": 14,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 78,
+            "prefill_tokens": 63,
+            "decode_tokens": 15,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 15,
+            "prefill_tokens": 0,
+            "decode_tokens": 15,
+            "requests": 15,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 13,
+            "prefill_tokens": 0,
+            "decode_tokens": 13,
+            "requests": 13,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 11,
+            "prefill_tokens": 0,
+            "decode_tokens": 11,
+            "requests": 11,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 9,
+            "prefill_tokens": 0,
+            "decode_tokens": 9,
+            "requests": 9,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 7,
+            "prefill_tokens": 0,
+            "decode_tokens": 7,
+            "requests": 7,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 5,
+            "prefill_tokens": 0,
+            "decode_tokens": 5,
+            "requests": 5,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 3,
+            "prefill_tokens": 0,
+            "decode_tokens": 3,
+            "requests": 3,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 2,
+            "prefill_tokens": 0,
+            "decode_tokens": 2,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 1,
+            "prefill_tokens": 0,
+            "decode_tokens": 1,
+            "requests": 1,
+            "mixed": false
+          }
+        ],
+        "linear_counts": {
+          "homogeneous_prefill": 144,
+          "mixed": 1296,
+          "homogeneous_decode": 9072
+        },
+        "teacher_skipped_partial_samples": 0,
+        "mixed_forwards": 9,
+        "total_prefill_rows": 36864,
+        "total_decode_rows": 1008
+      },
+      "output_tokens_per_second": 403.8368294019016,
+      "output_sha256": "6646ff4d5cc57652b07c4e28819cdeb98927fcf48fcdd8c4b17ebf898c02238c"
+    },
+    {
+      "iteration": 3,
+      "warmup": false,
+      "e2e_ms": 2533.3721949718893,
+      "admission_ms": 1.4519868418574333,
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 158.47921185195446,
+          "completion_ms": 2420.8649329375476,
+          "tpot_ms": 35.91088446167608
+        },
+        {
+          "request": 1,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 343.85738894343376,
+          "completion_ms": 2433.5908519569784,
+          "tpot_ms": 33.17037242878642
+        },
+        {
+          "request": 2,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 343.85738894343376,
+          "completion_ms": 2433.5908519569784,
+          "tpot_ms": 33.17037242878642
+        },
+        {
+          "request": 3,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 531.9690499454737,
+          "completion_ms": 2446.290373802185,
+          "tpot_ms": 30.38605275963034
+        },
+        {
+          "request": 4,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 531.9690499454737,
+          "completion_ms": 2446.290373802185,
+          "tpot_ms": 30.38605275963034
+        },
+        {
+          "request": 5,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 722.0213490072638,
+          "completion_ms": 2458.978827809915,
+          "tpot_ms": 27.570753631788115
+        },
+        {
+          "request": 6,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 722.0213490072638,
+          "completion_ms": 2458.978827809915,
+          "tpot_ms": 27.570753631788115
+        },
+        {
+          "request": 7,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 913.8462918344885,
+          "completion_ms": 2471.6301979497075,
+          "tpot_ms": 24.72672866849554
+        },
+        {
+          "request": 8,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 913.8462918344885,
+          "completion_ms": 2471.6301979497075,
+          "tpot_ms": 24.72672866849554
+        },
+        {
+          "request": 9,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1107.9227027948946,
+          "completion_ms": 2484.240284888074,
+          "tpot_ms": 21.84631082687586
+        },
+        {
+          "request": 10,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1107.9227027948946,
+          "completion_ms": 2484.240284888074,
+          "tpot_ms": 21.84631082687586
+        },
+        {
+          "request": 11,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1303.8760349154472,
+          "completion_ms": 2496.8509138561785,
+          "tpot_ms": 18.93610918953542
+        },
+        {
+          "request": 12,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1303.8760349154472,
+          "completion_ms": 2496.8509138561785,
+          "tpot_ms": 18.93610918953542
+        },
+        {
+          "request": 13,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1501.5581708867103,
+          "completion_ms": 2509.4198868609965,
+          "tpot_ms": 15.997805015464861
+        },
+        {
+          "request": 14,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1699.929190799594,
+          "completion_ms": 2521.8893128912896,
+          "tpot_ms": 13.04698606494755
+        },
+        {
+          "request": 15,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1742.908980930224,
+          "completion_ms": 2533.341009868309,
+          "tpot_ms": 12.546540141874363
+        }
+      ],
+      "scheduler": {
+        "steps": [
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4096,
+            "decode_tokens": 0,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4095,
+            "decode_tokens": 1,
+            "requests": 4,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4093,
+            "decode_tokens": 3,
+            "requests": 6,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4091,
+            "decode_tokens": 5,
+            "requests": 8,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4089,
+            "decode_tokens": 7,
+            "requests": 10,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4087,
+            "decode_tokens": 9,
+            "requests": 12,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4085,
+            "decode_tokens": 11,
+            "requests": 14,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4083,
+            "decode_tokens": 13,
+            "requests": 15,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4082,
+            "decode_tokens": 14,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 78,
+            "prefill_tokens": 63,
+            "decode_tokens": 15,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 15,
+            "prefill_tokens": 0,
+            "decode_tokens": 15,
+            "requests": 15,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 13,
+            "prefill_tokens": 0,
+            "decode_tokens": 13,
+            "requests": 13,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 11,
+            "prefill_tokens": 0,
+            "decode_tokens": 11,
+            "requests": 11,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 9,
+            "prefill_tokens": 0,
+            "decode_tokens": 9,
+            "requests": 9,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 7,
+            "prefill_tokens": 0,
+            "decode_tokens": 7,
+            "requests": 7,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 5,
+            "prefill_tokens": 0,
+            "decode_tokens": 5,
+            "requests": 5,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 3,
+            "prefill_tokens": 0,
+            "decode_tokens": 3,
+            "requests": 3,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 2,
+            "prefill_tokens": 0,
+            "decode_tokens": 2,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 1,
+            "prefill_tokens": 0,
+            "decode_tokens": 1,
+            "requests": 1,
+            "mixed": false
+          }
+        ],
+        "linear_counts": {
+          "homogeneous_prefill": 144,
+          "mixed": 1296,
+          "homogeneous_decode": 9072
+        },
+        "teacher_skipped_partial_samples": 0,
+        "mixed_forwards": 9,
+        "total_prefill_rows": 36864,
+        "total_decode_rows": 1008
+      },
+      "output_tokens_per_second": 404.20432577273255,
+      "output_sha256": "6646ff4d5cc57652b07c4e28819cdeb98927fcf48fcdd8c4b17ebf898c02238c"
+    },
+    {
+      "iteration": 4,
+      "warmup": false,
+      "e2e_ms": 2537.343712989241,
+      "admission_ms": 1.4516280498355627,
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 158.46045198850334,
+          "completion_ms": 2424.183240858838,
+          "tpot_ms": 35.96385379159261
+        },
+        {
+          "request": 1,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 343.7969209626317,
+          "completion_ms": 2437.0161399710923,
+          "tpot_ms": 33.225701889023185
+        },
+        {
+          "request": 2,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 343.7969209626317,
+          "completion_ms": 2437.0161399710923,
+          "tpot_ms": 33.225701889023185
+        },
+        {
+          "request": 3,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 531.7328530363739,
+          "completion_ms": 2449.8084420338273,
+          "tpot_ms": 30.445644269800848
+        },
+        {
+          "request": 4,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 531.7328530363739,
+          "completion_ms": 2449.8084420338273,
+          "tpot_ms": 30.445644269800848
+        },
+        {
+          "request": 5,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 721.4498310349882,
+          "completion_ms": 2462.6653569284827,
+          "tpot_ms": 27.63834168084912
+        },
+        {
+          "request": 6,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 721.4498310349882,
+          "completion_ms": 2462.6653569284827,
+          "tpot_ms": 27.63834168084912
+        },
+        {
+          "request": 7,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 913.2261530030519,
+          "completion_ms": 2475.352945039049,
+          "tpot_ms": 24.795663365650746
+        },
+        {
+          "request": 8,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 913.2261530030519,
+          "completion_ms": 2475.352945039049,
+          "tpot_ms": 24.795663365650746
+        },
+        {
+          "request": 9,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1107.4399100616574,
+          "completion_ms": 2488.120042020455,
+          "tpot_ms": 21.915557650139643
+        },
+        {
+          "request": 10,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1107.4399100616574,
+          "completion_ms": 2488.120042020455,
+          "tpot_ms": 21.915557650139643
+        },
+        {
+          "request": 11,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1303.488610079512,
+          "completion_ms": 2500.7563019171357,
+          "tpot_ms": 19.004249076787676
+        },
+        {
+          "request": 12,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1303.488610079512,
+          "completion_ms": 2500.7563019171357,
+          "tpot_ms": 19.004249076787676
+        },
+        {
+          "request": 13,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1501.3522359076887,
+          "completion_ms": 2513.4320340584964,
+          "tpot_ms": 16.064758700806472
+        },
+        {
+          "request": 14,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1699.8229299206287,
+          "completion_ms": 2525.926724076271,
+          "tpot_ms": 13.112758637391149
+        },
+        {
+          "request": 15,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1743.0082780774683,
+          "completion_ms": 2537.3107930645347,
+          "tpot_ms": 12.607976428366133
+        }
+      ],
+      "scheduler": {
+        "steps": [
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4096,
+            "decode_tokens": 0,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4095,
+            "decode_tokens": 1,
+            "requests": 4,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4093,
+            "decode_tokens": 3,
+            "requests": 6,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4091,
+            "decode_tokens": 5,
+            "requests": 8,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4089,
+            "decode_tokens": 7,
+            "requests": 10,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4087,
+            "decode_tokens": 9,
+            "requests": 12,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4085,
+            "decode_tokens": 11,
+            "requests": 14,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4083,
+            "decode_tokens": 13,
+            "requests": 15,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4082,
+            "decode_tokens": 14,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 78,
+            "prefill_tokens": 63,
+            "decode_tokens": 15,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 15,
+            "prefill_tokens": 0,
+            "decode_tokens": 15,
+            "requests": 15,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 13,
+            "prefill_tokens": 0,
+            "decode_tokens": 13,
+            "requests": 13,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 11,
+            "prefill_tokens": 0,
+            "decode_tokens": 11,
+            "requests": 11,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 9,
+            "prefill_tokens": 0,
+            "decode_tokens": 9,
+            "requests": 9,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 7,
+            "prefill_tokens": 0,
+            "decode_tokens": 7,
+            "requests": 7,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 5,
+            "prefill_tokens": 0,
+            "decode_tokens": 5,
+            "requests": 5,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 3,
+            "prefill_tokens": 0,
+            "decode_tokens": 3,
+            "requests": 3,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 2,
+            "prefill_tokens": 0,
+            "decode_tokens": 2,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 1,
+            "prefill_tokens": 0,
+            "decode_tokens": 1,
+            "requests": 1,
+            "mixed": false
+          }
+        ],
+        "linear_counts": {
+          "homogeneous_prefill": 144,
+          "mixed": 1296,
+          "homogeneous_decode": 9072
+        },
+        "teacher_skipped_partial_samples": 0,
+        "mixed_forwards": 9,
+        "total_prefill_rows": 36864,
+        "total_decode_rows": 1008
+      },
+      "output_tokens_per_second": 403.5716543871887,
+      "output_sha256": "6646ff4d5cc57652b07c4e28819cdeb98927fcf48fcdd8c4b17ebf898c02238c"
+    },
+    {
+      "iteration": 5,
+      "warmup": false,
+      "e2e_ms": 2536.2129739951342,
+      "admission_ms": 1.4247940853238106,
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 158.45514205284417,
+          "completion_ms": 2423.142554005608,
+          "tpot_ms": 35.94741923734546
+        },
+        {
+          "request": 1,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 343.7796861398965,
+          "completion_ms": 2435.938379028812,
+          "tpot_ms": 33.208868141093895
+        },
+        {
+          "request": 2,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 343.7796861398965,
+          "completion_ms": 2435.938379028812,
+          "tpot_ms": 33.208868141093895
+        },
+        {
+          "request": 3,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 531.8782241083682,
+          "completion_ms": 2448.7430439330637,
+          "tpot_ms": 30.426425711503104
+        },
+        {
+          "request": 4,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 531.8782241083682,
+          "completion_ms": 2448.7430439330637,
+          "tpot_ms": 30.426425711503104
+        },
+        {
+          "request": 5,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 721.6521929949522,
+          "completion_ms": 2461.5468259435147,
+          "tpot_ms": 27.61737512616766
+        },
+        {
+          "request": 6,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 721.6521929949522,
+          "completion_ms": 2461.5468259435147,
+          "tpot_ms": 27.61737512616766
+        },
+        {
+          "request": 7,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 913.3833891246468,
+          "completion_ms": 2474.342639092356,
+          "tpot_ms": 24.7771309518684
+        },
+        {
+          "request": 8,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 913.3833891246468,
+          "completion_ms": 2474.342639092356,
+          "tpot_ms": 24.7771309518684
+        },
+        {
+          "request": 9,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1107.5981629546732,
+          "completion_ms": 2487.046763068065,
+          "tpot_ms": 21.896009525609394
+        },
+        {
+          "request": 10,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1107.5981629546732,
+          "completion_ms": 2487.046763068065,
+          "tpot_ms": 21.896009525609394
+        },
+        {
+          "request": 11,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1303.6176450550556,
+          "completion_ms": 2499.6744079981,
+          "tpot_ms": 18.985027983222924
+        },
+        {
+          "request": 12,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1303.6176450550556,
+          "completion_ms": 2499.6744079981,
+          "tpot_ms": 18.985027983222924
+        },
+        {
+          "request": 13,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1501.4488501474261,
+          "completion_ms": 2512.267094105482,
+          "tpot_ms": 16.044734031080253
+        },
+        {
+          "request": 14,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1699.939426034689,
+          "completion_ms": 2524.778155144304,
+          "tpot_ms": 13.09267823983516
+        },
+        {
+          "request": 15,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1743.2244650553912,
+          "completion_ms": 2536.1831940244883,
+          "tpot_ms": 12.58664649157297
+        }
+      ],
+      "scheduler": {
+        "steps": [
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4096,
+            "decode_tokens": 0,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4095,
+            "decode_tokens": 1,
+            "requests": 4,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4093,
+            "decode_tokens": 3,
+            "requests": 6,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4091,
+            "decode_tokens": 5,
+            "requests": 8,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4089,
+            "decode_tokens": 7,
+            "requests": 10,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4087,
+            "decode_tokens": 9,
+            "requests": 12,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4085,
+            "decode_tokens": 11,
+            "requests": 14,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4083,
+            "decode_tokens": 13,
+            "requests": 15,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4082,
+            "decode_tokens": 14,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 78,
+            "prefill_tokens": 63,
+            "decode_tokens": 15,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 15,
+            "prefill_tokens": 0,
+            "decode_tokens": 15,
+            "requests": 15,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 13,
+            "prefill_tokens": 0,
+            "decode_tokens": 13,
+            "requests": 13,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 11,
+            "prefill_tokens": 0,
+            "decode_tokens": 11,
+            "requests": 11,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 9,
+            "prefill_tokens": 0,
+            "decode_tokens": 9,
+            "requests": 9,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 7,
+            "prefill_tokens": 0,
+            "decode_tokens": 7,
+            "requests": 7,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 5,
+            "prefill_tokens": 0,
+            "decode_tokens": 5,
+            "requests": 5,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 3,
+            "prefill_tokens": 0,
+            "decode_tokens": 3,
+            "requests": 3,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 2,
+            "prefill_tokens": 0,
+            "decode_tokens": 2,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 1,
+            "prefill_tokens": 0,
+            "decode_tokens": 1,
+            "requests": 1,
+            "mixed": false
+          }
+        ],
+        "linear_counts": {
+          "homogeneous_prefill": 144,
+          "mixed": 1296,
+          "homogeneous_decode": 9072
+        },
+        "teacher_skipped_partial_samples": 0,
+        "mixed_forwards": 9,
+        "total_prefill_rows": 36864,
+        "total_decode_rows": 1008
+      },
+      "output_tokens_per_second": 403.7515817872969,
+      "output_sha256": "6646ff4d5cc57652b07c4e28819cdeb98927fcf48fcdd8c4b17ebf898c02238c"
+    },
+    {
+      "iteration": 6,
+      "warmup": false,
+      "e2e_ms": 2535.675951046869,
+      "admission_ms": 1.4494850765913725,
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 158.69382512755692,
+          "completion_ms": 2422.589594963938,
+          "tpot_ms": 35.93485348946636
+        },
+        {
+          "request": 1,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 343.9655010588467,
+          "completion_ms": 2435.3904051240534,
+          "tpot_ms": 33.197220699447726
+        },
+        {
+          "request": 2,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 343.9655010588467,
+          "completion_ms": 2435.3904051240534,
+          "tpot_ms": 33.197220699447726
+        },
+        {
+          "request": 3,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 531.9238370284438,
+          "completion_ms": 2448.1990470085293,
+          "tpot_ms": 30.41706682508072
+        },
+        {
+          "request": 4,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 531.9238370284438,
+          "completion_ms": 2448.1990470085293,
+          "tpot_ms": 30.41706682508072
+        },
+        {
+          "request": 5,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 721.6900950297713,
+          "completion_ms": 2461.0321871005,
+          "tpot_ms": 27.60860463604331
+        },
+        {
+          "request": 6,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 721.6900950297713,
+          "completion_ms": 2461.0321871005,
+          "tpot_ms": 27.60860463604331
+        },
+        {
+          "request": 7,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 913.367172004655,
+          "completion_ms": 2473.843971034512,
+          "tpot_ms": 24.76947300047392
+        },
+        {
+          "request": 8,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 913.367172004655,
+          "completion_ms": 2473.843971034512,
+          "tpot_ms": 24.76947300047392
+        },
+        {
+          "request": 9,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1107.502015074715,
+          "completion_ms": 2486.524021020159,
+          "tpot_ms": 21.889238189610225
+        },
+        {
+          "request": 10,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1107.502015074715,
+          "completion_ms": 2486.524021020159,
+          "tpot_ms": 21.889238189610225
+        },
+        {
+          "request": 11,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1303.5570359788835,
+          "completion_ms": 2499.1372041404247,
+          "tpot_ms": 18.97746298669113
+        },
+        {
+          "request": 12,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1303.5570359788835,
+          "completion_ms": 2499.1372041404247,
+          "tpot_ms": 18.97746298669113
+        },
+        {
+          "request": 13,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1501.2454150710255,
+          "completion_ms": 2511.708192061633,
+          "tpot_ms": 16.039091698263608
+        },
+        {
+          "request": 14,
+          "prompt_tokens": 512,
+          "output_tokens": 64,
+          "ttft_ms": 1699.7940931469202,
+          "completion_ms": 2524.2611430585384,
+          "tpot_ms": 13.086778570025686
+        },
+        {
+          "request": 15,
+          "prompt_tokens": 4096,
+          "output_tokens": 64,
+          "ttft_ms": 1743.076551007107,
+          "completion_ms": 2535.6455431319773,
+          "tpot_ms": 12.580460192458261
+        }
+      ],
+      "scheduler": {
+        "steps": [
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4096,
+            "decode_tokens": 0,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4095,
+            "decode_tokens": 1,
+            "requests": 4,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4093,
+            "decode_tokens": 3,
+            "requests": 6,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4091,
+            "decode_tokens": 5,
+            "requests": 8,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4089,
+            "decode_tokens": 7,
+            "requests": 10,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4087,
+            "decode_tokens": 9,
+            "requests": 12,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4085,
+            "decode_tokens": 11,
+            "requests": 14,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4083,
+            "decode_tokens": 13,
+            "requests": 15,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 4096,
+            "prefill_tokens": 4082,
+            "decode_tokens": 14,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 78,
+            "prefill_tokens": 63,
+            "decode_tokens": 15,
+            "requests": 16,
+            "mixed": true
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 16,
+            "prefill_tokens": 0,
+            "decode_tokens": 16,
+            "requests": 16,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 15,
+            "prefill_tokens": 0,
+            "decode_tokens": 15,
+            "requests": 15,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 13,
+            "prefill_tokens": 0,
+            "decode_tokens": 13,
+            "requests": 13,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 11,
+            "prefill_tokens": 0,
+            "decode_tokens": 11,
+            "requests": 11,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 9,
+            "prefill_tokens": 0,
+            "decode_tokens": 9,
+            "requests": 9,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 7,
+            "prefill_tokens": 0,
+            "decode_tokens": 7,
+            "requests": 7,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 5,
+            "prefill_tokens": 0,
+            "decode_tokens": 5,
+            "requests": 5,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 3,
+            "prefill_tokens": 0,
+            "decode_tokens": 3,
+            "requests": 3,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 2,
+            "prefill_tokens": 0,
+            "decode_tokens": 2,
+            "requests": 2,
+            "mixed": false
+          },
+          {
+            "scheduled_tokens": 1,
+            "prefill_tokens": 0,
+            "decode_tokens": 1,
+            "requests": 1,
+            "mixed": false
+          }
+        ],
+        "linear_counts": {
+          "homogeneous_prefill": 144,
+          "mixed": 1296,
+          "homogeneous_decode": 9072
+        },
+        "teacher_skipped_partial_samples": 0,
+        "mixed_forwards": 9,
+        "total_prefill_rows": 36864,
+        "total_decode_rows": 1008
+      },
+      "output_tokens_per_second": 403.8370910830445,
+      "output_sha256": "6646ff4d5cc57652b07c4e28819cdeb98927fcf48fcdd8c4b17ebf898c02238c"
+    }
+  ],
+  "memory": {
+    "host_linear_bytes": 7813989504,
+    "gpu_linear_bytes": 7813989504,
+    "allocated_bytes_after_init": 16848057856,
+    "kv_bytes": 6442450944
+  },
+  "peak_allocated_bytes": 17955388928,
+  "peak_reserved_bytes": 18324914176,
+  "gpu": "6",
+  "e2e_ms": 2535.6775941327214,
+  "output_tokens_per_second": 403.8368294019016,
+  "p50_ttft_ms": 913.3833891246468,
+  "p95_ttft_ms": 1742.9139457875863,
+  "p50_completion_ms": 2474.151829024777,
+  "p95_completion_ms": 2533.4562365314923,
+  "p50_tpot_ms": 24.76947300047392,
+  "p95_tpot_ms": 35.912082913065596
+}

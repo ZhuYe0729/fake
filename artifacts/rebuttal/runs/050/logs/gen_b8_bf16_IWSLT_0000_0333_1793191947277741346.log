@@ -1,0 +1,44 @@
+INFO 10-28 12:52:31 [__init__.py:216] Automatically detected platform cuda.
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/code/quality_task.py", line 116, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/code/quality_task.py", line 50, in main
+    phase=install()
+          ^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/code/runtime_extensions.py", line 11, in install
+    from vllm.model_executor.models.qwen2 import Qwen2Model
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/models/qwen2.py", line 50, in <module>
+    from vllm.model_executor.model_loader.weight_utils import (
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/model_loader/__init__.py", line 12, in <module>
+    from vllm.model_executor.model_loader.bitsandbytes_loader import (
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/model_loader/bitsandbytes_loader.py", line 25, in <module>
+    from vllm.model_executor.layers.fused_moe import FusedMoE
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/fused_moe/__init__.py", line 8, in <module>
+    from vllm.model_executor.layers.fused_moe.layer import (
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/fused_moe/layer.py", line 28, in <module>
+    from vllm.model_executor.layers.fused_moe.fused_moe import (
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/fused_moe/fused_moe.py", line 16, in <module>
+    import vllm.model_executor.layers.fused_moe.modular_kernel as mk
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/fused_moe/modular_kernel.py", line 13, in <module>
+    from vllm.model_executor.layers.fused_moe.utils import (  # yapf: disable
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/fused_moe/utils.py", line 9, in <module>
+    from vllm.model_executor.layers.quantization.utils.fp8_utils import (
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/quantization/utils/fp8_utils.py", line 18, in <module>
+    from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/quantization/utils/w8a8_utils.py", line 72, in <module>
+    CUTLASS_FP8_SUPPORTED = cutlass_fp8_supported()
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/quantization/utils/w8a8_utils.py", line 46, in cutlass_fp8_supported
+    capability_tuple = current_platform.get_device_capability()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/platforms/cuda.py", line 46, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/platforms/cuda.py", line 538, in get_device_capability
+    physical_device_id = cls.device_id_to_physical_device_id(device_id)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/platforms/interface.py", line 184, in device_id_to_physical_device_id
+    return int(physical_device_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'GPU-45331692-1cbe-95c4-7c96-0f8d61255fbf'

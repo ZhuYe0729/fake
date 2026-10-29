@@ -1,0 +1,185 @@
+{
+  "policies": [
+    "uniform_dense_bf16",
+    "transfer_daso5_measured_prefill_decode_04",
+    "hawq_fp4_phase_pair_signed_prefill_decode_q0.01",
+    "hawq_fp4_phase_pair_signed_prefill_decode_q0.07",
+    "inverse_prefill_decode_r0.65",
+    "exact_prefill_decode_q0.02"
+  ],
+  "sources": {
+    "uniform_dense_bf16": {
+      "run": "011",
+      "policy_sha256": "ca97e90376f1d97b65e778a669a04691117f765647356863b824ac25053138ab"
+    },
+    "transfer_daso5_measured_prefill_decode_04": {
+      "run": "011",
+      "policy_sha256": "b4c04e2e8afda25dd8975108e37222a346a155511b3d37c3c9b415607ed1f262"
+    },
+    "hawq_fp4_phase_pair_signed_prefill_decode_q0.01": {
+      "run": "011",
+      "policy_sha256": "75b80b8595d38100926fb7eac59dd0951f148bf596fbaff66aeac3531786205a"
+    },
+    "hawq_fp4_phase_pair_signed_prefill_decode_q0.07": {
+      "run": "011",
+      "policy_sha256": "d9d0b0cad462c4ff4002026b31cd36ff91abc04b8779451d552578ed2f367ba1"
+    },
+    "inverse_prefill_decode_r0.65": {
+      "run": "011",
+      "policy_sha256": "dbf297a14bcf654a04dcc3888cc36a3abb44dc8afa6cbb0e0174f8183793e20f"
+    },
+    "exact_prefill_decode_q0.02": {
+      "run": "005",
+      "policy_sha256": "099a73717db85da596b7ed90654d8ab33aefb53fed3cb26d4314d9898db7acf7"
+    }
+  },
+  "gpu": 0,
+  "warmups": 3,
+  "iterations": 8,
+  "batch": 8,
+  "input": 2048,
+  "outputs": [
+    1,
+    64
+  ],
+  "kv_bytes": 6442450944,
+  "rounds": [
+    {
+      "round": 0,
+      "split": "calibration",
+      "seed": 144991,
+      "order": [
+        "uniform_dense_bf16",
+        "transfer_daso5_measured_prefill_decode_04",
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.01",
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.07",
+        "inverse_prefill_decode_r0.65",
+        "exact_prefill_decode_q0.02"
+      ]
+    },
+    {
+      "round": 1,
+      "split": "calibration",
+      "seed": 144993,
+      "order": [
+        "exact_prefill_decode_q0.02",
+        "inverse_prefill_decode_r0.65",
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.07",
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.01",
+        "transfer_daso5_measured_prefill_decode_04",
+        "uniform_dense_bf16"
+      ]
+    },
+    {
+      "round": 2,
+      "split": "test",
+      "seed": 144995,
+      "order": [
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.01",
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.07",
+        "inverse_prefill_decode_r0.65",
+        "exact_prefill_decode_q0.02",
+        "uniform_dense_bf16",
+        "transfer_daso5_measured_prefill_decode_04"
+      ]
+    },
+    {
+      "round": 3,
+      "split": "test",
+      "seed": 144997,
+      "order": [
+        "transfer_daso5_measured_prefill_decode_04",
+        "uniform_dense_bf16",
+        "exact_prefill_decode_q0.02",
+        "inverse_prefill_decode_r0.65",
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.07",
+        "hawq_fp4_phase_pair_signed_prefill_decode_q0.01"
+      ]
+    }
+  ],
+  "numa": {
+    "local": {
+      "node": 0,
+      "cpus": "0-7"
+    },
+    "remote": {
+      "node": 1,
+      "cpus": "32-39"
+    }
+  },
+  "remote_policies": [
+    "transfer_daso5_measured_prefill_decode_04",
+    "hawq_fp4_phase_pair_signed_prefill_decode_q0.07"
+  ],
+  "remote_rounds": [
+    0,
+    1
+  ],
+  "copy_probe": {
+    "order": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "mib": [
+      64,
+      512
+    ],
+    "warmups": 5,
+    "iterations": 20
+  },
+  "sla": {
+    "candidates": [
+      "uniform_dense_bf16",
+      "inverse_prefill_decode_r0.65",
+      "exact_prefill_decode_q0.02"
+    ],
+    "original_validation": [
+      {
+        "policy_id": "uniform_dense_bf16",
+        "scenario": "prefill_decode",
+        "delta_nll": 0.0,
+        "paired_se": 0.0,
+        "guarded_delta_nll": 0.0,
+        "calibration_ms": 2021.8140939250588,
+        "guarded_calibration_ms": 2122.904798621312,
+        "bf16_calibration_ms": 2021.8140939250588
+      },
+      {
+        "policy_id": "exact_prefill_decode_q0.02",
+        "scenario": "prefill_decode",
+        "delta_nll": 0.02558434203473249,
+        "paired_se": 0.01244742651251376,
+        "guarded_delta_nll": 0.055479195059760004,
+        "calibration_ms": 1538.8458189554513,
+        "guarded_calibration_ms": 1615.7881099032238,
+        "bf16_calibration_ms": 2021.8140939250588
+      },
+      {
+        "policy_id": "inverse_prefill_decode_r0.65",
+        "scenario": "prefill_decode",
+        "delta_nll": 0.00043623984628899173,
+        "paired_se": 0.002956360318495532,
+        "guarded_delta_nll": 0.011348960483280057,
+        "calibration_ms": 1739.727223990485,
+        "guarded_calibration_ms": 1826.7135851900093,
+        "bf16_calibration_ms": 2021.8140939250588
+      }
+    ],
+    "fractions": [
+      0.95,
+      0.8,
+      0.65
+    ],
+    "rules": {
+      "original_5_percent": "median(all calibration timed)*1.05",
+      "empirical_upper": "max(all calibration timed)*1.02"
+    },
+    "selection": "minimum ORIGINAL validation guarded_delta_nll among latency-feasible candidates; no final quality/test latency used",
+    "freeze_before_round": 2,
+    "scope": "empirical reliability under stated conditions, not a hard real-time bound"
+  },
+  "registered_time_ns": 1792977367141437319,
+  "scope": "Diagnose timing stability/NUMA; fixed maps and unchanged backends, no new quality labels or quality fitting."
+}

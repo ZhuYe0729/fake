@@ -1,0 +1,95 @@
+{
+  "run015": [
+    {
+      "policy_id": "uniform_sq_int8",
+      "scenario": "prefill_decode",
+      "delta_nll": -0.004143952413591081,
+      "paired_se": 0.0067871505123098235,
+      "guarded_delta_nll": 0.014430348611028567,
+      "calibration_median_ms": 1219.044815050438,
+      "calibration_max_ms": 1220.8531028591096,
+      "guarded_calibration_ms": 1281.8957580020651,
+      "calibration_cycle_ms": 1219.2260830197483,
+      "baseline_calibration_ms": 1982.3485182132572
+    },
+    {
+      "policy_id": "graph_exact7_prefill_decode_q0.01",
+      "scenario": "prefill_decode",
+      "delta_nll": 0.029761317363687246,
+      "paired_se": 0.011525903516293123,
+      "guarded_delta_nll": 0.05781312439627349,
+      "calibration_median_ms": 974.5808788575232,
+      "calibration_max_ms": 980.949467048049,
+      "guarded_calibration_ms": 1029.9969404004514,
+      "calibration_cycle_ms": 1079.7314529772848,
+      "baseline_calibration_ms": 1982.3485182132572
+    }
+  ],
+  "run015_int8_pool_entry": {
+    "signature": "e617c822e1c64a1eeadb1bf30eca475223420a1270d006da332150fed1c9866f",
+    "scenarios": [
+      "prefill_only",
+      "prefill_decode"
+    ],
+    "daso_eligible": false
+  },
+  "run016": [
+    {
+      "policy": "uniform_int8",
+      "scenario": "prefill_decode",
+      "validation_delta_nll": -0.00728232991159844,
+      "paired_se": 0.009598798543807836,
+      "guarded_delta_nll": 0.016915267176017233,
+      "calibration_e2e_ms": 1212.123611010611,
+      "calibration_cycle_ms": 1212.2506061568856
+    },
+    {
+      "policy": "uniform_sq_int8",
+      "scenario": "prefill_decode",
+      "validation_delta_nll": -0.0028492937850784147,
+      "paired_se": 0.008562247303160329,
+      "guarded_delta_nll": 0.019275200821242244,
+      "calibration_e2e_ms": 1214.83785379678,
+      "calibration_cycle_ms": 1214.9845636449754
+    }
+  ],
+  "original_quality_fit": {
+    "metrics": {
+      "train": {
+        "count": 108,
+        "mae": 0.015233741195234867,
+        "rmse": 0.023434636145022406
+      },
+      "holdout": {
+        "count": 36,
+        "mae": 0.017989228439651863,
+        "rmse": 0.027398705039925687
+      },
+      "new_int8_holdout": {
+        "count": 6,
+        "mae": 0.012011894262676515,
+        "rmse": 0.013244186836004685
+      }
+    },
+    "seconds": 3.8405745080672204,
+    "methods": [
+      "dense_bf16",
+      "dense_nvfp4",
+      "sparse_bf16",
+      "sparse_nvfp4",
+      "w4a16_ours",
+      "sq_int8",
+      "fp8",
+      "int8"
+    ],
+    "training_reference_nll": 2.2199699472705055,
+    "local_errors_sha256": "f23d3eba45cad818c3add941b90a00e0e9ab871078a43c9bd8db38b6538555b8",
+    "scope": "Original architecture,4000 steps,lr.03,regularization.05; train split only, no tuning on holdout/confirmation."
+  },
+  "original_quality_fit_sha256": "65bc327c51da6738cc2250f0f71f9a5c375a7ca9b1418e53e7940ed96abad8a0",
+  "zero_proxy_decode_o_proj_modules": {
+    "sq_int8": 36,
+    "int8": 36,
+    "w4a16_ours": 36
+  }
+}

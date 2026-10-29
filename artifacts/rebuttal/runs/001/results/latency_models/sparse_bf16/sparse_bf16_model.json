@@ -1,0 +1,75 @@
+{
+  "model": "sparse_bf16_baseline_residual",
+  "baseline_params": {
+    "effective_sparse_tflops": 218.34262770428117,
+    "effective_bandwidth_tbps": 1.4805384255287348,
+    "launch_decompress_floor_ms": 0.024432,
+    "weight_compression_ratio": 1.777778,
+    "k_floor_log2": [
+      6.0,
+      7.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0,
+      13.0,
+      14.0
+    ],
+    "k_floor_ms": [
+      0.025371,
+      0.0252886,
+      0.0254391,
+      0.025664100000000002,
+      0.0301248,
+      0.0412457,
+      0.06439052499999995,
+      0.10932694999999999,
+      0.20046349999999993
+    ]
+  },
+  "feature_columns": [
+    "log2_m",
+    "log2_n",
+    "log2_k",
+    "log2_mn",
+    "log2_mk",
+    "log2_nk",
+    "log2_mnk",
+    "log2_ai_sparse",
+    "log2_n_over_k",
+    "log2_m_over_n",
+    "log2_m_over_k",
+    "m_eq_8",
+    "m_eq_16",
+    "m_le_64",
+    "m_ge_256",
+    "n_le_1024",
+    "k_le_1024",
+    "ceil_m_tiles",
+    "ceil_n_tiles",
+    "ceil_k_tiles",
+    "log2_total_tiles",
+    "m_tail_frac",
+    "n_tail_frac",
+    "k_tail_frac",
+    "output_log2",
+    "weight_reuse_log2",
+    "sparse_weight_bytes_log2"
+  ],
+  "neighbors": 12,
+  "ranges": {
+    "m": [
+      8,
+      16384
+    ],
+    "n": [
+      16,
+      16384
+    ],
+    "k": [
+      64,
+      16384
+    ]
+  }
+}

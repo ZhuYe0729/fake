@@ -1,5 +1,9 @@
 # AGENTS.md
 
+## Rebuttal / PRO 6000 交接入口
+
+继续 rebuttal 或大模型实验前，先读 [PRO6000_HANDOFF.md](artifacts/rebuttal/PRO6000_HANDOFF.md) 与 [中文回复总稿](artifacts/rebuttal/REBUTTAL_RESPONSE_CN.md)。旧053夜间调度已结束，不直接重启；实际 phase vLLM fork、源码补丁、原始结果恢复和新实验入口见交接说明。
+
 ## Project workflow
 
 每次开始一个较大的开发/修改任务前，我会进行plan，请你将最终决定的plan在 `dev/plans/` 目录下创建计划文件：

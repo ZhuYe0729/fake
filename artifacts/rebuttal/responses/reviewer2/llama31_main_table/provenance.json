@@ -1,0 +1,2105 @@
+{
+  "model": "Llama-3.1-8B-Instruct",
+  "rows": [
+    {
+      "method": "BF16",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "BF16",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_dense_bf16",
+        "quality_run": "017",
+        "quality_policy": "uniform_dense_bf16",
+        "map_sha256": "005940d561f8453f086a66f42431538cdc536f81173f8fd28a2b7f6b6c9aa1e2",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_dense_bf16/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_dense_bf16/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_dense_bf16/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_dense_bf16/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "BF16",
+        "scenario": "prefill_decode",
+        "policy_run": "017",
+        "policy": "uniform_dense_bf16",
+        "quality_run": "017",
+        "quality_policy": "uniform_dense_bf16",
+        "map_sha256": "005940d561f8453f086a66f42431538cdc536f81173f8fd28a2b7f6b6c9aa1e2",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "Dense NVFP4",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Dense NVFP4",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_dense_nvfp4",
+        "quality_run": "017",
+        "quality_policy": "uniform_dense_nvfp4",
+        "map_sha256": "8a65cd9f2694b69b9b051557a86fdb4534e45aea3467862ae19c025603490ddf",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_dense_nvfp4/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_dense_nvfp4/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_dense_nvfp4/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_dense_nvfp4/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Dense NVFP4",
+        "scenario": "prefill_decode",
+        "policy_run": "017",
+        "policy": "uniform_dense_nvfp4",
+        "quality_run": "017",
+        "quality_policy": "uniform_dense_nvfp4",
+        "map_sha256": "8a65cd9f2694b69b9b051557a86fdb4534e45aea3467862ae19c025603490ddf",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_dense_nvfp4/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_dense_nvfp4/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_dense_nvfp4/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "W4A16 (FP4)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "W4A16 NVFP4 Marlin",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_w4a16_ours",
+        "quality_run": "017",
+        "quality_policy": "uniform_w4a16_ours",
+        "map_sha256": "6e08d59dfc68f2c87378efbaa4f869f633653611bdff9bbc6a4103ac18817fc4",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_w4a16_ours/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_w4a16_ours/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_w4a16_ours/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_w4a16_ours/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "W4A16 NVFP4 Marlin",
+        "scenario": "prefill_decode",
+        "policy_run": "017",
+        "policy": "uniform_w4a16_ours",
+        "quality_run": "017",
+        "quality_policy": "uniform_w4a16_ours",
+        "map_sha256": "6e08d59dfc68f2c87378efbaa4f869f633653611bdff9bbc6a4103ac18817fc4",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_w4a16_ours/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_w4a16_ours/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_w4a16_ours/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "Sparse BF16 (2:4)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Sparse BF16 (SparseGPT)",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_sparse_bf16",
+        "quality_run": "017",
+        "quality_policy": "uniform_sparse_bf16",
+        "map_sha256": "7713a7d831836149e4b59a55aeeaf41f28ef8a030a8c3a5d9f2f025967fb13e2",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_sparse_bf16/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_sparse_bf16/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_sparse_bf16/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_sparse_bf16/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Sparse BF16 (SparseGPT)",
+        "scenario": "prefill_decode",
+        "policy_run": "017",
+        "policy": "uniform_sparse_bf16",
+        "quality_run": "017",
+        "quality_policy": "uniform_sparse_bf16",
+        "map_sha256": "7713a7d831836149e4b59a55aeeaf41f28ef8a030a8c3a5d9f2f025967fb13e2",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_sparse_bf16/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_sparse_bf16/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_sparse_bf16/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "Sparse NVFP4 (2:4)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Sparse NVFP4 (SparseGPT)",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_sparse_nvfp4",
+        "quality_run": "017",
+        "quality_policy": "uniform_sparse_nvfp4",
+        "map_sha256": "2d1238870e0c68d8b3aca68b7b4e99510023872c6eeb18ed52d082c881257b37",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_sparse_nvfp4/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_sparse_nvfp4/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_sparse_nvfp4/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_sparse_nvfp4/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Sparse NVFP4 (SparseGPT)",
+        "scenario": "prefill_decode",
+        "policy_run": "017",
+        "policy": "uniform_sparse_nvfp4",
+        "quality_run": "017",
+        "quality_policy": "uniform_sparse_nvfp4",
+        "map_sha256": "2d1238870e0c68d8b3aca68b7b4e99510023872c6eeb18ed52d082c881257b37",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_sparse_nvfp4/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_sparse_nvfp4/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_sparse_nvfp4/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "INT8 (W8A8)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "INT8 W8A8",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_int8",
+        "quality_run": "017",
+        "quality_policy": "uniform_int8",
+        "map_sha256": "16f5151a517f366d5eb02f48319ea2d9ff2c10f7bd055e477ccea3c8e7a66ddd",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "INT8 W8A8 (034 reference)",
+        "scenario": "prefill_decode",
+        "policy_run": "034",
+        "policy": "uniform_int8",
+        "quality_run": "017",
+        "quality_policy": "uniform_int8",
+        "map_sha256": "16f5151a517f366d5eb02f48319ea2d9ff2c10f7bd055e477ccea3c8e7a66ddd",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_int8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_int8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_int8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "SmoothQuant INT8",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant INT8",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_sq_int8",
+        "quality_run": "017",
+        "quality_policy": "uniform_sq_int8",
+        "map_sha256": "82a91cb7c45576c3e679abae2e4b734a001e2362e54cba5179c629810ca1102d",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant INT8 (034 reference)",
+        "scenario": "prefill_decode",
+        "policy_run": "034",
+        "policy": "uniform_sq_int8",
+        "quality_run": "017",
+        "quality_policy": "uniform_sq_int8",
+        "map_sha256": "82a91cb7c45576c3e679abae2e4b734a001e2362e54cba5179c629810ca1102d",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_sq_int8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_sq_int8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_sq_int8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "FP8 (W8A8)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "FP8 W8A8",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_fp8",
+        "quality_run": "017",
+        "quality_policy": "uniform_fp8",
+        "map_sha256": "c22b99f5c261a3bbfc98d83128f6649ca17e5d2e160f9bd62a5b9b8e0080b7d3",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_fp8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_fp8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_fp8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_fp8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "FP8 W8A8 (034 reference)",
+        "scenario": "prefill_decode",
+        "policy_run": "034",
+        "policy": "uniform_fp8",
+        "quality_run": "017",
+        "quality_policy": "uniform_fp8",
+        "map_sha256": "c22b99f5c261a3bbfc98d83128f6649ca17e5d2e160f9bd62a5b9b8e0080b7d3",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/uniform_fp8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/uniform_fp8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/uniform_fp8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "SmoothQuant FP8",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant FP8 alpha=.5 (042)",
+        "scenario": "prefill_only",
+        "policy_run": "042",
+        "policy": "uniform_sq_fp8",
+        "quality_run": "042",
+        "quality_policy": "uniform_sq_fp8",
+        "map_sha256": "ebd156854db5006ae4f29daa607fd0afac9c959c85b63542bf36c7600923a65d",
+        "cells": {
+          "arc_c": {
+            "source": "runs/042/results/tasks/uniform_sq_fp8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/042/results/tasks/uniform_sq_fp8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/042/results/tasks/uniform_sq_fp8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/042/results/tasks/uniform_sq_fp8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant FP8 alpha=.5 (042)",
+        "scenario": "prefill_decode",
+        "policy_run": "042",
+        "policy": "uniform_sq_fp8",
+        "quality_run": "042",
+        "quality_policy": "uniform_sq_fp8",
+        "map_sha256": "ebd156854db5006ae4f29daa607fd0afac9c959c85b63542bf36c7600923a65d",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/042/results/generation/uniform_sq_fp8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/042/results/generation/uniform_sq_fp8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/042/results/generation/uniform_sq_fp8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "SQ-INT8 → W4A16",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant INT8",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_sq_int8",
+        "quality_run": "017",
+        "quality_policy": "uniform_sq_int8",
+        "map_sha256": "82a91cb7c45576c3e679abae2e4b734a001e2362e54cba5179c629810ca1102d",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Uniform SQ-INT8 prefill / W4A16 decode (034 reference)",
+        "scenario": "prefill_decode",
+        "policy_run": "034",
+        "policy": "phase_sq_int8_w4a16_ours",
+        "quality_run": "017",
+        "quality_policy": "phase_sq_int8_w4a16_ours",
+        "map_sha256": "ec74e15e1c71040510138342c3ca548989c53b2d3e3ec8e3a3a4eae23ddd2283",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/phase_sq_int8_w4a16_ours/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/phase_sq_int8_w4a16_ours/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/phase_sq_int8_w4a16_ours/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "INT8 → W4A16",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "INT8 W8A8",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_int8",
+        "quality_run": "017",
+        "quality_policy": "uniform_int8",
+        "map_sha256": "16f5151a517f366d5eb02f48319ea2d9ff2c10f7bd055e477ccea3c8e7a66ddd",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Uniform INT8 prefill / W4A16 decode (038 fixed control)",
+        "scenario": "prefill_decode",
+        "policy_run": "038",
+        "policy": "phase_int8_w4a16_ours",
+        "quality_run": "038",
+        "quality_policy": "phase_int8_w4a16_ours",
+        "map_sha256": "a633039d7b125456e3a368e703951bc042850df54dd8e1842134592700cfe83f",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/038/results/generation/phase_int8_w4a16_ours/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/038/results/generation/phase_int8_w4a16_ours/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/038/results/generation/phase_int8_w4a16_ours/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "FP8 → W4A16",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "FP8 W8A8",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_fp8",
+        "quality_run": "017",
+        "quality_policy": "uniform_fp8",
+        "map_sha256": "c22b99f5c261a3bbfc98d83128f6649ca17e5d2e160f9bd62a5b9b8e0080b7d3",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_fp8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_fp8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_fp8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_fp8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Uniform FP8 prefill / W4A16 decode (038 fixed control)",
+        "scenario": "prefill_decode",
+        "policy_run": "038",
+        "policy": "phase_fp8_w4a16_ours",
+        "quality_run": "038",
+        "quality_policy": "phase_fp8_w4a16_ours",
+        "map_sha256": "e2172791ce398cbf58f3c17348a073b563bd7069a31e4f46d2928c1bec7a3660",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/038/results/generation/phase_fp8_w4a16_ours/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/038/results/generation/phase_fp8_w4a16_ours/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/038/results/generation/phase_fp8_w4a16_ours/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": null
+    },
+    {
+      "method": "HAWQ-V3 (Balanced)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "HAWQ-FP4 PTQ r=.80",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "hawq_signed_prefill_only_same_operator_r0.8",
+        "quality_run": "017",
+        "quality_policy": "hawq_signed_prefill_only_same_operator_r0.8",
+        "map_sha256": "e868a4fefe4d11fa8db451774d649e29549fa984304a50395b296fd5184f9dee",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/hawq_signed_prefill_only_same_operator_r0.8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/hawq_signed_prefill_only_same_operator_r0.8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/hawq_signed_prefill_only_same_operator_r0.8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/hawq_signed_prefill_only_same_operator_r0.8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "HAWQ-FP4 PTQ r=.80",
+        "scenario": "prefill_decode",
+        "policy_run": "017",
+        "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+        "quality_run": "017",
+        "quality_policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+        "map_sha256": "7ca4eb17394d649f1fc4043a6d473061ec4b6d7244e230988ffa2cd671062ae2",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/hawq_signed_prefill_decode_phase_pair_r0.8/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": "FP4 PTQ hardware adaptation, r=.80."
+    },
+    {
+      "method": "HAWQ-V3 (Max-speed)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Common hardware-minimum FP4/INT8 control",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "hardware_minimum_prefill_only_same_operator",
+        "quality_run": "017",
+        "quality_policy": "hardware_minimum_prefill_only_same_operator",
+        "map_sha256": "8d08395e509c888ef5e8aa9c102bfa7698632128d365af0e3e44b42682409491",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Common hardware-minimum FP4/INT8 control",
+        "scenario": "prefill_decode",
+        "policy_run": "017",
+        "policy": "hardware_minimum_prefill_decode_phase_pair",
+        "quality_run": "017",
+        "quality_policy": "hardware_minimum_prefill_decode_phase_pair",
+        "map_sha256": "51a40fb2294e68defdaae6f563772770ff5a8f7a1c6a0162c24f774ca06a126c",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/017/results/generation/hardware_minimum_prefill_decode_phase_pair/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/017/results/generation/hardware_minimum_prefill_decode_phase_pair/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/017/results/generation/hardware_minimum_prefill_decode_phase_pair/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": {
+        "prefill_only": {
+          "solver_point": {
+            "label": "hardware_minimum_prefill_only_same_operator",
+            "policy_id": "hardware_minimum_prefill_only_same_operator",
+            "scenario": "prefill_only",
+            "family": "hardware anchor",
+            "phase_mode": "same_operator",
+            "minimum_linear_ms": 356.7269891500473,
+            "endpoint_daso_indices": [
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1
+            ],
+            "endpoint_hawq_indices": [
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1
+            ]
+          },
+          "map_sha256": "8d08395e509c888ef5e8aa9c102bfa7698632128d365af0e3e44b42682409491",
+          "minimum_linear_ms": 356.7269891500473
+        },
+        "prefill_decode": {
+          "solver_point": {
+            "label": "hardware_minimum_prefill_decode_phase_pair",
+            "policy_id": "hardware_minimum_prefill_decode_phase_pair",
+            "scenario": "prefill_decode",
+            "family": "hardware anchor",
+            "phase_mode": "phase_pair",
+            "minimum_linear_ms": 605.2709456604177,
+            "endpoint_daso_indices": [
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1
+            ],
+            "endpoint_hawq_indices": [
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1
+            ]
+          },
+          "map_sha256": "51a40fb2294e68defdaae6f563772770ff5a8f7a1c6a0162c24f774ca06a126c",
+          "minimum_linear_ms": 605.2709456604177
+        }
+      }
+    },
+    {
+      "method": "DASO (Balanced)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "SmoothQuant INT8",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "uniform_sq_int8",
+        "quality_run": "017",
+        "quality_policy": "uniform_sq_int8",
+        "map_sha256": "82a91cb7c45576c3e679abae2e4b734a001e2362e54cba5179c629810ca1102d",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/uniform_sq_int8/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "DASO-8 exploratory P+D, q=0.03, wP=1 (034)",
+        "scenario": "prefill_decode",
+        "policy_run": "034",
+        "policy": "w1_q0.03",
+        "quality_run": "034",
+        "quality_policy": "w1_q0.03",
+        "map_sha256": "50e8b81325d9fe1f659b6bcc7887ea7006b83b6c2109bbf46720cd4a1d7a6c1e",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/034/results/generation/w1_q0.03/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/034/results/generation/w1_q0.03/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/034/results/generation/w1_q0.03/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": "Representative reported quality-speed point; independent scenario policies. P+D is an explored point, not a common actual epsilon guarantee."
+    },
+    {
+      "method": "DASO (Max-speed)",
+      "prefill_only": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "Common hardware-minimum FP4/INT8 control",
+        "scenario": "prefill_only",
+        "policy_run": "017",
+        "policy": "hardware_minimum_prefill_only_same_operator",
+        "quality_run": "017",
+        "quality_policy": "hardware_minimum_prefill_only_same_operator",
+        "map_sha256": "8d08395e509c888ef5e8aa9c102bfa7698632128d365af0e3e44b42682409491",
+        "cells": {
+          "arc_c": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/arc_challenge/full/result.json",
+            "metric": "acc_norm,none",
+            "samples": 1172
+          },
+          "arc_e": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/arc_easy/full/result.json",
+            "metric": "acc,none",
+            "samples": 2376
+          },
+          "wino": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/winogrande/full/result.json",
+            "metric": "acc,none",
+            "samples": 1267
+          },
+          "mmlu": {
+            "source": "runs/017/results/tasks/hardware_minimum_prefill_only_same_operator/mmlu/full/result.json",
+            "metric": "acc,none",
+            "samples": 14042
+          }
+        }
+      },
+      "prefill_decode": {
+        "source_table": "responses/reviewer2/llama31_8b_instruct_table2_night161/main_table.csv",
+        "source_row": "DASO-8 exploratory P+D, q=0.04, wP=1 (034)",
+        "scenario": "prefill_decode",
+        "policy_run": "034",
+        "policy": "w1_q0.04",
+        "quality_run": "034",
+        "quality_policy": "w1_q0.04",
+        "map_sha256": "fe2de3f742dceac1161437758307dba1b22c38a9244906593c064f5c3d3d6eda",
+        "cells": {
+          "cnn_dm": {
+            "source": "runs/034/results/generation/w1_q0.04/cnn_dm_1000/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1000
+          },
+          "dialogsum": {
+            "source": "runs/034/results/generation/w1_q0.04/dsum/metrics_0000_end.json",
+            "metric": "rougeL_percent",
+            "samples": 1500
+          },
+          "iwslt": {
+            "source": "runs/034/results/generation/w1_q0.04/IWSLT/metrics_0000_end.json",
+            "metric": "sacre_bleu",
+            "samples": 333
+          }
+        }
+      },
+      "reporting_definition": "Faster of the two displayed representative points, not the global fastest policy across all archived budgets. Prefill uses the verified common floor."
+    }
+  ],
+  "hawq_latency_floor_proof": {
+    "prefill_only": {
+      "solver_point": {
+        "label": "hardware_minimum_prefill_only_same_operator",
+        "policy_id": "hardware_minimum_prefill_only_same_operator",
+        "scenario": "prefill_only",
+        "family": "hardware anchor",
+        "phase_mode": "same_operator",
+        "minimum_linear_ms": 356.7269891500473,
+        "endpoint_daso_indices": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "endpoint_hawq_indices": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      },
+      "map_sha256": "8d08395e509c888ef5e8aa9c102bfa7698632128d365af0e3e44b42682409491",
+      "minimum_linear_ms": 356.7269891500473
+    },
+    "prefill_decode": {
+      "solver_point": {
+        "label": "hardware_minimum_prefill_decode_phase_pair",
+        "policy_id": "hardware_minimum_prefill_decode_phase_pair",
+        "scenario": "prefill_decode",
+        "family": "hardware anchor",
+        "phase_mode": "phase_pair",
+        "minimum_linear_ms": 605.2709456604177,
+        "endpoint_daso_indices": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "endpoint_hawq_indices": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      },
+      "map_sha256": "51a40fb2294e68defdaae6f563772770ff5a8f7a1c6a0162c24f774ca06a126c",
+      "minimum_linear_ms": 605.2709456604177
+    }
+  },
+  "selection_scope": "Post hoc representative quality-speed reporting; all archived points retained, not a new blind test. Scenario policies separate."
+}

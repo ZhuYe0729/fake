@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "initial_failure": "Synthetic sparse NVFP4 weights incorrectly used ordinary 2:4; original backend rejected before timing that method.",
+  "correction": "Separate real pairwise-4:8 sparse NVFP4 weights; ordinary 2:4 sparse BF16 weights. All 112 cases rerun on idle GPU0; no partial first attempt enters final CSV.",
+  "gpu": 0,
+  "runtime_ablation_gpu": 6,
+  "reason": "Keep GPU6 dedicated to ongoing profiler/mixed-token work; large-shape case comparison uses only GPU0."
+}

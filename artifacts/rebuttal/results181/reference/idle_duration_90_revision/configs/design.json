@@ -1,0 +1,436 @@
+{
+  "policies": {
+    "bf16": {
+      "display": "BF16",
+      "scenario": null,
+      "source_run": "048",
+      "source_policy": "uniform_dense_bf16",
+      "map_sha256": "7aafcc63be76e1d5a0835a4e612fb9ef1ea2117614a8474b4f414889a1a9d06e",
+      "composition": {
+        "dense_bf16": 144
+      }
+    },
+    "pp_daso_bal": {
+      "display": "DASO（均衡）",
+      "scenario": "prefill_only",
+      "source_run": "015",
+      "source_policy": "uniform_sq_int8",
+      "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44",
+      "composition": {
+        "sq_int8": 144
+      }
+    },
+    "pp_hawq_bal": {
+      "display": "HAWQ-V3（均衡）",
+      "scenario": "prefill_only",
+      "source_run": "015",
+      "source_policy": "graph_hawq_fp4_prefill_only_r0.8",
+      "map_sha256": "fa9968b0d47160442a94e8956292b999297f696c95be8ff7ff9bf89d0ee1a5f5",
+      "composition": {
+        "dense_nvfp4": 8,
+        "int8": 60,
+        "dense_bf16": 76
+      }
+    },
+    "pp_shared_fast": {
+      "display": "共同速度端点",
+      "scenario": "prefill_only",
+      "source_run": "016",
+      "source_policy": "hardware_minimum_prefill_only_same_operator",
+      "map_sha256": "8bd60e611755a10699c2f4e3e0c43ef553e8a7725d2488af15a5246925f7a585",
+      "composition": {
+        "int8": 108,
+        "dense_nvfp4": 36
+      }
+    },
+    "pd_daso_bal": {
+      "display": "DASO（均衡）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "w1_e0.01",
+      "map_sha256": "b3a7766fdbdffaa772843ce303dc2cd4473d5c4d9019daef1f6c547334b72489",
+      "composition": {
+        "sq_int8": 82,
+        "dense_nvfp4": 33,
+        "int8": 26,
+        "sparse_nvfp4": 3
+      }
+    },
+    "pd_daso_fast": {
+      "display": "DASO（速度优先）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "w32_e0.03",
+      "map_sha256": "24dbc084d3f627e894638003273e3e0c70edd995b5f116256b5363f79891fb7c",
+      "composition": {
+        "sq_int8": 92,
+        "dense_nvfp4": 33,
+        "int8": 19
+      }
+    },
+    "pd_hawq_bal": {
+      "display": "HAWQ-V3（均衡）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "map_sha256": "cf73ed5a97d3d17181cacd4cf22751f40ff506f3609bbc00fbb955e2eada8e8d",
+      "composition": {
+        "dense_nvfp4": 8,
+        "int8": 69,
+        "dense_bf16": 67
+      }
+    },
+    "pd_hawq_fast": {
+      "display": "HAWQ-V3（速度优先）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "hardware_minimum_prefill_decode_phase_pair",
+      "map_sha256": "78cc66d64f2c7ec10c44e8ac54b09ba08036b638bbba34238ce19c86620e3978",
+      "composition": {
+        "int8": 108,
+        "dense_nvfp4": 36
+      }
+    }
+  },
+  "rows": {
+    "prefill_only": [
+      {
+        "method": "BF16",
+        "policy": "bf16"
+      },
+      {
+        "method": "HAWQ-V3（均衡）",
+        "policy": "pp_hawq_bal"
+      },
+      {
+        "method": "HAWQ-V3（速度优先）",
+        "policy": "pp_shared_fast"
+      },
+      {
+        "method": "DASO（均衡）",
+        "policy": "pp_daso_bal"
+      },
+      {
+        "method": "DASO（速度优先）",
+        "policy": "pp_shared_fast"
+      }
+    ],
+    "prefill_decode": [
+      {
+        "method": "BF16",
+        "policy": "bf16"
+      },
+      {
+        "method": "HAWQ-V3（均衡）",
+        "policy": "pd_hawq_bal"
+      },
+      {
+        "method": "HAWQ-V3（速度优先）",
+        "policy": "pd_hawq_fast"
+      },
+      {
+        "method": "DASO（均衡）",
+        "policy": "pd_daso_bal"
+      },
+      {
+        "method": "DASO（速度优先）",
+        "policy": "pd_daso_fast"
+      }
+    ]
+  },
+  "workloads": [
+    {
+      "label": "center_pp",
+      "scenario": "prefill_only",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 1,
+      "tier": 1,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/center_speed_inputs.json",
+      "input_sha256": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "center_pd",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 64,
+      "tier": 1,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/center_speed_inputs.json",
+      "input_sha256": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "batch4_pp",
+      "scenario": "prefill_only",
+      "batch": 4,
+      "prompt": 2048,
+      "output": 1,
+      "tier": 1,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/batch4_speed_inputs.json",
+      "input_sha256": "7653aa3c9abb10bdbae141f59421291bb0f0ac08d416eb622afcb49a9648b612",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "batch4_pd",
+      "scenario": "prefill_decode",
+      "batch": 4,
+      "prompt": 2048,
+      "output": 64,
+      "tier": 1,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/batch4_speed_inputs.json",
+      "input_sha256": "7653aa3c9abb10bdbae141f59421291bb0f0ac08d416eb622afcb49a9648b612",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "prompt4096_pp",
+      "scenario": "prefill_only",
+      "batch": 8,
+      "prompt": 4096,
+      "output": 1,
+      "tier": 1,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/prompt4096_speed_inputs.json",
+      "input_sha256": "b97a654fe2159a289f079a79b991ddd694b313ca3090c12e3a8d01a0780ca66c",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "prompt4096_pd",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 4096,
+      "output": 64,
+      "tier": 1,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/prompt4096_speed_inputs.json",
+      "input_sha256": "b97a654fe2159a289f079a79b991ddd694b313ca3090c12e3a8d01a0780ca66c",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "output128_pd",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 128,
+      "tier": 1,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/output128_speed_inputs.json",
+      "input_sha256": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "decode256_pd",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 256,
+      "tier": 2,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/center_speed_inputs.json",
+      "input_sha256": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "decode512_pd",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 512,
+      "tier": 2,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/center_speed_inputs.json",
+      "input_sha256": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/quality_windows.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    }
+  ],
+  "rounds": [
+    [
+      "bf16",
+      "pp_daso_bal",
+      "pp_hawq_bal",
+      "pp_shared_fast",
+      "pd_daso_bal",
+      "pd_daso_fast",
+      "pd_hawq_bal",
+      "pd_hawq_fast"
+    ],
+    [
+      "pd_hawq_fast",
+      "pd_hawq_bal",
+      "pd_daso_fast",
+      "pd_daso_bal",
+      "pp_shared_fast",
+      "pp_hawq_bal",
+      "pp_daso_bal",
+      "bf16"
+    ],
+    [
+      "pp_shared_fast",
+      "pd_daso_bal",
+      "pd_daso_fast",
+      "pd_hawq_bal",
+      "pd_hawq_fast",
+      "bf16",
+      "pp_daso_bal",
+      "pp_hawq_bal"
+    ]
+  ],
+  "warmups": 5,
+  "iterations": 10,
+  "quality_windows": 64,
+  "cards": [
+    3,
+    4,
+    0,
+    1,
+    2,
+    5,
+    6,
+    7
+  ],
+  "engine": {
+    "capture_sizes": [
+      4,
+      8,
+      16
+    ],
+    "max_model_len": 4232,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 32768,
+    "kv_gib": 6
+  },
+  "source_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/code/common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/code/experiment.py": "769bc0a8edf8c315af6ef3690192da7cb6410ab0a6b2c864264e5eb32ba030db",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/code/eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/code/runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/code/arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/code/graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/code/int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/data/activation_scales.pt": "336fd3727be6b6b86c152082d9421a6d9c782b6863d5648b1307265748f5e2ad",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/bf16.json": "f0eea4973775eebb5da81b6ce20cb5c12073eb73c0a60686053e2215b3fd9a71",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/pp_daso_bal.json": "014ee6c8178468c03f80cc0898cb3c6f1ad060941a69625e7fce0066cc1f71a9",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/pp_hawq_bal.json": "3850e0bbfdfc78996e3c386788d6a39444d248a7d471b77f686260b838b5c08b",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/pp_shared_fast.json": "597146448968f9b2e4607dc2d8ae1e7138e1e34b364779e8d9e722adc1dd3b83",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/pd_daso_bal.json": "fd71d42f85949b1597e00ce7680f79cb48aea3aedff15e24a443d33e9014a494",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/pd_daso_fast.json": "3e17aa88e647a0e30619a0c82160a54e32eefc405e6050ed478e45ba35c4a79c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/pd_hawq_bal.json": "baa944b0dcfdc6a00e29d79bdf715be3b066809482efba0b3d11c6ae77cbbdda",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/051/configs/policies/pd_hawq_fast.json": "c5aaa06196cebb4b58274ee1e30364a3e7a5519ee0a84c35289c5af799c176f2",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/design.json": "830dff54244f1b78e2c7818808cfb1cf66d67ce5a46507f75fa91a49452a7c08",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/configs/design.json": "531c181cb318328f3bc265adec516c4200a89bae67591712730601c5e4a0cc42",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/qwen_nearby_dual_scenario_run049/comparison.csv": "f8c6fe9b45bc45f2b1cb068cf074e1afedade9072237a4065d797bf828596a6f",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/qwen_original_quality_run050/quality_table.csv": "f934947b5a4330932b3ec83bef396d45f973a7c082666e737b84583ead6136d8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/qwen_original_quality_run050/delivery_audit.json": "4d4285585f1707d69c44e0b0b6f079b0bfd9957b718ae78046f163d78d33e9e0",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/qwen3_main_table/main_table.csv": "60420f3feb9485ef5911f3ef9a872a47eb36f0578fa6f514904b705962bfd3b7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/telemetry.py": "161c9da2fa1e1d25cc02112f8f76bb67ec4d3e3f4f67642b8b2f0fc0f0177b85",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/idle_monitor.py": "8d982d224a970a4b0b064bda933acb0eca255dba30dc4e29606905142ebceb4c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/experiment.py": "18b5739cc12b92c928912d5f23a86d7ed2ce391e78f154e842d6892020f14873",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/context_probe.py": "64ff094d681fd6cf29e7b0bf5d0e04e8da69688a055e810f3e5e57c7aa295994",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/driver.py": "3618c60097d83c69df83a366f8af4a81212e0efaf62f2529f270a36e00117284",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/resource_state.py": "96f7fd6e9c1ea273ebbf7341075d1a23ab6fdf29cebeb7d48cfdf8cd54e653cf",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/csrc/nvfp4_sm120.cu": "5f6f1dc94be63e59f41d4a73b8484c72057f0c9b3eb9a3361c426286698dbb0a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/csrc/sparse_nvfp4_bindings.cpp": "ffce1b1fe1c768fe003c0a846b4199ef455a6e9b599ca35453109121e0b2137e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/csrc/sparse_nvfp4_sm120.cu": "29b445024efe333d430a44bf7b4c0d99b078fefd83eb894d1e3a18888b23fb69",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/052/code/compat/include/cutlass/subbyte_reference.h": "ebd115ff62ac8c087522a2393a018fc7c06c1a6a4d6e4e0df941828b65f28451"
+  },
+  "scope": "Same fixed engine/cases/maps; complete scenario/output cohorts with BF16 brackets, sustained idle admission and same-device three repeats.",
+  "quality_scope": "64 previously studied public WikiText windows; shared prefixes across loads; no blind or new-data claim.",
+  "serial_devices": true,
+  "quality_repeated": false,
+  "watch": {
+    "deadline_unix": 1793236373.0,
+    "deadline_utc": "2026-10-29 01:12:53 UTC",
+    "sample_interval_seconds": 30,
+    "required_idle_seconds": 180,
+    "maximum_sampling_gap_seconds": 45,
+    "maximum_idle_used_bytes": 134217728,
+    "maximum_idle_utilization_percent": 5,
+    "preferred_cards": [
+      3,
+      4,
+      0,
+      1,
+      2,
+      5,
+      6,
+      7
+    ],
+    "revision_reason": "NVMLv1 includes driver reserve; idle threshold applies only to allocated application bytes.",
+    "memory_accounting": "NVMLv2 total - free - reserved",
+    "idle_window_revision": "Before any accepted 053 data: 300 to 180 seconds for fragmented idle availability; occupied-memory/utilization and in-run resource criteria unchanged."
+  },
+  "phases": [
+    "core_speed",
+    "long_speed",
+    "long_quality"
+  ],
+  "primary_selection": "First device with three accepted cohorts of every group of the phase; never performance-based.",
+  "memory_gap_allowance_bytes": 268435456,
+  "resource_confirmation_samples": 2,
+  "resource_sample_interval_seconds": 2,
+  "post_exit_idle_samples": 3,
+  "cohort_groups": {
+    "core_pp": {
+      "phase": "core_speed",
+      "scenario": "prefill_only",
+      "workloads": [
+        "center_pp",
+        "batch4_pp",
+        "prompt4096_pp"
+      ]
+    },
+    "core_pd_center_pd": {
+      "phase": "core_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "center_pd"
+      ]
+    },
+    "core_pd_batch4_pd": {
+      "phase": "core_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "batch4_pd"
+      ]
+    },
+    "core_pd_prompt4096_pd": {
+      "phase": "core_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "prompt4096_pd"
+      ]
+    },
+    "core_pd_output128_pd": {
+      "phase": "core_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "output128_pd"
+      ]
+    },
+    "decode256": {
+      "phase": "long_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "decode256_pd"
+      ]
+    },
+    "decode512": {
+      "phase": "long_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "decode512_pd"
+      ]
+    }
+  }
+}

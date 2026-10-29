@@ -1,0 +1,83 @@
+{
+  "policies": [
+    "group_36c0",
+    "group_3ec1",
+    "group_3ee5",
+    "group_7fcd",
+    "group_7ffd",
+    "group_7fff",
+    "phase_sq_int8_w4a16_ours",
+    "uniform_dense_bf16",
+    "uniform_int8",
+    "uniform_sq_int8"
+  ],
+  "families": {
+    "mean_only": [
+      "group_7ffd",
+      "group_7fff",
+      "phase_sq_int8_w4a16_ours"
+    ],
+    "guard_aware": [
+      "group_36c0",
+      "group_3ec1",
+      "group_3ee5",
+      "group_7fcd",
+      "group_7ffd",
+      "group_7fff",
+      "phase_sq_int8_w4a16_ours"
+    ]
+  },
+  "primary_model": "guard_aware",
+  "points": [
+    {
+      "target": 0.005,
+      "feasible": true,
+      "policy": "group_36c0",
+      "mask": 14016,
+      "w4_modules": 54,
+      "predicted_mean": -0.023064412902297465,
+      "predicted_se": 0.007351011570915327,
+      "predicted_guard": 0.004916767203951609,
+      "linear_ms": 713.6279355653792,
+      "enumerated_masks": 65536
+    },
+    {
+      "target": 0.01,
+      "feasible": true,
+      "policy": "group_3ec1",
+      "mask": 16065,
+      "w4_modules": 72,
+      "predicted_mean": -0.024026932175419596,
+      "predicted_se": 0.010193553648310691,
+      "predicted_guard": 0.009639332085620206,
+      "linear_ms": 698.5431786971856,
+      "enumerated_masks": 65536
+    },
+    {
+      "target": 0.02,
+      "feasible": true,
+      "policy": "group_3ee5",
+      "mask": 16101,
+      "w4_modules": 90,
+      "predicted_mean": -0.022342561985934657,
+      "predicted_se": 0.01347595953359178,
+      "predicted_guard": 0.017888514045667322,
+      "linear_ms": 677.4151185765592,
+      "enumerated_masks": 65536
+    },
+    {
+      "target": 0.04,
+      "feasible": true,
+      "policy": "group_7fcd",
+      "mask": 32717,
+      "w4_modules": 108,
+      "predicted_mean": -0.005310537445547119,
+      "predicted_se": 0.015441885355838113,
+      "predicted_guard": 0.038852390230547526,
+      "linear_ms": 647.4215315415927,
+      "enumerated_masks": 65536
+    }
+  ],
+  "model_choice_sha256": "db173900ad01e9fac289083e8fed2181cf6a6b94a4f97257995f7279ca9f95a5",
+  "registry_sha256": "111f58851efc1abfff3fd5507686b8228a9b140ab788ba190a854da1ff18ac37"
+}

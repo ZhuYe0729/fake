@@ -1,0 +1,682 @@
+{
+  "inherited_setup": "../001/results/preparation_costs.json",
+  "scope": "incremental run002 preparation; inherited 72 labels per scenario and canonical SparseGPT states are not free from scratch",
+  "activation_scales_and_local_errors": {
+    "blocks": 128,
+    "scale_tokens_per_block": 2048,
+    "local_error_blocks": 16,
+    "alpha": 0.5,
+    "smoothing_scope": [
+      "qkv_proj",
+      "gate_up_proj"
+    ],
+    "elapsed_seconds": 97.85784008610062,
+    "source": "https://github.com/mit-han-lab/smoothquant/blob/main/smoothquant/smooth.py",
+    "formula": "s=clamp(act_max**0.5 / weight_input_channel_max**0.5,1e-5)",
+    "activation_scale_sha256": "336fd3727be6b6b86c152082d9421a6d9c782b6863d5648b1307265748f5e2ad",
+    "rows": 2016,
+    "runtime": "candidate-local x/s fused into dynamic per-token activation quantization"
+  },
+  "prefill_only": {
+    "new_labels": 48,
+    "training_labels": 36,
+    "holdout_labels": 12,
+    "parallel_wall_seconds": 1273.7495865821838,
+    "allocated_gpus": 3,
+    "sum_label_elapsed_seconds": 3586.336782314349,
+    "training_sum_label_elapsed_seconds": 2718.9981502895243,
+    "holdout_sum_label_elapsed_seconds": 867.3386320248246,
+    "label_scope": "export, model initialization, NLL evaluation, metadata preservation and temporary binary release",
+    "records": [
+      {
+        "policy_id": "cal8_prefill_only_p00",
+        "split": "train",
+        "seconds": 67.59460812597536,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p01",
+        "split": "train",
+        "seconds": 65.55441815010272,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p02",
+        "split": "train",
+        "seconds": 82.42646857304499,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p03",
+        "split": "train",
+        "seconds": 85.01762349298224,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p04",
+        "split": "train",
+        "seconds": 74.4311463299673,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p05",
+        "split": "train",
+        "seconds": 67.7427136360202,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p06",
+        "split": "train",
+        "seconds": 66.7495970169548,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p07",
+        "split": "train",
+        "seconds": 67.57470235298388,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p08",
+        "split": "train",
+        "seconds": 80.94608063483611,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p09",
+        "split": "train",
+        "seconds": 74.60111223696731,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p10",
+        "split": "train",
+        "seconds": 65.97163891000673,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p11",
+        "split": "train",
+        "seconds": 84.75812240620144,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p12",
+        "split": "train",
+        "seconds": 65.54140163795091,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p13",
+        "split": "train",
+        "seconds": 79.99061749107204,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p14",
+        "split": "train",
+        "seconds": 68.04068356193602,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p15",
+        "split": "train",
+        "seconds": 74.32685882318765,
+        "source": "logs/calibration_prefill_only_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p16",
+        "split": "train",
+        "seconds": 108.0479747809004,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p17",
+        "split": "train",
+        "seconds": 73.69715163600631,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p18",
+        "split": "train",
+        "seconds": 81.71976986411028,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p19",
+        "split": "train",
+        "seconds": 67.41830530297011,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p20",
+        "split": "train",
+        "seconds": 77.92300167190842,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p21",
+        "split": "train",
+        "seconds": 68.5486581500154,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p22",
+        "split": "train",
+        "seconds": 70.82408912596293,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p23",
+        "split": "train",
+        "seconds": 72.69744026195258,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p24",
+        "split": "train",
+        "seconds": 68.84282564884052,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p25",
+        "split": "train",
+        "seconds": 73.90938295098022,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p26",
+        "split": "train",
+        "seconds": 69.19339281297289,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p27",
+        "split": "train",
+        "seconds": 73.76754258782603,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p28",
+        "split": "train",
+        "seconds": 78.06142133497633,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p29",
+        "split": "train",
+        "seconds": 70.46653798106126,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p30",
+        "split": "train",
+        "seconds": 73.52175053488463,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p31",
+        "split": "train",
+        "seconds": 80.52683334890753,
+        "source": "logs/calibration_prefill_only_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p32",
+        "split": "train",
+        "seconds": 91.81480626901612,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p33",
+        "split": "train",
+        "seconds": 70.39366832515225,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p34",
+        "split": "train",
+        "seconds": 94.39619471691549,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p35",
+        "split": "train",
+        "seconds": 81.95960960397497,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p36",
+        "split": "holdout",
+        "seconds": 68.7528487960808,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p37",
+        "split": "holdout",
+        "seconds": 70.23705185204744,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p38",
+        "split": "holdout",
+        "seconds": 70.88244765903801,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p39",
+        "split": "holdout",
+        "seconds": 69.32740946603008,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p40",
+        "split": "holdout",
+        "seconds": 67.3064770360943,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p41",
+        "split": "holdout",
+        "seconds": 72.52112978789955,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p42",
+        "split": "holdout",
+        "seconds": 68.94856889080256,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p43",
+        "split": "holdout",
+        "seconds": 67.58105318015441,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p44",
+        "split": "holdout",
+        "seconds": 68.81372068985365,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p45",
+        "split": "holdout",
+        "seconds": 68.52070635999553,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p46",
+        "split": "holdout",
+        "seconds": 96.36744707077742,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_only_p47",
+        "split": "holdout",
+        "seconds": 78.07977123605087,
+        "source": "logs/calibration_prefill_only_slot2.log"
+      }
+    ]
+  },
+  "prefill_decode": {
+    "new_labels": 48,
+    "training_labels": 36,
+    "holdout_labels": 12,
+    "parallel_wall_seconds": 1434.55637216568,
+    "allocated_gpus": 3,
+    "sum_label_elapsed_seconds": 4052.1263101703953,
+    "training_sum_label_elapsed_seconds": 3069.0746062099934,
+    "holdout_sum_label_elapsed_seconds": 983.0517039604019,
+    "label_scope": "export, model initialization, NLL evaluation, metadata preservation and temporary binary release",
+    "records": [
+      {
+        "policy_id": "cal8_prefill_decode_p00",
+        "split": "train",
+        "seconds": 72.04730633506551,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p01",
+        "split": "train",
+        "seconds": 68.01353442692198,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p02",
+        "split": "train",
+        "seconds": 83.59905885788612,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p03",
+        "split": "train",
+        "seconds": 79.0202493169345,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p04",
+        "split": "train",
+        "seconds": 68.17474711197428,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p05",
+        "split": "train",
+        "seconds": 65.85575544205494,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p06",
+        "split": "train",
+        "seconds": 94.36632610205561,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p07",
+        "split": "train",
+        "seconds": 78.21531817899086,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p08",
+        "split": "train",
+        "seconds": 88.80013934499584,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p09",
+        "split": "train",
+        "seconds": 107.0002238729503,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p10",
+        "split": "train",
+        "seconds": 84.6388508209493,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p11",
+        "split": "train",
+        "seconds": 65.22765005403198,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p12",
+        "split": "train",
+        "seconds": 66.02389685786329,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p13",
+        "split": "train",
+        "seconds": 85.39768234593794,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p14",
+        "split": "train",
+        "seconds": 71.10134717216715,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p15",
+        "split": "train",
+        "seconds": 84.81721458188258,
+        "source": "logs/calibration_prefill_decode_slot0.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p16",
+        "split": "train",
+        "seconds": 91.47585605597124,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p17",
+        "split": "train",
+        "seconds": 85.79414284508675,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p18",
+        "split": "train",
+        "seconds": 87.89428178686649,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p19",
+        "split": "train",
+        "seconds": 81.85846612113528,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p20",
+        "split": "train",
+        "seconds": 98.17337727011181,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p21",
+        "split": "train",
+        "seconds": 91.5925226949621,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p22",
+        "split": "train",
+        "seconds": 95.20532108284533,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p23",
+        "split": "train",
+        "seconds": 76.02515676314943,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p24",
+        "split": "train",
+        "seconds": 65.40007054200396,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p25",
+        "split": "train",
+        "seconds": 93.55633330112323,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p26",
+        "split": "train",
+        "seconds": 97.58661533892155,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p27",
+        "split": "train",
+        "seconds": 75.73684303602204,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p28",
+        "split": "train",
+        "seconds": 97.64493105001748,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p29",
+        "split": "train",
+        "seconds": 103.2406673929654,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p30",
+        "split": "train",
+        "seconds": 110.73459964198992,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p31",
+        "split": "train",
+        "seconds": 82.63648037007079,
+        "source": "logs/calibration_prefill_decode_slot1.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p32",
+        "split": "train",
+        "seconds": 90.38016772316769,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p33",
+        "split": "train",
+        "seconds": 71.98328484594822,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p34",
+        "split": "train",
+        "seconds": 102.54268862493336,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p35",
+        "split": "train",
+        "seconds": 107.31349890003912,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p36",
+        "split": "holdout",
+        "seconds": 68.55335480999202,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p37",
+        "split": "holdout",
+        "seconds": 65.67966394196264,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p38",
+        "split": "holdout",
+        "seconds": 82.50546722020954,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p39",
+        "split": "holdout",
+        "seconds": 60.540689007844776,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p40",
+        "split": "holdout",
+        "seconds": 85.77683925512247,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p41",
+        "split": "holdout",
+        "seconds": 80.31845206208527,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p42",
+        "split": "holdout",
+        "seconds": 80.28151001408696,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p43",
+        "split": "holdout",
+        "seconds": 116.48755458416417,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p44",
+        "split": "holdout",
+        "seconds": 86.20256133610383,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p45",
+        "split": "holdout",
+        "seconds": 93.79221782204695,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p46",
+        "split": "holdout",
+        "seconds": 96.18087100493722,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      },
+      {
+        "policy_id": "cal8_prefill_decode_p47",
+        "split": "holdout",
+        "seconds": 66.7325229018461,
+        "source": "logs/calibration_prefill_decode_slot2.log"
+      }
+    ]
+  },
+  "daso8/prefill_only": {
+    "quality_fit_seconds": 5.320289897033945,
+    "latency_query_and_dp_seconds": 4.6656694679986686,
+    "total_seconds": 9.985961331054568,
+    "policies": 8,
+    "scope": "same extended fitted quality model; complete-forward measured shape latency and original DP",
+    "search_methods": [
+      "dense_bf16",
+      "dense_nvfp4",
+      "sparse_bf16",
+      "sparse_nvfp4",
+      "w4a16_ours",
+      "sq_int8",
+      "fp8"
+    ]
+  },
+  "daso8/prefill_decode": {
+    "quality_fit_seconds": 4.379923175089061,
+    "latency_query_and_dp_seconds": 14.477191407931969,
+    "total_seconds": 18.857116115046665,
+    "policies": 6,
+    "scope": "same extended fitted quality model; complete-forward measured shape latency and original DP",
+    "search_methods": [
+      "dense_bf16",
+      "dense_nvfp4",
+      "sparse_bf16",
+      "sparse_nvfp4",
+      "w4a16_ours",
+      "sq_int8",
+      "fp8"
+    ]
+  },
+  "daso5_measured/prefill_only": {
+    "quality_fit_seconds": 4.941722926916555,
+    "latency_query_and_dp_seconds": 3.673522446071729,
+    "total_seconds": 8.615247112000361,
+    "policies": 9,
+    "scope": "same extended fitted quality model; complete-forward measured shape latency and original DP",
+    "search_methods": [
+      "dense_bf16",
+      "dense_nvfp4",
+      "sparse_bf16",
+      "sparse_nvfp4",
+      "w4a16_ours"
+    ]
+  },
+  "daso5_measured/prefill_decode": {
+    "quality_fit_seconds": 4.284579996019602,
+    "latency_query_and_dp_seconds": 8.412512046052143,
+    "total_seconds": 12.697093289112672,
+    "policies": 8,
+    "scope": "same extended fitted quality model; complete-forward measured shape latency and original DP",
+    "search_methods": [
+      "dense_bf16",
+      "dense_nvfp4",
+      "sparse_bf16",
+      "sparse_nvfp4",
+      "w4a16_ours"
+    ]
+  }
+}

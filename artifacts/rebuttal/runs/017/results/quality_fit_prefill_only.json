@@ -1,0 +1,33 @@
+{
+  "metrics": {
+    "train": {
+      "count": 90,
+      "mae": 0.01887349375571943,
+      "rmse": 0.02792309861323905
+    },
+    "holdout": {
+      "count": 30,
+      "mae": 0.0154365815218427,
+      "rmse": 0.022034987517945935
+    },
+    "new_methods_holdout": {
+      "count": 12,
+      "mae": 0.00881601247268506,
+      "rmse": 0.016387201969737947
+    }
+  },
+  "seconds": 4.589375379960984,
+  "methods": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "w4a16_ours",
+    "sq_int8",
+    "fp8",
+    "int8"
+  ],
+  "training_reference_nll": 1.983390648407158,
+  "local_errors_sha256": "ffc835271fc296e948c3b6531a5c73b8809005aa437cac5fe4f7f309348d29b4",
+  "scope": "Original architecture,4000 steps,lr.03,regularization.05; train split only, no tuning on holdout/confirmation."
+}

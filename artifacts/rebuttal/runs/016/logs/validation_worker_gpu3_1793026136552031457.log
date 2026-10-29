@@ -1,0 +1,17 @@
+quality job complete validation uniform_int8 3
+quality job complete validation daso_prefill_only_same_operator_r0.95 3
+quality job complete validation hawq_clip_zero_prefill_only_same_operator_r0.8 3
+quality job complete validation hardware_minimum_prefill_only_same_operator 3
+quality job complete validation hawq_signed_prefill_decode_same_operator_r0.95 3
+quality job complete validation hawq_absolute_prefill_decode_same_operator_r0.8 3
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/016/code/job_queue.py", line 119, in <module>
+    main()
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/016/code/job_queue.py", line 89, in main
+    worker(args.stage, args.gpu)
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/016/code/job_queue.py", line 76, in worker
+    invoke([sys.executable, RUN / 'code/score_nll.py', '--checkpoint', model,
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/016/code/launch.py", line 51, in invoke
+    hashes = {str(p.relative_to(RUN / 'code')): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/016/logs/hawq_signed_prefill_decode_phase_pair_r0.95_1793026632668380989.log

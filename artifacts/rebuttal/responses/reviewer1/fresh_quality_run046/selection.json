@@ -1,0 +1,109 @@
+{
+  "selected": [
+    {
+      "validation_size": 32,
+      "epsilon": 0.01,
+      "policy": "uniform_dense_bf16",
+      "feasible_candidates": 1,
+      "pool_size": 11,
+      "linear_ms": 1434.6802186568577,
+      "validation_delta_nll": 0.0,
+      "validation_guard": 0.0
+    },
+    {
+      "validation_size": 32,
+      "epsilon": 0.02,
+      "policy": "uniform_int8",
+      "feasible_candidates": 3,
+      "pool_size": 11,
+      "linear_ms": 725.5927866480567,
+      "validation_delta_nll": 0.0009722992043182527,
+      "validation_guard": 0.01745400130657704
+    },
+    {
+      "validation_size": 32,
+      "epsilon": 0.04,
+      "policy": "uniform_sq_int8",
+      "feasible_candidates": 4,
+      "pool_size": 11,
+      "linear_ms": 719.8572869560936,
+      "validation_delta_nll": 0.01515925622985062,
+      "validation_guard": 0.03348072582862716
+    },
+    {
+      "validation_size": 32,
+      "epsilon": 0.07,
+      "policy": "w4_q0.03",
+      "feasible_candidates": 7,
+      "pool_size": 11,
+      "linear_ms": 512.9320083320592,
+      "validation_delta_nll": 0.03175587067729174,
+      "validation_guard": 0.06519836310975193
+    },
+    {
+      "validation_size": 64,
+      "epsilon": 0.01,
+      "policy": "uniform_dense_bf16",
+      "feasible_candidates": 1,
+      "pool_size": 11,
+      "linear_ms": 1434.6802186568577,
+      "validation_delta_nll": 0.0,
+      "validation_guard": 0.0
+    },
+    {
+      "validation_size": 64,
+      "epsilon": 0.02,
+      "policy": "uniform_int8",
+      "feasible_candidates": 3,
+      "pool_size": 11,
+      "linear_ms": 725.5927866480567,
+      "validation_delta_nll": -0.0023053592946689558,
+      "validation_guard": 0.010117212455552256
+    },
+    {
+      "validation_size": 64,
+      "epsilon": 0.04,
+      "policy": "w32_q0.03",
+      "feasible_candidates": 5,
+      "pool_size": 11,
+      "linear_ms": 536.5385697668249,
+      "validation_delta_nll": 0.021432394496483084,
+      "validation_guard": 0.03866611068998118
+    },
+    {
+      "validation_size": 64,
+      "epsilon": 0.07,
+      "policy": "w4_q0.03",
+      "feasible_candidates": 7,
+      "pool_size": 11,
+      "linear_ms": 512.9320083320592,
+      "validation_delta_nll": 0.03735881155482025,
+      "validation_guard": 0.06253831056654996
+    }
+  ],
+  "confirmation_policies": [
+    "uniform_dense_bf16",
+    "uniform_fp8",
+    "uniform_int8",
+    "uniform_sq_int8",
+    "w32_q0.03",
+    "w4_q0.03"
+  ],
+  "written_at_unix": 1793144469.2844875,
+  "confirmation_read": false,
+  "design_sha256": "9ef5c4cdb980ee598171cd03c0f43b5f557d8f401c1b061da0568438ba3d6652",
+  "validation_sha256": {
+    "uniform_dense_bf16": "8e91de0a10558f160fc22bf686680f6108a61d5e1fa0622820375b8b924a5358",
+    "uniform_int8": "3089e14bf8b5942805b2e216208eed8b1cb4c941d9c8ae062df399f80abb234f",
+    "uniform_sq_int8": "78f8be2bd852049e2b728736f071855b3af2750eac2173e975718e2ec4f952d3",
+    "uniform_fp8": "c702e4cc5e6a9bbf1756a2299a298b36fbe5fd0d58676187cdaf94d033c731b7",
+    "phase_sq_int8_w4a16_ours": "abf52d188c5acb3aa0d28747d7fd744e395579ba7ca142e1eee79141c0da9224",
+    "w1_q0.01": "4012f9b8263ab98a1ca6703407a96f004515169b4197cc2ce50f43f59aeac4d3",
+    "w1_q0.02": "02ab22c3115a6f9c4212b89fa78075c81e04421f723d772c23926291625ea43d",
+    "w1_q0.03": "279aa8922738af3cc5ff1e2fbbd5c60c2adfa1e3a32a34a91dbfd975702cc74b",
+    "w1_q0.04": "ce04314cf37c100cd8723ef847fbe1455ceef722dc342c16c094d87c90251c8f",
+    "w4_q0.03": "313bb5b7a2b059205a84565ef6ca59894b3117f0361a6f4c7ce0aba973fe98b5",
+    "w32_q0.03": "9b0efbefeb997a3611e8b4a8fb7f886d252175bbbeb167513b777c4d4e12be14"
+  },
+  "rule": "Minimum fixed Linear LUT cost among passing frozen incumbents; tie guard,policy ID. No new full-space solve."
+}

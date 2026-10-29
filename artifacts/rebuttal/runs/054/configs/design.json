@@ -1,0 +1,252 @@
+{
+  "policies": {
+    "bf16": {
+      "display": "BF16",
+      "scenario": null,
+      "source_run": "048",
+      "source_policy": "uniform_dense_bf16",
+      "map_sha256": "7aafcc63be76e1d5a0835a4e612fb9ef1ea2117614a8474b4f414889a1a9d06e",
+      "composition": {
+        "dense_bf16": 144
+      }
+    },
+    "pd_hawq_bal": {
+      "display": "HAWQ-V3（均衡）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "map_sha256": "cf73ed5a97d3d17181cacd4cf22751f40ff506f3609bbc00fbb955e2eada8e8d",
+      "composition": {
+        "dense_nvfp4": 8,
+        "int8": 69,
+        "dense_bf16": 67
+      }
+    },
+    "pd_hawq_fast": {
+      "display": "HAWQ-V3（速度优先）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "hardware_minimum_prefill_decode_phase_pair",
+      "map_sha256": "78cc66d64f2c7ec10c44e8ac54b09ba08036b638bbba34238ce19c86620e3978",
+      "composition": {
+        "int8": 108,
+        "dense_nvfp4": 36
+      }
+    },
+    "pd_daso_bal": {
+      "display": "DASO（均衡）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "w1_e0.01",
+      "map_sha256": "b3a7766fdbdffaa772843ce303dc2cd4473d5c4d9019daef1f6c547334b72489",
+      "composition": {
+        "sq_int8": 82,
+        "dense_nvfp4": 33,
+        "int8": 26,
+        "sparse_nvfp4": 3
+      }
+    },
+    "pd_daso_fast": {
+      "display": "DASO（速度优先）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "w32_e0.03",
+      "map_sha256": "24dbc084d3f627e894638003273e3e0c70edd995b5f116256b5363f79891fb7c",
+      "composition": {
+        "sq_int8": 92,
+        "dense_nvfp4": 33,
+        "int8": 19
+      }
+    }
+  },
+  "rows": {
+    "prefill_decode": [
+      {
+        "method": "BF16",
+        "policy": "bf16"
+      },
+      {
+        "method": "HAWQ-V3（均衡）",
+        "policy": "pd_hawq_bal"
+      },
+      {
+        "method": "HAWQ-V3（速度优先）",
+        "policy": "pd_hawq_fast"
+      },
+      {
+        "method": "DASO（均衡）",
+        "policy": "pd_daso_bal"
+      },
+      {
+        "method": "DASO（速度优先）",
+        "policy": "pd_daso_fast"
+      }
+    ]
+  },
+  "workloads": [
+    {
+      "label": "decode256_pd",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 256,
+      "tier": 2,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/054/reference/ffb7efc157e6e636.json",
+      "input_sha256": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/054/reference/f862907442944811.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "decode512_pd",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 512,
+      "tier": 2,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/054/reference/ffb7efc157e6e636.json",
+      "input_sha256": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/054/reference/f862907442944811.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    }
+  ],
+  "rounds": [
+    [
+      "bf16",
+      "pp_daso_bal",
+      "pp_hawq_bal",
+      "pp_shared_fast",
+      "pd_daso_bal",
+      "pd_daso_fast",
+      "pd_hawq_bal",
+      "pd_hawq_fast"
+    ],
+    [
+      "pd_hawq_fast",
+      "pd_hawq_bal",
+      "pd_daso_fast",
+      "pd_daso_bal",
+      "pp_shared_fast",
+      "pp_hawq_bal",
+      "pp_daso_bal",
+      "bf16"
+    ],
+    [
+      "pp_shared_fast",
+      "pd_daso_bal",
+      "pd_daso_fast",
+      "pd_hawq_bal",
+      "pd_hawq_fast",
+      "bf16",
+      "pp_daso_bal",
+      "pp_hawq_bal"
+    ]
+  ],
+  "warmups": 5,
+  "iterations": 10,
+  "quality_windows": 64,
+  "cards": [
+    3,
+    4,
+    0,
+    1,
+    2,
+    5,
+    6,
+    7
+  ],
+  "engine": {
+    "capture_sizes": [
+      4,
+      8,
+      16
+    ],
+    "max_model_len": 4232,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 32768,
+    "kv_gib": 6
+  },
+  "source_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/telemetry.py": "161c9da2fa1e1d25cc02112f8f76bb67ec4d3e3f4f67642b8b2f0fc0f0177b85",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/idle_monitor.py": "8d982d224a970a4b0b064bda933acb0eca255dba30dc4e29606905142ebceb4c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/experiment.py": "04ffc5a09be3bb54d9697909ca93a4ee6d94dc8cea9d6c529265d664651fd199",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/context_probe.py": "64ff094d681fd6cf29e7b0bf5d0e04e8da69688a055e810f3e5e57c7aa295994",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/driver.py": "f0380a7d25a2ab711649d99b487fa7a8041aee47951ab4f363bba4662c9980ee",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/resource_state.py": "96f7fd6e9c1ea273ebbf7341075d1a23ab6fdf29cebeb7d48cfdf8cd54e653cf",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/csrc/nvfp4_sm120.cu": "5f6f1dc94be63e59f41d4a73b8484c72057f0c9b3eb9a3361c426286698dbb0a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/csrc/sparse_nvfp4_bindings.cpp": "ffce1b1fe1c768fe003c0a846b4199ef455a6e9b599ca35453109121e0b2137e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/csrc/sparse_nvfp4_sm120.cu": "29b445024efe333d430a44bf7b4c0d99b078fefd83eb894d1e3a18888b23fb69",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/code/compat/include/cutlass/subbyte_reference.h": "ebd115ff62ac8c087522a2393a018fc7c06c1a6a4d6e4e0df941828b65f28451",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/configs/design.json": "6f1a969bfab334f27cfdec13f41cf1d3af299db2354eede141f25e52a369b875"
+  },
+  "scope": "Same fixed engine/cases/maps; complete scenario/output cohorts with BF16 brackets, sustained idle admission and same-device three repeats.",
+  "quality_scope": "64 previously studied public WikiText windows; shared prefixes across loads; no blind or new-data claim.",
+  "serial_devices": true,
+  "quality_repeated": false,
+  "watch": {
+    "deadline_unix": 1793236373.0,
+    "deadline_utc": "2026-10-29 01:12:53 UTC",
+    "sample_interval_seconds": 30,
+    "required_idle_seconds": 90,
+    "maximum_sampling_gap_seconds": 45,
+    "maximum_idle_used_bytes": 134217728,
+    "maximum_idle_utilization_percent": 5,
+    "preferred_cards": [
+      3,
+      4,
+      0,
+      1,
+      2,
+      5,
+      6,
+      7
+    ],
+    "revision_reason": "NVMLv1 includes driver reserve; idle threshold applies only to allocated application bytes.",
+    "memory_accounting": "NVMLv2 total - free - reserved",
+    "idle_window_revision": "Before accepted 053 data: 300 -> 180 -> 90 seconds after measured idle-window availability; four samples at 30 seconds, unchanged memory/utilization and in-run resource criteria."
+  },
+  "phases": [
+    "core_speed",
+    "long_speed",
+    "long_quality"
+  ],
+  "primary_selection": "First device with three accepted cohorts of every group of the phase; never performance-based.",
+  "memory_gap_allowance_bytes": 268435456,
+  "resource_confirmation_samples": 2,
+  "resource_sample_interval_seconds": 2,
+  "post_exit_idle_samples": 3,
+  "cohort_groups": {
+    "decode256": {
+      "phase": "long_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "decode256_pd"
+      ]
+    },
+    "decode512": {
+      "phase": "long_speed",
+      "scenario": "prefill_decode",
+      "workloads": [
+        "decode512_pd"
+      ]
+    }
+  },
+  "batch_policies": [
+    "bf16",
+    "pd_hawq_bal",
+    "pd_hawq_fast",
+    "pd_daso_bal",
+    "pd_daso_fast"
+  ],
+  "minimum_remaining_seconds": 180,
+  "baseline_replication_tolerance": 0.0001,
+  "compiler_cache": {
+    "triton": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/extensions/triton",
+    "cuda": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/053/extensions/cuda"
+  }
+}

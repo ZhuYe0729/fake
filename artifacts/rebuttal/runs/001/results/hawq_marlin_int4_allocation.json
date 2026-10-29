@@ -1,0 +1,76 @@
+{
+  "policies": [
+    {
+      "policy_id": "hawq_marlin_int4_prefill_only_00",
+      "scenario": "prefill_only",
+      "latency_limit_ms": 940.8228479431701,
+      "predicted_linear_ms": 940.8228478431702,
+      "hessian_sensitivity": 0.10866342112861965,
+      "low_method": "marlin_int4",
+      "low_precision_modules": 72,
+      "int8_modules": 0,
+      "bf16_modules": 72
+    },
+    {
+      "policy_id": "hawq_marlin_int4_prefill_only_01",
+      "scenario": "prefill_only",
+      "latency_limit_ms": 973.4125247524811,
+      "predicted_linear_ms": 956.0953788757324,
+      "hessian_sensitivity": -0.002723102688911861,
+      "low_method": "marlin_int4",
+      "low_precision_modules": 9,
+      "int8_modules": 0,
+      "bf16_modules": 135
+    },
+    {
+      "policy_id": "hawq_marlin_int4_prefill_decode_00",
+      "scenario": "prefill_decode",
+      "latency_limit_ms": 1374.5145541162922,
+      "predicted_linear_ms": 1374.514554016292,
+      "hessian_sensitivity": 0.16333380736565964,
+      "low_method": "marlin_int4",
+      "low_precision_modules": 72,
+      "int8_modules": 0,
+      "bf16_modules": 72
+    },
+    {
+      "policy_id": "hawq_marlin_int4_prefill_decode_01",
+      "scenario": "prefill_decode",
+      "latency_limit_ms": 1543.8904664793743,
+      "predicted_linear_ms": 1543.6645971331745,
+      "hessian_sensitivity": 0.004771705626593608,
+      "low_method": "marlin_int4",
+      "low_precision_modules": 24,
+      "int8_modules": 0,
+      "bf16_modules": 120
+    },
+    {
+      "policy_id": "hawq_marlin_int4_prefill_decode_02",
+      "scenario": "prefill_decode",
+      "latency_limit_ms": 1797.9543350239976,
+      "predicted_linear_ms": 1603.067080071196,
+      "hessian_sensitivity": -0.002723102688911861,
+      "low_method": "marlin_int4",
+      "low_precision_modules": 9,
+      "int8_modules": 0,
+      "bf16_modules": 135
+    }
+  ],
+  "trace_source": "artifacts/rebuttal/runs/001/results/hessian_trace_blockwise_p16_b4_s256.json",
+  "objective": "min sum_i mean_trace(H_i) * ||Q_b(W_i)-W_i||_F^2",
+  "trace_absolute_value": false,
+  "negative_trace_blocks": 35,
+  "constraint": "sum_i measured_Linear_latency_i <= latency_limit",
+  "candidates": [
+    "marlin_int4",
+    "int8",
+    "dense_bf16"
+  ],
+  "solver": "scipy.optimize.milp / HiGHS, binary one-hot ILP",
+  "adaptations": [
+    "Qwen3 teacher-forced NLL instead of ImageNet classification",
+    "fused QKV and gate/up choices tied for runtime compatibility",
+    "PTQ marlin_int4/INT8 through common phase-vLLM, no original CNN QAT/TVM"
+  ],
+  "solve_seconds": 0.15566914388909936
+}

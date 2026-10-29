@@ -1,0 +1,132 @@
+{
+  "jobs": [
+    {
+      "policy": "graph_phase_dense_bf16_sq_int8",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_dense_nvfp4_dense_bf16",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_dense_nvfp4_sq_int8",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_sparse_bf16_dense_bf16",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_sparse_bf16_w4a16_ours",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_sparse_bf16_sq_int8",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_sparse_nvfp4_dense_bf16",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_sparse_nvfp4_w4a16_ours",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_sparse_nvfp4_sq_int8",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_w4a16_ours_dense_bf16",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_w4a16_ours_sq_int8",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_sq_int8_dense_bf16",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_fp8_dense_bf16",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    },
+    {
+      "policy": "graph_phase_fp8_sq_int8",
+      "scenarios": [
+        "prefill_decode"
+      ]
+    }
+  ],
+  "amendment": {
+    "time_ns": 1793001071734013313,
+    "added_maps": [
+      "graph_phase_dense_bf16_sq_int8",
+      "graph_phase_dense_nvfp4_dense_bf16",
+      "graph_phase_dense_nvfp4_sq_int8",
+      "graph_phase_sparse_bf16_dense_bf16",
+      "graph_phase_sparse_bf16_w4a16_ours",
+      "graph_phase_sparse_bf16_sq_int8",
+      "graph_phase_sparse_nvfp4_dense_bf16",
+      "graph_phase_sparse_nvfp4_w4a16_ours",
+      "graph_phase_sparse_nvfp4_sq_int8",
+      "graph_phase_w4a16_ours_dense_bf16",
+      "graph_phase_w4a16_ours_sq_int8",
+      "graph_phase_sq_int8_dense_bf16",
+      "graph_phase_fp8_dense_bf16",
+      "graph_phase_fp8_sq_int8"
+    ],
+    "decode_frontier": [
+      "dense_bf16",
+      "w4a16_ours",
+      "sq_int8"
+    ],
+    "decoder_training_quality_costs": [
+      0.0,
+      0.022221148069011765,
+      0.15959198493099414,
+      0.467078212089034,
+      0.011082494951545162,
+      0.00582832778523514,
+      0.002180596525706552
+    ],
+    "decoder_measured_costs_ms": [
+      579.3242777840653,
+      480.9997892279375,
+      790.8557348094176,
+      424.2244591712955,
+      185.50405139621958,
+      330.3553193514998,
+      852.4047428076913
+    ],
+    "reason": "Complete phase-uniform coverage on the training-surrogate/hardware decode frontier, including high-quality BF16 decode anchors.",
+    "data_use": "Uses only the frozen training quality surrogate and new hardware profile; no new validation/test values were read to add anchors. Initial validation was already running; original pool/rules/job list retained."
+  }
+}

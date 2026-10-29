@@ -1,0 +1,389 @@
+{
+  "created_at_unix": 1793129461.999769,
+  "rows": [
+    {
+      "method": "BF16",
+      "policy": "uniform_dense_bf16",
+      "source_run": "032",
+      "budget": null,
+      "prefill_reuse_method": "BF16"
+    },
+    {
+      "method": "INT8 W8A8",
+      "policy": "uniform_int8",
+      "source_run": "032",
+      "budget": null,
+      "prefill_reuse_method": "INT8 W8A8"
+    },
+    {
+      "method": "SmoothQuant INT8",
+      "policy": "uniform_sq_int8",
+      "source_run": "032",
+      "budget": null,
+      "prefill_reuse_method": "SmoothQuant INT8"
+    },
+    {
+      "method": "FP8 W8A8",
+      "policy": "uniform_fp8",
+      "source_run": "019",
+      "budget": null,
+      "prefill_reuse_method": "FP8 W8A8"
+    },
+    {
+      "method": "SmoothQuant FP8 alpha=.5",
+      "policy": "uniform_sq_fp8",
+      "source_run": "002",
+      "budget": null,
+      "prefill_reuse_method": "SmoothQuant FP8"
+    },
+    {
+      "method": "Uniform SQ-INT8 prefill / W4A16 decode",
+      "policy": "fixed_sq_int8_w4a16",
+      "source_run": "019",
+      "budget": null,
+      "prefill_reuse_method": "SmoothQuant INT8"
+    },
+    {
+      "method": "HAWQ-FP4 PTQ r=.80",
+      "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "source_run": "019",
+      "budget": null,
+      "prefill_reuse_method": "HAWQ-v3 FP4, latency target=.80 BF16 (PTQ)"
+    },
+    {
+      "method": "Common hardware-minimum control",
+      "policy": "hardware_minimum_prefill_decode_phase_pair",
+      "source_run": "019",
+      "budget": null,
+      "prefill_reuse_method": "HAWQ FP4 minimum-cost control, q=.07"
+    },
+    {
+      "method": "DASO exploratory w1 q=.01",
+      "policy": "w1_e0.01",
+      "source_run": "032",
+      "budget": 0.01,
+      "prefill_reuse_method": "DASO-8 exploratory P+D, q=.01, wP=1 (032)"
+    },
+    {
+      "method": "DASO exploratory w32 q=.03",
+      "policy": "w32_e0.03",
+      "source_run": "033",
+      "budget": 0.03,
+      "prefill_reuse_method": "DASO-8 exploratory P+D, q=.03, wP=32 (033)"
+    }
+  ],
+  "policies": {
+    "uniform_dense_bf16": "beb0114dac4e4ecb44b988300978cabf7624a2e908e2c73ce5c88c37842bd79f",
+    "uniform_int8": "ca995f3e6afcbfb927a080b8b84c7fd1b0fb1ce68d894d1b296ee24f0bd2a676",
+    "uniform_sq_int8": "6c968742a500ec6c5c5eb7f078594dad270bba2ebb2718a1675a47b51e9a00b2",
+    "uniform_fp8": "0540ef63bd10744f82c6a18e73aef699f9bc246a9ce18dac671dafb49014a22c",
+    "uniform_sq_fp8": "ac98e531813bb987a728ce0da7a381e2b23e648ca45ba0e720ec02aaac6a05e3",
+    "fixed_sq_int8_w4a16": "cf024e1188e1f2a18a46f7cded271125e82bb0bc713ad82284aab9aa51daf559",
+    "hawq_signed_prefill_decode_phase_pair_r0.8": "d18f0020359247933c8e4e96113f499e8eaf11b1837cf2e1e70cfe3a520f3caf",
+    "hardware_minimum_prefill_decode_phase_pair": "0c092a3b2ed1414fb54cfc7dfa4f612a614c67353ba09bcb7639c9f1f5ed7785",
+    "w1_e0.01": "7993275e61bd9414bcaebb11176cfa6e2113b6edfe5f43b49b0af81b7a3011f8",
+    "w32_e0.03": "9ba1239dac83f30057a584ae1586425d658f25123f5f43bc916b3cbba01c149c"
+  },
+  "jobs": [
+    {
+      "policy": "uniform_dense_bf16",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "uniform_dense_bf16",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "uniform_dense_bf16",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "uniform_int8",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "uniform_int8",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "uniform_int8",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "uniform_sq_int8",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "uniform_sq_int8",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "uniform_sq_int8",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "uniform_fp8",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "uniform_fp8",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "uniform_fp8",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "uniform_sq_fp8",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "uniform_sq_fp8",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "uniform_sq_fp8",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "fixed_sq_int8_w4a16",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "fixed_sq_int8_w4a16",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "fixed_sq_int8_w4a16",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "hardware_minimum_prefill_decode_phase_pair",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "hardware_minimum_prefill_decode_phase_pair",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "hardware_minimum_prefill_decode_phase_pair",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "w1_e0.01",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "w1_e0.01",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "w1_e0.01",
+      "dataset": "IWSLT"
+    },
+    {
+      "policy": "w32_e0.03",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "policy": "w32_e0.03",
+      "dataset": "dsum"
+    },
+    {
+      "policy": "w32_e0.03",
+      "dataset": "IWSLT"
+    }
+  ],
+  "rounds": [
+    [
+      "uniform_dense_bf16",
+      "uniform_sq_fp8",
+      "uniform_sq_int8",
+      "uniform_fp8",
+      "w1_e0.01",
+      "w32_e0.03",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "fixed_sq_int8_w4a16",
+      "uniform_int8",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "uniform_sq_int8",
+      "fixed_sq_int8_w4a16",
+      "w1_e0.01",
+      "uniform_sq_fp8",
+      "uniform_int8",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "w32_e0.03",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "uniform_fp8",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "fixed_sq_int8_w4a16",
+      "w32_e0.03",
+      "uniform_fp8",
+      "w1_e0.01",
+      "uniform_sq_fp8",
+      "uniform_sq_int8",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "uniform_int8",
+      "uniform_dense_bf16_bracket_end"
+    ]
+  ],
+  "previous_generation": {
+    "uniform_dense_bf16": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "d5cd3d360a2a7f4c14630546dc34b107988d42792703674dc61943b562b9ce71"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json",
+        "sha256": "4cfa6edb544ff6ee8be59eb63f05422d66f4d8cd52f16be2409063f827c75161"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json",
+        "sha256": "bb29dcc471bff3aed5e040723b7f893d57517a90fb56440e947dea3f8977e197"
+      }
+    },
+    "uniform_int8": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/028/results/generation/uniform_int8/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "ed2aac574c8c60a125351a3bb177e90faad95357eccf53bfcf780a3e02e2ef06"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/028/results/generation/uniform_int8/dsum/metrics_0000_end.json",
+        "sha256": "bd2c670f46444f7a42bdb61ee33f81ece4c2392b4e8b1f9427377be1fa96d9c5"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/028/results/generation/uniform_int8/IWSLT/metrics_0000_end.json",
+        "sha256": "271170c18a83001bc3597d9d5cda890f095d9b1a3a44096eb30beff9b19f184d"
+      }
+    },
+    "uniform_sq_int8": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "71334ea7b0ae36e5b75816b73db1873482da5591747ebc321f384e5279096ddd"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/dsum/metrics_0000_end.json",
+        "sha256": "70c3913fbe1b865bffff7d012670dbd6798b7a02d1a88c7ead5f618b98629d76"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/IWSLT/metrics_0000_end.json",
+        "sha256": "63bf081b4dd0f0fab209b9a0de6071be8970df27b393d5fabd1224eca10da88a"
+      }
+    },
+    "uniform_fp8": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/results/generation/uniform_fp8/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "6da3d5379fd0fcf9042947e86f5e14a4007ec43a9a836191230f001930e72472"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/results/generation/uniform_fp8/dsum/metrics_0000_end.json",
+        "sha256": "ff33772cbd157d3c626191fe14ffe46db65b7b44dd98acbe6f0799fb174e686c"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/results/generation/uniform_fp8/IWSLT/metrics_0000_end.json",
+        "sha256": "a26dffb321df7fd3202653af3e0701a5b145b3c51bcfdd6f78d9914e84b05fb7"
+      }
+    },
+    "uniform_sq_fp8": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/results/generation/uniform_sq_fp8/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "838eedacd2bed254d1c054a099682af194ef5a5cf575d9097ffa74f5eb8e6523"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/results/generation/uniform_sq_fp8/dsum/metrics_0000_end.json",
+        "sha256": "46b4aec67aee8b97a230d015c1bb3cc84c53eea7190fadf794310739103db207"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/results/generation/uniform_sq_fp8/IWSLT/metrics_0000_end.json",
+        "sha256": "8761a2aff8725931bbe1e0bc7d3fb572229b7d1de4c18d1a88b83d402b1890e2"
+      }
+    },
+    "fixed_sq_int8_w4a16": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/027/full/results/generation/sq_int8_w4a16/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "90ac292285b29c26d8fc1ad027ecc06a01061aa760f961a1733ba829798e813a"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/027/full/results/generation/sq_int8_w4a16/dsum/metrics_0000_end.json",
+        "sha256": "3528184a839a3092ec6998d972dbc684e580e494a0173ea40b86e16b64386e70"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/027/full/results/generation/sq_int8_w4a16/IWSLT/metrics_0000_end.json",
+        "sha256": "0b6de4bf83ac567e0e87a83325250a48bfde0e53d4478a7752bac08dc2f16c3d"
+      }
+    },
+    "w1_e0.01": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/generation/w1_e0.01/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "8b58d338b1ff05f442b4545c62d904eadccf3132ad08b4c736bedab7705ca616"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/generation/w1_e0.01/dsum/metrics_0000_end.json",
+        "sha256": "80c946b77b07ea669bfe4689fdd2e5db9e49631b31823cbbc6b04f4feddc86a3"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/generation/w1_e0.01/IWSLT/metrics_0000_end.json",
+        "sha256": "e9467e6eb88b1e18cd748a2c1573fe4fb48206f5ff8c0d35e613373ecc315b44"
+      }
+    },
+    "w32_e0.03": {
+      "cnn_dm_1000": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/results/generation/w32_e0.03/cnn_dm_1000/metrics_0000_end.json",
+        "sha256": "c3efd7f61f7bde4eb572b9a092a20ee59e94a9d1fb869652d0f20786f9e2f4c7"
+      },
+      "dsum": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/results/generation/w32_e0.03/dsum/metrics_0000_end.json",
+        "sha256": "4da0d3905d46193f30418111344d3680a864f6571a3e0b036fb560af7b6597e4"
+      },
+      "IWSLT": {
+        "file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/results/generation/w32_e0.03/IWSLT/metrics_0000_end.json",
+        "sha256": "582aacfe6e8370ab2cf0d25ad1c03274186d4ef9b3924e705c814e8d91cab8a0"
+      }
+    }
+  },
+  "legacy_table": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016",
+  "legacy_table_sha256": {
+    "main_table.csv": "a979dd4eede1c98e006516941e42f018bd323cb5dc967954ab05d381a9519a0d",
+    "README.md": "16f55299feab9f5203f26b6db9a42002706dd24eb576a431ad7f80dcdcd36ac4",
+    "provenance.json": "880778de952966ba298759248ccd382890afa71f006e8fbcf2d20252743dbb44"
+  },
+  "input_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/data/activation_scales.pt": "336fd3727be6b6b86c152082d9421a6d9c782b6863d5648b1307265748f5e2ad",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/data/generation_cnn_dm_1000.jsonl": "9f622de4e989b75fbe4e21a2da355b730488e6a5596678726aea71dff4cd4b03",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/data/generation_dsum.jsonl": "6583d5e4c591798d61fecd0f9ca9d78d5faf0287216d5b31e576e655a329051e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/data/generation_IWSLT.jsonl": "d656a85768adee7a210a83d0aaa44ed8c6c84bf6dc29caf618c9bf660975e672",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/configs/speed_inputs.json": "ffb7efc157e6e6364cc8da4a7e70bfac4fe3989077695f221950afe35161282b"
+  },
+  "scope": "Ten frozen maps, current common Graph protocol,30 full generation jobs and33 formal processes. No refitting or filtering by results; Prefill-only MC reused independently.",
+  "numeric_sha256": {
+    "common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "generate_tasks.py": "30194f3a282f6612677255e1706f0f918a2c1f2d4168979f1633bd51a03774c0",
+    "benchmark.py": "fff18249d275e2a9edcb7501df076e3a5c1d3024ae6c191206e0960c8c7484bd",
+    "export_model.py": "e3ba193f87df657ee808bc386525bf6a78b844b5e103b07e7b155b4b47bbffbd"
+  },
+  "numeric_frozen_unix": 1793129551.6370428
+}

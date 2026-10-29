@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_int4/marlin_int4/linear.py", line 286, in quantize_marlin_int4_weight
+    _load_ext()
+  File "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_int4/marlin_int4/linear.py", line 86, in _load_ext
+    return load(
+           ^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 1692, in load
+    return _jit_compile(
+           ^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 2091, in _jit_compile
+    version = JIT_EXTENSION_VERSIONER.bump_version_if_changed(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_cpp_extension_versioner.py", line 49, in bump_version_if_changed
+    hash_value = hash_source_files(hash_value, source_files)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_cpp_extension_versioner.py", line 16, in hash_source_files
+    with open(filename, "rb") as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/third_party/vllm/csrc/quantization/marlin/marlin.cu'

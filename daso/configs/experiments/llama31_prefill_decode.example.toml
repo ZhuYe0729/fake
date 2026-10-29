@@ -1,0 +1,19 @@
+[model]
+name = "llama31_8b_instruct"
+path = "$LLAMA31_8B_INSTRUCT_PATH"
+layers = 32
+hidden_size = 4096
+intermediate_size = 14336
+
+[workload]
+name = "prefill_decode"
+batch_size = 8
+input_tokens = 2048
+output_tokens = 64
+gpu_memory_utilization = 0.80
+
+[backend]
+vllm_root = "$DASO_VLLM_ROOT"
+cutlass_wrapper_root = "$DASO_CUTLASS_WRAPPER_ROOT"
+run_root = "$DASO_RUN_ROOT/llama31_8b_instruct/prefill_decode"
+

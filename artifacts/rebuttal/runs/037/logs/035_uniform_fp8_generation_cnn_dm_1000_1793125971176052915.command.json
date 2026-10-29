@@ -1,0 +1,24 @@
+{
+  "command": [
+    "numactl",
+    "--all",
+    "--physcpubind=48-55",
+    "--membind=1",
+    "/root/wja/miniconda3/envs/vllm/bin/python",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/037/code/replay.py",
+    "--source-run",
+    "035",
+    "--root",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/037/models/llama2_7b_chat",
+    "--checkpoint",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/night161/checkpoints/035/uniform_fp8",
+    "--policy",
+    "uniform_fp8",
+    "--kind",
+    "generation",
+    "--dataset",
+    "cnn_dm_1000"
+  ],
+  "gpu": 6,
+  "started_at_unix": 1793125971.176064
+}

@@ -1,0 +1,71 @@
+{
+  "selected": [
+    {
+      "label": "daso8_verified_prefill_only_q0.01",
+      "scenario": "prefill_only",
+      "quality_budget": 0.01,
+      "policy": "uniform_int8",
+      "validation": {
+        "policy": "uniform_int8",
+        "scenario": "prefill_only",
+        "validation_delta_nll": -0.009883505790001398,
+        "paired_se": 0.001655358598643258,
+        "guarded_delta_nll": -0.0015727885927148818,
+        "calibration_e2e_ms": 614.3978098407388,
+        "calibration_cycle_ms": 614.5019251853228
+      },
+      "feasible_candidates": 3
+    },
+    {
+      "label": "daso8_verified_prefill_only_q0.04",
+      "scenario": "prefill_only",
+      "quality_budget": 0.04,
+      "policy": "hardware_minimum_prefill_only_same_operator",
+      "validation": {
+        "policy": "hardware_minimum_prefill_only_same_operator",
+        "scenario": "prefill_only",
+        "validation_delta_nll": 0.009920116663069342,
+        "paired_se": 0.0027528984899445347,
+        "guarded_delta_nll": 0.020425913642958413,
+        "calibration_e2e_ms": 527.8398278169334,
+        "calibration_cycle_ms": 527.9744938015938
+      },
+      "feasible_candidates": 8
+    },
+    {
+      "label": "daso8_verified_prefill_decode_q0.01",
+      "scenario": "prefill_decode",
+      "quality_budget": 0.01,
+      "policy": "uniform_dense_bf16",
+      "validation": {
+        "policy": "uniform_dense_bf16",
+        "scenario": "prefill_decode",
+        "validation_delta_nll": 0.0,
+        "paired_se": 0.0,
+        "guarded_delta_nll": 0.0,
+        "calibration_e2e_ms": 2003.4703756682575,
+        "calibration_cycle_ms": 2003.6148643121123
+      },
+      "feasible_candidates": 1
+    },
+    {
+      "label": "daso8_verified_prefill_decode_q0.04",
+      "scenario": "prefill_decode",
+      "quality_budget": 0.04,
+      "policy": "daso8_exact_prefill_decode_q0.04",
+      "validation": {
+        "policy": "daso8_exact_prefill_decode_q0.04",
+        "scenario": "prefill_decode",
+        "validation_delta_nll": -0.0023948287990201572,
+        "paired_se": 0.016265288396173756,
+        "guarded_delta_nll": 0.03513574799332735,
+        "calibration_e2e_ms": 975.7843120023608,
+        "calibration_cycle_ms": 1089.657770935446
+      },
+      "feasible_candidates": 15
+    }
+  ],
+  "pool_sha256": "638dd4c7f33dea432955fe3af432cfe91127459bd89f0912657546ecd7052772",
+  "design_sha256": "576131924ecbf007820066aa3a66b6afb475bdb4080d86c58b5f031de0e2bf62",
+  "scope": "DASO-8 extension only. Raw matched-cap allocations remain fixed, not chosen by validation or confirmation. No HAWQ-only map is added to the selectable pool; shared hardware/uniform anchors are explicit."
+}

@@ -1,0 +1,181 @@
+{
+  "created_at_unix": 1793127194.079412,
+  "rows": [
+    {
+      "method": "BF16",
+      "policy": "uniform_dense_bf16",
+      "source_run": "032",
+      "budget": null
+    },
+    {
+      "method": "INT8 W8A8",
+      "policy": "uniform_int8",
+      "source_run": "032",
+      "budget": null
+    },
+    {
+      "method": "SmoothQuant INT8",
+      "policy": "uniform_sq_int8",
+      "source_run": "032",
+      "budget": null
+    },
+    {
+      "method": "FP8 W8A8",
+      "policy": "uniform_fp8",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "Uniform SQ-INT8 prefill / W4A16 decode",
+      "policy": "fixed_sq_int8_w4a16",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "HAWQ-FP4 PTQ r=.80",
+      "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "Common hardware-minimum control",
+      "policy": "hardware_minimum_prefill_decode_phase_pair",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "DASO exploratory w1 q=.01",
+      "policy": "w1_e0.01",
+      "source_run": "032",
+      "budget": 0.01
+    },
+    {
+      "method": "DASO exploratory w32 q=.03",
+      "policy": "w32_e0.03",
+      "source_run": "033",
+      "budget": 0.03
+    }
+  ],
+  "policies": {
+    "uniform_dense_bf16": "beb0114dac4e4ecb44b988300978cabf7624a2e908e2c73ce5c88c37842bd79f",
+    "uniform_int8": "ca995f3e6afcbfb927a080b8b84c7fd1b0fb1ce68d894d1b296ee24f0bd2a676",
+    "uniform_sq_int8": "6c968742a500ec6c5c5eb7f078594dad270bba2ebb2718a1675a47b51e9a00b2",
+    "uniform_fp8": "0540ef63bd10744f82c6a18e73aef699f9bc246a9ce18dac671dafb49014a22c",
+    "fixed_sq_int8_w4a16": "cf024e1188e1f2a18a46f7cded271125e82bb0bc713ad82284aab9aa51daf559",
+    "hawq_signed_prefill_decode_phase_pair_r0.8": "d18f0020359247933c8e4e96113f499e8eaf11b1837cf2e1e70cfe3a520f3caf",
+    "hardware_minimum_prefill_decode_phase_pair": "0c092a3b2ed1414fb54cfc7dfa4f612a614c67353ba09bcb7639c9f1f5ed7785",
+    "w1_e0.01": "7993275e61bd9414bcaebb11176cfa6e2113b6edfe5f43b49b0af81b7a3011f8",
+    "w32_e0.03": "9ba1239dac83f30057a584ae1586425d658f25123f5f43bc916b3cbba01c149c"
+  },
+  "cases": [
+    {
+      "id": "chunk1024_b8_s2048_o64",
+      "prompts": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "output": 64,
+      "token_budget": 1024
+    },
+    {
+      "id": "chunk1024_b8_heterogeneous_o256",
+      "prompts": [
+        512,
+        2048,
+        512,
+        2048,
+        512,
+        2048,
+        512,
+        2048
+      ],
+      "output": 256,
+      "token_budget": 1024
+    }
+  ],
+  "rounds": [
+    [
+      "uniform_dense_bf16",
+      "uniform_fp8",
+      "w1_e0.01",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "w32_e0.03",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "fixed_sq_int8_w4a16",
+      "uniform_int8",
+      "uniform_sq_int8",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "w32_e0.03",
+      "uniform_sq_int8",
+      "w1_e0.01",
+      "uniform_int8",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "uniform_fp8",
+      "fixed_sq_int8_w4a16",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "w1_e0.01",
+      "uniform_int8",
+      "uniform_fp8",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "fixed_sq_int8_w4a16",
+      "w32_e0.03",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "uniform_sq_int8",
+      "uniform_dense_bf16_bracket_end"
+    ]
+  ],
+  "warmups": 2,
+  "iterations": 5,
+  "kv_bytes": 6442450944,
+  "engine": {
+    "max_model_len": 2304,
+    "max_num_seqs": 8
+  },
+  "speed_seed": 144907,
+  "quality_blocks": 64,
+  "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/long_quality.pt",
+  "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572",
+  "input_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/code/common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/code/eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/code/export_model.py": "e3ba193f87df657ee808bc386525bf6a78b844b5e103b07e7b155b4b47bbffbd",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/code/runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/code/int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/code/launch.py": "3522519c44ad7fdebfb45a43a391cb30bd5a56c5786007177cc1cdea9d866eff",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/code/telemetry.py": "161c9da2fa1e1d25cc02112f8f76bb67ec4d3e3f4f67642b8b2f0fc0f0177b85",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/006/code/resident.py": "4f54e6cfe1bb1f8aaecf9e1d9d18235449430dffbfb72acf59d398bc46608682",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/006/code/mixed_runtime.py": "67bf47f45b1c83906fec3540291581ae0d6cd71755dc39566b76f448b14d395e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/006/code/teacher_force_mixed.py": "9d2eb1797a9a11eb47b6b0efde0b7552938e77b28bc1ad0188664a521e5badd3",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/uniform_dense_bf16.json": "beb0114dac4e4ecb44b988300978cabf7624a2e908e2c73ce5c88c37842bd79f",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/uniform_int8.json": "ca995f3e6afcbfb927a080b8b84c7fd1b0fb1ce68d894d1b296ee24f0bd2a676",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/uniform_sq_int8.json": "6c968742a500ec6c5c5eb7f078594dad270bba2ebb2718a1675a47b51e9a00b2",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/uniform_fp8.json": "0540ef63bd10744f82c6a18e73aef699f9bc246a9ce18dac671dafb49014a22c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/fixed_sq_int8_w4a16.json": "cf024e1188e1f2a18a46f7cded271125e82bb0bc713ad82284aab9aa51daf559",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/hawq_signed_prefill_decode_phase_pair_r0.8.json": "d18f0020359247933c8e4e96113f499e8eaf11b1837cf2e1e70cfe3a520f3caf",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/hardware_minimum_prefill_decode_phase_pair.json": "0c092a3b2ed1414fb54cfc7dfa4f612a614c67353ba09bcb7639c9f1f5ed7785",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/w1_e0.01.json": "7993275e61bd9414bcaebb11176cfa6e2113b6edfe5f43b49b0af81b7a3011f8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/policies/w32_e0.03.json": "9ba1239dac83f30057a584ae1586425d658f25123f5f43bc916b3cbba01c149c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/data/activation_scales.pt": "336fd3727be6b6b86c152082d9421a6d9c782b6863d5648b1307265748f5e2ad",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/long_quality.pt": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+  },
+  "protected_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/006/REPORT.md": "32d110eac349f17ccaf21c8dc91510bde0101709aa929705cb8c354246510a37",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/040/configs/design.json": "557072befd3fa3d99ce9d15910102b97fe4efb4ce8d041f2211c098c72574534",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/final_audit.json": "c3aa29ea6df3655d9ef1d44e5130d20995539f2e93eb4777e17ed9f8e004760d",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/results/final_audit.json": "dfb05e5b4bb8668b35d59eaeb3b6bc124ff3de13a0fcefc5e22c13a9f310475f"
+  },
+  "scope": "Frozen nine-map transfer to two closed-loop mixed bursts, dual-resident eager variant; no retuning, production/open-loop or nominal q guarantee."
+}

@@ -1,0 +1,697 @@
+{
+  "complete": true,
+  "rows": 24,
+  "metric_cells": 312,
+  "original_metric_cells": 264,
+  "derived_metric_cells": 48,
+  "derived_metrics": {
+    "prefill_avg_acc": {
+      "operation": "unweighted arithmetic mean of unrounded scores",
+      "inputs": [
+        "arc_c",
+        "arc_e",
+        "wino",
+        "mmlu"
+      ]
+    },
+    "pd_avg_score": {
+      "operation": "unweighted arithmetic mean of unrounded scores",
+      "inputs": [
+        "cnn_dm",
+        "dialogsum",
+        "iwslt"
+      ],
+      "scope": "Mixed ROUGE-L percent and SacreBLEU summary; not a common accuracy measure or NLL constraint."
+    }
+  },
+  "old_rows_source": "artifacts/rebuttal/responses/reviewer2/qwen3_table2/main_table.csv",
+  "old_rows_run": "015",
+  "new_rows": [
+    {
+      "method": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.01",
+      "run": "016",
+      "policies": {
+        "prefill_only": "uniform_int8",
+        "prefill_decode": "uniform_dense_bf16"
+      },
+      "speed_ranges": {
+        "prefill_ttft_speedup": {
+          "min": 1.8587408083899877,
+          "max": 1.8689560790063897
+        },
+        "pd_ttft_speedup": {
+          "min": 1.0,
+          "max": 1.0
+        },
+        "pd_tpot_speedup": {
+          "min": 1.0,
+          "max": 1.0
+        },
+        "pd_e2e_speedup": {
+          "min": 1.0,
+          "max": 1.0
+        }
+      },
+      "prefill_only_quality_sources": {
+        "arc_c": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_challenge/full/result.json",
+          "metric": "acc_norm,none",
+          "samples": 1172
+        },
+        "arc_e": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/arc_easy/full/result.json",
+          "metric": "acc,none",
+          "samples": 2376
+        },
+        "wino": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/winogrande/full/result.json",
+          "metric": "acc,none",
+          "samples": 1267
+        },
+        "mmlu": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/uniform_int8/mmlu/full/result.json",
+          "metric": "acc,none",
+          "samples": 14042
+        }
+      },
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      }
+    },
+    {
+      "method": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.04",
+      "run": "016",
+      "policies": {
+        "prefill_only": "hardware_minimum_prefill_only_same_operator",
+        "prefill_decode": "daso8_exact_prefill_decode_q0.04"
+      },
+      "speed_ranges": {
+        "prefill_ttft_speedup": {
+          "min": 2.155631844879283,
+          "max": 2.168828039011131
+        },
+        "pd_ttft_speedup": {
+          "min": 2.2515717609275754,
+          "max": 2.2590205107649606
+        },
+        "pd_tpot_speedup": {
+          "min": 1.8037898291758092,
+          "max": 1.8465794898282029
+        },
+        "pd_e2e_speedup": {
+          "min": 2.04008132747735,
+          "max": 2.0616783050496563
+        }
+      },
+      "prefill_only_quality_sources": {
+        "arc_c": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_challenge/full/result.json",
+          "metric": "acc_norm,none",
+          "samples": 1172
+        },
+        "arc_e": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/arc_easy/full/result.json",
+          "metric": "acc,none",
+          "samples": 2376
+        },
+        "wino": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/winogrande/full/result.json",
+          "metric": "acc,none",
+          "samples": 1267
+        },
+        "mmlu": {
+          "source": "artifacts/rebuttal/runs/016/results/tasks/hardware_minimum_prefill_only_same_operator/mmlu/full/result.json",
+          "metric": "acc,none",
+          "samples": 14042
+        }
+      },
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/daso8_exact_prefill_decode_q0.04/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/daso8_exact_prefill_decode_q0.04/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/016/results/generation/daso8_exact_prefill_decode_q0.04/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      }
+    }
+  ],
+  "sources_sha256": {
+    "artifacts/rebuttal/runs/016/results/final_audit.json": "5e8609aa459e11b3615401aca21c5be5472da1addd1d8f2506b8b84a4b219062",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2/main_table.csv": "7367972f7d211407afa9edd8353e8b0ab5f6c387238529d35cf6a13ea280ec05",
+    "artifacts/rebuttal/runs/016/configs/selected_policies.json": "64a27f2bbb1ce0ae19a7ba89a1ca4671d44ce95e4d7175124cba219cbd373ed3",
+    "artifacts/rebuttal/runs/016/results/full_task_metrics.json": "8a0121797e5a3b0f7b5316d6dd7be61cbeed72f3178fd1b2ac16a3af04065825",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/uniform_int8.json": "219a4085ffa56d56ae19fc688009db303624bfeb4d009498a161b1dc02524da2",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/uniform_dense_bf16.json": "8c3110126ea08be24773506e029228e4ae73d26a45c98d73fed7c6444619a2e5",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/uniform_dense_bf16_bracket_end.json": "8a8f0e00e2cfd7d7a8dc6d12ce7c8048359dfcdd2246827a456ae3c9a0f7e361",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/uniform_int8.json": "d96ad01e8ee1fbbbeec453dae63d1fc04dd8834db9588823c45b2a4f22f66be0",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/uniform_dense_bf16.json": "b607937603230497a7d50ab38c726b9b6a172980489ac2de27a89858fd115efe",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/uniform_dense_bf16_bracket_end.json": "f38bd16be9ed405cd96246b3f20b18b59046dd3682237757750b1b7e3148cf3e",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/uniform_int8.json": "4dccf56e2f570d94e4878ccfd430a0a3f280506df04260cd68b5ae152f99d688",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/uniform_dense_bf16.json": "954783c68244575773ac4f404d6529632ff731ed73f5e6714af2b3f2d6a5f667",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/uniform_dense_bf16_bracket_end.json": "0c9230dd2a2eed2e2def72f44516790c0e5da8316dc532591e5ceb87efc8bb48",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/hardware_minimum_prefill_only_same_operator.json": "1a2b703757ae51e2e057aea351e22de90288760002ae2b08b8e8931393294fc5",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/hardware_minimum_prefill_only_same_operator.json": "f44609eabfcb6f6926114e0d882970cfe4660f7369b02c397c1581137577f3df",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/hardware_minimum_prefill_only_same_operator.json": "16c23765bf2c53a3d7bc7371aae35718f27ce215dd5ac63dc7c42c0e53479bc6",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round0/daso8_exact_prefill_decode_q0.04.json": "06a0ec1d8a51e2fa2deb6dcdd437f391aca2a510a518c0e844f464efb74b9d54",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round1/daso8_exact_prefill_decode_q0.04.json": "07f366988760fa4224d0c166358e164714339e5c822bb876f8565ff5f8df5b79",
+    "artifacts/rebuttal/runs/016/results/speed/node0/round2/daso8_exact_prefill_decode_q0.04.json": "c68b24c93437c01d2612b918b6dab3e942efa5e3c16ea518c69f59e2a14571f0",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/main_table.csv": "6afab97886b97d3ca3d936656c1958c9dd328a8857a9f5705bbc5534471634d3",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/README.md": "7de433b5453cbf8e64b5a8c5308d4a6d77d6b0388825bd71c2f48e5edbfdb42e",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/provenance.json": "b746cc446ddb86154d5621a6f76634831ba69c73d32bef385fe6f62ba313097d",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/snapshot_sha256.json": "ce78e73cc8c075b3416e000838b56ed18d54b0b5d0221ee3e4dc5cb36c758b89",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/append_run032_033.py": "325ed70f8277c82a112d055a9ace4592fe5a029b66826a11165fc2df8a259e65",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_budget_prefill_weight/complete_comparison.csv": "0f37b2ffd9d7a2b5270c0c0a72810ad20af986e87959477197983e94d89e80f3",
+    "artifacts/rebuttal/responses/reviewer2/qwen3_budget_prefill_weight/provenance.json": "1c4cad28736371ccadcd1969f2582e490ea57e9e0631dbd583544afdfd2aada5",
+    "artifacts/rebuttal/runs/032/results/benchmark_nll.csv": "3e6462b80cf109ea6d120dc02f22446094c9b8d14073fd45f91691114b5a7223",
+    "artifacts/rebuttal/runs/032/results/formal_campaigns.csv": "d2abf0b82f091bb6f84925e199636ec9ecac08c53fb5164c0cd9a8644e3c20b4",
+    "artifacts/rebuttal/runs/032/results/formal_speed.csv": "a5d51054654c9cf35418c49b634dc4e0b5711e682d774a08d871ba7b3cd8161f",
+    "artifacts/rebuttal/runs/032/results/full_generation.csv": "6f9ee6f8bee5ab6fb32055923b6f2554f17e54c48f7af7147bbdb38a4a03c666",
+    "artifacts/rebuttal/runs/032/results/full_mc.csv": "821f6ed7573c27cb8f652202d901705e76bc76acae17e3bb0d8f6126ef0dde86",
+    "artifacts/rebuttal/runs/032/results/fixed_decode_budget_equivalence.csv": "18825cf4216550da7078c46c61365df3bfc290db2314e4e95d5361df3b05f49d",
+    "artifacts/rebuttal/runs/032/results/sweep_results.csv": "5602ec32871f42be36fec3a7d88846df44f6b86f401f475cf606b6566be3ab63",
+    "artifacts/rebuttal/runs/032/results/relative_to_int8.csv": "944192c6a010991b90a49a225f98b164fe000cd947f401019c72577379914478",
+    "artifacts/rebuttal/runs/032/results/final_audit.json": "c3aa29ea6df3655d9ef1d44e5130d20995539f2e93eb4777e17ed9f8e004760d",
+    "artifacts/rebuttal/runs/032/configs/generation_jobs.json": "6cbd2ce12dab778a157e36ff2ac81c354e41bfadbbc5faa2c4263fafa5adc351",
+    "artifacts/rebuttal/runs/032/configs/formal_rounds.json": "d6a9b646b71348a2f2c27e8a7b7677928301c62816a72bf633df87bb1c836018",
+    "artifacts/rebuttal/runs/032/configs/design.json": "b0bf40589950628d1fc81a8f9adc9292cafe0e9e25beec5af0dacd760c7210d9",
+    "artifacts/rebuttal/runs/033/results/benchmark_nll.csv": "dc0a6cf696177c9c88ebb05f2540f6ffbe60ae1c4bd6aa766c4bfe7f02ba7c93",
+    "artifacts/rebuttal/runs/033/results/formal_campaigns.csv": "53fd118226eb4a2cbd8836420556ebea2f4c0233c53a5c19bf0d9de922df3220",
+    "artifacts/rebuttal/runs/033/results/formal_speed.csv": "9ac124397aaca3675b02f92726741c13361e5a29ead5f9340e755305edafe31d",
+    "artifacts/rebuttal/runs/033/results/full_generation.csv": "58169833eabfb935d77fe6536794851d3c1e705190c8186929880798a0df29d6",
+    "artifacts/rebuttal/runs/033/results/full_mc.csv": "7558e8a356ed263567271dc0f5cd57eb339974de29b4c7be280915d2634591bd",
+    "artifacts/rebuttal/runs/033/results/fixed_decode_budget_equivalence.csv": "2d160e05a978e9923a90e075cfc6fbcb6ee39f29638c1f9780af7ed8241e2219",
+    "artifacts/rebuttal/runs/033/results/sweep_results.csv": "6e8811d7cb4ecff8a440a98e70a5d9f140814f31e7c6a90e17d9d68446f51ceb",
+    "artifacts/rebuttal/runs/033/results/relative_to_int8.csv": "6193a6c25a747df7078732bc4f295e760bd0f2a045b9716fc274a2990e8e232c",
+    "artifacts/rebuttal/runs/033/results/final_audit.json": "dfb05e5b4bb8668b35d59eaeb3b6bc124ff3de13a0fcefc5e22c13a9f310475f",
+    "artifacts/rebuttal/runs/033/configs/generation_jobs.json": "cdd9e2a9710ce955cfdad2be0a5d72db8ae5febc547aa9669bb6cf5f3eeaf7a7",
+    "artifacts/rebuttal/runs/033/configs/formal_rounds.json": "3dfae48581b1c5ee088a58d77d327c67c6dd31398bdca01fffb00c5794266c88",
+    "artifacts/rebuttal/runs/033/configs/design.json": "879512b6ad222d751cb4f096d95a687dbf8b4252c40acef15739381a1bc0518b",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round0_uniform_dense_bf16.json": "db1711e47592d9578f7d0cde85b8b4f4590b58090fb79aa708eba2f660aca407",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round0_uniform_dense_bf16_bracket_end.json": "32fb1606c9c4e96e67341c434f4f6fcbae6b2a90462ff9e455f57d87d08a77d5",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round0_uniform_int8.json": "b7e27198f2718dc08e3d35e2ee5ed15de18486863ec23ef81686decb3ea2a067",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round1_uniform_dense_bf16.json": "a82c789e31d15ee2dcf0efb200b1eb3bbedd9570ad3bd4fb63046ddb8c78c0f2",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round1_uniform_dense_bf16_bracket_end.json": "7ff5ff0be042a1cf3a685258393adfee330aec835e302d007f9f09bc6dad3964",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round1_uniform_int8.json": "37f7ba9dc4792906e04c8a8d62a76987fbc1e2f07279faf27ac43cc00fc01924",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round2_uniform_dense_bf16.json": "8ff7e4fcf6566265ea3b2e12c387649ced40299ff0bea97b8ce73fb8458f3548",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round2_uniform_dense_bf16_bracket_end.json": "cc617771dff9b766ef41200acc7f089f54252a3992e291af8fb8fbffe10a4c8d",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round2_uniform_int8.json": "238566fa2949bed3c02cba6e293152bdb4aafac090451fede5c524c0f6d2cf29",
+    "artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json": "d5cd3d360a2a7f4c14630546dc34b107988d42792703674dc61943b562b9ce71",
+    "artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json": "4cfa6edb544ff6ee8be59eb63f05422d66f4d8cd52f16be2409063f827c75161",
+    "artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json": "bb29dcc471bff3aed5e040723b7f893d57517a90fb56440e947dea3f8977e197",
+    "artifacts/rebuttal/runs/032/configs/policies/uniform_dense_bf16.json": "beb0114dac4e4ecb44b988300978cabf7624a2e908e2c73ce5c88c37842bd79f",
+    "artifacts/rebuttal/runs/028/results/generation/uniform_int8/cnn_dm_1000/metrics_0000_end.json": "ed2aac574c8c60a125351a3bb177e90faad95357eccf53bfcf780a3e02e2ef06",
+    "artifacts/rebuttal/runs/028/results/generation/uniform_int8/dsum/metrics_0000_end.json": "bd2c670f46444f7a42bdb61ee33f81ece4c2392b4e8b1f9427377be1fa96d9c5",
+    "artifacts/rebuttal/runs/028/results/generation/uniform_int8/IWSLT/metrics_0000_end.json": "271170c18a83001bc3597d9d5cda890f095d9b1a3a44096eb30beff9b19f184d",
+    "artifacts/rebuttal/runs/032/configs/policies/uniform_int8.json": "ca995f3e6afcbfb927a080b8b84c7fd1b0fb1ce68d894d1b296ee24f0bd2a676",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round0_uniform_sq_int8.json": "74589e58caf8e7bb1aeb17f13c06560a17d5bda3b91e2ab37e7d5aa5053e212b",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round1_uniform_sq_int8.json": "e62925d235f661c6ea4799f1d0639cd33377a21b9c8865ca782985106508ee7e",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round2_uniform_sq_int8.json": "09d4ebc73c52f7541f3cb543647492d7621c0726da187b183ea6eb7cd958d493",
+    "artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/cnn_dm_1000/metrics_0000_end.json": "71334ea7b0ae36e5b75816b73db1873482da5591747ebc321f384e5279096ddd",
+    "artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/dsum/metrics_0000_end.json": "70c3913fbe1b865bffff7d012670dbd6798b7a02d1a88c7ead5f618b98629d76",
+    "artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/IWSLT/metrics_0000_end.json": "63bf081b4dd0f0fab209b9a0de6071be8970df27b393d5fabd1224eca10da88a",
+    "artifacts/rebuttal/runs/032/configs/policies/uniform_sq_int8.json": "6c968742a500ec6c5c5eb7f078594dad270bba2ebb2718a1675a47b51e9a00b2",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round0_w1_e0.01.json": "55b76ff6792780eb4d5a67fc18719975f17339f8af5d37b2261bf9fc13db42d2",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round1_w1_e0.01.json": "74409d93cf25f657ffc2c0556d571bcfd27087759c0fa8432129c01465ed5d55",
+    "artifacts/rebuttal/runs/032/results/measurements/formal_round2_w1_e0.01.json": "2c08d51349b37434feb7d4fb09d531d58ee79f96cea5bdc817561ac4003ac167",
+    "artifacts/rebuttal/runs/032/results/generation/w1_e0.01/cnn_dm_1000/metrics_0000_end.json": "8b58d338b1ff05f442b4545c62d904eadccf3132ad08b4c736bedab7705ca616",
+    "artifacts/rebuttal/runs/032/results/generation/w1_e0.01/dsum/metrics_0000_end.json": "80c946b77b07ea669bfe4689fdd2e5db9e49631b31823cbbc6b04f4feddc86a3",
+    "artifacts/rebuttal/runs/032/results/generation/w1_e0.01/IWSLT/metrics_0000_end.json": "e9467e6eb88b1e18cd748a2c1573fe4fb48206f5ff8c0d35e613373ecc315b44",
+    "artifacts/rebuttal/runs/032/configs/policies/w1_e0.01.json": "7993275e61bd9414bcaebb11176cfa6e2113b6edfe5f43b49b0af81b7a3011f8",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round0_w32_e0.03.json": "8ba488e222e74132fc91439a8eb966d68e252082a03d38f058d1706cd1238d66",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round0_uniform_dense_bf16.json": "721875df14b3c45f3af8cbf605a5c3e984dea2b17ec2016a2c68d5db0e82e777",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round0_uniform_dense_bf16_bracket_end.json": "e43b8e5b5f727c59103e7562232f93f83cc25eff2cd7e137fc74bf7f184e33f1",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round0_uniform_int8.json": "d9fa59ed155d9b28343a62e24de50eb9422f0b868d3476f817b347a9519ad1d6",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round1_w32_e0.03.json": "bd48e3ed1f000395ec87878812c82de2cf9dbf7ec0da770eefb2b8f56c155a01",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round1_uniform_dense_bf16.json": "68e95b7e338e9dbe86ba00d1bc32ac9ab6449eb99d8e24d4a67717eec7802f62",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round1_uniform_dense_bf16_bracket_end.json": "f6eaef745226ddfbe1b60c3670ed1193bd5f0294dec9e122c8244c81b1b14804",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round1_uniform_int8.json": "5899c8c2c9426c27f2986c1c9ff0c08c33d44b630c9a320edc28585f8b9c95ce",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round2_w32_e0.03.json": "849fe79d9312734e940f812f42e26fe0e258f25f2c8d1a4e5e9e4460f7a95d59",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round2_uniform_dense_bf16.json": "285b0220240afd5a3ab3a5af87b9514608022105b3725377f6647d7a8f7d1920",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round2_uniform_dense_bf16_bracket_end.json": "9f9ea1e760404bac7648d0e77cb7deedcd6b9a0edfa66c0149815319b9c23afe",
+    "artifacts/rebuttal/runs/033/results/measurements/formal_round2_uniform_int8.json": "8cb7885574e0af9d928c7877084b810fdcced4efa602fd8f679ddade433b2c36",
+    "artifacts/rebuttal/runs/033/results/generation/w32_e0.03/cnn_dm_1000/metrics_0000_end.json": "c3efd7f61f7bde4eb572b9a092a20ee59e94a9d1fb869652d0f20786f9e2f4c7",
+    "artifacts/rebuttal/runs/033/results/generation/w32_e0.03/dsum/metrics_0000_end.json": "4da0d3905d46193f30418111344d3680a864f6571a3e0b036fb560af7b6597e4",
+    "artifacts/rebuttal/runs/033/results/generation/w32_e0.03/IWSLT/metrics_0000_end.json": "582aacfe6e8370ab2cf0d25ad1c03274186d4ef9b3924e705c814e8d91cab8a0",
+    "artifacts/rebuttal/runs/033/configs/policies/w32_e0.03.json": "9ba1239dac83f30057a584ae1586425d658f25123f5f43bc916b3cbba01c149c"
+  },
+  "scope": "Original19 rows retained; 3 references and 2 exploratory P+D points appended. Prefill-only reused independently, not replaced by P+D MC. No claim of passed nominal NLL budgets.",
+  "retained_rows": 19,
+  "retained_snapshot": "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033",
+  "appended_run032_033": [
+    {
+      "method": "BF16 (032 reference)",
+      "run": "032",
+      "policies": {
+        "prefill_only": "uniform_dense_bf16",
+        "prefill_only_reused_row": "BF16",
+        "prefill_decode": "uniform_dense_bf16"
+      },
+      "prefill_only_source": "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/main_table.csv",
+      "prefill_only_reused_fields": [
+        "arc_c",
+        "arc_e",
+        "wino",
+        "mmlu",
+        "prefill_avg_acc",
+        "prefill_ttft_speedup"
+      ],
+      "prefill_only_newly_optimized": false,
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/032/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      },
+      "speed_ranges": {
+        "pd_ttft_speedup": {
+          "value": 1.000388590353415,
+          "rounds": [
+            1.0008714003702024,
+            1.0005833932933008,
+            0.999710977396742
+          ],
+          "min": 0.999710977396742,
+          "max": 1.0008714003702024
+        },
+        "pd_tpot_speedup": {
+          "value": 1.0086729067160811,
+          "rounds": [
+            1.0152914904766601,
+            1.0033103384205126,
+            1.0074168912510708
+          ],
+          "min": 1.0033103384205126,
+          "max": 1.0152914904766601
+        },
+        "pd_e2e_speedup": {
+          "value": 1.003921610984666,
+          "rounds": [
+            1.0070147389626887,
+            1.0018001421924558,
+            1.0029499517988534
+          ],
+          "min": 1.0018001421924558,
+          "max": 1.0070147389626887
+        }
+      },
+      "prefill_decode_counts": {
+        "prefill": {
+          "dense_bf16": 144
+        },
+        "decode": {
+          "dense_bf16": 144
+        }
+      },
+      "pd_own_prefill_mc_avg": 70.31995522525132,
+      "proxy_budget": null,
+      "prefill_weight": null,
+      "delta_nll": 0.0,
+      "guarded_delta_nll": 0.0,
+      "guard_within_nominal_budget": null,
+      "validation_selected_final_point": false,
+      "same_campaign_e2e_vs_int8": 0.6139635472478621
+    },
+    {
+      "method": "INT8 W8A8 (032 reference)",
+      "run": "032",
+      "policies": {
+        "prefill_only": "uniform_int8",
+        "prefill_only_reused_row": "DASO-8 incl. plain INT8 + exact/validation, epsilon=0.01",
+        "prefill_decode": "uniform_int8"
+      },
+      "prefill_only_source": "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/main_table.csv",
+      "prefill_only_reused_fields": [
+        "arc_c",
+        "arc_e",
+        "wino",
+        "mmlu",
+        "prefill_avg_acc",
+        "prefill_ttft_speedup"
+      ],
+      "prefill_only_newly_optimized": false,
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/028/results/generation/uniform_int8/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/028/results/generation/uniform_int8/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/028/results/generation/uniform_int8/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      },
+      "speed_ranges": {
+        "pd_ttft_speedup": {
+          "value": 1.8822333599149141,
+          "rounds": [
+            1.8770396746753577,
+            1.8836557064702397,
+            1.8860046985991448
+          ],
+          "min": 1.8770396746753577,
+          "max": 1.8860046985991448
+        },
+        "pd_tpot_speedup": {
+          "value": 1.3930662606384958,
+          "rounds": [
+            1.3697893147625297,
+            1.4210335103107627,
+            1.3883759568421952
+          ],
+          "min": 1.3697893147625297,
+          "max": 1.4210335103107627
+        },
+        "pd_e2e_speedup": {
+          "value": 1.6352586376640241,
+          "rounds": [
+            1.6216926304884558,
+            1.6505863886750893,
+            1.6334968938285275
+          ],
+          "min": 1.6216926304884558,
+          "max": 1.6505863886750893
+        }
+      },
+      "prefill_decode_counts": {
+        "prefill": {
+          "int8": 144
+        },
+        "decode": {
+          "int8": 144
+        }
+      },
+      "pd_own_prefill_mc_avg": 69.96631151161507,
+      "proxy_budget": null,
+      "prefill_weight": null,
+      "delta_nll": -0.004904844194206967,
+      "guarded_delta_nll": 0.009596037552461356,
+      "guard_within_nominal_budget": null,
+      "validation_selected_final_point": false,
+      "same_campaign_e2e_vs_int8": 1.0
+    },
+    {
+      "method": "SmoothQuant INT8 (032 reference)",
+      "run": "032",
+      "policies": {
+        "prefill_only": "uniform_sq_int8",
+        "prefill_only_reused_row": "SmoothQuant INT8",
+        "prefill_decode": "uniform_sq_int8"
+      },
+      "prefill_only_source": "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/main_table.csv",
+      "prefill_only_reused_fields": [
+        "arc_c",
+        "arc_e",
+        "wino",
+        "mmlu",
+        "prefill_avg_acc",
+        "prefill_ttft_speedup"
+      ],
+      "prefill_only_newly_optimized": false,
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/027/full/results/generation/uniform_sq_int8/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      },
+      "speed_ranges": {
+        "pd_ttft_speedup": {
+          "value": 1.879562773085746,
+          "rounds": [
+            1.8792826863297307,
+            1.8816423610149222,
+            1.877763271912585
+          ],
+          "min": 1.877763271912585,
+          "max": 1.8816423610149222
+        },
+        "pd_tpot_speedup": {
+          "value": 1.403187234735801,
+          "rounds": [
+            1.4062930636556572,
+            1.416525052307029,
+            1.3867435882447168
+          ],
+          "min": 1.3867435882447168,
+          "max": 1.416525052307029
+        },
+        "pd_e2e_speedup": {
+          "value": 1.6390759104624884,
+          "rounds": [
+            1.6425887966485622,
+            1.6458062358745946,
+            1.6288326988643085
+          ],
+          "min": 1.6288326988643085,
+          "max": 1.6458062358745946
+        }
+      },
+      "prefill_decode_counts": {
+        "prefill": {
+          "sq_int8": 144
+        },
+        "decode": {
+          "sq_int8": 144
+        }
+      },
+      "pd_own_prefill_mc_avg": 70.57589815799739,
+      "proxy_budget": null,
+      "prefill_weight": null,
+      "delta_nll": -0.0026037832309731613,
+      "guarded_delta_nll": 0.011225557536028108,
+      "guard_within_nominal_budget": null,
+      "validation_selected_final_point": false,
+      "same_campaign_e2e_vs_int8": 1.0023780093888615
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=.01, wP=1 (032)",
+      "run": "032",
+      "policies": {
+        "prefill_only": "uniform_sq_int8",
+        "prefill_only_reused_row": "DASO + 8bit + exact/validation, epsilon=.01",
+        "prefill_decode": "w1_e0.01"
+      },
+      "prefill_only_source": "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/main_table.csv",
+      "prefill_only_reused_fields": [
+        "arc_c",
+        "arc_e",
+        "wino",
+        "mmlu",
+        "prefill_avg_acc",
+        "prefill_ttft_speedup"
+      ],
+      "prefill_only_newly_optimized": false,
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/032/results/generation/w1_e0.01/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/032/results/generation/w1_e0.01/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/032/results/generation/w1_e0.01/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      },
+      "speed_ranges": {
+        "pd_ttft_speedup": {
+          "value": 2.1634354565660443,
+          "rounds": [
+            2.151824768404494,
+            2.1567682637730194,
+            2.1817133375206197
+          ],
+          "min": 2.151824768404494,
+          "max": 2.1817133375206197
+        },
+        "pd_tpot_speedup": {
+          "value": 1.6119752849421454,
+          "rounds": [
+            1.5203012199300205,
+            1.5255619127597093,
+            1.7900627221367065
+          ],
+          "min": 1.5203012199300205,
+          "max": 1.7900627221367065
+        },
+        "pd_e2e_speedup": {
+          "value": 1.8823791590288537,
+          "rounds": [
+            1.8256718980432287,
+            1.827964211821256,
+            1.993501367222076
+          ],
+          "min": 1.8256718980432287,
+          "max": 1.993501367222076
+        }
+      },
+      "prefill_decode_counts": {
+        "prefill": {
+          "sq_int8": 82,
+          "dense_nvfp4": 33,
+          "int8": 26,
+          "sparse_nvfp4": 3
+        },
+        "decode": {
+          "w4a16_ours": 122,
+          "sq_int8": 22
+        }
+      },
+      "pd_own_prefill_mc_avg": 69.56066309821303,
+      "proxy_budget": 0.01,
+      "prefill_weight": 1.0,
+      "delta_nll": 0.014047832862245022,
+      "guarded_delta_nll": 0.031005182866963757,
+      "guard_within_nominal_budget": false,
+      "validation_selected_final_point": false,
+      "same_campaign_e2e_vs_int8": 1.1512113531855257
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=.03, wP=32 (033)",
+      "run": "033",
+      "policies": {
+        "prefill_only": "uniform_sq_int8",
+        "prefill_only_reused_row": "DASO + 8bit + exact/validation, epsilon=.01",
+        "prefill_decode": "w32_e0.03"
+      },
+      "prefill_only_source": "artifacts/rebuttal/responses/reviewer2/qwen3_table2_run016/reference/before_run032_033/main_table.csv",
+      "prefill_only_reused_fields": [
+        "arc_c",
+        "arc_e",
+        "wino",
+        "mmlu",
+        "prefill_avg_acc",
+        "prefill_ttft_speedup"
+      ],
+      "prefill_only_newly_optimized": false,
+      "prefill_decode_quality_sources": {
+        "cnn_dm": {
+          "source": "artifacts/rebuttal/runs/033/results/generation/w32_e0.03/cnn_dm_1000/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1000
+        },
+        "dialogsum": {
+          "source": "artifacts/rebuttal/runs/033/results/generation/w32_e0.03/dsum/metrics_0000_end.json",
+          "metric": "rougeL_percent",
+          "samples": 1500
+        },
+        "iwslt": {
+          "source": "artifacts/rebuttal/runs/033/results/generation/w32_e0.03/IWSLT/metrics_0000_end.json",
+          "metric": "sacre_bleu",
+          "samples": 333
+        }
+      },
+      "speed_ranges": {
+        "pd_ttft_speedup": {
+          "value": 2.148351345443514,
+          "rounds": [
+            2.142287985424207,
+            2.1401266291051826,
+            2.162639421801153
+          ],
+          "min": 2.1401266291051826,
+          "max": 2.162639421801153
+        },
+        "pd_tpot_speedup": {
+          "value": 1.8879817594293258,
+          "rounds": [
+            1.8843852622652697,
+            1.8347188485846733,
+            1.9448411674380344
+          ],
+          "min": 1.8347188485846733,
+          "max": 1.9448411674380344
+        },
+        "pd_e2e_speedup": {
+          "value": 2.0261565380517714,
+          "rounds": [
+            2.023213147023176,
+            1.9970328204708272,
+            2.0582236466613115
+          ],
+          "min": 1.9970328204708272,
+          "max": 2.0582236466613115
+        }
+      },
+      "prefill_decode_counts": {
+        "prefill": {
+          "sq_int8": 92,
+          "dense_nvfp4": 33,
+          "int8": 19
+        },
+        "decode": {
+          "w4a16_ours": 144
+        }
+      },
+      "pd_own_prefill_mc_avg": 69.76498242535905,
+      "proxy_budget": 0.03,
+      "prefill_weight": 32.0,
+      "delta_nll": 0.018606710621071713,
+      "guarded_delta_nll": 0.0335043091845272,
+      "guard_within_nominal_budget": false,
+      "validation_selected_final_point": false,
+      "same_campaign_e2e_vs_int8": 1.2402715002662368
+    }
+  ],
+  "delivery_sha256": {
+    "README.md": "16f55299feab9f5203f26b6db9a42002706dd24eb576a431ad7f80dcdcd36ac4",
+    "main_table.csv": "a979dd4eede1c98e006516941e42f018bd323cb5dc967954ab05d381a9519a0d",
+    "new_point_details.csv": "7e4ebb7247aa61c9904e95d167485751a1b03fe9dcbe5ecffcb57908bc9ac60d",
+    "new_speed_rounds.csv": "684151fcde73ea34ca7b9b9be067b28fb810aea1971a90ca4fabbef5a7824d3b"
+  }
+}

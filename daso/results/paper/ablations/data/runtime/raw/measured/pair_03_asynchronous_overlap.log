@@ -1,0 +1,31 @@
+INFO 07-22 13:06:07 [__init__.py:216] Automatically detected platform cuda.
+INFO 07-22 13:06:11 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 2112, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.8, 'max_num_batched_tokens': 16384, 'max_num_seqs': 8, 'disable_log_stats': True, 'enforce_eager': True, 'enable_chunked_prefill': False, 'model': '/root/wja/project/my/cospaq/fake/artifacts/debug/066_llama31_vllm_overlap_ablation/checkpoint/point_011'}
+WARNING 07-22 13:06:11 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 07-22 13:06:11 [model.py:547] Resolved architecture: LlamaForCausalLM
+INFO 07-22 13:06:11 [model.py:1510] Using max model len 2112
+INFO 07-22 13:06:13 [__init__.py:381] Cudagraph is disabled under eager mode
+INFO 07-22 13:06:13 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/root/wja/project/my/cospaq/fake/artifacts/debug/066_llama31_vllm_overlap_ablation/checkpoint/point_011', speculative_config=None, tokenizer='/root/wja/project/my/cospaq/fake/artifacts/debug/066_llama31_vllm_overlap_ablation/checkpoint/point_011', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=2112, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=True, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/root/wja/project/my/cospaq/fake/artifacts/debug/066_llama31_vllm_overlap_ablation/checkpoint/point_011, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":0,"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":0,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 07-22 13:06:15 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 07-22 13:06:15 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 07-22 13:06:16 [gpu_model_runner.py:2602] Starting to load model /root/wja/project/my/cospaq/fake/artifacts/debug/066_llama31_vllm_overlap_ablation/checkpoint/point_011...
+INFO 07-22 13:06:16 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 07-22 13:06:16 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:13<00:00, 13.61s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:13<00:00, 13.61s/it]
+
+INFO 07-22 13:06:30 [default_loader.py:267] Loading weights took 14.12 seconds
+INFO 07-22 13:06:31 [gpu_model_runner.py:2653] Model loading took 7.0929 GiB and 14.327511 seconds
+INFO 07-22 13:06:32 [gpu_worker.py:298] Available KV cache memory: 16.20 GiB
+INFO 07-22 13:06:33 [kv_cache_utils.py:1087] GPU KV cache size: 132,720 tokens
+INFO 07-22 13:06:33 [kv_cache_utils.py:1091] Maximum concurrency for 2,112 tokens per request: 62.84x
+WARNING 07-22 13:06:33 [cudagraph_dispatcher.py:106] cudagraph dispatching keys are not initialized. No cudagraph will be used.
+INFO 07-22 13:06:33 [core.py:210] init engine (profile, create kv cache, warmup model) took 2.14 seconds
+INFO 07-22 13:06:33 [llm.py:306] Supported_tasks: ('generate',)
+[rank0]:[W722 13:06:36.079794982 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

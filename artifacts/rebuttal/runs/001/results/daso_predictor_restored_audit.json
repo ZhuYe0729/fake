@@ -1,0 +1,258 @@
+[
+  {
+    "kind": "qkv_proj",
+    "phase": "prefill",
+    "m": 16384,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 3.914394789297884,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 2.407372722403801,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 1.9079242915966026,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 2.1361463190118672,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 3.6664150868265093,
+        "supported": true
+      }
+    }
+  },
+  {
+    "kind": "qkv_proj",
+    "phase": "decode",
+    "m": 8,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 0.05520331092065001,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 0.14392392832553438,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 0.06444025127948516,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 0.13859512717599554,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 0.03862381690796255,
+        "supported": true
+      }
+    }
+  },
+  {
+    "kind": "o_proj",
+    "phase": "prefill",
+    "m": 16384,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 2.441358,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 1.969835,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 1.257995,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 1.8060495,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 2.398342,
+        "supported": true
+      }
+    }
+  },
+  {
+    "kind": "o_proj",
+    "phase": "decode",
+    "m": 8,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 0.0320765,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 0.1289055,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 0.0652715,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 0.133818,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 0.0350745,
+        "supported": true
+      }
+    }
+  },
+  {
+    "kind": "gate_up_proj",
+    "phase": "prefill",
+    "m": 16384,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 15.823022420081294,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 5.206411038197475,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 7.695875312698941,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 4.093803805072961,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 15.169943827972013,
+        "supported": true
+      }
+    }
+  },
+  {
+    "kind": "gate_up_proj",
+    "phase": "decode",
+    "m": 8,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 0.15337807332101547,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 0.1751874892983555,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 0.09340656152790199,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 0.14841255792026425,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 0.05262717024715238,
+        "supported": true
+      }
+    }
+  },
+  {
+    "kind": "down_proj",
+    "phase": "prefill",
+    "m": 16384,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 7.924273942489958,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 5.443133955340522,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 3.8149197912726565,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 4.905316899230318,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 7.3377021238608435,
+        "supported": true
+      }
+    }
+  },
+  {
+    "kind": "down_proj",
+    "phase": "decode",
+    "m": 8,
+    "actions": {
+      "dense_bf16": {
+        "kernel": "dense_bf16",
+        "latency_ms": 0.09046898046811315,
+        "supported": true
+      },
+      "dense_nvfp4": {
+        "kernel": "dense_nvfp4",
+        "latency_ms": 0.1698424769502797,
+        "supported": true
+      },
+      "sparse_bf16": {
+        "kernel": "sparse_bf16",
+        "latency_ms": 0.16369962203592026,
+        "supported": true
+      },
+      "sparse_nvfp4": {
+        "kernel": "sparse_nvfp4",
+        "latency_ms": 0.17181154792022052,
+        "supported": true
+      },
+      "marlin_nvfp4": {
+        "kernel": "marlin_nvfp4",
+        "latency_ms": 0.04196349863568792,
+        "supported": true
+      }
+    }
+  }
+]

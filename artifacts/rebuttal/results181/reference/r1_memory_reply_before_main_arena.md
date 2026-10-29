@@ -1,0 +1,1 @@
+> We also quantify representation storage. In the dual-resident mixed-runtime experiment, a representative Qwen policy has 17.104 GiB peak Torch-allocated GPU memory versus 21.384 GiB for BF16, together with an additional 8.236 GiB host adapter-weight cache. Thus, we report both compressed GPU residency and the host-side cost instead of treating phase switching as free.

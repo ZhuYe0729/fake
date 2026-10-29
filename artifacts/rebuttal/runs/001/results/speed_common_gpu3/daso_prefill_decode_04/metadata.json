@@ -1,0 +1,45 @@
+{
+  "scenario": {
+    "name": "prefill_decode",
+    "batch": 8,
+    "input_seq": 2048,
+    "output_seq": 64
+  },
+  "warmup_iters": 2,
+  "iters": 5,
+  "phase_runtime": "phase_hetero_mytest",
+  "execution": "same_engine_warmup_then_timed",
+  "kv_cache_memory_bytes": 3221225472,
+  "kv_cache_dtype": null,
+  "mode": "speed",
+  "arguments": [
+    "/root/wja/project/my/cospaq/fake/daso/workflows/paper/runtime/benchmark_phase_hetero.py",
+    "--checkpoint",
+    "/dev/shm/daso_rebuttal_001_20261025/common_card_checkpoints/daso_prefill_decode_04",
+    "--scenario",
+    "prefill_decode",
+    "--output-dir",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/results/speed_common_gpu3/daso_prefill_decode_04",
+    "--vllm-root",
+    "/root/wja/project/my/cospaq/test/vllm",
+    "--cutlass-wrapper-path",
+    "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper",
+    "--warmup-iters",
+    "2",
+    "--iters",
+    "5",
+    "--reuse-llm",
+    "--gpu-memory-utilization",
+    ".85"
+  ],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "host_weight_cache_bytes": {
+    "prefill_bytes": 4905763084,
+    "decode_bytes": 4573888944,
+    "pinned_bytes": 9479652028
+  },
+  "peak_host_rss_bytes": 26137817088,
+  "peak_allocated_bytes": 14868891648,
+  "peak_reserved_bytes": 22347251712,
+  "resolved_kv_cache_dtype": "bfloat16"
+}

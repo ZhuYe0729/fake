@@ -1,0 +1,51 @@
+{
+  "complete": true,
+  "reuse": true,
+  "checks": [
+    {
+      "scenario": "prefill_only",
+      "method": "dense_bf16",
+      "mean_difference": 0.0,
+      "max_absolute_block_difference": 0.0,
+      "passed": true
+    },
+    {
+      "scenario": "prefill_decode",
+      "method": "dense_bf16",
+      "mean_difference": 0.0,
+      "max_absolute_block_difference": 0.0,
+      "passed": true
+    },
+    {
+      "scenario": "prefill_only",
+      "method": "dense_nvfp4",
+      "mean_difference": 0.0,
+      "max_absolute_block_difference": 0.0,
+      "passed": true
+    },
+    {
+      "scenario": "prefill_decode",
+      "method": "dense_nvfp4",
+      "mean_difference": 0.0,
+      "max_absolute_block_difference": 0.0,
+      "passed": true
+    },
+    {
+      "scenario": "prefill_only",
+      "method": "preselected heterogeneous training map",
+      "original_policy": "legacy_prefill_only_p37",
+      "mean_difference": 0.0,
+      "max_absolute_block_difference": 0.0,
+      "passed": true
+    },
+    {
+      "scenario": "prefill_decode",
+      "method": "preselected heterogeneous training map",
+      "original_policy": "legacy_prefill_decode_p41",
+      "mean_difference": 0.0,
+      "max_absolute_block_difference": 0.0,
+      "passed": true
+    }
+  ],
+  "scope": "Both target-model BF16 and NVFP4 parity checked before fitting; cache mismatch triggers fresh labels for all old policies, without removing failed evidence."
+}

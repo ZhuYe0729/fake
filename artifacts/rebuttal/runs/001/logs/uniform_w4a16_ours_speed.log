@@ -1,0 +1,18 @@
+INFO 10-25 06:11:25 [__init__.py:216] Automatically detected platform cuda.
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/code/run_workflow.py", line 55, in <module>
+    main()
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/code/run_workflow.py", line 45, in main
+    runpy.run_path(str(script), run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/wja/project/my/cospaq/fake/daso/workflows/paper/runtime/benchmark_phase_hetero.py", line 296, in <module>
+    main()
+  File "/root/wja/project/my/cospaq/fake/daso/workflows/paper/runtime/benchmark_phase_hetero.py", line 70, in main
+    ttft, ttft_rows, main_stats, main_rows = run_reuse_benchmark(args, scenario)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/daso/workflows/paper/runtime/benchmark_phase_hetero.py", line 147, in run_reuse_benchmark
+    llm = LLM(model=str(args.checkpoint), dtype="bfloat16", tensor_parallel_size=1,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: main.<locals>.initialize_fixed_cache() got multiple values for argument 'model'

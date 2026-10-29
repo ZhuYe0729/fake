@@ -1,0 +1,33 @@
+diff --git a/models/mirror.py b/models/mirror.py
+index 389207a..2846735 100644
+--- a/models/mirror.py
++++ b/models/mirror.py
+@@ -41,7 +41,10 @@ class DINO(nn.Module):
+         config = LoraConfig(r=8, lora_alpha=16, target_modules=target_modules)
+         
+         # Apply LoRA to encoder layers
+-        encoder_layers = self.dino.layer if self.is_v3 else self.dino.encoder.layer
++        if self.is_v3 and hasattr(self.dino, "model") and hasattr(self.dino.model, "layer"):
++            encoder_layers = self.dino.model.layer
++        else:
++            encoder_layers = self.dino.layer if self.is_v3 else self.dino.encoder.layer
+         for i in range(len(encoder_layers)):
+             encoder_layers[i] = get_peft_model(encoder_layers[i], config)
+ 
+@@ -111,7 +114,8 @@ class MirrorMemoryBank(nn.Module):
+         
+         # Zero out non-top-k values in the full attention matrix for reconstruction
+         mask = torch.zeros_like(attn_logits).scatter_(-1, topk_indices, 1.0)
+-        sparse_attn = torch.softmax(attn_logits.masked_fill(mask == 0, -1e9), dim=-1)
++        mask_fill_value = torch.finfo(attn_logits.dtype).min
++        sparse_attn = torch.softmax(attn_logits.masked_fill(mask == 0, mask_fill_value), dim=-1)
+         
+         # 5. Reconstruct Ideal Reference
+         recon = (sparse_attn @ v).transpose(1, 2).reshape(B, N, C)
+@@ -250,4 +254,4 @@ def build_mirror(memory_path='', backbone_path=''):
+ if __name__ == "__main__":
+     # Simulate loading
+     # model = build_mirror(memory_path='./checkpoints/mirror_phase1/mirror_phase1_epoch_5.pth')
+-    pass
+\ No newline at end of file
++    pass

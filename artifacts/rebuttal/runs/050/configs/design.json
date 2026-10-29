@@ -1,0 +1,1060 @@
+{
+  "model": "Qwen3-8B",
+  "policies": {
+    "bf16": {
+      "display": "BF16",
+      "scenario": null,
+      "source_run": "048",
+      "source_policy": "uniform_dense_bf16",
+      "map_sha256": "7aafcc63be76e1d5a0835a4e612fb9ef1ea2117614a8474b4f414889a1a9d06e",
+      "composition": {
+        "dense_bf16": 144
+      }
+    },
+    "pp_daso_bal": {
+      "display": "DASO（均衡）",
+      "scenario": "prefill_only",
+      "source_run": "015",
+      "source_policy": "uniform_sq_int8",
+      "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44",
+      "composition": {
+        "sq_int8": 144
+      }
+    },
+    "pp_hawq_bal": {
+      "display": "HAWQ-V3（均衡）",
+      "scenario": "prefill_only",
+      "source_run": "015",
+      "source_policy": "graph_hawq_fp4_prefill_only_r0.8",
+      "map_sha256": "fa9968b0d47160442a94e8956292b999297f696c95be8ff7ff9bf89d0ee1a5f5",
+      "composition": {
+        "dense_nvfp4": 8,
+        "int8": 60,
+        "dense_bf16": 76
+      }
+    },
+    "pp_shared_fast": {
+      "display": "共同速度端点",
+      "scenario": "prefill_only",
+      "source_run": "016",
+      "source_policy": "hardware_minimum_prefill_only_same_operator",
+      "map_sha256": "8bd60e611755a10699c2f4e3e0c43ef553e8a7725d2488af15a5246925f7a585",
+      "composition": {
+        "int8": 108,
+        "dense_nvfp4": 36
+      }
+    },
+    "pd_daso_bal": {
+      "display": "DASO（均衡）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "w1_e0.01",
+      "map_sha256": "b3a7766fdbdffaa772843ce303dc2cd4473d5c4d9019daef1f6c547334b72489",
+      "composition": {
+        "sq_int8": 82,
+        "dense_nvfp4": 33,
+        "int8": 26,
+        "sparse_nvfp4": 3
+      }
+    },
+    "pd_daso_fast": {
+      "display": "DASO（速度优先）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "w32_e0.03",
+      "map_sha256": "24dbc084d3f627e894638003273e3e0c70edd995b5f116256b5363f79891fb7c",
+      "composition": {
+        "sq_int8": 92,
+        "dense_nvfp4": 33,
+        "int8": 19
+      }
+    },
+    "pd_hawq_bal": {
+      "display": "HAWQ-V3（均衡）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "map_sha256": "cf73ed5a97d3d17181cacd4cf22751f40ff506f3609bbc00fbb955e2eada8e8d",
+      "composition": {
+        "dense_nvfp4": 8,
+        "int8": 69,
+        "dense_bf16": 67
+      }
+    },
+    "pd_hawq_fast": {
+      "display": "HAWQ-V3（速度优先）",
+      "scenario": "prefill_decode",
+      "source_run": "048",
+      "source_policy": "hardware_minimum_prefill_decode_phase_pair",
+      "map_sha256": "78cc66d64f2c7ec10c44e8ac54b09ba08036b638bbba34238ce19c86620e3978",
+      "composition": {
+        "int8": 108,
+        "dense_nvfp4": 36
+      }
+    }
+  },
+  "rows": {
+    "prefill_only": [
+      {
+        "method": "BF16",
+        "policy": "bf16"
+      },
+      {
+        "method": "HAWQ-V3（均衡）",
+        "policy": "pp_hawq_bal"
+      },
+      {
+        "method": "HAWQ-V3（速度优先）",
+        "policy": "pp_shared_fast"
+      },
+      {
+        "method": "DASO（均衡）",
+        "policy": "pp_daso_bal"
+      },
+      {
+        "method": "DASO（速度优先）",
+        "policy": "pp_shared_fast"
+      }
+    ],
+    "prefill_decode": [
+      {
+        "method": "BF16",
+        "policy": "bf16"
+      },
+      {
+        "method": "HAWQ-V3（均衡）",
+        "policy": "pd_hawq_bal"
+      },
+      {
+        "method": "HAWQ-V3（速度优先）",
+        "policy": "pd_hawq_fast"
+      },
+      {
+        "method": "DASO（均衡）",
+        "policy": "pd_daso_bal"
+      },
+      {
+        "method": "DASO（速度优先）",
+        "policy": "pd_daso_fast"
+      }
+    ]
+  },
+  "batches": [
+    8,
+    4
+  ],
+  "mc_tasks": [
+    {
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    }
+  ],
+  "generation_tasks": {
+    "cnn_dm_1000": 1000,
+    "dsum": 1500,
+    "IWSLT": 333
+  },
+  "generation_max_new_tokens": 256,
+  "generation_input_protocol_max": 3840,
+  "mc_max_model_len": 2048,
+  "generation_max_model_len": 4096,
+  "jobs": [
+    {
+      "id": "gen_b8_bf16_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "mc_b4_bf16_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "gen_b8_bf16_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_bf16_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b8_bf16_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_bf16_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b8_bf16_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b8_pd_hawq_fast_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 8,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b8_pd_hawq_fast_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_hawq_fast_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b8_pd_hawq_fast_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_hawq_fast_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b8_pd_hawq_fast_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b8_pd_daso_fast_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 8,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b8_pd_daso_fast_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_daso_fast_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b8_pd_daso_fast_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_daso_fast_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b8_pd_daso_fast_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b8_pd_hawq_bal_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 8,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b8_pd_hawq_bal_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_hawq_bal_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b8_pd_hawq_bal_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_hawq_bal_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b8_pd_hawq_bal_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b8_pd_daso_bal_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 8,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b8_pd_daso_bal_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_daso_bal_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 8,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b8_pd_daso_bal_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b8_pd_daso_bal_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b8_pd_daso_bal_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 8,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "mc_b8_bf16_winogrande",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_bf16_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_bf16_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b8_bf16_mmlu",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 8,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_hawq_bal_winogrande",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 8,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_hawq_bal_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 8,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_hawq_bal_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 8,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b8_pp_hawq_bal_mmlu",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 8,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_shared_fast_winogrande",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 8,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_shared_fast_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 8,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_shared_fast_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 8,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b8_pp_shared_fast_mmlu",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 8,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_daso_bal_winogrande",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 8,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_daso_bal_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 8,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b8_pp_daso_bal_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 8,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b8_pp_daso_bal_mmlu",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 8,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    },
+    {
+      "id": "gen_b4_bf16_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b4_bf16_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_bf16_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b4_bf16_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_bf16_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b4_bf16_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b4_pd_hawq_fast_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 4,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b4_pd_hawq_fast_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_hawq_fast_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b4_pd_hawq_fast_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_hawq_fast_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b4_pd_hawq_fast_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_hawq_fast",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b4_pd_daso_fast_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 4,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b4_pd_daso_fast_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_daso_fast_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b4_pd_daso_fast_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_daso_fast_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b4_pd_daso_fast_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_daso_fast",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b4_pd_hawq_bal_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 4,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b4_pd_hawq_bal_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_hawq_bal_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b4_pd_hawq_bal_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_hawq_bal_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b4_pd_hawq_bal_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_hawq_bal",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "gen_b4_pd_daso_bal_IWSLT_0000_0333",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 4,
+      "task": "IWSLT",
+      "begin": 0,
+      "end": 333
+    },
+    {
+      "id": "gen_b4_pd_daso_bal_cnn_dm_1000_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_daso_bal_cnn_dm_1000_0512_1000",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 4,
+      "task": "cnn_dm_1000",
+      "begin": 512,
+      "end": 1000
+    },
+    {
+      "id": "gen_b4_pd_daso_bal_dsum_0000_0512",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 0,
+      "end": 512
+    },
+    {
+      "id": "gen_b4_pd_daso_bal_dsum_0512_1024",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 512,
+      "end": 1024
+    },
+    {
+      "id": "gen_b4_pd_daso_bal_dsum_1024_1500",
+      "kind": "generation",
+      "policy": "pd_daso_bal",
+      "batch": 4,
+      "task": "dsum",
+      "begin": 1024,
+      "end": 1500
+    },
+    {
+      "id": "mc_b4_bf16_winogrande",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_bf16_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b4_bf16_mmlu",
+      "kind": "multiple_choice",
+      "policy": "bf16",
+      "batch": 4,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_hawq_bal_winogrande",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 4,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_hawq_bal_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 4,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_hawq_bal_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 4,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b4_pp_hawq_bal_mmlu",
+      "kind": "multiple_choice",
+      "policy": "pp_hawq_bal",
+      "batch": 4,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_shared_fast_winogrande",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 4,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_shared_fast_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 4,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_shared_fast_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 4,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b4_pp_shared_fast_mmlu",
+      "kind": "multiple_choice",
+      "policy": "pp_shared_fast",
+      "batch": 4,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_daso_bal_winogrande",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 4,
+      "task": "winogrande",
+      "samples": 1267,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_daso_bal_arc_easy",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 4,
+      "task": "arc_easy",
+      "samples": 2376,
+      "metric": "acc,none"
+    },
+    {
+      "id": "mc_b4_pp_daso_bal_arc_challenge",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 4,
+      "task": "arc_challenge",
+      "samples": 1172,
+      "metric": "acc_norm,none"
+    },
+    {
+      "id": "mc_b4_pp_daso_bal_mmlu",
+      "kind": "multiple_choice",
+      "policy": "pp_daso_bal",
+      "batch": 4,
+      "task": "mmlu",
+      "samples": 14042,
+      "metric": "acc,none"
+    }
+  ],
+  "anchor_jobs": [
+    "gen_b8_bf16_IWSLT_0000_0333",
+    "mc_b4_bf16_arc_easy"
+  ],
+  "preferred_cards": [
+    3,
+    4,
+    6,
+    0,
+    1,
+    2,
+    5,
+    7
+  ],
+  "workers": 4,
+  "source_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/telemetry.py": "161c9da2fa1e1d25cc02112f8f76bb67ec4d3e3f4f67642b8b2f0fc0f0177b85",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/activation_scales.pt": "336fd3727be6b6b86c152082d9421a6d9c782b6863d5648b1307265748f5e2ad",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/generation_cnn_dm_1000.jsonl": "9f622de4e989b75fbe4e21a2da355b730488e6a5596678726aea71dff4cd4b03",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/generation_dsum.jsonl": "6583d5e4c591798d61fecd0f9ca9d78d5faf0287216d5b31e576e655a329051e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/generation_IWSLT.jsonl": "d656a85768adee7a210a83d0aaa44ed8c6c84bf6dc29caf618c9bf660975e672",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/data/generation_protocol.json": "0a4a275e85927673442973c234b4e416aa5d4ff3214620c72f9b86c299a98407",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/001/data/likelihood_task_configs.json": "9e539957a7ba9c398add297f1aada7456b72fcd10f81c171c2c14f2b80bf1acd",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/design.json": "830dff54244f1b78e2c7818808cfb1cf66d67ce5a46507f75fa91a49452a7c08",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/bf16.json": "f0eea4973775eebb5da81b6ce20cb5c12073eb73c0a60686053e2215b3fd9a71",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/pp_daso_bal.json": "014ee6c8178468c03f80cc0898cb3c6f1ad060941a69625e7fce0066cc1f71a9",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/pp_hawq_bal.json": "3850e0bbfdfc78996e3c386788d6a39444d248a7d471b77f686260b838b5c08b",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/pp_shared_fast.json": "597146448968f9b2e4607dc2d8ae1e7138e1e34b364779e8d9e722adc1dd3b83",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/pd_daso_bal.json": "fd71d42f85949b1597e00ce7680f79cb48aea3aedff15e24a443d33e9014a494",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/pd_daso_fast.json": "3e17aa88e647a0e30619a0c82160a54e32eefc405e6050ed478e45ba35c4a79c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/pd_hawq_bal.json": "baa944b0dcfdc6a00e29d79bdf715be3b066809482efba0b3d11c6ae77cbbdda",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/policies/pd_hawq_fast.json": "c5aaa06196cebb4b58274ee1e30364a3e7a5519ee0a84c35289c5af799c176f2"
+  },
+  "protected_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/configs/design.json": "830dff54244f1b78e2c7818808cfb1cf66d67ce5a46507f75fa91a49452a7c08",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/results/tier1_complete.json": "85e27cb3da8f91d811b8018f3fa2bec9177b59d6d6348e3b84e588bd7fac2aea",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/qwen3_main_table/main_table.csv": "60420f3feb9485ef5911f3ef9a872a47eb36f0578fa6f514904b705962bfd3b7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/final_audit.json": "dc24a7365f7f144ebca337116a8d7965f10364163605f462966724cfb9b5e67d"
+  },
+  "quality_scope": "Original paper tasks/input files and generation limit256, measured separately at batches8/4. S/O speed labels do not define new task datasets; shared scores are explicitly identified.",
+  "speed_stage": "deferred_until_quiet_evening_window",
+  "performance_measurements_enabled": false,
+  "input_sha256": {
+    "generation_cnn_dm_1000.jsonl": "9f622de4e989b75fbe4e21a2da355b730488e6a5596678726aea71dff4cd4b03",
+    "generation_dsum.jsonl": "6583d5e4c591798d61fecd0f9ca9d78d5faf0287216d5b31e576e655a329051e",
+    "generation_IWSLT.jsonl": "d656a85768adee7a210a83d0aaa44ed8c6c84bf6dc29caf618c9bf660975e672"
+  }
+}

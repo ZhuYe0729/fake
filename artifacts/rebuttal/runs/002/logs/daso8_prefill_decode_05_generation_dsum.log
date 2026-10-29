@@ -1,0 +1,53 @@
+INFO 10-25 12:41:26 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-25 12:41:29 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05] to model_path [/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05]
+INFO 10-25 12:41:29 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05] to model_path [/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05]
+INFO 10-25 12:41:29 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 6442450944, 'max_num_batched_tokens': 32768, 'max_num_seqs': 8, 'disable_log_stats': True, 'enforce_eager': True, 'enable_chunked_prefill': False, 'model': '/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05'}
+WARNING 10-25 12:41:29 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-25 12:41:29 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+INFO 10-25 12:41:29 [model.py:1510] Using max model len 4096
+INFO 10-25 12:41:30 [__init__.py:381] Cudagraph is disabled under eager mode
+INFO 10-25 12:41:30 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05', speculative_config=None, tokenizer='/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=True, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":0,"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":0,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-25 12:41:30 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-25 12:41:31 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-25 12:41:31 [gpu_model_runner.py:2602] Starting to load model /dev/shm/daso_rebuttal_002_20261025/checkpoints/daso8_prefill_decode_05...
+INFO 10-25 12:41:31 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-25 12:41:31 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.06s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.06s/it]
+
+INFO 10-25 12:41:39 [default_loader.py:267] Loading weights took 7.42 seconds
+INFO 10-25 12:41:39 [gpu_model_runner.py:2653] Model loading took 7.4347 GiB and 7.586058 seconds
+INFO 10-25 12:41:41 [gpu_worker.py:251] Initial free memory 30.7535400390625 GiB, reserved 6.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-25 12:41:41 [kv_cache_utils.py:1087] GPU KV cache size: 43,680 tokens
+INFO 10-25 12:41:41 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 10.66x
+WARNING 10-25 12:41:41 [cudagraph_dispatcher.py:106] cudagraph dispatching keys are not initialized. No cudagraph will be used.
+INFO 10-25 12:41:41 [core.py:210] init engine (profile, create kv cache, warmup model) took 1.98 seconds
+INFO 10-25 12:41:42 [llm.py:306] Supported_tasks: ('generate',)
+daso8_prefill_decode_05 dsum 8 / 1500 seconds 0.8930324281100184
+daso8_prefill_decode_05 dsum 88 / 1500 seconds 9.465516052907333
+daso8_prefill_decode_05 dsum 168 / 1500 seconds 18.92549645109102
+daso8_prefill_decode_05 dsum 248 / 1500 seconds 27.900259837973863
+daso8_prefill_decode_05 dsum 328 / 1500 seconds 36.28278107312508
+daso8_prefill_decode_05 dsum 408 / 1500 seconds 44.580203644931316
+daso8_prefill_decode_05 dsum 488 / 1500 seconds 53.301397589966655
+daso8_prefill_decode_05 dsum 568 / 1500 seconds 61.974529675906524
+daso8_prefill_decode_05 dsum 648 / 1500 seconds 71.27112479205243
+daso8_prefill_decode_05 dsum 728 / 1500 seconds 81.13809513207525
+daso8_prefill_decode_05 dsum 808 / 1500 seconds 90.88235076004639
+daso8_prefill_decode_05 dsum 888 / 1500 seconds 99.63797595491633
+daso8_prefill_decode_05 dsum 968 / 1500 seconds 107.96750071505085
+daso8_prefill_decode_05 dsum 1048 / 1500 seconds 117.05884692096151
+daso8_prefill_decode_05 dsum 1128 / 1500 seconds 125.9111571831163
+daso8_prefill_decode_05 dsum 1208 / 1500 seconds 134.82927939807996
+daso8_prefill_decode_05 dsum 1288 / 1500 seconds 143.64676932105795
+daso8_prefill_decode_05 dsum 1368 / 1500 seconds 152.58135314797983
+daso8_prefill_decode_05 dsum 1448 / 1500 seconds 161.35260269907303
+{'policy_id': 'daso8_prefill_decode_05', 'dataset': 'dsum', 'samples': 1500, 'begin': 0, 'end': None, 'generation_seconds': 167.80209894990548, 'rougeL_percent': 25.614733231878155, 'empty_predictions': 0, 'input_sha256': '6583d5e4c591798d61fecd0f9ca9d78d5faf0287216d5b31e576e655a329051e', 'kv_cache_memory_bytes': 6442450944, 'max_new_tokens': 256, 'chat_template': 'native Qwen3, enable_thinking=False', 'peak_allocated_bytes': 18191267328, 'peak_reserved_bytes': 24813502464}
+[rank0]:[W1025 12:44:31.137701952 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

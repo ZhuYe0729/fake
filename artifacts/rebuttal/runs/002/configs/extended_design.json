@@ -1,0 +1,45 @@
+{
+  "methods": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "w4a16_ours",
+    "sq_int8",
+    "fp8"
+  ],
+  "new_policies_per_scenario": 48,
+  "train": 90,
+  "holdout": 30,
+  "old_labels": 72,
+  "new_label_train": 36,
+  "new_label_holdout": 12,
+  "rule": "seeds and splits frozen before any new labels or test measurement",
+  "budgets": [
+    0,
+    0.01,
+    0.02,
+    0.04,
+    0.07,
+    0.1,
+    0.15,
+    0.22,
+    0.32,
+    0.45,
+    0.65,
+    0.9,
+    1.2,
+    1.6,
+    2.0
+  ],
+  "representative_budgets_prefill": [
+    0.02,
+    0.07,
+    0.45
+  ],
+  "representative_budgets_decode": [
+    0.02,
+    0.07,
+    0.22
+  ]
+}

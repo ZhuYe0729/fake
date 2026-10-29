@@ -1,0 +1,163 @@
+{
+  "workloads": [
+    {
+      "id": "p_b1_s2048",
+      "scenario": "prefill_only",
+      "batch": 1,
+      "input": 2048,
+      "output": 1
+    },
+    {
+      "id": "p_b4_s2048",
+      "scenario": "prefill_only",
+      "batch": 4,
+      "input": 2048,
+      "output": 1
+    },
+    {
+      "id": "p_b8_s2048",
+      "scenario": "prefill_only",
+      "batch": 8,
+      "input": 2048,
+      "output": 1
+    },
+    {
+      "id": "p_b16_s2048",
+      "scenario": "prefill_only",
+      "batch": 16,
+      "input": 2048,
+      "output": 1
+    },
+    {
+      "id": "p_b8_s512",
+      "scenario": "prefill_only",
+      "batch": 8,
+      "input": 512,
+      "output": 1
+    },
+    {
+      "id": "p_b8_s4096",
+      "scenario": "prefill_only",
+      "batch": 8,
+      "input": 4096,
+      "output": 1
+    },
+    {
+      "id": "p_b1_s512",
+      "scenario": "prefill_only",
+      "batch": 1,
+      "input": 512,
+      "output": 1
+    },
+    {
+      "id": "pd_b1_s2048_o64",
+      "scenario": "prefill_decode",
+      "batch": 1,
+      "input": 2048,
+      "output": 64
+    },
+    {
+      "id": "pd_b4_s2048_o64",
+      "scenario": "prefill_decode",
+      "batch": 4,
+      "input": 2048,
+      "output": 64
+    },
+    {
+      "id": "pd_b8_s2048_o64",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "input": 2048,
+      "output": 64
+    },
+    {
+      "id": "pd_b16_s2048_o64",
+      "scenario": "prefill_decode",
+      "batch": 16,
+      "input": 2048,
+      "output": 64
+    },
+    {
+      "id": "pd_b8_s512_o64",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "input": 512,
+      "output": 64
+    },
+    {
+      "id": "pd_b8_s4096_o64",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "input": 4096,
+      "output": 64
+    },
+    {
+      "id": "pd_b8_s2048_o16",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "input": 2048,
+      "output": 16
+    },
+    {
+      "id": "pd_b8_s2048_o256",
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "input": 2048,
+      "output": 256
+    },
+    {
+      "id": "pd_b1_s512_o256",
+      "scenario": "prefill_decode",
+      "batch": 1,
+      "input": 512,
+      "output": 256
+    }
+  ],
+  "quality_budgets": [
+    0.01,
+    0.07
+  ],
+  "methods": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "w4a16_ours",
+    "sq_int8",
+    "fp8"
+  ],
+  "uniform_methods": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "w4a16_ours",
+    "int8",
+    "marlin_int4",
+    "sq_int8",
+    "fp8"
+  ],
+  "kv_bytes": 6442450944,
+  "warmups": 2,
+  "iterations": 5,
+  "quality_blocks": 100,
+  "speed_gpu": 3,
+  "quality_gpus": [
+    0,
+    4,
+    7
+  ],
+  "engine": {
+    "max_model_len": 4360,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 65536,
+    "enforce_eager": true,
+    "prefix_caching": false,
+    "chunked_prefill": false
+  },
+  "scope": "synchronous homogeneous batches; no claim about mixed continuous batching",
+  "quality_transfer": "frozen run002 calibration and local errors; no refit or test feedback",
+  "solver": "unchanged 2000-bin conservative DP",
+  "ordinary_int8": "same weight quantizer; fused token quantization and output scaling, numeric audit required",
+  "selection": "all workloads, budgets and controls frozen before new measurements"
+}

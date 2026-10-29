@@ -1,0 +1,107 @@
+{
+  "model": "quantized_kernel_baseline_residual",
+  "kernel": "sparse_nvfp4",
+  "display_name": "Sparse NVFP4 W4A4",
+  "support_mods": {
+    "m": 32,
+    "k": 64
+  },
+  "baseline_params": {
+    "effective_work_tps": 402.18785784647656,
+    "effective_bandwidth_tbps": 0.9674726314207039,
+    "launch_floor_ms": 0.122987,
+    "k_floor_log2": [
+      6.0,
+      7.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0,
+      13.0,
+      14.0
+    ],
+    "k_floor_ms": [
+      0.126308825,
+      0.12556875,
+      0.12658345000000001,
+      0.1270253,
+      0.1267491,
+      0.13134025,
+      0.1325369,
+      0.13787765,
+      0.15487567499999996
+    ],
+    "n_floor_log2": [
+      4.0,
+      5.0,
+      6.0,
+      7.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0,
+      13.0,
+      14.0
+    ],
+    "n_floor_ms": [
+      0.1275391,
+      0.126848075,
+      0.1273325,
+      0.125237625,
+      0.1283079,
+      0.12684489999999998,
+      0.12640835,
+      0.12616295,
+      0.1280015,
+      0.12634965,
+      0.12704035
+    ]
+  },
+  "feature_columns": [
+    "log2_m",
+    "log2_n",
+    "log2_k",
+    "log2_mn",
+    "log2_mk",
+    "log2_nk",
+    "log2_mnk",
+    "log2_ai",
+    "log2_n_over_k",
+    "log2_m_over_n",
+    "log2_m_over_k",
+    "m_le_16",
+    "m_le_64",
+    "m_ge_256",
+    "n_le_1024",
+    "k_le_1024",
+    "ceil_m_tiles",
+    "ceil_n_tiles",
+    "ceil_k_tiles",
+    "log2_total_tiles",
+    "m_tail_frac",
+    "n_tail_frac",
+    "k_tail_frac",
+    "output_log2",
+    "weight_reuse_log2",
+    "bytes_activation_log2",
+    "bytes_weight_log2",
+    "bytes_scale_log2"
+  ],
+  "neighbors": 12,
+  "ranges": {
+    "m": [
+      32,
+      16384
+    ],
+    "n": [
+      16,
+      16384
+    ],
+    "k": [
+      64,
+      16384
+    ]
+  }
+}

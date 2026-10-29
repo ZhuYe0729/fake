@@ -1,0 +1,6 @@
+method,policy_id,e2e_median_ms,speedup_vs_dense_bf16,ttft_median_ms,tpot_ms,note,runtime
+dense_bf16,p00,2291.8431889265776,1.0,1096.9024114310741,18.967313928500054,dense BF16 in both phases,phase_hetero_mytest; VLLM V1; BF16 KV; chunked prefill disabled
+dense_nvfp4,p01,2853.9937417954206,0.8030302082879833,668.0662240833044,34.69726218590661,dense NVFP4 in both phases,phase_hetero_mytest; VLLM V1; BF16 KV; chunked prefill disabled
+sparse_bf16,p02,2020.7710321992636,1.134142934755106,701.8477842211723,20.935289650445892,canonical sparse BF16 in both phases,phase_hetero_mytest; VLLM V1; BF16 KV; chunked prefill disabled
+sparse_nvfp4_legal_projection,p03,2991.4962239563465,0.7661193654777688,679.0295671671629,36.70581994903466,prefill sparse NVFP4; decode dense NVFP4 because sparse NVFP4 is unsupported at M=8,phase_hetero_mytest; VLLM V1; BF16 KV; chunked prefill disabled
+w4a16_marlin,p04,1925.8346650749445,1.1900518930774309,1128.2217893749475,12.660521836507888,W4A16/Marlin NVFP4 in both phases,phase_hetero_mytest; VLLM V1; BF16 KV; chunked prefill disabled

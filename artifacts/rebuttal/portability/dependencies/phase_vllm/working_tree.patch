@@ -1,0 +1,198 @@
+diff --git a/artifacts/dev/011_phase_switch_linear_test/pmpd_vllm_eval.py b/artifacts/dev/011_phase_switch_linear_test/pmpd_vllm_eval.py
+index 09d540a..96c8392 100644
+--- a/artifacts/dev/011_phase_switch_linear_test/pmpd_vllm_eval.py
++++ b/artifacts/dev/011_phase_switch_linear_test/pmpd_vllm_eval.py
+@@ -29,6 +29,8 @@ def parse_args() -> argparse.Namespace:
+     parser.add_argument("--question-end", type=int)
+     parser.add_argument("--batch-size", type=int, default=8)
+     parser.add_argument("--gpu-memory-utilization", type=float, default=0.9)
++    parser.add_argument("--kv-cache-dtype", choices=["auto", "fp8"],
++                        default="auto")
+     parser.add_argument("--log-every", type=int, default=20)
+     parser.add_argument("--bertscore-model", type=Path,
+                         default=Path("/home/agent/wja/data/models/bert_score/roberta-large"))
+@@ -76,6 +78,8 @@ def write_run_config(args: argparse.Namespace, output_dir: Path,
+         "question_begin": args.question_begin,
+         "question_end": args.question_end,
+         "batch_size": args.batch_size,
++        "gpu_memory_utilization": args.gpu_memory_utilization,
++        "kv_cache_dtype": args.kv_cache_dtype,
+         "backend": "vllm",
+         "phase_switch": args.phase_switch,
+         "phase_hetero": args.phase_hetero,
+@@ -142,6 +146,7 @@ def main() -> None:
+         "enforce_eager": True,
+         "skip_mm_profiling": True,
+         "gpu_memory_utilization": args.gpu_memory_utilization,
++        "kv_cache_dtype": args.kv_cache_dtype,
+     }
+     if args.phase_hetero:
+         llm_kwargs["enable_chunked_prefill"] = False
+diff --git a/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py b/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py
+index 53b912f..7a29718 100644
+--- a/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py
++++ b/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py
+@@ -38,6 +38,8 @@ def parse_args() -> argparse.Namespace:
+     parser.add_argument("--cutlass-wrapper-path", default=DEFAULT_CUTLASS_WRAPPER)
+     parser.add_argument("--force", action="store_true")
+     parser.add_argument("--prune", action="store_true")
++    parser.add_argument("--canonical-sparse-bf16-state")
++    parser.add_argument("--canonical-sparse-nvfp4-state")
+     return parser.parse_args()
+ 
+ 
+@@ -81,6 +83,30 @@ class LazyTensorReader:
+             return f.get_tensor(name)
+ 
+ 
++class CanonicalStateReader:
++    """Lazily materialize a calibrated dense-state checkpoint on first use."""
++
++    def __init__(self, path: str) -> None:
++        self.path = Path(path)
++        self._state: dict[str, torch.Tensor] | None = None
++        self.metadata: dict[str, Any] | None = None
++
++    def get(self, name: str) -> torch.Tensor:
++        if self._state is None:
++            payload = torch.load(self.path, map_location="cpu", mmap=True,
++                                 weights_only=True)
++            state = payload.get("state_dict")
++            if not isinstance(state, dict):
++                raise ValueError(f"canonical state has no state_dict: {self.path}")
++            self._state = state
++            metadata = payload.get("metadata", {})
++            self.metadata = metadata if isinstance(metadata, dict) else {}
++        try:
++            return self._state[name]
++        except KeyError as exc:
++            raise KeyError(f"canonical state {self.path} lacks {name}") from exc
++
++
+ def layer_prefix(layer_idx: int) -> str:
+     return f"model.layers.{layer_idx}"
+ 
+@@ -310,6 +336,9 @@ def phase_prefix_tensors(tensors: dict[str, torch.Tensor], base_name: str,
+ 
+ def main() -> None:
+     args = parse_args()
++    if args.prune and (args.canonical_sparse_bf16_state or
++                       args.canonical_sparse_nvfp4_state):
++        raise ValueError("--prune cannot be combined with canonical sparse states")
+     model_path = Path(args.model_path).resolve()
+     output_dir = Path(args.output_dir).resolve()
+ 
+@@ -339,6 +368,13 @@ def main() -> None:
+ 
+     weight_map = read_weight_map(model_path)
+     reader = LazyTensorReader(model_path, weight_map)
++    canonical_readers: dict[str, CanonicalStateReader] = {}
++    if args.canonical_sparse_bf16_state:
++        canonical_readers["sparse_bf16"] = CanonicalStateReader(
++            args.canonical_sparse_bf16_state)
++    if args.canonical_sparse_nvfp4_state:
++        canonical_readers["sparse_nvfp4"] = CanonicalStateReader(
++            args.canonical_sparse_nvfp4_state)
+     method_map: dict[str, dict[str, str]] = policy["method_map"]
+     default_prefill = str(policy["default_prefill_method"])
+     default_decode = str(policy["default_decode_method"])
+@@ -352,21 +388,33 @@ def main() -> None:
+             return default_prefill, default_decode
+         return item["prefill_method"], item["decode_method"]
+ 
+-    def convert(base_name: str, source: str, weight: torch.Tensor) -> None:
++    def source_weight(source_names: list[str], method: str) -> torch.Tensor:
++        source_reader = canonical_readers.get(method, reader)
++        weights = [source_reader.get(name) for name in source_names]
++        return weights[0] if len(weights) == 1 else torch.cat(weights, dim=0)
++
++    def source_kind(method: str) -> str:
++        return "canonical_sparse" if method in canonical_readers else "raw_hf"
++
++    def convert(base_name: str, source_names: list[str]) -> None:
+         prefill_method, decode_method = methods_for(base_name)
+         manifest[base_name] = {
+-            "source": source,
+-            "shape": list(weight.shape),
++            "source": "+".join(source_names),
+             "prefill_method": prefill_method,
+             "decode_method": decode_method,
+             "same_method": prefill_method == decode_method,
++            "prefill_weight_source": source_kind(prefill_method),
++            "decode_weight_source": source_kind(decode_method),
+         }
+-        prefill = convert_method(prefill_method, base_name, weight,
++        prefill_weight = source_weight(source_names, prefill_method)
++        manifest[base_name]["shape"] = list(prefill_weight.shape)
++        prefill = convert_method(prefill_method, base_name, prefill_weight,
+                                  args.prune)
+         output_tensors.update(
+             phase_prefix_tensors(prefill, base_name, "ph_prefill"))
+         if prefill_method != decode_method:
+-            decode = convert_method(decode_method, base_name, weight,
++            decode_weight = source_weight(source_names, decode_method)
++            decode = convert_method(decode_method, base_name, decode_weight,
+                                     args.prune)
+             output_tensors.update(
+                 phase_prefix_tensors(decode, base_name, "ph_decode"))
+@@ -385,23 +433,13 @@ def main() -> None:
+         for source_name in qkv_names + gate_up_names:
+             linear_sources.add(source_name)
+ 
+-        fused_qkv = torch.cat([reader.get(name) for name in qkv_names], dim=0)
+-        convert(f"{prefix}.self_attn.qkv_proj", "q_proj+k_proj+v_proj",
+-                fused_qkv)
+-        del fused_qkv
+-
+-        fused_gate_up = torch.cat([reader.get(name) for name in gate_up_names],
+-                                  dim=0)
+-        convert(f"{prefix}.mlp.gate_up_proj", "gate_proj+up_proj",
+-                fused_gate_up)
+-        del fused_gate_up
++        convert(f"{prefix}.self_attn.qkv_proj", qkv_names)
++        convert(f"{prefix}.mlp.gate_up_proj", gate_up_names)
+ 
+         for suffix in ("self_attn.o_proj", "mlp.down_proj"):
+             source_name = f"{prefix}.{suffix}.weight"
+             linear_sources.add(source_name)
+-            weight = reader.get(source_name)
+-            convert(f"{prefix}.{suffix}", source_name, weight)
+-            del weight
++            convert(f"{prefix}.{suffix}", [source_name])
+ 
+         print(f"converted layer {layer_idx + 1}/{num_layers}", flush=True)
+ 
+@@ -418,6 +456,15 @@ def main() -> None:
+     with (output_dir / "phase_hetero_manifest.json").open("w") as f:
+         json.dump(manifest, f, indent=2, sort_keys=True)
+         f.write("\n")
++    canonical_sources = {
++        method: str(reader.path)
++        for method, reader in canonical_readers.items()
++    }
++    with (output_dir / "phase_hetero_export_provenance.json").open("w") as f:
++        json.dump({"prune": args.prune,
++                   "canonical_sparse_states": canonical_sources}, f,
++                  indent=2, sort_keys=True)
++        f.write("\n")
+ 
+     counts: dict[str, int] = {}
+     for item in manifest.values():
+diff --git a/vllm/vllm/engine/arg_utils.py b/vllm/vllm/engine/arg_utils.py
+index 6bb7941..4966d68 100644
+--- a/vllm/vllm/engine/arg_utils.py
++++ b/vllm/vllm/engine/arg_utils.py
+@@ -1545,7 +1545,12 @@ class EngineArgs:
+         # for non-pooling tasks.
+         # For pooling tasks the default is False
+         if model_config.runner_type != "pooling":
+-            self.enable_chunked_prefill = True
++            # Preserve an explicit caller choice.  V1 defaults to chunked
++            # prefills, but phase-heterogeneous execution needs to keep one
++            # request prefill in a single phase unless it implements
++            # chunk-aware phase switching.
++            if self.enable_chunked_prefill is None:
++                self.enable_chunked_prefill = True
+ 
+             # TODO: When prefix caching supports prompt embeds inputs, this
+             # check can be removed.

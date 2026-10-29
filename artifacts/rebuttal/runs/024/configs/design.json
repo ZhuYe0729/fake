@@ -1,0 +1,31 @@
+{
+  "created_at_unix": 1793064948.8015318,
+  "source_runs": [
+    "017",
+    "018"
+  ],
+  "scenarios": [
+    "prefill_only",
+    "prefill_decode"
+  ],
+  "feature_change": "Only sq_int8/fp8/int8 use their already measured per-module output_rel_mse instead of the weighted depth/type bucket average. Original four non-BF16 methods remain unchanged. Calibrator architecture/steps/hyperparameters and train/holdout policies unchanged.",
+  "sources_sha256": {
+    "017": {
+      "configs/frozen_design.json": "3d5efff53e4657bfa81cc3055abfe950bc4eb6a194098a07fbc3dc016e355dbc",
+      "data/local_errors_new_module.csv": "e52c1801d301e5eb7d1e6fb2752f6bb0ae06a67f74e621befee8bd3f745455ea",
+      "configs/calibration_prefill_only.json": "fa45a95f24e56ef1231035358936e1eb8f7a9d0981d3eb273a007508942b3399",
+      "configs/calibration_prefill_decode.json": "29468886190482a7196033802c2c6e3010ecd83d1327c88aaa865317da674e79",
+      "data/local_errors_prefill_only.csv": "ffc835271fc296e948c3b6531a5c73b8809005aa437cac5fe4f7f309348d29b4",
+      "data/local_errors_prefill_decode.csv": "ffc835271fc296e948c3b6531a5c73b8809005aa437cac5fe4f7f309348d29b4"
+    },
+    "018": {
+      "configs/frozen_design.json": "4fa82d5747c7cd7df600e027d1840eb9dae6307c847aff0e014f2d7ab24066d7",
+      "data/local_errors_new_module.csv": "2a796e343484db7e2ce938e44f10dce9101641c306fcccaa7ef7858d04bec470",
+      "configs/calibration_prefill_only.json": "29524d5491eb6e8771a263665afa33c69aa588010002e85699d07d4de478e190",
+      "configs/calibration_prefill_decode.json": "0fa5de406724d7492c4cb5def39cc4ac3cd6907eb18f365a9f3e5225358cf1f5",
+      "data/local_errors_prefill_only.csv": "2681919bc62de0fe7fe55efa821ade400e47ff398de546353c645bb889705a78",
+      "data/local_errors_prefill_decode.csv": "22b7adae974bb5bfde2b7278e45405d0dd92831d02b7194c83d735b222b5f9bf"
+    }
+  },
+  "scope": "CPU-only feature ablation. No confirmation values read, no new policy selection, no change to running core experiments. Existing holdout is a development diagnostic, not a new independent test. A later GPU revision would require a separate frozen protocol and new validation/confirmation windows."
+}

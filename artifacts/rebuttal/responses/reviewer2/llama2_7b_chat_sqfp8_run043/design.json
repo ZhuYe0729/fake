@@ -1,0 +1,109 @@
+{
+  "original_run": "018",
+  "source_current": "035",
+  "anchors": [
+    "uniform_dense_bf16",
+    "uniform_int8",
+    "uniform_sq_int8",
+    "uniform_fp8"
+  ],
+  "policies": {
+    "uniform_dense_bf16": "a41d9213471e228a75f84e0903443d825fdc3090ab6d2e068c578e0cdacb8545",
+    "uniform_int8": "2b02018f75dbdbbe42de567c5b7c634284c58c4cd1e521f4e7b389552d60080b",
+    "uniform_sq_int8": "787b64e321b7a9a81f79d2013c87f3663d47e1bf82d4cb650c2b9a87099d0d55",
+    "uniform_fp8": "395fdcb34b65eeeb74260ff0187425f4ed4d5e36d8194404af78b20c313f74ef",
+    "uniform_sq_fp8": "f7a831e1a63c6c64450653b03bfbcd171800c2da2512fd49aa2f27dde52441b4"
+  },
+  "jobs": [
+    {
+      "label": "full_mc",
+      "stage": "mc",
+      "policy": "uniform_sq_fp8"
+    },
+    {
+      "label": "nll",
+      "stage": "nll",
+      "policy": "uniform_sq_fp8"
+    },
+    {
+      "label": "generation_cnn_dm_1000",
+      "stage": "generation",
+      "policy": "uniform_sq_fp8",
+      "dataset": "cnn_dm_1000"
+    },
+    {
+      "label": "generation_dsum",
+      "stage": "generation",
+      "policy": "uniform_sq_fp8",
+      "dataset": "dsum"
+    },
+    {
+      "label": "generation_IWSLT",
+      "stage": "generation",
+      "policy": "uniform_sq_fp8",
+      "dataset": "IWSLT"
+    }
+  ],
+  "reused_quality_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_dense_bf16/prefill_only.json": "9f3eae2eec8669138f4720582b90c6a5a42d035e324a532945f475cc48d8d143",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_dense_bf16/prefill_decode.json": "029146bcd0e3843e4cb81ac8edd4677d6f4d8199b44b376fa6d8117374042c79",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_dense_bf16/cnn_dm_1000/metrics_0000_end.json": "543510ff629f00fc94a50ecc26411cfe7d4b8f11c1adb83a980ca2033b99fb29",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_dense_bf16/dsum/metrics_0000_end.json": "b8652cd2c61171e438b13d1cacad5b2feac6f8c90e4ff451a57cf150592faf1d",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_dense_bf16/IWSLT/metrics_0000_end.json": "a8fb27a35ff886a02b3ee084373d8a7396ade1701b9a1d73266d9a9f356a9696",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_dense_bf16/arc_challenge/full/result.json": "bcb9d2efd50e83d00d54dfc51957a1080b73eea025aa803aa9804d38f7858380",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_dense_bf16/arc_easy/full/result.json": "d2a237e638212466373e1179a794dc366e366974581671865653325d487cd088",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_dense_bf16/winogrande/full/result.json": "d8d3dfe127502752b1c5e88971fbf98575b073707c91d1b76541a169e72de4ed",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_dense_bf16/mmlu/full/result.json": "4a06c89cb7a44fef29137fa3e4f6a65bca27ea489c496aa5c97598bedb299dcd",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_int8/prefill_only.json": "27fe7a682c1554a91b82de30b2e108009e7c01183c983daff412cd3040079074",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_int8/prefill_decode.json": "a1d3ce7defa9cdbd4978a4df607dbb41c4e9ac442d0b8bb3dd245d9ae0e67154",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_int8/cnn_dm_1000/metrics_0000_end.json": "4ea4b77c7dd7fbfaa64250bf860f8f36026c949a82423a2578811630f28e7a05",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_int8/dsum/metrics_0000_end.json": "336963093f38c17ca56ef2da33836db4f44c6926d00e5729068b0f69021666c9",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_int8/IWSLT/metrics_0000_end.json": "a4a541d5f7bc7992f8afaa3378c97650404e25aa266b89d035b666ccbb6ec82c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_int8/arc_challenge/full/result.json": "982489f583992e15269097dadac2218d431a522c9aa4ee345900cfb8979b6806",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_int8/arc_easy/full/result.json": "d9437cb74ac08af3fe89bbe2d0340db52f240298c4ea941ea4406c9b772a914e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_int8/winogrande/full/result.json": "ae326070108be422f2da905cb4c4532aacfeef9aba0c89a065be29edd73bd569",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_int8/mmlu/full/result.json": "a2e0620fbc7a416c392bcc06d01ce197101c5fed02eabea4f943803fa6f0f269",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_sq_int8/prefill_only.json": "2bef1856f9dfb5cd03cce5eb4056a2d71fda734fc460b4b8bb57c71d5427aadb",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_sq_int8/prefill_decode.json": "a199437a260d4fd2bc3b0af2a296660d644c22032c9dbd19ab06c5abf505af55",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_sq_int8/cnn_dm_1000/metrics_0000_end.json": "7726ec3f39f3829971f0a7e4f5adf7efa5d7301ae4ad4d37dd6a2875f091496a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_sq_int8/dsum/metrics_0000_end.json": "6047ac2cdf7befef5180ef8d8127e4897dea2439b331cb462520be8ce1718a68",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_sq_int8/IWSLT/metrics_0000_end.json": "282a6c32bc85390e0ad94b12a2071c5a0b158b6c7cb1da49642945fe6a00fa99",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_sq_int8/arc_challenge/full/result.json": "6fbd0ef549da82a8d90edbc69e9868c68ad38e8799d57b3d50092a09caf24153",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_sq_int8/arc_easy/full/result.json": "6ab0e40145b56799321c811229033513808b741db663b9adf88c2a033206eace",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_sq_int8/winogrande/full/result.json": "cd27aea35128c8e861bb2f26ecc1a47d2595b4a5486ce9792480c991a6646b19",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_sq_int8/mmlu/full/result.json": "4ca035409b8b8cccc9e9563a4b05bfa633c20867685408e1fc14b1a4b298494f",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_fp8/prefill_only.json": "efa8208358f3ac94f7e4e17e7dd22eff4db3f1ec252449c9253e3156516fdc10",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/confirmation/uniform_fp8/prefill_decode.json": "85d5005d7f7d6442f38c19323ee0101ed432be4254d6f3e2513380454a243a4a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_fp8/cnn_dm_1000/metrics_0000_end.json": "780ed831ceaed4f57c16e0341d84f40d9f001562a9269634f44637b5072c8763",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_fp8/dsum/metrics_0000_end.json": "00add6553cfc1966f643bf88e337b0a61f6a8df5110fa3eb29d92ddbedb05c6e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/generation/uniform_fp8/IWSLT/metrics_0000_end.json": "5c2f132b4f872f786f5f1f3e723688d27fdd841de642c5a5b507e69ec67fd90c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_fp8/arc_challenge/full/result.json": "650125d797ab69496aae947b818f76b5680d0c788890f0cd3348a8ac682ab32e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_fp8/arc_easy/full/result.json": "d04927ea6817bc6fe00d3fdfd6132e31cf7198d93ef7c5d0fa39f0899293fe55",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_fp8/winogrande/full/result.json": "8b64c5dd047959dbf36c491f9b1ea76fc21675a6778ae6337c04be882b74145b",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/tasks/uniform_fp8/mmlu/full/result.json": "50a99c21a505ca909f8637c111cdfa4374b8d4a0eafe5b5f09ffcf10feae48c5"
+  },
+  "input_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/data/activation_scales.pt": "7bc72d5ffcf7fe308d012331bf23c8a939f3d40e155d389d1413d9bbcf0acc97",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/043/configs/speed_inputs.json": "bb7892b561447bed4b813fbbe964578ad780cc32c2ef6e4a667f3ab92e58df9d",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/043/configs/full_task_protocol.json": "9b2230bd46d0db84e2928a720b309e7930e77ade9d0bed9b6133a08327980cac",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/data/generation_cnn_dm_1000.jsonl": "a34b322f010a99a4a0b0fad964b00a7de25157bb5b4ec8b7bc4c2267a5627c10",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/data/generation_dsum.jsonl": "56a8bfaf52904cea496633552fa4a049f1d9885673555fe7eddc192cf65d7819",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/data/generation_IWSLT.jsonl": "dd4cb1e3af95a7d84476ca39bf0fb039b9278a1dcd4c7aadbbcab1c49ce45bb8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/data/confirmation_64_2112.pt": "0194940a5ed78647b9ab5209978d2c52a0fc293187203dfc34ddbf3bb5c89c16"
+  },
+  "protected_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/results/final_audit.json": "e3162c2ba465e8e07ce48e20d81a7f8064ba4564ce8842d6f657a3f7d2c5a9fb",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/configs/frozen_design.json": "4fa82d5747c7cd7df600e027d1840eb9dae6307c847aff0e014f2d7ab24066d7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/common.py": "5a37f1adea8d7ae662ddd84f851f85f66c5f6c6ad4b30b409b565f7e814df3c1",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/runtime_extensions.py": "3e93a01f8a41afa9682e802c6b251266ed544c0930b890b31fa3c51a6ee2a777",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/export_model.py": "e3ba193f87df657ee808bc386525bf6a78b844b5e103b07e7b155b4b47bbffbd",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/run_workflow.py": "bc0b7512faac42fa513691b6a6929ad708931f72395b62b6cfffa95a8e202233",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/evaluate_prefill_tasks_batch8.py": "00645f9b6d7474d25f8893499ab5967b710b581f619964703fcd06d814e0d923",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/018/code/generate_tasks.py": "163c5465047193496274dffd322c81b58560668d9f36841eeec6a57e375105fa"
+  },
+  "alpha": 0.5,
+  "scope": "Existing SQ-FP8 baseline path, original scales/MC/GEN protocols; no alpha tuning or ninth-action DASO refit."
+}

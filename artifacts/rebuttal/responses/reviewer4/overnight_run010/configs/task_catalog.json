@@ -1,0 +1,91 @@
+{
+  "jobs": [
+    {
+      "id": "verified_d1eeaeaf84b5_tasks",
+      "policy_id": "verified_d1eeaeaf84b5",
+      "kind": "tasks",
+      "origin": "original canonical states"
+    },
+    {
+      "id": "verified_9e60153b6827_generation",
+      "policy_id": "verified_9e60153b6827",
+      "kind": "generation",
+      "origin": "original canonical states"
+    },
+    {
+      "id": "pruning_magnitude_tasks",
+      "policy_id": "pruning_magnitude",
+      "kind": "tasks",
+      "origin": "magnitude canonical state from run007"
+    },
+    {
+      "id": "pruning_wanda_tasks",
+      "policy_id": "pruning_wanda",
+      "kind": "tasks",
+      "origin": "wanda canonical state from run007"
+    }
+  ],
+  "policies": {
+    "verified_c63754e060c4": {
+      "origin": "original canonical states",
+      "policy_sha256": "3cc1958ab59d559f7c3e81e7a946837a383b78d57f6c0177311e139057e27a61"
+    },
+    "verified_d1eeaeaf84b5": {
+      "origin": "original canonical states",
+      "policy_sha256": "9bf6af9b5da64405e0aa6827eba55bdc9a70867489db59dc9c03ffc7a8637dfa"
+    },
+    "verified_7aafcc63be76": {
+      "origin": "original canonical states",
+      "policy_sha256": "4de5a30df3f0e9d78a9d0c69df823850410813247e7b1cb7815dd7c070e92a72"
+    },
+    "verified_9e60153b6827": {
+      "origin": "original canonical states",
+      "policy_sha256": "eaa8ec717148407dcb2620f8bfa562da56f1216b2948e99b6aebfc5e4d825c44"
+    },
+    "pruning_magnitude": {
+      "origin": "magnitude canonical state from run007",
+      "policy_sha256": "d0ce52fffd85db85197552e09b99223b0a1223a760408119face867dba146ce1"
+    },
+    "pruning_wanda": {
+      "origin": "wanda canonical state from run007",
+      "policy_sha256": "7fe1794b92ac812a4e8955e4cb532ae64a22663676678b46f3a7c471f766a682"
+    },
+    "reference_bf16": {
+      "origin": "original canonical states",
+      "policy_sha256": "0793f9f35d1cc126aadde311418fc8929ff83b30a19564921221bed59ac65501"
+    },
+    "reference_sparsegpt": {
+      "origin": "original canonical states",
+      "policy_sha256": "7d0996027cfaa94d8dc01762b8955a1216011d4a7e7fd421897e5220a113a113"
+    }
+  },
+  "aliases": [
+    {
+      "label": "verified_prefill_only_q0.01",
+      "policy_id": "verified_c63754e060c4",
+      "kind": "tasks",
+      "source_policy": "uniform_sq_int8"
+    },
+    {
+      "label": "verified_prefill_only_q0.04",
+      "policy_id": "verified_d1eeaeaf84b5",
+      "kind": "tasks",
+      "source_policy": "exact_prefill_only_q0.01"
+    },
+    {
+      "label": "verified_prefill_decode_q0.01",
+      "policy_id": "verified_7aafcc63be76",
+      "kind": "generation",
+      "source_policy": "uniform_dense_bf16"
+    },
+    {
+      "label": "verified_prefill_decode_q0.04",
+      "policy_id": "verified_9e60153b6827",
+      "kind": "generation",
+      "source_policy": "dp_prefill_decode_q0.01"
+    }
+  ],
+  "source_selection_sha256": "fc5987c6a622a50b5c0a0b2fc4fe36b770215576a5c87838da51f948c053ac21",
+  "rules_sha256": "f6892eb80672f089e729b630fb644e42bc8fddb7a66709a9357c24e5290c4069",
+  "selection_precedes_full_tasks": true
+}

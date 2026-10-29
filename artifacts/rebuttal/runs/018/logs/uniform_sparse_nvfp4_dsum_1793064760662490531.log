@@ -1,0 +1,53 @@
+INFO 10-27 01:32:45 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-27 01:32:50 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4] to model_path [/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4]
+INFO 10-27 01:32:50 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4] to model_path [/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4]
+INFO 10-27 01:32:50 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 10737418240, 'max_num_batched_tokens': 16384, 'max_num_seqs': 4, 'disable_log_stats': True, 'enable_chunked_prefill': False, 'compilation_config': {"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[4],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': '/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4'}
+WARNING 10-27 01:32:50 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-27 01:32:50 [model.py:547] Resolved architecture: LlamaForCausalLM
+INFO 10-27 01:32:50 [model.py:1510] Using max model len 4096
+INFO 10-27 01:32:51 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4', speculative_config=None, tokenizer='/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[4],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":4,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-27 01:32:51 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-27 01:32:51 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-27 01:32:51 [gpu_model_runner.py:2602] Starting to load model /dev/shm/daso_rebuttal_018_20261026/checkpoints/uniform_sparse_nvfp4...
+INFO 10-27 01:32:52 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-27 01:32:52 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:01<00:00,  1.07s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:01<00:00,  1.07s/it]
+
+INFO 10-27 01:32:53 [default_loader.py:267] Loading weights took 1.17 seconds
+INFO 10-27 01:32:53 [gpu_model_runner.py:2653] Model loading took 4.1309 GiB and 1.329215 seconds
+INFO 10-27 01:32:55 [gpu_worker.py:251] Initial free memory 30.68707275390625 GiB, reserved 10.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-27 01:32:55 [kv_cache_utils.py:1087] GPU KV cache size: 20,480 tokens
+INFO 10-27 01:32:55 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 5.00x
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  6.27it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  6.26it/s]
+INFO 10-27 01:32:55 [gpu_model_runner.py:3480] Graph capturing finished in 1 secs, took -1.22 GiB
+INFO 10-27 01:32:55 [core.py:210] init engine (profile, create kv cache, warmup model) took 1.94 seconds
+INFO 10-27 01:32:56 [llm.py:306] Supported_tasks: ('generate',)
+uniform_sparse_nvfp4 dsum 4 / 1500 seconds 2.1860259897075593
+uniform_sparse_nvfp4 dsum 84 / 1500 seconds 43.53181175002828
+uniform_sparse_nvfp4 dsum 164 / 1500 seconds 84.66906108567491
+uniform_sparse_nvfp4 dsum 244 / 1500 seconds 125.78782273177058
+uniform_sparse_nvfp4 dsum 324 / 1500 seconds 167.08402659604326
+uniform_sparse_nvfp4 dsum 404 / 1500 seconds 208.56874197395518
+uniform_sparse_nvfp4 dsum 484 / 1500 seconds 249.70740136690438
+uniform_sparse_nvfp4 dsum 564 / 1500 seconds 290.7013004128821
+uniform_sparse_nvfp4 dsum 644 / 1500 seconds 331.85384237766266
+uniform_sparse_nvfp4 dsum 724 / 1500 seconds 373.00967495003715
+uniform_sparse_nvfp4 dsum 804 / 1500 seconds 414.29725810559466
+uniform_sparse_nvfp4 dsum 884 / 1500 seconds 455.4062222316861
+uniform_sparse_nvfp4 dsum 964 / 1500 seconds 496.3896650779061
+uniform_sparse_nvfp4 dsum 1044 / 1500 seconds 537.5398115348071
+uniform_sparse_nvfp4 dsum 1124 / 1500 seconds 578.3451304328628
+uniform_sparse_nvfp4 dsum 1204 / 1500 seconds 619.7757528317161
+uniform_sparse_nvfp4 dsum 1284 / 1500 seconds 660.931399113033
+uniform_sparse_nvfp4 dsum 1364 / 1500 seconds 702.639446998015
+uniform_sparse_nvfp4 dsum 1444 / 1500 seconds 744.0516800950281
+{'policy_id': 'uniform_sparse_nvfp4', 'dataset': 'dsum', 'samples': 1500, 'begin': 0, 'end': None, 'generation_seconds': 773.2314986749552, 'rougeL_percent': 11.106337373176492, 'empty_predictions': 223, 'input_sha256': '56a8bfaf52904cea496633552fa4a049f1d9885673555fe7eddc192cf65d7819', 'kv_cache_memory_bytes': 10737418240, 'quality_batch': 4, 'admission': {'kv_capacity_tokens': 20480, 'required_tokens': 16384, 'block_size': 16, 'whole_batch_fits': True}, 'max_new_tokens': 256, 'chat_template': 'original paper PMPD Claude wrapper; model tokenizer; greedy max256 EOS', 'peak_allocated_bytes': 16042065920, 'peak_reserved_bytes': 16963862528}
+[rank0]:[W1027 01:45:51.919443592 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

@@ -1,0 +1,741 @@
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\pdfinfoomitdate=1
+\pdftrailerid{}
+\pdfsuppressptexinfo=-1
+\pdfinfo{/Creator () /Producer ()}
+\usepackage[submission]{aaai2027}  % DO NOT CHANGE THIS
+% The serif, sans-serif, and monospaced fonts are loaded automatically by
+% aaai2027.sty (newtxtext, helvet, courier). DO NOT add \usepackage{times},
+% \usepackage{helvet}, \usepackage{courier}, or any other font package.
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{natbib}  % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\frenchspacing  % DO NOT CHANGE THIS
+%
+% These are recommended to typeset algorithms but not required. See the subsubsection on algorithms. Remove them if you don't have algorithms in your paper.
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{xurl}
+%
+% These are recommended to typeset listings but not required. See the subsubsection on listing. Remove this block if you don't have listings in your paper.
+\usepackage{newfloat}
+\usepackage{multirow}
+\usepackage{listings}
+\DeclareCaptionStyle{ruled}{labelfont=normalfont,labelsep=colon,strut=off} % DO NOT CHANGE THIS
+\lstset{%
+	basicstyle={\footnotesize\ttfamily},% footnotesize acceptable for monospace
+	numbers=left,numberstyle=\footnotesize,xleftmargin=2em,% show line numbers, remove this entire line if you don't want the numbers.
+	aboveskip=0pt,belowskip=0pt,%
+	showstringspaces=false,tabsize=2,breaklines=true}
+\floatstyle{ruled}
+\newfloat{listing}{tb}{lst}{}
+\floatname{listing}{Listing}
+
+%
+% Required for aligned, substack, operatorname, etc.
+\usepackage{amsmath}
+% Recommended for better-looking tables
+\usepackage{booktabs}
+\usepackage{colortbl}
+
+% Rank-aware table highlights: darker shading denotes a higher rank.
+% All shades retain black text and remain distinguishable in grayscale.
+\newcommand{\rankone}[1]{\cellcolor{blue!30}\textbf{#1}}
+\newcommand{\ranktwo}[1]{\cellcolor{blue!18}#1}
+\newcommand{\rankthree}[1]{\cellcolor{blue!9}#1}
+\newcolumntype{S}{c<{\ensuremath{\times}}}
+
+%
+% Keep the \pdfinfo as shown here. There's no need
+% for you to add the /Title and /Author tags.
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+% DISALLOWED PACKAGES
+% \usepackage{authblk} -- This package is specifically forbidden
+% \usepackage{balance} -- This package is specifically forbidden
+% \usepackage{CJK} -- This package is specifically forbidden
+% \usepackage{float} -- This package is specifically forbidden
+% \usepackage{flushend} -- This package is specifically forbidden
+% \usepackage{fullpage} -- This package is specifically forbidden
+% \usepackage{geometry} -- This package is specifically forbidden
+% \usepackage{hyperref} -- This package is specifically forbidden
+% \usepackage{navigator} -- This package is specifically forbidden
+% (or any other package that embeds links such as navigator or hyperref)
+% \usepackage{indentfirst} -- This package is specifically forbidden
+% \usepackage{layout} -- This package is specifically forbidden
+% \usepackage{multicol} -- This package is specifically forbidden
+% \usepackage{nameref} -- This package is specifically forbidden
+% \usepackage{savetrees} -- This package is specifically forbidden
+% \usepackage{setspace} -- This package is specifically forbidden
+% \usepackage{stfloats} -- This package is specifically forbidden
+% \usepackage{tabu} -- This package is specifically forbidden
+% \usepackage{titlesec} -- This package is specifically forbidden
+% \usepackage{tocbibind} -- This package is specifically forbidden
+% \usepackage{ulem} -- This package is specifically forbidden
+% \usepackage{wrapfig} -- This package is specifically forbidden
+% DISALLOWED COMMANDS
+% \nocopyright -- Your paper will not be published if you use this command
+% \addtolength -- This command may not be used
+% \balance -- This command may not be used
+% \baselinestretch -- Your paper will not be published if you use this command
+% \clearpage -- No page breaks of any kind may be used for the final version of your paper
+% \columnsep -- This command may not be used
+% \newpage -- No page breaks of any kind may be used for the final version of your paper
+% \pagebreak -- No page breaks of any kind may be used for the final version of your paper
+% \pagestyle -- This command may not be used
+% \tiny -- This is not an acceptable font size.
+% \vspace{- -- No negative value may be used in proximity of a caption, figure, table, section, subsection, subsubsection, or reference
+% \vskip{- -- No negative value may be used to alter spacing above or below a caption, figure, table, section, subsection, subsubsection, or reference
+
+\setcounter{secnumdepth}{0} %May be changed to 1 or 2 if section numbers are desired.
+
+% The file aaai2027.sty is the style file for AAAI Press
+% proceedings, working notes, and technical reports.
+%
+
+% Title
+
+% Your title must be in mixed case, not sentence case.
+% That means all verbs (including short verbs like be, is, using,and go),
+% nouns, adverbs, adjectives should be capitalized, including both words in hyphenated terms, while
+% articles, conjunctions, and prepositions are lower case unless they
+% directly follow a colon or long dash
+\title{From Compression Methods to Deployment Decisions: Quality-Constrained Fine-Grained Strategy Optimization for Efficient LLM Inference}
+\author{Anonymous Submission}
+\affiliations{}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Model compression has become an effective approach for speeding up large language model (LLM) inference. However, the availability of diverse compression methods does not directly translate into actionable deployment decisions: existing approaches lack a unified mechanism for selecting among compression techniques at a fine granularity---across model modules and across inference phases such as prefill and decoding---and they cannot automatically generate policies with appropriate quality--speed trade-offs for diverse deployment requirements. In this work, we propose \textbf{DASO} (Deployment-Aware Strategy Optimization), a deployment-oriented framework that turns a set of compression methods into fine-grained deployment decisions. DASO integrates quantization and pruning methods into a unified candidate space and automatically selects module-wise and phase-wise configurations under a user-defined quality constraint. To enable efficient optimization, we develop a hardware-aware, calibrated latency model, together with a quality model that estimates global quality degradation from local compression perturbations. A constrained optimizer then derives the latency-optimal policy within the given quality budget, which is deployed through an extended vLLM runtime. Experiments on two Llama models on RTX~5090, together with cross-platform validation on RTX~PRO~6000, show that DASO achieves up to \textbf{2.26$\times$} prefill and \textbf{1.55$\times$} end-to-end speedups over BF16 while exposing budget-controlled quality--speed trade-offs.
+\end{abstract}
+
+
+
+% Uncomment the following to link to your code, datasets, an extended version or similar.
+% You must keep this block between (not within) the abstract and the main body of the paper.
+% Make sure that you do not de-anonymize yourself with these links.
+% \begin{links}
+%     \link{Code}{https://aaai.org/example/code}
+%     \link{Datasets}{https://aaai.org/example/datasets}
+%     \link{Extended version}{https://aaai.org/example/extended-version}
+% \end{links}
+
+\section{Introduction}
+Large language models (LLMs) have demonstrated remarkable capabilities across a broad range of language understanding and generation tasks, including knowledge assessment, dialogue, text summarization, and machine translation \cite{touvron2023llama2,grattafiori2024llama3}. However, their continuously increasing parameter counts also incur substantial computation and memory-access overhead, which directly affects service latency, system throughput, and infrastructure costs in practical deployment \cite{kwon2023vllm}. Consequently, reducing inference overhead while satisfying model quality requirements has become a critical challenge.
+
+To reduce inference costs, extensive research has explored various post-training compression techniques, including quantization, pruning, and their combinations \cite{xiao2023smoothquant,frantar2023gptq,lin2024awq,frantar2023sparsegpt,sun2024wanda}. These methods compress models by reducing parameter precision or pruning redundant weights. For example, SparseGPT enables one-shot pruning of LLMs using approximate second-order information \cite{frantar2023sparsegpt}; AWQ preserves salient weights based on activation statistics to improve the accuracy of low-bit weight-only quantization \cite{lin2024awq}; SmoothQuant smooths the numerical distributions of weights and activations to support efficient W8A8 inference \cite{xiao2023smoothquant}; and the recent NVFP4 format further leverages native low-precision hardware to improve the efficiency of 4-bit computation \cite{alvarez2025nvfp4}. Collectively, these studies have substantially expanded the design space of compression and inference acceleration techniques for LLMs.
+
+\begin{figure}[t]
+    \centering
+    % \placeholderbox{0.95\columnwidth}{1.35in}{Motivation Figure Placeholder}
+    \includegraphics[width=\columnwidth]{Figures/draft2/motivation.pdf}
+    \caption{Motivation for deployment-aware strategy optimization. (a) Numerous compression methods are available, yet how to select among them remains unclear. (b) Diverse deployment needs cannot be met by fixed uniform policies, whereas DASO combines multiple methods at fine granularity to provide adaptable quality--speed trade-offs.}
+    \label{fig:motivation}
+\end{figure}
+
+However, from the perspective of practical deployment, the availability of diverse compression techniques does not directly translate into actionable deployment decisions. This gap manifests in two ways, as illustrated in Figure~\ref{fig:motivation}. First, although individual methods have each shown advantages in specific settings, practitioners lack a unified mechanism for selecting among them: given a target model, hardware platform, and workload, which compression method---or combination---should be used, and at what granularity? Second, different serving scenarios impose different requirements on model quality and inference performance. Some services require the original model quality to be preserved to a greater extent, whereas others can tolerate a certain degree of quality degradation in exchange for acceleration gains. Yet existing approaches typically provide only a fixed configuration or a small set of predefined options, making it difficult to deliver controllable quality--speed trade-offs for diverse deployment requirements. Thus, while individual compression methods have each demonstrated effectiveness, the central challenge in practical deployment has shifted to \textbf{how to systematically select and configure them into an optimal deployment policy under a given quality requirement}.
+
+To address this challenge, we propose \textbf{DASO}, a deployment-oriented framework that translates diverse compression methods into fine-grained deployment decisions. The framework incorporates multiple representative compression methods into a unified candidate space and supports fine-grained module-wise and inference-phase-wise configurations. To enable unified comparison among candidate policies and provide controllable trade-offs, we develop a latency model tailored to the target hardware and inference workload, together with a quality model that estimates the resulting model quality degradation. We then formulate policy generation as an inference latency minimization problem subject to a model quality constraint. This formulation enables model deployers to automatically generate optimized compression policies according to the requirements of specific serving scenarios. We further integrate the proposed framework into a real-world LLM inference system and evaluate it across multiple models, workloads, and quality constraints. The results demonstrate that our framework achieves more favorable end-to-end quality--speed trade-offs than uniform whole-model compression configurations.
+
+Our main contributions are summarized as follows:
+
+\begin{itemize}
+    \item We propose a deployment-oriented framework that unifies multiple compression methods into a common policy space with heterogeneous module-wise and phase-wise configurations, which can minimize inference latency under a model quality constraint to deliver controllable quality--speed trade-offs.
+
+    \item We develop a hardware-aware latency model and a model-aware quality model for heterogeneous compression policies. These models characterize the latency benefits and quality costs of different compression methods with respect to layer characteristics, inference phases, and practical workloads, enabling efficient evaluation of a large policy space and providing reliable estimates for compression policy optimization.
+
+    \item We integrate the proposed framework into a real-world LLM inference system and conduct extensive experiments across multiple models, inference workloads, and quality budgets. The results show that our framework consistently achieves better end-to-end quality--speed trade-offs than uniform whole-model compression schemes.
+\end{itemize}
+
+
+
+
+
+\begin{figure*}[t]
+    \centering
+    % \placeholderbox{0.97\textwidth}{2.15in}{Main Framework Figure Placeholder}
+    \includegraphics[width=0.9\textwidth]{Figures/draft2/overview3.pdf}
+    \caption{Overview of \textbf{DASO}. (a) The latency and quality models estimate the cost of each compression choice for different modules and inference phases. (b) Given the deployment setting, candidate methods, and quality budget, DASO selects a module-wise and phase-wise compression policy and executes it in the extended vLLM runtime.}
+    \label{fig:framework}
+\end{figure*}
+
+\section{Related Work}
+\textbf{Quantization and Pruning for LLMs. }Post-training compression of large language models mainly focuses on quantization and pruning. Weight–activation quantization reduces memory overhead and leverages hardware low-precision units for acceleration, but must address activation outliers. SmoothQuant transfers quantization difficulty from activations to weights, while QuaRot and FlatQuant suppress outliers through fixed or learnable transformations \cite{xiao2023smoothquant,ashkboos2024quarot,sun2025flatquant}. Weight-only methods such as GPTQ and AWQ reduce weight-loading overhead and are particularly suitable for memory-bound decoding, while Marlin provides efficient W4A16 kernels for further practical acceleration \cite{frantar2023gptq,lin2024awq,frantar2025marlin}. Recently, hardware-supported FP4 formats, particularly NVFP4, have provided a promising path toward low-precision inference \cite{alvarez2025nvfp4}. For pruning, SparseGPT and Wanda remove redundant weights with limited calibration cost, whereas SliceGPT removes structured dimensions to produce smaller dense models \cite{frantar2023sparsegpt,sun2024wanda,ashkboos2024slicegpt}. Quantization and pruning can also be combined to enable sparse low-precision execution~\cite{guo2024jsq}.
+
+% \textbf{Adaptive Compression Configuration. }To account for heterogeneous compression sensitivity, mixed-precision quantization methods allocate different bit widths across model components. APTQ assigns layer-wise precision based on sensitivity estimates, while SliM-LLM performs finer-grained group-wise bit allocation \cite{guan2024aptq,huang2025slimllm}. Adaptive pruning methods similarly distribute sparsity non-uniformly: OWL determines layer-wise sparsity from activation outliers, whereas BESA learns layer-specific sparsity through blockwise reconstruction \cite{yin2024owl,xu2024besa}. PMPD and FlexQuant further explore phase- or token-dependent precision adjustment \cite{chen2025pmpd,liu2025flexquant}. These studies are complementary to our deployment-oriented framework, as their finer-grained policies can be incorporated as additional candidate configurations. 
+
+\textbf{Fine-Grained Compression Configuration.}
+Several existing studies allocate bit widths or sparsity ratios across layers using sensitivity or reconstruction objectives \cite{guan2024aptq,huang2025slimllm,yin2024owl,xu2024besa}, while PMPD and FlexQuant vary precision across phases or tokens \cite{chen2025pmpd,liu2025flexquant}. LLM-PQ further extends this idea to heterogeneous GPU clusters \cite{zhao2024llmpq}. These fine-grained allocation techniques operate at a different design level from DASO's cross-method selection and could be incorporated as additional candidate configurations; we leave this integration to future work.
+
+
+
+
+% Despite these advances, existing studies do not provide a unified deployment-oriented view for configuring compression under different models, hardware platforms, workloads, and accuracy requirements. Their decisions are also commonly guided by proxy metrics such as bit width, sparsity, or reconstruction error, which may not reflect the realized latency on the target hardware. Our work addresses this gap by jointly modeling deployment-specific latency and quality and selecting module- and stage-specific compression configurations under explicit accuracy constraints.
+
+
+
+\section{Method}
+\subsection{Framework Overview and Problem Formulation}
+
+We consider the problem of compression policy selection for practical large language model deployment. Given a target model, hardware platform, inference workload, and user-specified quality-loss budget, the framework selects a deployment policy from a unified set of candidate methods, including quantization, pruning, and their combinations. The objective is to minimize inference latency while satisfying the quality constraint. Rather than experimenting with numerous methods, we place multiple compression methods in a common candidate space and formulate policy generation as a deployment-specific constrained optimization problem.
+
+Figure~\ref{fig:framework} overviews DASO. As shown in Fig.~\ref{fig:framework}(a), the latency model calibrates a method-aware analytical baseline against measurements through complementary global and local predictors, while the quality model combines local output perturbations with structure-aware sensitivity and a small set of policy-level calibration measurements. Together, the two models assign comparable latency and quality costs to every legal action for each configurable module and inference phase. Figure~\ref{fig:framework}(b) shows how these costs are used at deployment time: given the model, hardware, workload, candidate methods, and quality budget, the constrained optimizer selects a module-wise, phase-specific policy for prefill and decoding, and the extended vLLM runtime executes the result while overlapping decoding-weight prefetch with prefill computation. This fine granularity allows the optimizer to account for shape- and phase-dependent latency gains as well as heterogeneous module sensitivity, leading to the policy definition below.
+
+Let the model contain $M$ configurable modules $\mathcal{V}=\{v_i\}_{i=1}^{M}$. Given a set of candidate compression methods $\mathcal{C}$, the action of module $v_i$ is the phase pair $a_i=(a_i^{p},a_i^{d})$, where $a_i^{p},a_i^{d}\in\mathcal{C}$ denote the methods used during prefill and decoding. The actions of all modules jointly define a complete policy $\pi=(a_1,\ldots,a_M)$. A deployment scenario $s=(B,S,T)$ specifies the batch size, input sequence length, and generation length.
+
+Let $\mathcal{A}_i\subseteq\mathcal{C}\times\mathcal{C}$ be the legal phase-pair actions for module $v_i$ after removing configurations unsupported by the target hardware and backend, with $a_i\in\mathcal{A}_i$ for $i=1,\ldots,M$. Given a quality-loss budget $\epsilon$, heterogeneous compression policy generation is formulated as
+
+\begin{equation}
+\min_{\pi}\ \widehat{L}(\pi;s)
+\qquad \mathrm{s.t.}\qquad
+\widehat{\Delta Q}(\pi;s)\leq \epsilon.
+\label{eq:problem}
+\end{equation}
+
+where $\widehat{L}(\pi;s)$ and $\widehat{\Delta Q}(\pi;s)$ denote the predicted inference latency and quality degradation of policy $\pi$ under scenario $s$. By varying $\epsilon$, the framework produces policies with different quality--speed trade-offs. Since the policy space grows combinatorially with $M$, exhaustively evaluating every candidate is infeasible. The following sections introduce the latency and quality models for efficient cost estimation, followed by the optimization procedure and runtime deployment.
+
+
+
+\subsection{Latency Modeling}
+To optimize heterogeneous compression policies, DASO requires a comparable latency cost for every legal module--action pair under a given workload shape. This cost must reflect the realized execution time of the corresponding compressed Linear module, which cannot be reliably inferred from nominal indicators such as bit width, compression ratio, or FLOPs due to two challenges: (i) different compression methods involve distinct execution pipelines, and (ii) analytical cost models often deviate systematically from measured latency.
+
+To address the first challenge, we develop a method-aware Roofline baseline that places different compression methods in a unified latency formulation while preserving their distinct execution characteristics. For a candidate method $c\in\mathcal{C}$, we use the GEMM convention $Y=XW^\top$, where the input $X$, weight $W$, and output $Y$ have shapes $m\times k$, $n\times k$, and $m\times n$, respectively. The baseline latency is defined as
+\begin{equation}
+\ell_{c}^{\mathrm{base}}(m,n,k)
+=
+\max
+\left(
+\frac{F_c(m,n,k)}{P_c},
+\frac{D_c(m,n,k)}{W_c}
+\right)
++
+\ell_c^{0}.
+\end{equation}
+Here, $F_c(m,n,k)$ and $D_c(m,n,k)$ denote the effective computation and data movement of method $c$, respectively. $P_c$ and $W_c$ denote the effective compute throughput and memory bandwidth of the corresponding kernel on the target platform, and $\ell_c^{0}$ captures other fixed overheads such as kernel launch.
+
+This formulation builds on the classical Roofline model~\cite{williams2009roofline}, which decomposes the dominant execution cost into computation and data movement, and we use it to estimate latency lower bounds for different compression methods. We instantiate this formulation by defining method-specific \(F_c\) and \(D_c\), which account for differences in numerical representation, activation processing, scale access, and sparse metadata. Table~\ref{tab:latency-components} summarizes these definitions, with detailed derivations provided in Appendix. Consequently, the baseline preserves the physical scaling of computation and data movement across matrix shapes, providing generalizable estimates even for shapes absent from the profiling set.
+% ------------------------------------------------------------------
+% PLACEHOLDER 3: single-column latency table.
+% Replace the placeholder values with real methods, effective work,
+% traffic terms, shape constraints, or profiling statistics.
+% ------------------------------------------------------------------
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{@{}l@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+        \toprule
+        Method & $F_c$ & $D_c$ \\
+        \midrule
+        Dense BF16   & $2mnk$ & $2mk+2nk+2mn$ \\
+        Sparse BF16  & $mnk$  & $2mk+\frac{9}{8}nk+2mn$ \\
+        Dense NVFP4  & $2mnk$ & $2.5mk+0.5nk+\frac{mk+nk}{16}+2mn$ \\
+        Sparse NVFP4 & $mnk$  & $2.5mk+\frac{mk}{32}+\frac{11}{32}nk+2mn$ \\
+        W4A16 Marlin & $2mnk$ & $2mk+0.5nk+\frac{nk}{16}+2mn$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{Method-specific effective computation $F_c$ and data movement $D_c$ used by the analytical latency baseline for a Linear layer with matrix-multiplication shape $(m,n,k)$.}
+    \label{tab:latency-components}
+\end{table}
+
+The method-aware Roofline baseline captures the overall compute--memory trend, but it cannot fully represent shape-dependent kernel efficiency on the target platform. To address the second challenge, rather than directly regressing absolute latency, we learn the logarithmic multiplicative residual between the measured latency and the Roofline baseline. For a profiled shape $x_j=(m_j,n_j,k_j)$ under method $c$, the residual target is
+\begin{equation}
+\delta_{c,j}
+=
+\log
+\frac{
+\ell_{c,j}^{\mathrm{meas}}
+}{
+\ell_{c}^{\mathrm{base}}(x_j)
+},
+\end{equation}
+which represents the relative deviation not explained by the analytical model.
+
+The residual predictor combines global and local shape information. A regularized ridge regressor learns a smooth global trend from matrix dimensions and aspect ratios, together with tile-count and tail-ratio statistics. In parallel, a local predictor interpolates the residuals of nearby profiled shapes using inverse-distance weights, preserving kernel behaviors that are difficult to express with a single global function. We adaptively combine the two predictions according to the distance $d_{\min}(x)$ between the target shape $x$ and its nearest profiled shape:
+\begin{equation}
+\widehat{\delta}_c(x)
+=
+\lambda\!\left(d_{\min}(x)\right)
+\widehat{\delta}_c^{\mathrm{local}}(x)
++
+\left[1-\lambda\!\left(d_{\min}(x)\right)\right]
+\widehat{\delta}_c^{\mathrm{global}}(x),
+\end{equation}
+where $\lambda(\cdot)$ decreases with distance, assigning more weight to local interpolation near profiled shapes and more weight to the regularized global model when extrapolating farther away. The final latency estimate is
+\begin{equation}
+\widehat{\ell}_{c}(x)
+=
+\ell_{c}^{\mathrm{base}}(x)
+\exp\!\left(\widehat{\delta}_{c}(x)\right).
+\end{equation}
+Modeling a logarithmic residual captures relative errors across kernels with different latency scales, while exponentiation yields a positive multiplicative correction. Detailed feature definitions, distance normalization, local interpolation, and the mixing function are provided in Appendix.
+
+% Having obtained a calibrated latency estimate for each module--phase--action tuple, we compose these costs according to the actual execution counts of the two inference phases. Let module $v_i$ have weight shape $(N_i,K_i)$, and let a deployment scenario $s=(B,S,O)$ specify the batch size, input length, and total number of output tokens. A request generating $O$ output tokens executes each prefill module once with $M=BS$ and each decoding module $O-1$ times with $M=B$. The resulting module-level latency cost is
+% \begin{equation}
+% \begin{aligned}
+% \widehat{L}(\pi;s)
+% &=
+% \sum_{i=1}^{M}
+% \left[
+% \widehat{\ell}_{a_i^{p}}(BS,N_i,K_i)
+% {}\right.\\[-2pt]
+% &\hspace{3.8em}\left.
+% {}+
+% (O-1)\widehat{\ell}_{a_i^{d}}(B,N_i,K_i)
+% \right].
+% \end{aligned}
+% \end{equation}
+% For prefill-only inference, we set $O=1$ and $a_i^{p}=a_i$, so the decoding term vanishes. For prefill--decode inference, $a_i^{p}$ and $a_i^{d}$ can be selected independently, and the decoding kernel is executed $O-1$ times. The resulting phase-specific module costs form the latency objective of the constrained optimizer.
+
+\subsection{Quality Modeling}
+
+The quality model assigns a quality cost to each compression action on each configurable module, supplying the penalty terms needed by the constrained optimizer. Building these per-module costs raises two questions: (i)~what signal should serve as the quality measure, and (ii)~how to estimate the quality impact of compressing a single module such that the individual costs remain informative when many modules are compressed jointly.
+
+For the first question, directly using downstream metrics such as accuracy or BLEU~\cite{papineni2002bleu} incurs substantial evaluation cost and depends heavily on dataset and evaluation protocol, making them unsuitable as a stable and efficient optimization signal. We therefore use teacher-forced negative log-likelihood (NLL) as the quality measure. Given a reference sequence $\mathbf{y}$, the NLL of policy $\pi$ is
+\begin{equation}
+\mathrm{NLL}(\pi)
+=
+-\frac{1}{|\mathbf{y}|}
+\sum_{t=1}^{|\mathbf{y}|}
+\log p_{\pi}(y_t\mid y_{<t}).
+\end{equation}
+We quantify compression-induced degradation by the increase over the BF16 model, $\Delta\mathrm{NLL}(\pi)=\mathrm{NLL}(\pi)-\mathrm{NLL}(\pi_{\mathrm{BF16}})$.
+
+For the second question, a direct approach is to compress each module independently and measure its $\Delta\mathrm{NLL}$ impact. However, this requires hundreds of full-model evaluations, making it impractical. We instead construct module-level costs in two steps. First, we characterize each candidate method by an inexpensive local perturbation that can be evaluated from cached module inputs without repeatedly running the full model. Let $f_{i,c}$ denote the function implemented by module $v_i$ under method $c\in\mathcal{C}$, with $f_{i,\mathrm{BF16}}$ denoting its BF16 baseline, and let $\mathcal{X}_{r,i}$ be the set of input activations collected for this module during inference phase $r$. We define the local perturbation as
+\begin{equation}
+e_{r,i,c}
+=
+\frac{
+\sum_{x\in\mathcal{X}_{r,i}}
+\left\|
+f_{i,c}(x)-f_{i,\mathrm{BF16}}(x)
+\right\|_2^2
+}{
+\max\left\{
+\sum_{x\in\mathcal{X}_{r,i}}
+\left\|
+f_{i,\mathrm{BF16}}(x)
+\right\|_2^2,\eta
+\right\}
+}.
+\label{eq:local-perturbation}
+\end{equation}
+Here, $\eta=10^{-12}$ is a stabilizing threshold. By measuring the normalized output perturbation under identical module inputs, this characterization provides a unified local metric across different compression methods.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{Figures/draft2/quality_modeling_insight.pdf}
+\caption{(a) Local output error poorly reflects global quality impact. (b) Sensitivity varies substantially across model depth and Linear projection types.}
+\label{fig:local-error-factors}
+\end{figure}
+
+The local error $e_{r,i,c}$ captures perturbation magnitude, but cannot directly predict model-level $\Delta\mathrm{NLL}$: as Figure~\ref{fig:local-error-factors} shows, the same local error can have markedly different consequences depending on the compression method, module type, depth, and inference phase. This observation directly motivates our modeling choice---the second step learns a structured mapping that decomposes sensitivity along exactly these dimensions:
+\begin{equation}
+q_{r,i,c}
+=
+e_{r,i,c}
+\frac{
+\operatorname{ReLU}
+\left(
+g+\rho_r+u_c+\beta_{b_i}+\tau_{t_i}
+\right)
+}{
+s_{\mathrm{feat}}
+}.
+\label{eq:module-quality-cost}
+\end{equation}
+Here, $b_i$ and $t_i$ denote the depth-region and module-type labels of module $v_i$, respectively. The terms $g$, $\rho_r$, $u_c$, $\beta_{b_i}$, and $\tau_{t_i}$ capture the shared global, inference-phase, compression-method, depth-region, and module-type effects, respectively. The constant $s_{\mathrm{feat}}>0$ is the average total mass of the structured local-perturbation features over the training policies and is used only for numerical normalization. Modules in the same depth region or of the same type therefore share the corresponding sensitivity parameters. This factored design pools information across structurally similar modules and greatly reduces the parameter count, allowing the model to be fitted from only a small set of complete policies. The ReLU enforces $q_{r,i,c}\geq 0$, ensuring compression costs are non-negative and preventing quality contributions from spuriously canceling across modules.
+
+For a policy $\pi$, let $q_{r,i}^{\pi}\equiv q_{r,i,a_i^r}$ denote the quality cost of its selected method for module $v_i$ in phase $r$. We define the predicted policy-level quality degradation as the sum of these selected costs:
+\begin{equation}
+\widehat{\Delta\mathrm{NLL}}(\pi)
+=
+q_0+
+\sum_{r\in\mathcal{R}}
+\sum_{i=1}^{M}
+q_{r,i}^{\pi},
+\label{eq:policy-quality}
+\end{equation}
+where $q_0$ is the fitted regression intercept. The phase set is $\mathcal{R}=\{p\}$ for prefill-only inference and $\mathcal{R}=\{p,d\}$ for prefill--decode inference. We fit the shared parameters by minimizing the regularized mean-squared error between $\widehat{\Delta\mathrm{NLL}}(\pi)$ and the measured $\Delta\mathrm{NLL}(\pi)$ of a small set of complete heterogeneous policies.
+
+This additive form is designed to match the knapsack solver: each $q_{r,i,c}$ serves both as a term in the quality prediction and as an independent cost in the quality budget constraint (Eq.~\ref{eq:knapsack}). Moreover, because fitting uses complete policies rather than isolated modules, the learned costs implicitly absorb joint compression effects, so their sum remains predictive even when many modules are compressed together.
+
+\subsection{Strategy Optimization and Deployment}
+
+\paragraph{Strategy Optimization.}
+For a deployment scenario $s=(B,S,T)$ and a module $v_i$ with weight shape $(n_i,k_i)$, let $a=(a^p,a^d)\in\mathcal{A}_i$ be a legal phase-pair action. Prefill processes $BS$ tokens once, whereas decoding processes $B$ tokens in each of the remaining $T-1$ generation steps. The resulting latency cost of assigning $a$ to module $v_i$ is
+\begin{equation}
+\ell_i(a;s)
+=
+\widehat{\ell}_{a^p}(BS,n_i,k_i)
++
+(T-1)\widehat{\ell}_{a^d}(B,n_i,k_i),
+\end{equation}
+where $\widehat{\ell}_c(m,n,k)$ is the predicted latency under method $c$ for matrix shape $(m,n,k)$ obtained from the calibrated latency model. For a prefill-only scenario, only the first term is retained. Accordingly, the policy latency estimate used in Eq.~\ref{eq:problem} is $\widehat{L}(\pi;s)=\sum_{i=1}^{M}\ell_i(a_i;s)$. From Eq.~\ref{eq:policy-quality}, the corresponding quality cost is $q_i(a;s)=\sum_{r\in\mathcal{R}}q_{r,i,a^r}$. Thus, every legal module--action pair is represented by an additive latency--quality cost pair $\bigl(\ell_i(a;s),q_i(a;s)\bigr)$.
+
+The abstract problem in Eq.~\ref{eq:problem} therefore reduces to a multiple-choice knapsack. Let $z_{i,a}\in\{0,1\}$ indicate whether action $a\in\mathcal{A}_i$ is selected for module $v_i$, with $\sum_{a\in\mathcal{A}_i}z_{i,a}=1$ for every module $i$. The optimization is
+\begin{equation}
+\min_z \sum_{i=1}^{M}\sum_{a\in\mathcal{A}_i}z_{i,a}\ell_i(a;s)
+\;\mathrm{s.t.}\;
+q_0+\sum_{i=1}^{M}\sum_{a\in\mathcal{A}_i}z_{i,a}q_i(a;s)\leq\epsilon.
+\label{eq:knapsack}
+\end{equation}
+
+The intercept $q_0$ is policy-independent and can equivalently be subtracted once from the quality budget. We discretize the remaining budget into $H$ bins and solve the problem by dynamic programming, maintaining the minimum latency attainable at each cumulative quality cost while processing modules sequentially. The time complexity is $O\!\left(H\sum_i|\mathcal{A}_i|\right)$ with $O(H)$ working memory. Sweeping $\epsilon$ yields candidate policies along the predicted quality--speed frontier. In our implementation, the solver generates 25 Pareto-optimal policies for Llama-2-7B-Chat in a few seconds.
+
+
+
+\paragraph{Runtime Deployment.}
+We extend vLLM with phase-aware backend dispatch so that each Linear module executes $a_i^p$ during prefill and $a_i^d$ during decoding. The main systems challenge is the resulting representation switch between phases: a synchronous implementation materializes all decoding weights at the phase boundary, creating a global stall. DASO instead adopts a layer-wise asynchronous materialization pipeline. Once a layer completes prefill, its decoding representation is staged on a dedicated copy stream while the compute stream continues prefill on subsequent layers. This overlap moves most phase-switching work off the critical path, making fine-grained phase-heterogeneous policies practical for end-to-end serving.
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{1.8pt}
+\begin{tabular}{@{}llccccS|cccSSS@{}}
+\toprule
+& &
+\multicolumn{5}{c}{\textbf{Prefill-only}} &
+\multicolumn{6}{c}{\textbf{Prefill--Decode}} \\
+Model & Method &
+ARC-C & ARC-E & Wino. & MMLU & \multicolumn{1}{c|}{TTFT} &
+CNN/DM & DialogSum & IWSLT'17 & \multicolumn{1}{c}{TTFT} &
+\multicolumn{1}{c}{TPOT} & \multicolumn{1}{c}{E2E} \\
+\midrule
+\multirow{7}{*}{\shortstack[c]{Llama-2\\7B-Chat}}
+& BF16                & 43.34 & 72.81 & 68.27 & 46.57 & 1.00 & 23.67 & 21.69 & 19.30 & 1.00 & 1.00 & 1.00 \\
+& Dense NVFP4         & \ranktwo{43.17} & \ranktwo{71.13} & \ranktwo{67.80} & \ranktwo{44.94} & 1.71 & \rankone{24.27} & \rankthree{20.59} & \rankthree{16.84} & \rankone{1.64} & 0.55 & 0.80 \\
+& W4A16 Marlin        & \rankthree{43.09} & \rankone{71.89} & \rankone{68.82} & \rankone{45.66} & 1.02 & \rankthree{23.73} & \rankone{21.77} & \ranktwo{18.85} & 0.97 & \ranktwo{1.50} & \ranktwo{1.19} \\
+& Sparse BF16         & 35.07 & 63.85 & 63.85 & 28.24 & 1.53 & 15.35 & 13.54 &  3.90 & \rankthree{1.56} & 0.91 & 1.13 \\
+& Sparse NVFP4        & 23.38 & 36.62 & 50.43 & 23.09 & \ranktwo{1.86} & 15.96 & 13.57 &  1.57 & \ranktwo{1.62} & 0.52 & 0.77 \\
+& DASO (Max speed)    & 27.73 & 53.16 & 56.75 & 23.51 & \rankone{2.08} & 18.56 & 13.57 &  2.60 & 1.50 & \rankone{1.60} & \rankone{1.55} \\
+& DASO (Balanced)     & \rankone{43.69} & \rankthree{70.58} & \rankthree{67.32} & \rankthree{44.35} & \rankthree{1.74} & \ranktwo{23.80} & \ranktwo{21.40} & \rankone{21.08} & 1.03 & \rankthree{1.26} & \rankthree{1.14} \\
+\midrule
+\multirow{7}{*}{\shortstack[c]{Llama-3.1\\8B-Instruct}}
+& BF16                & 55.63 & 81.99 & 73.48 & 68.40 & 1.00 & 19.39 & 13.48 & 10.78 & 1.00 & 1.00 & 1.00 \\
+& Dense NVFP4         & \rankthree{51.11} & \ranktwo{79.29} & \rankthree{72.06} & \rankthree{63.50} & \rankthree{1.76} & \rankthree{17.11} & \rankthree{9.54} & \rankthree{10.51} & \rankthree{1.71} & 0.53 & 0.83 \\
+& W4A16 Marlin        & \rankone{53.67} & \rankone{80.93} & \ranktwo{73.09} & \ranktwo{66.20} & 0.98 & \ranktwo{17.50} & \ranktwo{9.75} & \rankone{10.56} & 0.98 & \rankone{1.27} & 1.10 \\
+& Sparse BF16         & 38.74 & 68.18 & 66.06 & 42.96 & 1.54 &  6.76 &  5.11 &  3.04 & 1.53 & 0.88 & \rankthree{1.13} \\
+& Sparse NVFP4        & 26.37 & 45.66 & 53.28 & 23.88 & \ranktwo{1.93} &  4.25 &  0.41 &  0.05 & \rankone{1.81} & 0.49 & 0.79 \\
+& DASO (Max speed)    & 33.02 & 61.28 & 61.09 & 31.14 & \rankone{2.26} & 14.59 &  4.21 &  1.29 & \ranktwo{1.74} & \ranktwo{1.18} & \rankone{1.42} \\
+% Prefill-only: point_007; prefill--decode: point_005.
+& DASO (Balanced)     & \ranktwo{51.45} & \rankthree{79.08} & \rankone{73.80} & \rankone{66.50} & 1.59 & \rankone{18.84} & \rankone{11.48} & \ranktwo{10.55} & 1.40 & \rankthree{1.13} & \ranktwo{1.26} \\
+\bottomrule
+\end{tabular}
+\caption{Measured downstream quality and speedups of uniform baselines and DASO on RTX~5090. Time to first token (TTFT), time per output token (TPOT), and end-to-end (E2E) speedups are relative to BF16 under the same workload. Excluding the BF16 reference, darker shading indicates a higher rank among the top three results in each column. ``Balanced'' and ``Max speed'' are returned under tight and relaxed quality budgets, respectively.}
+\label{tab:overall_results}
+\end{table*}
+
+
+
+% Revised experimental section for an AAAI-style two-column paper.
+% Suggested packages:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+% \usepackage{graphicx}
+
+\section{Experiments}
+We organize the evaluation around five key questions:
+\begin{itemize}
+    \item[\textbf{Q1.}] \textbf{Single-method speed ceiling.} Can DASO exceed the speedup of every uniform method?
+    \item[\textbf{Q2.}] \textbf{Quality retention.} Can DASO achieve practical speedups under a tight quality budget?
+    \item[\textbf{Q3.}] \textbf{Quality--speed control.} Can DASO provide operating points for different quality budgets?
+    \item[\textbf{Q4.}] \textbf{Hardware adaptability.} Can DASO adapt its policies to different GPU platforms?
+    \item[\textbf{Q5.}] \textbf{Ablation study.} Do the proposed modeling and runtime components improve estimation and deployment?
+%     \item[\textbf{Q6.}] \textbf{Policy case study.} What does a generated DASO policy look like?
+\end{itemize}
+
+
+\subsection{Experimental Setup}
+
+\paragraph{Models and workloads.}
+We evaluate Llama-2-7B-Chat and Llama-3.1-8B-Instruct on RTX~5090 and additionally on RTX~PRO~6000 for cross-platform validation. We consider two representative workloads, both with batch size $B=8$ and input length $S=2048$: prefill-only inference and prefill--decode inference with generation length $T=64$. Prefill quality is accuracy on ARC-Challenge, ARC-Easy, WinoGrande, and MMLU~\cite{clark2018arc,sakaguchi2020winogrande,hendrycks2021mmlu}; generation quality is ROUGE-L on CNN/DailyMail and DialogSum~\cite{nallapati2016cnndm,chen2021dialogsum,lin2004rouge}, and SacreBLEU~\cite{post2018call} on IWSLT~2017~\cite{cettolo2017iwslt}. We report TTFT, TPOT, and E2E speedups over BF16.
+
+\paragraph{Baselines and system.}
+We use five widely adopted compression choices with optimized kernel support as uniform baselines: BF16, dense NVFP4~\cite{alvarez2025nvfp4}, Sparse BF16~\cite{frantar2023sparsegpt}, sparse NVFP4, and W4A16 Marlin~\cite{frantar2025marlin}. As DASO targets realized serving performance, we select these compression methods with mature, efficient kernel implementations rather than per-layer allocation schemes. Both sparse baselines use 50\% 2:4 semi-structured sparsity, with pruning masks calibrated by SparseGPT. Dense and sparse NVFP4 use CUTLASS kernels~\cite{thakkar2023cutlass}, sparse BF16 uses cuSPARSELt~\cite{busato2020cusparselt}, and W4A16 Marlin uses the Marlin kernel. We implement DASO on top of vLLM~0.11.1~\cite{kwon2023vllm} and conduct all experiments on NVIDIA RTX~5090 and RTX~PRO~6000 GPUs, profiling each GPU separately and measuring all policies under the same runtime protocol for a fair comparison.
+
+\subsection{Single-Method Speed Ceiling (Q1)}
+
+Tables~\ref{tab:overall_results} and~\ref{tab:pro6000_results} show that DASO consistently breaks the single-method speed ceiling across all model--platform--workload settings. Its \emph{Max speed} policies achieve $1.49\times$--$2.26\times$ prefill speedups and $1.42\times$--$1.55\times$ generation E2E speedups, surpassing every uniform baseline. These results reflect that no single method is universally effective: on RTX~5090, dense NVFP4 strongly accelerates prefill but slows decoding, whereas W4A16 Marlin provides little prefill gain while reaching up to $1.50\times$ TPOT speedup. Unlike uniform methods, DASO selects fine-grained module-wise and phase-wise compression configurations for each deployment scenario, overcoming the single-method speed ceiling.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\columnwidth]{Figures/draft2/llama31_two_scenario_tradeoff_horizontal.pdf}
+\caption{Budget-controlled policies for Llama-3.1-8B-Instruct on RTX~5090. Dark circles form the measured DASO frontier; red squares are uniform baselines. Diamonds and stars mark the \emph{Balanced} and \emph{Max speed} policies.}
+\label{fig:pareto_tradeoff}
+\end{figure}
+
+\subsection{Quality Retention at Practical Speedups (Q2)}
+
+To answer Q2, we report one illustrative \emph{Balanced} policy selected under a tight quality budget for each setting. As highlighted in Tables~\ref{tab:overall_results} and~\ref{tab:pro6000_results}, the Balanced policies consistently rank among the top three non-BF16 configurations—and often first—across the reported quality metrics while still delivering considerable practical speedups. For Llama-3.1-8B-Instruct generation on RTX~5090, \emph{Balanced} reaches $1.26\times$ E2E speedup, compared with $1.10\times$ for W4A16 Marlin, while achieving higher CNN/DailyMail and DialogSum ROUGE-L and essentially matching IWSLT. On RTX~PRO~6000, the \emph{Balanced} policy reaches $1.25\times$ prefill speedup with 56.91 average accuracy, compared with $1.31\times$ and 47.06 for the fastest uniform Sparse BF16.
+
+\subsection{Controllable Quality--Speed Trade-offs (Q3)}
+
+We evaluate DASO across a range of $\Delta\mathrm{NLL}$ budgets. As shown in Figure~\ref{fig:pareto_tradeoff}, DASO produces a controllable quality--speed frontier for both workloads. Tight budgets keep DASO in the high-quality region, while relaxing the budget progressively increases speed, extending to $2.26\times$ for prefill and $1.42\times$ E2E for prefill--decode. More importantly, the DASO frontier forms an upper-right envelope over nearly all uniform baselines in both panels. Uniform methods offer only isolated operating points, and a method that performs well in one inference phase or workload can be inefficient or overly destructive in another. In contrast, DASO jointly selects module-wise and phase-wise compression actions to construct an optimized policy for each deployment scenario and quality budget, fully exploiting the available compression potential and enabling flexible quality--speed trade-offs.
+
+
+
+\subsection{Adaptation Across Hardware Platforms (Q4)}
+
+Hardware characteristics substantially change the relative benefits of individual compression methods. As shown in Table~\ref{tab:pro6000_results}, the fastest uniform prefill method for Llama-2-7B-Chat changes from sparse NVFP4 on RTX~5090 ($1.86\times$) to sparse BF16 on RTX~PRO~6000 ($1.31\times$). For compactness, Acc.\ reports the average of the four prefill accuracy metrics, while Score reports the average of the three generation metrics. DASO adapts its fine-grained policy to the new platform, reaching $1.49\times$ prefill and $1.45\times$ E2E speedups, beyond the corresponding uniform ceilings of $1.31\times$ and $1.21\times$. These results show that platform-specific optimization allows DASO to preserve its advantage despite changes in kernel behavior and hardware balance.
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{@{}lcS|cSSS@{}}
+\toprule
+& \multicolumn{2}{c|}{\textbf{Prefill-only}}
+& \multicolumn{4}{c}{\textbf{Prefill--Decode}} \\
+Method & Acc. & \multicolumn{1}{c|}{TTFT} & Score &
+\multicolumn{1}{c}{TTFT} & \multicolumn{1}{c}{TPOT} &
+\multicolumn{1}{c}{E2E} \\
+\midrule
+BF16             & 57.69 & 1.00 & 21.53 & 1.00 & 1.00 & 1.00 \\
+Dense NVFP4      & \rankthree{56.76} & 1.08 & \ranktwo{20.77} & 1.07 & 0.71 & 0.81 \\
+W4A16 Marlin     & \rankone{57.25} & 0.90 & \rankone{21.57} & 0.90 & \ranktwo{1.52} & \rankthree{1.21} \\
+Sparse BF16      & 47.06 & \ranktwo{1.31} & 12.34 & \ranktwo{1.31} & 1.08 & 1.16 \\
+Sparse NVFP4     & 34.59 & 1.19 & 11.84 & \rankthree{1.18} & 0.68 & 0.81 \\
+DASO (Max speed) & 40.10 & \rankone{1.49} & 12.45 & \rankone{1.33} & \rankone{1.53} & \rankone{1.45} \\
+DASO (Balanced)  & \ranktwo{56.91} & \rankthree{1.25} & \rankthree{19.13} & 1.16 & \rankthree{1.44} & \ranktwo{1.32} \\
+\bottomrule
+\end{tabular}
+\caption{Results for Llama-2-7B-Chat on RTX~PRO~6000.}
+\label{tab:pro6000_results}
+\end{table}
+
+\subsection{Ablation Study (Q5)}
+\label{sec:ablation}
+
+We conduct component-wise ablations from cost modeling to runtime deployment on Llama-3.1-8B-Instruct. As shown in Table~\ref{tab:modeling-ablation}, the method-specific Roofline prior and shape correction reduce unseen-shape kernel-latency mean absolute percentage error (MAPE) from 14.80\% to 8.01\%. For quality modeling, structure and phase awareness reduce the held-out $\Delta\mathrm{NLL}$ mean absolute error (MAE) from 0.0571 to 0.0413. At deployment, asynchronous phase switching overlaps 99.46\% of the transfer work with useful computation, reducing the median vLLM E2E latency of the \emph{Max speed} policy from 1625.87 to 1521.73\,ms, a 6.41\% reduction. These results show that the proposed designs improve both cost estimation and realized serving performance.
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Ablation type & Variant & Result \\
+\midrule
+\multirow{3}{*}{Kernel modeling}
+ & Direct fit & 14.80\% \\
+ & + Roofline & 10.78\% \\
+ & + Shape corr. & \textbf{8.01\%} \\
+\midrule
+\multirow{3}{*}{Quality modeling}
+ & Local aggregation & 0.0571 \\
+ & + Structure-aware & 0.0468 \\
+ & + Phase-aware & \textbf{0.0413} \\
+\midrule
+\multirow{2}{*}{Runtime deployment}
+ & Cumulative transfer & 354.94\,ms \\
+ & Exposed after overlap & \textbf{1.92\,ms} (99.46\%) \\
+\bottomrule
+\end{tabular}
+\caption{Ablation from cost modeling to runtime deployment. Kernel modeling reports MAPE, quality modeling reports $\Delta\mathrm{NLL}$ MAE, and runtime deployment reports phase-switch transfer work and its exposed portion after overlap.}
+\label{tab:modeling-ablation}
+\end{table}
+
+We further analyze sensitivity to the calibration-set size in Figure~\ref{fig:calibration-size-ablation}. Increasing the number of policy-level NLL labels from 5 to 45 reduces the median held-out MAE from 0.0614 to 0.0403, after which the improvement becomes modest while labeling cost continues to grow. We therefore use 54 calibration policies, achieving 0.0413 MAE at a cost of 48.6 GPU-minutes to balance modeling accuracy and calibration overhead.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\columnwidth]{Figures/draft2/calibration_size_sensitivity.pdf}
+\caption{Sensitivity to the number of quality-calibration policies. The line and shading show held-out $\Delta\mathrm{NLL}$ MAE, the secondary axis reports labeling cost, and the star marks the main configuration.}
+\label{fig:calibration-size-ablation}
+\end{figure}
+
+% \subsection{Case Study on DASO Policies (Q6)}
+%
+% A DASO policy is a $32$-layer $\times$ four-module-type action map, with a separate assignment for prefill and decode---256 decisions rather than one model-wide format. The max-speed generation policy illustrates this heterogeneity: all 128 Linear groups change backend across phases, consistent with the opposite prefill/decode strengths in Q1. This policy remains practical because per-layer asynchronous materialization reduces median E2E latency from 1625.87 to 1521.73\,ms (6.41\%); only 1.92\,ms of 354.94\,ms transfer work is exposed as first-use stalls. The returned policy is therefore both fine-grained and executable, rather than an abstract knapsack solution.
+
+% A module-by-policy heatmap can replace this text-only case study once the
+% exported policy JSONs for the measured Pareto points are available.
+
+
+
+
+
+
+
+
+
+% \section{Experiments}
+
+% \subsection{Experimental Setup}
+
+% \paragraph{Baselines.}
+% % TODO.
+
+% \paragraph{Models and Datasets.}
+% % TODO.
+
+% \paragraph{Deployment Scenarios and Hardware.}
+% % TODO.
+
+% \paragraph{Implementation Details.}
+% % TODO.
+
+% \subsection{Overall Results}
+
+
+% \begin{table*}[t]
+% \centering
+% \caption{
+% Overall comparison with uniform compression baselines.
+% Speedup is measured against dense BF16.
+% For prefill-only, quality is measured by ARC-Challenge accuracy.
+% For prefill-decoding, we report ROUGE-L on CNN/DailyMail and DialogSum,
+% and BLEU on IWSLT2017.
+% }
+% \label{tab:overall_results}
+
+% \resizebox{\textwidth}{!}{
+% \begin{tabular}{ll|cc|cccc}
+% \toprule
+
+% Model & Method
+% &
+% \multicolumn{2}{c|}{Prefill-only}
+% &
+% \multicolumn{4}{c}{Prefill-Decoding}
+% \\
+
+% &
+% &
+% Speedup $\uparrow$
+% &
+% ARC Acc. $\uparrow$
+% &
+% Speedup $\uparrow$
+% &
+% CNN/DM R-L $\uparrow$
+% &
+% DialogSum R-L $\uparrow$
+% &
+% IWSLT BLEU $\uparrow$
+% \\
+
+% \midrule
+
+% \multirow{7}{*}{\centering Llama-2-7B-Chat}
+
+% &Dense BF16
+% &1.00&43.345
+% &1.00&23.671&21.688&19.296
+% \\
+
+% &Dense NVFP4
+% &1.87&42.833
+% &1.19&24.273&20.592&16.835
+% \\
+
+% &Sparse BF16
+% &1.63&35.324
+% &1.44&15.350&13.539&3.900
+% \\
+
+% &Sparse NVFP4
+% &2.07&23.976
+% &1.19&2.047&9.388&0.238
+% \\
+
+% &Marlin NVFP4
+% &1.04&42.833
+% &1.39&24.579&21.368&18.200
+% \\
+
+% \cmidrule{2-8}
+
+% &Ours (High-quality)
+% &1.73&44.198
+% &1.68&23.754&21.633&19.029
+% \\
+
+% &Ours (High-speed)
+% &2.04&28.072
+% &1.71&23.544&21.581&18.301
+% \\
+
+
+% \midrule
+
+
+% \multirow{7}{*}{\centering Llama-3.1-8B-Instruct}
+
+% &Dense BF16
+% &1.00&55.375
+% &1.00&19.487&13.784&10.680
+% \\
+
+% &Dense NVFP4
+% &1.73&54.096
+% &1.06&16.345&8.203&10.312
+% \\
+
+% &Sparse BF16
+% &1.55&38.737
+% &1.17&12.834&4.049&3.276
+% \\
+
+% &Sparse NVFP4
+% &1.92&26.792
+% &0.79&0.804&0.126&0.014
+% \\
+
+% &Marlin NVFP4
+% &1.03&54.096
+% &1.16&16.108&8.805&10.403
+% \\
+
+% \cmidrule{2-8}
+
+% &Ours (High-quality)
+% &1.56&54.863
+% &1.48&16.675&11.122&10.582
+% \\
+
+% &Ours (High-speed)
+% &2.17&33.106
+% &1.69&16.840&9.085&10.570
+% \\
+
+% \bottomrule
+% \end{tabular}
+% }
+% \end{table*}
+
+
+
+% % TODO:
+% % 1. Comprehensive quality and speed table.
+% % 2. Speed--quality Pareto frontier.
+% % 3. Optimization overhead.
+
+% \subsection{Ablation Studies}
+
+% TODO:
+% 1. Quality-prediction accuracy and ablations.
+% 2. Latency-prediction accuracy and ablations.
+% 3. vLLM integration/runtime ablations.
+
+\FloatBarrier
+\section{Conclusion}
+
+We presented \textbf{DASO}, a deployment-oriented framework that bridges the gap between the availability of diverse compression methods and the need for actionable, quality-constrained deployment decisions under real hardware and workload constraints. Rather than applying one compression format uniformly, DASO jointly selects module-wise and phase-wise actions under a quality constraint, with calibrated latency and quality models enabling efficient search and an extended vLLM runtime supporting deployment. Across Llama models with cross-platform validation, DASO consistently improves quality--speed trade-offs over uniform baselines, demonstrating the effectiveness of our approach. Future work includes extending DASO to support finer-grained budget allocation schemes and more dynamic serving scenarios.
+
+
+\bibliography{aaai2027}
+
+% Check whether the conference requires a reproducibility checklist to be included in the paper.
+% If so, you can uncomment the following line and ajust the path to include it.
+% \input{ReproducibilityChecklist.tex}
+
+\end{document}

@@ -1,0 +1,12 @@
+{
+  "time_ns": 1792977977312106844,
+  "reason": "LLM.generate forces FINAL_ONLY. Observe raw EngineCore new_token_ids before output filtering to capture first token.",
+  "affected_scope": "Early unmarked first-token/decode-remainder diagnostic fields invalid; E2E/restore timing and output tokens valid and unchanged.",
+  "analysis_rule": "Use first-token fields only if first_token_observer == engine_core_before_FINAL_ONLY_filter.",
+  "existing_result_files_before_fix": [
+    "results/speed/node0/round0/uniform_dense_bf16.json",
+    "results/speed/node0/round0/transfer_daso5_measured_prefill_decode_04.json",
+    "results/speed/node0/round0/hawq_fp4_phase_pair_signed_prefill_decode_q0.01.json",
+    "results/speed/node0/round0/hawq_fp4_phase_pair_signed_prefill_decode_q0.07.json"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "sources": {
+    "nvfp4_sm120.cu": {
+      "original_sha256": "3c7dd21e1d3e7f3a379aaa4789bdfc6d59191701ee7bb285aa0e1e6043410e01",
+      "modified_sha256": "5f6f1dc94be63e59f41d4a73b8484c72057f0c9b3eb9a3361c426286698dbb0a"
+    },
+    "sparse_nvfp4_sm120.cu": {
+      "original_sha256": "4593daddba3eecc7ed2176e06297d1024f5f39ea020d304af685f39d284c57d7",
+      "modified_sha256": "29b445024efe333d430a44bf7b4c0d99b078fefd83eb894d1e3a18888b23fb69"
+    },
+    "sparse_nvfp4_bindings.cpp": {
+      "original_sha256": "5aa21782cd11a9c627833203c303fde5da7c76e144a5702d0d24bd151101ab04",
+      "modified_sha256": "ffce1b1fe1c768fe003c0a846b4199ef455a6e9b599ca35453109121e0b2137e"
+    }
+  },
+  "changes": [
+    "Read the existing FP32 alpha through the CUTLASS device scalar pointer.",
+    "Use the current CUDA stream for initialization and execution.",
+    "Sparse graph path allocates workspace through torch, avoiding raw cudaMalloc/free and the single cached run state."
+  ],
+  "unchanged": "Quantization, scales, weight layouts, GEMM tiles, accumulator/output types.",
+  "build_root": "/tmp/daso_graph_bindings_015_20261026"
+}

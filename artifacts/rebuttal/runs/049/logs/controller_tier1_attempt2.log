@@ -1,0 +1,36 @@
+{
+  "verified": true,
+  "complete": false,
+  "tier": 1,
+  "display_rows": 35,
+  "quality_rows": 35,
+  "three_round_speed_rows": 0,
+  "shared_prefill_endpoint": true,
+  "protected_sources_unchanged": true,
+  "unresolved_timing_rows": []
+}
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/report.py", line 101, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/report.py", line 70, in main
+    if raw_rounds:save(OUT/'speed_rounds.csv',raw_rounds)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/report.py", line 20, in save
+    writer=csv.DictWriter(handle,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/csv.py", line 167, in writerows
+    return self.writer.writerows(map(self._dict_to_list, rowdicts))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/csv.py", line 159, in _dict_to_list
+    raise ValueError("dict contains fields not in fieldnames: "
+ValueError: dict contains fields not in fieldnames: 'tpot_speedup', 'tpot_ms'
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/driver.py", line 109, in <module>
+    try:main()
+        ^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/driver.py", line 102, in main
+    subprocess.run([sys.executable,RUN/'code/report.py','--tier',str(args.tier),'--allow-partial'],check=True)
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/root/wja/miniconda3/envs/vllm/bin/python', PosixPath('/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/code/report.py'), '--tier', '1', '--allow-partial']' returned non-zero exit status 1.

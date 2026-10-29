@@ -1,0 +1,72 @@
+{
+  "quality_budgets": [
+    0.005,
+    0.01,
+    0.02,
+    0.04,
+    0.07
+  ],
+  "inverse_latency_fractions": [
+    0.95,
+    0.8,
+    0.65
+  ],
+  "quality_guard": {
+    "z": 2.0,
+    "additive_delta_nll": 0.005
+  },
+  "latency_guard_fraction": 0.05,
+  "speed_calibration_seed": 148015771,
+  "speed_test_seed": 144983,
+  "quality_windows": 64,
+  "quality_batch": 8,
+  "selection": "Only independent validation NLL and calibration E2E; baseline BF16 guard is exact zero. Test labels do not choose candidates.",
+  "quality_sources": "Frozen WikiText validation/test windows from run005; same-map prior labels may be inherited with signature checks.",
+  "pool_sha256": "2bc67dd7e1762e481306d66ce9ca24b51b9374349e22f605fdfbe3602867edb8",
+  "scope": "New timing profile, unchanged quality surrogate; exact means additive surrogate only. Existing-map runtime probes are retained and not selection data.",
+  "anchor_amendment": {
+    "time_ns": 1793001071734013313,
+    "added_maps": [
+      "graph_phase_dense_bf16_sq_int8",
+      "graph_phase_dense_nvfp4_dense_bf16",
+      "graph_phase_dense_nvfp4_sq_int8",
+      "graph_phase_sparse_bf16_dense_bf16",
+      "graph_phase_sparse_bf16_w4a16_ours",
+      "graph_phase_sparse_bf16_sq_int8",
+      "graph_phase_sparse_nvfp4_dense_bf16",
+      "graph_phase_sparse_nvfp4_w4a16_ours",
+      "graph_phase_sparse_nvfp4_sq_int8",
+      "graph_phase_w4a16_ours_dense_bf16",
+      "graph_phase_w4a16_ours_sq_int8",
+      "graph_phase_sq_int8_dense_bf16",
+      "graph_phase_fp8_dense_bf16",
+      "graph_phase_fp8_sq_int8"
+    ],
+    "decode_frontier": [
+      "dense_bf16",
+      "w4a16_ours",
+      "sq_int8"
+    ],
+    "decoder_training_quality_costs": [
+      0.0,
+      0.022221148069011765,
+      0.15959198493099414,
+      0.467078212089034,
+      0.011082494951545162,
+      0.00582832778523514,
+      0.002180596525706552
+    ],
+    "decoder_measured_costs_ms": [
+      579.3242777840653,
+      480.9997892279375,
+      790.8557348094176,
+      424.2244591712955,
+      185.50405139621958,
+      330.3553193514998,
+      852.4047428076913
+    ],
+    "reason": "Complete phase-uniform coverage on the training-surrogate/hardware decode frontier, including high-quality BF16 decode anchors.",
+    "data_use": "Uses only the frozen training quality surrogate and new hardware profile; no new validation/test values were read to add anchors. Initial validation was already running; original pool/rules/job list retained."
+  },
+  "latency_guard_statistic": "Maximum of five non-warmup calibration E2E observations times 1.05; actual E2E excludes separately recorded restore."
+}

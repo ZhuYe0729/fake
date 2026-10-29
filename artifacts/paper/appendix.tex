@@ -1,0 +1,413 @@
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\pdfinfoomitdate=1
+\pdftrailerid{}
+\pdfsuppressptexinfo=-1
+\pdfinfo{/Creator () /Producer ()}
+\usepackage[submission]{aaai2027}  % DO NOT CHANGE THIS
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{natbib}  % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\frenchspacing  % DO NOT CHANGE THIS
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+\setcounter{secnumdepth}{1}
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+
+\title{Supplementary Material}
+\affiliations{}
+
+\begin{document}
+
+\maketitle
+\appendix
+
+This supplement provides the technical details referenced by the main paper. All symbols follow the definitions in the main paper.
+
+\section{Method-Aware Latency}
+\label{app:latency-prior}
+
+\subsection{Scope and notation}
+
+For a Linear module, we use the convention \(Y=XW^\top\), where \(X\),
+\(W\), and \(Y\) have shapes \(m\times k\), \(n\times k\), and \(m\times n\),
+respectively. The latency predictor targets the complete online module
+forward, including representation-specific activation processing, weight and
+scale reads, sparse metadata access and output writes. Offline
+checkpoint conversion and weight packing are not included because they are
+performed before serving.
+
+For compression method \(c\), \(F_c(m,n,k)\) is the effective floating-point
+work and \(D_c(m,n,k)\) is the logical data movement used by the Roofline
+prior. These quantities are not intended to reproduce every physical memory
+transaction.
+
+\subsection{Method-specific work and data movement}
+
+\paragraph{Dense BF16.}
+The dense kernel reads BF16 activations and weights and writes a BF16 output:
+\begin{equation}
+\begin{aligned}
+F_{\mathrm{dbf16}}(m,n,k) &= 2mnk,\\
+D_{\mathrm{dbf16}}(m,n,k) &= 2mk+2nk+2mn.
+\end{aligned}
+\end{equation}
+
+\paragraph{Sparse BF16.}
+The 2:4 kernel retains two BF16 values in every group of four weights, halving
+the effective multiply--accumulate count. A dense group occupies \(64\) bits,
+whereas its sparse representation contains \(32\) value bits and \(4\)
+metadata bits. The packed weight traffic is therefore
+\begin{equation}
+2nk\big/(64/36)=\frac{9}{8}nk,
+\end{equation}
+which gives
+\begin{equation}
+\begin{aligned}
+F_{\mathrm{sbf16}}(m,n,k) &= mnk,\\
+D_{\mathrm{sbf16}}(m,n,k) &= 2mk+\frac{9}{8}nk+2mn.
+\end{aligned}
+\end{equation}
+
+
+\paragraph{Dense NVFP4.}
+The dense W4A4 path reads the BF16 input, produces a packed FP4 activation,
+reads FP4 weights and their associated scales, and writes a BF16 output:
+\begin{equation}
+\begin{aligned}
+F_{\mathrm{dnvfp4}}(m,n,k) &= 2mnk,\\
+D_{\mathrm{dnvfp4}}(m,n,k)
+&=2mk+0.5mk+0.5nk\\
+&\quad+\frac{mk+nk}{16}+2mn.
+\end{aligned}
+\end{equation}
+The terms \(0.5mk\) and \(0.5nk\) represent packed 4-bit activation and
+weight values. NVFP4 uses one FP8 scale for each group of \(16\) values and
+one FP32 global scale for the entire tensor. Accordingly,
+\((mk+nk)/16\) accounts for the FP8 scale traffic of the activations and
+weights. We omit the single FP32 global scale per tensor because its constant
+four-byte cost is negligible relative to the matrix data.
+
+\paragraph{Sparse NVFP4.}
+Due to underlying hardware constraints and the requirements of the CUTLASS
+sparse kernel, Sparse NVFP4 uses one FP8 scale for each group of \(32\)
+values rather than the \(16\)-value groups used by dense NVFP4. It applies
+50\% semi-structured sparsity using the kernel's pairwise 4:8 layout: four FP4
+values are retained in each group of eight weights. Consequently, the
+effective work is halved and the packed weight values occupy \(0.25nk\)
+bytes. The sparse layout additionally uses \(4\) position bits per group,
+equivalent to \(nk/16\) bytes. Including the FP8 activation and weight scales,
+while again omitting the tensor-level FP32 global scales, gives
+\begin{equation}
+\begin{aligned}
+F_{\mathrm{snvfp4}}(m,n,k) &= mnk,\\
+D_{\mathrm{snvfp4}}(m,n,k)
+&=2mk+0.5mk+\frac{mk}{32}\\
+&\quad+0.25nk+\frac{nk}{16}+\frac{nk}{32}+2mn\\
+&=2.5mk+\frac{mk}{32}+\frac{11}{32}nk+2mn.
+\end{aligned}
+\end{equation}
+This description distinguishes the logical 50\% sparsity used for comparison
+from the physical 4:8 grouping required by the sparse FP4 kernel.
+
+\paragraph{W4A16 Marlin.}
+The weight-only path retains BF16 activations and outputs while reading packed
+4-bit weights and their scales:
+\begin{equation}
+\begin{aligned}
+F_{\mathrm{marlin}}(m,n,k) &= 2mnk,\\
+D_{\mathrm{marlin}}(m,n,k)
+&=2mk+0.5nk+\frac{nk}{16}+2mn.
+\end{aligned}
+\end{equation}
+
+\section{Residual Correction}
+\label{app:latency-residual}
+
+\subsection{Residual target and global features}
+
+For a profiled shape \(x_j=(m_j,n_j,k_j)\), the logarithmic residual is
+\begin{equation}
+\delta_{c,j}
+=
+\log\frac{\ell^{\mathrm{meas}}_{c,j}}
+{\ell_c^{\mathrm{base}}(x_j)}.
+\end{equation}
+The global predictor is a ridge regressor
+\(\widehat{\delta}^{\mathrm{global}}_c(x)=\theta_c^\top\phi_c(x)\).
+Its feature vector includes log dimensions and aspect ratios, kernel-specific
+tile counts and tail-utilization statistics, and indicators for small or
+highly skewed matrix shapes.
+Tile and tail features use the native tile geometry of each kernel family
+rather than a shared tile size across all compression methods.
+
+\subsection{Local interpolation}
+
+The local predictor operates in log-shape space. Let
+\(u(x)=(\log_2m,\log_2n,\log_2k)\), where a unit change in any coordinate
+corresponds to doubling the associated matrix dimension. For kernel family
+\(c\), we use the Euclidean distance
+\(d_c(x,x_j)=\|u(x)-u(x_j)\|_2\). Let
+\(\mathcal{N}_{12,c}(x)\) be the 12 nearest profiled shapes. The local
+residual estimate is
+\begin{equation}
+\widehat{\delta}^{\mathrm{local}}_c(x)
+=
+\frac{
+\displaystyle\sum_{j\in\mathcal{N}_{12,c}(x)}
+\frac{\delta_{c,j}}{d_c(x,x_j)+10^{-6}}
+}{
+\displaystyle\sum_{j\in\mathcal{N}_{12,c}(x)}
+\frac{1}{d_c(x,x_j)+10^{-6}}
+}.
+\end{equation}
+
+\subsection{Adaptive mixing}
+
+Let \(d_{\min,c}(x)\) be the distance to the nearest profiled shape. We assign
+more weight to local interpolation near observed shapes and gradually shift
+toward the regularized global predictor when extrapolating:
+\begin{equation}
+\lambda_c(x)
+=
+\operatorname{clip}\!\left(
+\frac{2.5}{2.5+d_{\min,c}(x)},\,0.25,\,0.95
+\right),
+\end{equation}
+\begin{equation}
+\widehat{\delta}_c(x)
+=
+\lambda_c(x)\widehat{\delta}^{\mathrm{local}}_c(x)
++\bigl[1-\lambda_c(x)\bigr]
+\widehat{\delta}^{\mathrm{global}}_c(x).
+\end{equation}
+The calibrated module latency is
+\begin{equation}
+\widehat{\ell}_c(x)
+=
+\ell_c^{\mathrm{base}}(x)\exp\!\bigl(\widehat{\delta}_c(x)\bigr).
+\end{equation}
+When an exact profiled shape is available, the implementation returns its
+measured median directly. The learned correction is used for shapes absent
+from the profile table.
+
+% \section{Structured Quality-Cost Construction}
+% \label{app:quality-cost}
+
+% \subsection{Shared structural factors}
+
+% The policy remains configurable at individual Linear modules; structural
+% labels only determine which sensitivity parameters are shared. For both
+% evaluated 32-layer Llama models, we use four contiguous depth regions:
+% \begin{equation}
+% b_i=\left\lfloor\frac{l_i}{8}\right\rfloor
+% \in\{0,1,2,3\},
+% \end{equation}
+% corresponding to layers \(0\)--\(7\), \(8\)--\(15\), \(16\)--\(23\), and
+% \(24\)--\(31\). Here \(l_i\) is the layer index of module \(v_i\).
+% The module-type label \(t_i\) takes one of four values:
+% \texttt{qkv\_proj}, \texttt{o\_proj}, \texttt{gate\_up\_proj}, and
+% \texttt{down\_proj}. Modules within the same region or type share the
+% corresponding sensitivity term, but the optimizer still selects their
+% compression actions independently.
+
+% \subsection{Policy-level feature aggregation}
+
+% For policy \(\pi\), define the selected local-perturbation mass associated
+% with phase \(r\), method \(c\), depth region \(b\), and module type \(t\) as
+% \begin{equation}
+% X_{r,c,b,t}(\pi)
+% =
+% \sum_{i=1}^{M}
+% \mathbf{1}[b_i=b]\,
+% \mathbf{1}[t_i=t]\,
+% \mathbf{1}[a_i^r=c]\,
+% e_{r,i,c}.
+% \end{equation}
+% The structured model in the main paper can then be written equivalently as
+% \begin{equation}
+% \begin{aligned}
+% \widehat{\Delta\mathrm{NLL}}(\pi)
+% &=q_0+\frac{1}{s_{\mathrm{feat}}}
+% \sum_{r,c,b,t}X_{r,c,b,t}(\pi)\\
+% &\quad{}\times
+% \operatorname{ReLU}
+% \!\left(g+\rho_r+u_c+\beta_b+\tau_t\right).
+% \end{aligned}
+% \end{equation}
+% The normalization constant is the average selected feature mass over the
+% calibration policies \(\Pi_{\mathrm{cal}}\):
+% \begin{equation}
+% s_{\mathrm{feat}}
+% =
+% \frac{1}{|\Pi_{\mathrm{cal}}|}
+% \sum_{\pi\in\Pi_{\mathrm{cal}}}
+% \sum_{r,c,b,t}X_{r,c,b,t}(\pi).
+% \end{equation}
+% The prefill-only and prefill--decode scenarios are fitted separately because
+% they use different phase sets and policy-level NLL labels. In both cases, the
+% parameters are learned from complete heterogeneous policies by minimizing
+% regularized mean-squared prediction error:
+% \begin{equation}
+% \frac{1}{|\Pi_{\mathrm{cal}}|}
+% \sum_{\pi\in\Pi_{\mathrm{cal}}}
+% \left[
+% \widehat{\Delta\mathrm{NLL}}(\pi)
+% -\Delta\mathrm{NLL}(\pi)
+% \right]^2
+% +\gamma\|\Theta\|_2^2.
+% \end{equation}
+% The intercept \(q_0\) is left unregularized. The resulting
+% \(q_{r,i,c}\) is an additive optimization surrogate calibrated from joint
+% policies; it should not be interpreted as an independently measured causal
+% NLL increase from compressing only module \(v_i\).
+
+\section{Budgeted Policy Optimization}
+\label{app:optimization}
+
+For module \(v_i\), a legal action is \(a=(a^p,a^d)\in\mathcal{A}_i\) in a
+prefill--decode scenario, or a single prefill action in a prefill-only
+scenario. Its latency and variable quality costs are
+\begin{equation}
+\ell_i(a;s)
+=
+\widehat{\ell}_{a^p}(BS,n_i,k_i)
++(T-1)\widehat{\ell}_{a^d}(B,n_i,k_i),
+\end{equation}
+\begin{equation}
+q_i(a;s)
+=
+\sum_{r\in\mathcal{R}}q_{r,i,a^r},
+\end{equation}
+with the decoding term omitted for prefill-only inference. The
+policy-independent intercept \(q_0\) is subtracted once from the quality
+budget before optimization.
+
+Let \(\Delta_q\) be the quality discretization step,
+\(\bar q_i(a)=\lceil q_i(a;s)/\Delta_q\rceil\), and \(H\) the discretized
+budget. Define \(D_i(h)\) as the minimum latency attainable by the first
+\(i\) modules with cumulative quality cost at most \(h\). The recurrence is
+\begin{equation}
+D_i(h)
+=
+\min_{\substack{a\in\mathcal{A}_i\\\bar q_i(a)\leq h}}
+\left\{
+D_{i-1}\!\left(h-\bar q_i(a)\right)+\ell_i(a;s)
+\right\},
+\end{equation}
+with \(D_0(h)=0\) for \(h=0,\ldots,H\). Storing the minimizing action for
+each state permits policy reconstruction. The solver requires
+\(O\!\left(H\sum_i|\mathcal{A}_i|\right)\) time and \(O(H)\) working memory.
+Solving across quality budgets and removing dominated or duplicate policies
+produces the predicted frontier.
+
+\begin{algorithm}[t]
+\caption{Quality-budgeted policy optimization}
+\label{alg:budgeted-policy-optimization}
+\small
+\begin{algorithmic}[1]
+\STATE \textbf{Input:} action sets \(\{\mathcal{A}_i\}_{i=1}^{M}\);
+latency costs \(\ell_i(a;s)\); quality costs \(q_i(a;s)\);
+budget \(\epsilon\); intercept \(q_0\); step \(\Delta_q\)
+\STATE \textbf{Output:} policy \(\pi=(a_1,\ldots,a_M)\)
+\STATE \(H\gets
+\left\lfloor\max(0,\epsilon-q_0)/\Delta_q\right\rfloor\)
+\STATE \(D[h]\gets0\) for \(h=0,\ldots,H\)
+\FOR{\(i=1\) \TO \(M\)}
+    \STATE \(D_{\mathrm{new}}[h]\gets\infty\) for \(h=0,\ldots,H\)
+    \FOR{\(h=0\) \TO \(H\)}
+        \FORALL{\(a\in\mathcal{A}_i\)}
+            \STATE \(b\gets\left\lceil q_i(a;s)/\Delta_q\right\rceil\)
+            \IF{\(b\leq h\) \AND
+                \(D[h-b]+\ell_i(a;s)<D_{\mathrm{new}}[h]\)}
+                \STATE \(D_{\mathrm{new}}[h]\gets
+                    D[h-b]+\ell_i(a;s)\)
+                \STATE \(\mathrm{trace}[i,h]\gets(h-b,a)\)
+            \ENDIF
+        \ENDFOR
+    \ENDFOR
+    \STATE \(D\gets D_{\mathrm{new}}\)
+\ENDFOR
+\STATE \(h\gets H\)
+\FOR{\(i=M\) \TO \(1\)}
+    \STATE \((h_{\mathrm{prev}},a_i)\gets\mathrm{trace}[i,h]\)
+    \STATE \(h\gets h_{\mathrm{prev}}\)
+\ENDFOR
+\STATE \textbf{return} \(\pi=(a_1,\ldots,a_M)\)
+\end{algorithmic}
+\end{algorithm}
+
+Algorithm~\ref{alg:budgeted-policy-optimization} shows the single-budget
+solver. One run up to a maximum budget also produces the terminal states
+\(D_M(h)\) for all \(h\leq H\), which can be backtracked to obtain multiple
+frontier candidates. The two DP rows require \(O(H)\) working memory; retaining
+all backpointers for direct reconstruction requires an additional \(O(MH)\)
+trace, which can be avoided by recomputing rows during backtracking.
+
+The proxy models and solver are used for candidate screening rather than as a
+substitute for measurement. Reported operating points are exported using the
+same canonical compression states used during calibration and are re-evaluated
+with the real extended vLLM runtime and downstream tasks.
+
+\FloatBarrier
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.49\textwidth]{Figures/draft2/pareto_search_audit.pdf}
+    \hfill
+    \includegraphics[width=0.49\textwidth]{Figures/draft2/pareto_search_audit_display.pdf}
+    \caption{Empirical audit of the measured DASO frontiers on
+    Llama-3.1-8B-Instruct for prefill-only inference (left) and
+    prefill--decode inference (right). Red squares denote uniform baselines;
+    blue, green, and orange markers denote random, neighborhood, and
+    leverage-guided challenger policies, respectively. The dashed curves are
+    the frontiers after combining the challengers with the existing DASO
+    points.}
+    \label{fig:pareto-search-audit}
+\end{figure*}
+\FloatBarrier
+
+\section{Empirical Pareto-Frontier Audit}
+\label{app:pareto-audit}
+This section is intended to address a supplementary question: how close are the policies found
+by DASO to the true Pareto frontier? To probe this question, we attempt to
+outperform the DASO points using several broader, independently constructed
+search strategies, as described below.
+
+\textbf{Audit setup.}
+We examine whether the measured DASO frontier is merely favored by its
+proxy-guided optimization path. For each of the prefill-only and
+prefill--decode scenarios, we independently generate 30 label-blind challenger
+policies: 15 random module-wise policies, 10 neighborhood mutations around
+representative DASO points, and five leverage-guided mutations targeting
+modules with promising predicted latency--quality ratios. Candidate generation
+does not access the downstream labels. Every challenger is then exported and
+fully evaluated using the same extended vLLM runtime and downstream protocols
+as the reported policies. The comparison in
+Fig.~\ref{fig:pareto-search-audit} therefore uses measured E2E speedup and full
+ARC-Challenge or IWSLT quality, rather than proxy predictions.
+
+\textbf{Results.}
+Across the two scenarios, 18 of the 20 existing DASO frontier points remain
+non-dominated after adding the 60 challengers. All seven prefill--decode points
+are retained. In prefill-only inference, only two of 13 points are dominated,
+and the largest observed improvement is \(0.0305\times\) in speedup and
+\(0.005973\) in normalized ARC-Challenge accuracy. The challengers primarily
+insert isolated bridge points or extend the low-quality tail, rather than
+forming a systematically better frontier. These results indicate that the
+DASO policies are already close to the empirical Pareto boundary discoverable
+under this independent search budget and are robust to alternative search
+paths. Although this finite audit cannot establish global optimality over the
+combinatorial policy space, it provides empirical evidence that DASO approaches the underlying Pareto frontier.
+
+\end{document}

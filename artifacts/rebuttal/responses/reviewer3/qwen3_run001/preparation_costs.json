@@ -1,0 +1,64 @@
+[
+  {
+    "stage": "SparseGPT BF16",
+    "seconds": 305.02914623194374,
+    "source": "results/canonical_sparse_bf16.json"
+  },
+  {
+    "stage": "SparseGPT NVFP4",
+    "seconds": 305.29572466085665,
+    "source": "results/canonical_sparse_nvfp4.json"
+  },
+  {
+    "stage": "HAWQ Hessian",
+    "seconds": 1765.6385020969901,
+    "source": "results/hessian_trace_blockwise_p16_b4_s256.json"
+  },
+  {
+    "stage": "HAWQ INT4 分配",
+    "seconds": 0.15566914388909936,
+    "source": "results/hawq_marlin_int4_allocation.json"
+  },
+  {
+    "stage": "HAWQ FP4 分配",
+    "seconds": 0.2617448829114437,
+    "source": "results/hawq_fp4_allocation.json"
+  },
+  {
+    "stage": "局部输出误差",
+    "seconds": 66.62469808594324,
+    "source": "results/local_error_metadata.json"
+  },
+  {
+    "stage": "DASO prefill_only 标签采集壁钟",
+    "seconds": 4856.442481279373,
+    "start_utc": "2026-10-25T06:21:22.246238+00:00",
+    "end_utc": "2026-10-25T07:42:18.688719+00:00",
+    "parallelism": "1 GPU",
+    "source": "logs/cal_prefill_only_*.command.json and outer completion log"
+  },
+  {
+    "stage": "DASO prefill_only 质量拟合",
+    "seconds": 3.5940726278349757
+  },
+  {
+    "stage": "DASO prefill_only 延迟查询与 DP",
+    "seconds": 4.5671732479240745
+  },
+  {
+    "stage": "DASO prefill_decode 标签采集壁钟",
+    "seconds": 2583.386514186859,
+    "start_utc": "2026-10-25T07:23:11.459828+00:00",
+    "end_utc": "2026-10-25T08:06:14.846342+00:00",
+    "parallelism": "first 12 labels serial, remaining labels on GPUs 0/1/2",
+    "source": "logs/cal_prefill_decode_*.command.json and outer completion log"
+  },
+  {
+    "stage": "DASO prefill_decode 质量拟合",
+    "seconds": 4.828193424968049
+  },
+  {
+    "stage": "DASO prefill_decode 延迟查询与 DP",
+    "seconds": 12.686177067924291
+  }
+]

@@ -1,0 +1,51 @@
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                            FixedDecode        24.27%      28.046ms        99.41%     114.874ms      38.291ms       0.000us         0.00%      37.978ms      12.659ms             3  
+                                       cudaLaunchKernel        10.94%      12.642ms        10.94%      12.642ms       7.761us       0.000us         0.00%       0.000us       0.000us          1629  
+                                               aten::mm         8.29%       9.575ms        11.29%      13.045ms      29.988us      29.848ms        78.60%      29.848ms      68.616us           435  
+                    vllm::unified_attention_with_output         6.14%       7.092ms        25.44%      29.395ms     272.176us       0.000us         0.00%       6.182ms      57.244us           108  
+                                            aten::empty         4.40%       5.081ms         4.40%       5.081ms       4.691us       0.000us         0.00%       0.000us       0.000us          1083  
+                                            aten::copy_         3.29%       3.796ms         8.69%      10.036ms      18.482us     821.842us         2.16%     823.122us       1.516us           543  
+                                _vllm_fa2_C::varlen_fwd         3.13%       3.616ms        14.94%      17.262ms     159.836us       5.509ms        14.51%       6.005ms      55.599us           108  
+                                         cuLaunchKernel         2.82%       3.256ms         2.82%       3.256ms       7.484us       0.000us         0.00%       0.000us       0.000us           435  
+                                    aten::empty_strided         2.00%       2.315ms         2.00%       2.315ms       5.286us       0.000us         0.00%       0.000us       0.000us           438  
+                                          aten::reshape         1.90%       2.191ms         7.44%       8.596ms       6.123us       0.000us         0.00%     294.329us       0.210us          1404  
+                                             aten::view         1.66%       1.915ms         1.66%       1.915ms       0.844us       0.000us         0.00%       0.000us       0.000us          2268  
+                                Activity Buffer Request         1.65%       1.901ms         1.65%       1.901ms       1.901ms       1.280us         0.00%       1.280us       1.280us             1  
+                                       aten::empty_like         1.50%       1.736ms         5.28%       6.103ms       7.040us       0.000us         0.00%       0.000us       0.000us           867  
+                                       aten::as_strided         1.40%       1.614ms         1.40%       1.614ms       0.878us       0.000us         0.00%       0.000us       0.000us          1839  
+                                        aten::transpose         1.06%       1.225ms         1.65%       1.904ms       2.509us       0.000us         0.00%       0.000us       0.000us           759  
+                                            aten::clone         1.03%       1.187ms         9.28%      10.728ms      24.834us       0.000us         0.00%     615.825us       1.426us           432  
+                                 _C::fused_add_rms_norm         0.90%       1.045ms         2.41%       2.784ms      12.888us     480.634us         1.27%     480.634us       2.225us           216  
+                                           aten::linear         0.90%       1.041ms        14.73%      17.018ms      39.121us       0.000us         0.00%      29.848ms      68.616us           435  
+                                                aten::t         0.85%     987.683us         1.82%       2.107ms       4.844us       0.000us         0.00%       0.000us       0.000us           435  
+                                           aten::matmul         0.71%     824.770us        12.00%      13.869ms      31.884us       0.000us         0.00%      29.848ms      68.616us           435  
+                                           _C::rms_norm         0.71%     820.807us         2.06%       2.386ms      10.894us     338.488us         0.89%     338.488us       1.546us           219  
+                                  cudaDeviceSynchronize         0.59%     677.340us         0.59%     677.340us     338.670us       0.000us         0.00%       0.000us       0.000us             2  
+                                           aten::expand         0.58%     673.880us         0.83%     964.734us       2.978us       0.000us         0.00%       0.000us       0.000us           324  
+                                            aten::fill_         0.54%     620.022us         1.25%       1.442ms      13.352us      75.205us         0.20%      75.205us       0.696us           108  
+                  _C_cache_ops::reshape_and_cache_flash         0.52%     597.559us         1.26%       1.452ms      13.441us     177.657us         0.47%     177.657us       1.645us           108  
+                                           aten::select         0.51%     591.782us         0.72%     829.513us       3.840us       0.000us         0.00%       0.000us       0.000us           216  
+                                   _C::rotary_embedding         0.47%     542.749us         1.19%       1.372ms      12.707us     273.982us         0.72%     273.982us       2.537us           108  
+                                           aten::unbind         0.45%     523.317us         1.17%       1.353ms      12.526us       0.000us         0.00%       0.000us       0.000us           108  
+                                       _C::silu_and_mul         0.42%     481.094us         1.13%       1.301ms      12.046us     437.981us         1.15%     437.981us       4.055us           108  
+                                 aten::split_with_sizes         0.40%     460.428us         0.60%     694.757us       6.433us       0.000us         0.00%       0.000us       0.000us           108  
+                                            aten::zeros         0.33%     386.735us         2.32%       2.681ms      24.822us       0.000us         0.00%      75.205us       0.696us           108  
+                                 cudaDeviceGetAttribute         0.31%     360.632us         0.31%     360.632us       0.475us       0.000us         0.00%       0.000us       0.000us           759  
+                                            aten::slice         0.30%     347.878us         0.45%     519.924us       2.407us       0.000us         0.00%       0.000us       0.000us           216  
+                                            aten::zero_         0.28%     328.948us         1.53%       1.771ms      16.398us       0.000us         0.00%      75.205us       0.696us           108  
+                                       aten::contiguous         0.25%     291.006us         5.04%       5.825ms      26.968us       0.000us         0.00%     321.496us       1.488us           216  
+               Linear/model.layers.0.self_attn.qkv_proj         0.24%     281.026us         0.47%     548.812us     182.937us       0.000us         0.00%      98.942us      32.981us             3  
+                                               aten::to         0.22%     258.392us         2.08%       2.405ms       5.529us       0.000us         0.00%       5.920us       0.014us           435  
+                                     aten::_unsafe_view         0.19%     221.921us         0.19%     221.921us       1.027us       0.000us         0.00%       0.000us       0.000us           216  
+                 Linear/model.layers.0.self_attn.o_proj         0.16%     189.399us         0.35%     402.355us     134.118us       0.000us         0.00%      80.896us      26.965us             3  
+                                   cudaFuncSetAttribute         0.16%     188.202us         0.16%     188.202us       1.743us       0.000us         0.00%       0.000us       0.000us           108  
+                 Linear/model.layers.0.mlp.gate_up_proj         0.14%     164.218us         0.27%     313.382us     104.461us       0.000us         0.00%     367.358us     122.453us             3  
+                Linear/model.layers.15.self_attn.o_proj         0.14%     162.336us         0.27%     308.338us     102.779us       0.000us         0.00%      76.064us      25.355us             3  
+                 Linear/model.layers.1.self_attn.o_proj         0.13%     149.844us         0.27%     312.669us     104.223us       0.000us         0.00%      76.864us      25.621us             3  
+                 Linear/model.layers.3.self_attn.o_proj         0.13%     148.967us         0.27%     311.316us     103.772us       0.000us         0.00%      76.480us      25.493us             3  
+                 Linear/model.layers.2.self_attn.o_proj         0.12%     142.837us         0.26%     299.226us      99.742us       0.000us         0.00%      77.696us      25.899us             3  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 115.552ms
+Self CUDA time total: 37.976ms

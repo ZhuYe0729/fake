@@ -1,0 +1,180 @@
+{
+  "complete": true,
+  "rows": 27,
+  "retained_rows": 15,
+  "metric_cells": 351,
+  "source_run": "034",
+  "audit_sha256": "42d4e2a07b1af6976ed42a9545761ff9babbc4f90b95b97703c7ef39653fe502",
+  "old_sources_sha256": {
+    "README.md": "1be5beb006f94a19e23e84d63634a25465df32747867279da9059bc66596dc27",
+    "main_table.csv": "da7517c7ffe996973d76fe48229d2c0e61a8249974a8d7dad1ec89c1ff3e946b",
+    "provenance.json": "270cb73a40169ae42864d224ff26a69cd258af73e64fd5f47e669549acdc85a1"
+  },
+  "run_csv_sha256": {
+    "sweep_formal_rounds.csv": "f69dadc2f9018be6a5e7467fbb26d2e6bd347389537db5f5415e64d423c6436a",
+    "sweep_all_results.csv": "ee2ccd9d39e279088c01c8d05cad299bfd7c07c32ea93231ebd986d81feb4b9f",
+    "sweep_results.csv": "ed7dfbaca736254bc8b1f5a7291e006f517b998193380a91cfe1ce0d0289eda3"
+  },
+  "supplemental_audits": {
+    "036": {
+      "audit_sha256": "940f29bd875228fb889a284b3055ad272a2ad16fcdaf8f93851ea1f88b5afd54",
+      "formal_device": {
+        "physical_gpu": 4,
+        "name": "NVIDIA GeForce RTX 5090",
+        "cpu_affinity": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        "numa_node": 1,
+        "frozen_at_unix": 1793123765.821447,
+        "rule": "Restart all3 matched rounds on free card; previous partial timings retained, no cross-card merge.",
+        "reason": "Own failed idle campaign reset after OOM with other memory present; all partial timing archived.",
+        "previous_gpu": 0,
+        "previous_gpu_used_bytes": 12480741376,
+        "own_idle_controller_pid": null,
+        "preserved_partial_records": 11,
+        "archive": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/036/results/interrupted_formal_gpu0_1793123765819069860",
+        "quality_and_policy_unchanged": true
+      }
+    }
+  },
+  "appended_rows": [
+    {
+      "method": "BF16 (034 reference)",
+      "campaign": "034",
+      "pd_policy": "uniform_dense_bf16",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "BF16",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 0.5818358604487621
+    },
+    {
+      "method": "INT8 W8A8 (034 reference)",
+      "campaign": "034",
+      "pd_policy": "uniform_int8",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "INT8 W8A8",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.0
+    },
+    {
+      "method": "SmoothQuant INT8 (034 reference)",
+      "campaign": "034",
+      "pd_policy": "uniform_sq_int8",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "SmoothQuant INT8",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 0.9953697057552116
+    },
+    {
+      "method": "FP8 W8A8 (034 reference)",
+      "campaign": "034",
+      "pd_policy": "uniform_fp8",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "FP8 W8A8",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 0.6670991337459059
+    },
+    {
+      "method": "Uniform SQ-INT8 prefill / W4A16 decode (034 reference)",
+      "campaign": "034",
+      "pd_policy": "phase_sq_int8_w4a16_ours",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "Uniform SQ-INT8 prefill / W4A16 decode",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.1422790484351546
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=0.01, wP=1 (034)",
+      "campaign": "034",
+      "pd_policy": "w1_q0.01",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "DASO-8 measured-LUT + exact/validation epsilon=0.04",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.0948314819098384
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=0.02, wP=1 (034)",
+      "campaign": "034",
+      "pd_policy": "w1_q0.02",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "DASO-8 measured-LUT + exact/validation epsilon=0.04",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.1519035872805412
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=0.03, wP=1 (034)",
+      "campaign": "034",
+      "pd_policy": "w1_q0.03",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "DASO-8 measured-LUT + exact/validation epsilon=0.04",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.258073855186948
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=0.04, wP=1 (034)",
+      "campaign": "034",
+      "pd_policy": "w1_q0.04",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "DASO-8 measured-LUT + exact/validation epsilon=0.04",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.2801004201879096
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=0.03, wP=4 (034)",
+      "campaign": "034",
+      "pd_policy": "w4_q0.03",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "DASO-8 measured-LUT + exact/validation epsilon=0.04",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.1552989786006338
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=0.03, wP=32 (034)",
+      "campaign": "034",
+      "pd_policy": "w32_q0.03",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/034/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "DASO-8 measured-LUT + exact/validation epsilon=0.04",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.058087802790282
+    },
+    {
+      "method": "DASO-8 exploratory P+D, q=0.03, wP=16 (036)",
+      "campaign": "036",
+      "pd_policy": "w16_q0.03",
+      "pd_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/036/results/sweep_all_results.csv",
+      "prefill_only_reused_method": "DASO-8 measured-LUT + exact/validation epsilon=0.04",
+      "prefill_only_newly_optimized": false,
+      "prefill_only_source": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/llama31_8b_instruct_table2/main_table.csv",
+      "same_campaign_e2e_vs_int8": 1.1155616449475236
+    }
+  ],
+  "scope": "Exploratory full sweep; independent Prefill-only reuse; no test-blind or nominal-budget guarantee claim.",
+  "delivery_sha256": {
+    "main_table.csv": "e11245207c0c0e7406895b442528f410bd51ff880b34f254d6d900071cbe35e4",
+    "sweep_results.csv": "ed7dfbaca736254bc8b1f5a7291e006f517b998193380a91cfe1ce0d0289eda3",
+    "sweep_all_results.csv": "ee2ccd9d39e279088c01c8d05cad299bfd7c07c32ea93231ebd986d81feb4b9f",
+    "sweep_formal_rounds.csv": "f69dadc2f9018be6a5e7467fbb26d2e6bd347389537db5f5415e64d423c6436a",
+    "all_exploratory_points.csv": "aeb262d5bdfadf4db21ff58d67963a2d481a47a8157986364fcf629940b3e658",
+    "README.md": "9ef779a3e998af963ddbc7b4c6b69e11e198ca8e41057754ec7684b8bdccf8fb",
+    "quality_speed.png": "81faccbe4f3cbca6c3553983c0f67cf1c1bccac162ee1244e33e1a1988aa2e19",
+    "quality_speed.pdf": "b0c643fa14b0b96f7b8e7cbe060c0a9bb3e001bcbfceb0ed61f4e8454bdaef59"
+  }
+}

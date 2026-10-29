@@ -1,0 +1,308 @@
+{
+  "rows": [
+    {
+      "method": "BF16",
+      "policy": "uniform_dense_bf16",
+      "source_run": "016",
+      "source_policy": "uniform_dense_bf16"
+    },
+    {
+      "method": "SmoothQuant INT8",
+      "policy": "uniform_sq_int8",
+      "source_run": "015",
+      "source_policy": "uniform_sq_int8"
+    },
+    {
+      "method": "FP8 W8A8",
+      "policy": "uniform_fp8",
+      "source_run": "015",
+      "source_policy": "uniform_fp8"
+    },
+    {
+      "method": "W4A16 NVFP4",
+      "policy": "uniform_w4a16_ours",
+      "source_run": "015",
+      "source_policy": "uniform_w4a16_ours"
+    },
+    {
+      "method": "HAWQ-FP4 r=.80",
+      "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "source_run": "016",
+      "source_policy": "hawq_signed_prefill_decode_phase_pair_r0.8"
+    },
+    {
+      "method": "HAWQ-FP4 hardware minimum",
+      "policy": "hardware_minimum_prefill_decode_phase_pair",
+      "source_run": "016",
+      "source_policy": "hardware_minimum_prefill_decode_phase_pair"
+    },
+    {
+      "method": "DASO-7 exact/validation epsilon=.01",
+      "policy": "graph_phase_dense_nvfp4_sq_int8",
+      "source_run": "015",
+      "source_policy": "graph_phase_dense_nvfp4_sq_int8"
+    },
+    {
+      "method": "DASO-7 exact/validation epsilon=.04",
+      "policy": "transfer_daso5_measured_prefill_decode_04",
+      "source_run": "015",
+      "source_policy": "transfer_daso5_measured_prefill_decode_04"
+    },
+    {
+      "method": "DASO-8 exact/validation epsilon=0.01",
+      "policy": "uniform_dense_bf16",
+      "source_run": "016",
+      "source_policy": "uniform_dense_bf16"
+    },
+    {
+      "method": "DASO-8 exact/validation epsilon=0.04",
+      "policy": "daso8_exact_prefill_decode_q0.04",
+      "source_run": "016",
+      "source_policy": "daso8_exact_prefill_decode_q0.04"
+    },
+    {
+      "method": "Uniform SQ-INT8 prefill / W4A16 decode",
+      "policy": "fixed_sq_int8_w4a16",
+      "source_run": "019",
+      "source_policy": "fixed_sq_int8_w4a16"
+    }
+  ],
+  "policies": {
+    "uniform_dense_bf16": {
+      "origin": "016",
+      "source_policy": "uniform_dense_bf16",
+      "source_sha256": "ca97e90376f1d97b65e778a669a04691117f765647356863b824ac25053138ab",
+      "map_sha256": "7aafcc63be76e1d5a0835a4e612fb9ef1ea2117614a8474b4f414889a1a9d06e"
+    },
+    "uniform_sq_int8": {
+      "origin": "015",
+      "source_policy": "uniform_sq_int8",
+      "source_sha256": "7122f2aaa3510d452b2af6d3c82f722914d4c4ecf27371a5e330554f82ef88a5",
+      "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44"
+    },
+    "uniform_fp8": {
+      "origin": "015",
+      "source_policy": "uniform_fp8",
+      "source_sha256": "0540ef63bd10744f82c6a18e73aef699f9bc246a9ce18dac671dafb49014a22c",
+      "map_sha256": "0406a7e7f71cf42e1ed98d257bbc069a87d9eb284bfe2fb60ce3e619125585fb"
+    },
+    "uniform_w4a16_ours": {
+      "origin": "015",
+      "source_policy": "uniform_w4a16_ours",
+      "source_sha256": "633f6cfaa7d0438e9ba05dc33defb5bb617d6cd2700c8a0bd0e5f68724f9ca3c",
+      "map_sha256": "0f7f08baf9153b2904ca44de930890597ed03e6be5705ffc3ee1a1a399a84264"
+    },
+    "hawq_signed_prefill_decode_phase_pair_r0.8": {
+      "origin": "016",
+      "source_policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "source_sha256": "d18f0020359247933c8e4e96113f499e8eaf11b1837cf2e1e70cfe3a520f3caf",
+      "map_sha256": "cf73ed5a97d3d17181cacd4cf22751f40ff506f3609bbc00fbb955e2eada8e8d"
+    },
+    "hardware_minimum_prefill_decode_phase_pair": {
+      "origin": "016",
+      "source_policy": "hardware_minimum_prefill_decode_phase_pair",
+      "source_sha256": "0c092a3b2ed1414fb54cfc7dfa4f612a614c67353ba09bcb7639c9f1f5ed7785",
+      "map_sha256": "78cc66d64f2c7ec10c44e8ac54b09ba08036b638bbba34238ce19c86620e3978"
+    },
+    "graph_phase_dense_nvfp4_sq_int8": {
+      "origin": "015",
+      "source_policy": "graph_phase_dense_nvfp4_sq_int8",
+      "source_sha256": "256f419f1be3a5344611a52369da83a9cb06f349507fd1ee8097e5894f13e1f5",
+      "map_sha256": "897a80ac0c58e0b9049ed1d99b9d7e7c726d7b0b63cd095003a5b296270a1d04"
+    },
+    "transfer_daso5_measured_prefill_decode_04": {
+      "origin": "015",
+      "source_policy": "transfer_daso5_measured_prefill_decode_04",
+      "source_sha256": "b4c04e2e8afda25dd8975108e37222a346a155511b3d37c3c9b415607ed1f262",
+      "map_sha256": "ad89ebf681b9c0480582fefcc6c63a5c9378abc8a82f2b03aeb9a39c491ab07f"
+    },
+    "daso8_exact_prefill_decode_q0.04": {
+      "origin": "016",
+      "source_policy": "daso8_exact_prefill_decode_q0.04",
+      "source_sha256": "1d52bb12eea1092272d243e5482cb5bdcfbd57e9df07c3f43c7aa7d440eb8d52",
+      "map_sha256": "51ccc2f69bd1d555d2d7318d30500e91d1c59246e313ae79f534407eac8cc12c"
+    },
+    "fixed_sq_int8_w4a16": {
+      "origin": "019",
+      "source_policy": "fixed_sq_int8_w4a16",
+      "source_sha256": "cf024e1188e1f2a18a46f7cded271125e82bb0bc713ad82284aab9aa51daf559",
+      "map_sha256": "9cbf5295521b7b3c63c803978ffebdfc99e314b9cf93078a74c3c23fe1535ddb"
+    }
+  },
+  "workloads": [
+    {
+      "label": "center",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 64,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/center_speed_inputs.json",
+      "input_sha256": "d8c0bc3ba81a8c49216f74cdb35fa363fd5bce27bc753f3aa4907a855bc8b514",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/center_quality.pt",
+      "quality_sha256": "71c648b6713614414dbb6aa2bc839c2b0fe9821c31840c2e09c54d9f760e545a"
+    },
+    {
+      "label": "single",
+      "batch": 1,
+      "prompt": 2048,
+      "output": 128,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/single_speed_inputs.json",
+      "input_sha256": "d7a6b66cb81911f1d387d5091c0dbf435516b2708461ecdb7d045cf275306214",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/single_quality.pt",
+      "quality_sha256": "3932128e8c6b0c9955cee8854ee92e547870b3ccb36743e4cdf1db5a60c7b572"
+    },
+    {
+      "label": "short",
+      "batch": 8,
+      "prompt": 512,
+      "output": 128,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/short_speed_inputs.json",
+      "input_sha256": "23a46937f32fff3bd58954e8afcf0438f8188fb64696c9006fa9e6d2471c676c",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/short_quality.pt",
+      "quality_sha256": "62e8a2fac4849fae5fb57e4926f22d9e2f8d5abf5d4538babf5e06d8b9b29db8"
+    },
+    {
+      "label": "long",
+      "batch": 8,
+      "prompt": 4096,
+      "output": 64,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/long_speed_inputs.json",
+      "input_sha256": "edfedf0ebc45d6c1425a22bc0d49ea805a29190fe36cfa3fd19b066ab232c409",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/long_quality.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "decode256",
+      "batch": 8,
+      "prompt": 512,
+      "output": 256,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/decode256_speed_inputs.json",
+      "input_sha256": "3984c1f9cf3c1a7af9ac2aa3c3124bc33b1a889940e2467e10874523a9022d0a",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/decode256_quality.pt",
+      "quality_sha256": "65fff817fd75b6dd77f8cbe588af1adc873f45b9d21f38d55f202478f322caf5"
+    },
+    {
+      "label": "single256",
+      "batch": 1,
+      "prompt": 512,
+      "output": 256,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/single256_speed_inputs.json",
+      "input_sha256": "3a094dab3f78b3b2e0fd13607379c682e8a5cc7a53e7cf50cc4f9d5700a50b4b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/single256_quality.pt",
+      "quality_sha256": "21395797a923b9fd63d103ecf4dcf83afb9eaa198beb037a9b03d5cff3394ad3"
+    }
+  ],
+  "rounds": [
+    [
+      "uniform_dense_bf16",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "uniform_w4a16_ours",
+      "daso8_exact_prefill_decode_q0.04",
+      "fixed_sq_int8_w4a16",
+      "uniform_fp8",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "transfer_daso5_measured_prefill_decode_04",
+      "uniform_sq_int8",
+      "graph_phase_dense_nvfp4_sq_int8",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "uniform_w4a16_ours",
+      "daso8_exact_prefill_decode_q0.04",
+      "uniform_sq_int8",
+      "transfer_daso5_measured_prefill_decode_04",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "graph_phase_dense_nvfp4_sq_int8",
+      "fixed_sq_int8_w4a16",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "uniform_fp8",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "daso8_exact_prefill_decode_q0.04",
+      "fixed_sq_int8_w4a16",
+      "graph_phase_dense_nvfp4_sq_int8",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "uniform_w4a16_ours",
+      "transfer_daso5_measured_prefill_decode_04",
+      "uniform_fp8",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "uniform_sq_int8",
+      "uniform_dense_bf16_bracket_end"
+    ]
+  ],
+  "warmups": 3,
+  "iterations": 5,
+  "quality_windows": 64,
+  "kv_gib": 6,
+  "quality_source": "/root/wja/.cache/huggingface/datasets/Salesforce___wikitext/wikitext-2-raw-v1/0.0.0/b08601e04326c79dfdd32d625aee71d232d685c3/wikitext-test.arrow",
+  "quality_source_sha256": "2b8a3efac7b468cbe6432edba5f55c21e435d93873acc6727431f08d5ed328ea",
+  "quality_starts": [
+    187136,
+    0,
+    221952,
+    17408,
+    269824,
+    65280,
+    43520,
+    108800,
+    265472,
+    21760,
+    274176,
+    121856,
+    230656,
+    239360,
+    52224,
+    213248,
+    139264,
+    30464,
+    104448,
+    60928,
+    26112,
+    256768,
+    169728,
+    174080,
+    34816,
+    182784,
+    156672,
+    4352,
+    78336,
+    126208,
+    243712,
+    282880,
+    39168,
+    252416,
+    191488,
+    56576,
+    261120,
+    208896,
+    47872,
+    130560,
+    143616,
+    178432,
+    69632,
+    161024,
+    235008,
+    165376,
+    134912,
+    152320,
+    117504,
+    287232,
+    226304,
+    278528,
+    82688,
+    13056,
+    200192,
+    204544,
+    8704,
+    87040,
+    147968,
+    91392,
+    217600,
+    195840,
+    73984,
+    100096
+  ],
+  "scope": "Fixed center-load maps transferred to six predeclared B/S/O loads; no per-load retuning or selection. Same local public WikiText test corpus previously benchmarked; reshuffled nonoverlapping 4352-token source blocks reused across cases, not a new unseen corpus. Three speed campaigns, BF16 start/end anchors, per-case raw TTFT/TPOT/E2E/restore/cycle. All baselines and previous DASO incumbents preserved; no method is dropped after seeing new results."
+}

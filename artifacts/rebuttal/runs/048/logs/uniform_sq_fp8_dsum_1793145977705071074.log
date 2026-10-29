@@ -1,0 +1,53 @@
+INFO 10-28 00:06:22 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-28 00:06:27 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8] to model_path [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8]
+INFO 10-28 00:06:27 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8] to model_path [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8]
+INFO 10-28 00:06:27 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 6442450944, 'max_num_batched_tokens': 32768, 'max_num_seqs': 8, 'disable_log_stats': True, 'enable_chunked_prefill': False, 'compilation_config': {"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[8],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': '/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8'}
+WARNING 10-28 00:06:27 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-28 00:06:27 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+INFO 10-28 00:06:27 [model.py:1510] Using max model len 4096
+INFO 10-28 00:06:28 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8', speculative_config=None, tokenizer='/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[8],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":8,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-28 00:06:28 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-28 00:06:28 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-28 00:06:29 [gpu_model_runner.py:2602] Starting to load model /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/data/work/checkpoints/uniform_sq_fp8...
+INFO 10-28 00:06:29 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-28 00:06:29 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:01<00:00,  1.38s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:01<00:00,  1.38s/it]
+
+INFO 10-28 00:06:31 [default_loader.py:267] Loading weights took 1.93 seconds
+INFO 10-28 00:06:31 [gpu_model_runner.py:2653] Model loading took 8.8064 GiB and 2.093700 seconds
+INFO 10-28 00:06:34 [gpu_worker.py:251] Initial free memory 30.68719482421875 GiB, reserved 6.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-28 00:06:34 [kv_cache_utils.py:1087] GPU KV cache size: 43,680 tokens
+INFO 10-28 00:06:34 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 10.66x
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  7.83it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  7.81it/s]
+INFO 10-28 00:06:34 [gpu_model_runner.py:3480] Graph capturing finished in 0 secs, took -0.24 GiB
+INFO 10-28 00:06:34 [core.py:210] init engine (profile, create kv cache, warmup model) took 2.91 seconds
+INFO 10-28 00:06:35 [llm.py:306] Supported_tasks: ('generate',)
+uniform_sq_fp8 dsum 8 / 1500 seconds 0.9890309781767428
+uniform_sq_fp8 dsum 88 / 1500 seconds 9.81677209911868
+uniform_sq_fp8 dsum 168 / 1500 seconds 19.788075627293438
+uniform_sq_fp8 dsum 248 / 1500 seconds 28.864006347954273
+uniform_sq_fp8 dsum 328 / 1500 seconds 38.04522601515055
+uniform_sq_fp8 dsum 408 / 1500 seconds 46.96622363617644
+uniform_sq_fp8 dsum 488 / 1500 seconds 55.95505317207426
+uniform_sq_fp8 dsum 568 / 1500 seconds 64.64118497213349
+uniform_sq_fp8 dsum 648 / 1500 seconds 73.5756169189699
+uniform_sq_fp8 dsum 728 / 1500 seconds 82.9473235681653
+uniform_sq_fp8 dsum 808 / 1500 seconds 92.53394388314337
+uniform_sq_fp8 dsum 888 / 1500 seconds 102.30997804831713
+uniform_sq_fp8 dsum 968 / 1500 seconds 111.19778036000207
+uniform_sq_fp8 dsum 1048 / 1500 seconds 119.45951033104211
+uniform_sq_fp8 dsum 1128 / 1500 seconds 128.11753228725865
+uniform_sq_fp8 dsum 1208 / 1500 seconds 137.92565960390493
+uniform_sq_fp8 dsum 1288 / 1500 seconds 147.1747254258953
+uniform_sq_fp8 dsum 1368 / 1500 seconds 156.40161286620423
+uniform_sq_fp8 dsum 1448 / 1500 seconds 165.39763819100335
+{'policy_id': 'uniform_sq_fp8', 'dataset': 'dsum', 'samples': 1500, 'begin': 0, 'end': None, 'generation_seconds': 171.9878506679088, 'rougeL_percent': 27.030242688104053, 'empty_predictions': 0, 'input_sha256': '6583d5e4c591798d61fecd0f9ca9d78d5faf0287216d5b31e576e655a329051e', 'kv_cache_memory_bytes': 6442450944, 'max_new_tokens': 256, 'chat_template': 'native Qwen3, enable_thinking=False', 'peak_allocated_bytes': 16645391360, 'peak_reserved_bytes': 17416847360}
+[rank0]:[W1028 00:09:28.105612026 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

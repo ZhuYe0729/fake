@@ -1,0 +1,53 @@
+INFO 10-25 18:11:51 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-25 18:11:56 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827] to model_path [/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827]
+INFO 10-25 18:11:56 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827] to model_path [/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827]
+INFO 10-25 18:11:56 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 6442450944, 'max_num_batched_tokens': 32768, 'max_num_seqs': 8, 'disable_log_stats': True, 'enforce_eager': True, 'enable_chunked_prefill': False, 'model': '/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827'}
+WARNING 10-25 18:11:56 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-25 18:11:56 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+INFO 10-25 18:11:56 [model.py:1510] Using max model len 4096
+INFO 10-25 18:11:56 [__init__.py:381] Cudagraph is disabled under eager mode
+INFO 10-25 18:11:57 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827', speculative_config=None, tokenizer='/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=True, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":0,"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":0,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-25 18:11:57 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-25 18:11:58 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-25 18:11:58 [gpu_model_runner.py:2602] Starting to load model /dev/shm/daso_rebuttal_010_20261025/checkpoints/verified_9e60153b6827...
+INFO 10-25 18:11:58 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-25 18:11:58 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:06<00:00,  6.66s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:06<00:00,  6.66s/it]
+
+INFO 10-25 18:12:06 [default_loader.py:267] Loading weights took 7.25 seconds
+INFO 10-25 18:12:06 [gpu_model_runner.py:2653] Model loading took 8.6884 GiB and 7.437746 seconds
+INFO 10-25 18:12:09 [gpu_worker.py:251] Initial free memory 30.75347900390625 GiB, reserved 6.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-25 18:12:09 [kv_cache_utils.py:1087] GPU KV cache size: 43,680 tokens
+INFO 10-25 18:12:09 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 10.66x
+WARNING 10-25 18:12:09 [cudagraph_dispatcher.py:106] cudagraph dispatching keys are not initialized. No cudagraph will be used.
+INFO 10-25 18:12:09 [core.py:210] init engine (profile, create kv cache, warmup model) took 2.57 seconds
+INFO 10-25 18:12:09 [llm.py:306] Supported_tasks: ('generate',)
+verified_9e60153b6827 dsum 8 / 1500 seconds 1.3013311470858753
+verified_9e60153b6827 dsum 88 / 1500 seconds 11.536602625157684
+verified_9e60153b6827 dsum 168 / 1500 seconds 20.29798432602547
+verified_9e60153b6827 dsum 248 / 1500 seconds 29.25032663717866
+verified_9e60153b6827 dsum 328 / 1500 seconds 37.248774473089725
+verified_9e60153b6827 dsum 408 / 1500 seconds 45.089446583995596
+verified_9e60153b6827 dsum 488 / 1500 seconds 53.48748677410185
+verified_9e60153b6827 dsum 568 / 1500 seconds 61.408270886167884
+verified_9e60153b6827 dsum 648 / 1500 seconds 69.87017488712445
+verified_9e60153b6827 dsum 728 / 1500 seconds 78.83567823609337
+verified_9e60153b6827 dsum 808 / 1500 seconds 87.28438122500665
+verified_9e60153b6827 dsum 888 / 1500 seconds 95.5670054371003
+verified_9e60153b6827 dsum 968 / 1500 seconds 103.74158746213652
+verified_9e60153b6827 dsum 1048 / 1500 seconds 112.27526786900125
+verified_9e60153b6827 dsum 1128 / 1500 seconds 121.00859991507605
+verified_9e60153b6827 dsum 1208 / 1500 seconds 129.82838360010646
+verified_9e60153b6827 dsum 1288 / 1500 seconds 138.2035752690863
+verified_9e60153b6827 dsum 1368 / 1500 seconds 146.75248351320624
+verified_9e60153b6827 dsum 1448 / 1500 seconds 154.96143835410476
+{'policy_id': 'verified_9e60153b6827', 'dataset': 'dsum', 'samples': 1500, 'begin': 0, 'end': None, 'generation_seconds': 160.91847437806427, 'rougeL_percent': 26.720266260695198, 'empty_predictions': 0, 'input_sha256': '6583d5e4c591798d61fecd0f9ca9d78d5faf0287216d5b31e576e655a329051e', 'kv_cache_memory_bytes': 6442450944, 'max_new_tokens': 256, 'chat_template': 'native Qwen3, enable_thinking=False', 'peak_allocated_bytes': 18817023488, 'peak_reserved_bytes': 24366809088}
+[rank0]:[W1025 18:14:52.878577773 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

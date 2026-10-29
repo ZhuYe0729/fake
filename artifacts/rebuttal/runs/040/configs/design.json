@@ -1,0 +1,247 @@
+{
+  "rows": [
+    {
+      "method": "BF16",
+      "policy": "uniform_dense_bf16",
+      "source_run": "032",
+      "budget": null
+    },
+    {
+      "method": "INT8 W8A8",
+      "policy": "uniform_int8",
+      "source_run": "032",
+      "budget": null
+    },
+    {
+      "method": "SmoothQuant INT8",
+      "policy": "uniform_sq_int8",
+      "source_run": "032",
+      "budget": null
+    },
+    {
+      "method": "FP8 W8A8",
+      "policy": "uniform_fp8",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "Uniform SQ-INT8 prefill / W4A16 decode",
+      "policy": "fixed_sq_int8_w4a16",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "HAWQ-FP4 PTQ r=.80",
+      "policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "Common hardware-minimum control",
+      "policy": "hardware_minimum_prefill_decode_phase_pair",
+      "source_run": "019",
+      "budget": null
+    },
+    {
+      "method": "DASO exploratory w1 q=.01",
+      "policy": "w1_e0.01",
+      "source_run": "032",
+      "budget": 0.01
+    },
+    {
+      "method": "DASO exploratory w32 q=.03",
+      "policy": "w32_e0.03",
+      "source_run": "033",
+      "budget": 0.03
+    }
+  ],
+  "policies": {
+    "uniform_dense_bf16": {
+      "source_run": "032",
+      "source_policy": "uniform_dense_bf16",
+      "source_sha256": "beb0114dac4e4ecb44b988300978cabf7624a2e908e2c73ce5c88c37842bd79f",
+      "map_sha256": "7aafcc63be76e1d5a0835a4e612fb9ef1ea2117614a8474b4f414889a1a9d06e"
+    },
+    "uniform_int8": {
+      "source_run": "032",
+      "source_policy": "uniform_int8",
+      "source_sha256": "ca995f3e6afcbfb927a080b8b84c7fd1b0fb1ce68d894d1b296ee24f0bd2a676",
+      "map_sha256": "e617c822e1c64a1eeadb1bf30eca475223420a1270d006da332150fed1c9866f"
+    },
+    "uniform_sq_int8": {
+      "source_run": "032",
+      "source_policy": "uniform_sq_int8",
+      "source_sha256": "6c968742a500ec6c5c5eb7f078594dad270bba2ebb2718a1675a47b51e9a00b2",
+      "map_sha256": "c63754e060c44d48a501b91db833991b1247270661d77e0ef4306941c711ff44"
+    },
+    "uniform_fp8": {
+      "source_run": "019",
+      "source_policy": "uniform_fp8",
+      "source_sha256": "0540ef63bd10744f82c6a18e73aef699f9bc246a9ce18dac671dafb49014a22c",
+      "map_sha256": "0406a7e7f71cf42e1ed98d257bbc069a87d9eb284bfe2fb60ce3e619125585fb"
+    },
+    "fixed_sq_int8_w4a16": {
+      "source_run": "019",
+      "source_policy": "fixed_sq_int8_w4a16",
+      "source_sha256": "cf024e1188e1f2a18a46f7cded271125e82bb0bc713ad82284aab9aa51daf559",
+      "map_sha256": "9cbf5295521b7b3c63c803978ffebdfc99e314b9cf93078a74c3c23fe1535ddb"
+    },
+    "hawq_signed_prefill_decode_phase_pair_r0.8": {
+      "source_run": "019",
+      "source_policy": "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "source_sha256": "d18f0020359247933c8e4e96113f499e8eaf11b1837cf2e1e70cfe3a520f3caf",
+      "map_sha256": "cf73ed5a97d3d17181cacd4cf22751f40ff506f3609bbc00fbb955e2eada8e8d"
+    },
+    "hardware_minimum_prefill_decode_phase_pair": {
+      "source_run": "019",
+      "source_policy": "hardware_minimum_prefill_decode_phase_pair",
+      "source_sha256": "0c092a3b2ed1414fb54cfc7dfa4f612a614c67353ba09bcb7639c9f1f5ed7785",
+      "map_sha256": "78cc66d64f2c7ec10c44e8ac54b09ba08036b638bbba34238ce19c86620e3978"
+    },
+    "w1_e0.01": {
+      "source_run": "032",
+      "source_policy": "w1_e0.01",
+      "source_sha256": "7993275e61bd9414bcaebb11176cfa6e2113b6edfe5f43b49b0af81b7a3011f8",
+      "map_sha256": "b3a7766fdbdffaa772843ce303dc2cd4473d5c4d9019daef1f6c547334b72489"
+    },
+    "w32_e0.03": {
+      "source_run": "033",
+      "source_policy": "w32_e0.03",
+      "source_sha256": "9ba1239dac83f30057a584ae1586425d658f25123f5f43bc916b3cbba01c149c",
+      "map_sha256": "24dbc084d3f627e894638003273e3e0c70edd995b5f116256b5363f79891fb7c"
+    }
+  },
+  "workloads": [
+    {
+      "label": "center",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 64,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/center_speed_inputs.json",
+      "input_sha256": "d8c0bc3ba81a8c49216f74cdb35fa363fd5bce27bc753f3aa4907a855bc8b514",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/center_quality.pt",
+      "quality_sha256": "71c648b6713614414dbb6aa2bc839c2b0fe9821c31840c2e09c54d9f760e545a"
+    },
+    {
+      "label": "single",
+      "batch": 1,
+      "prompt": 2048,
+      "output": 128,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/single_speed_inputs.json",
+      "input_sha256": "d7a6b66cb81911f1d387d5091c0dbf435516b2708461ecdb7d045cf275306214",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/single_quality.pt",
+      "quality_sha256": "3932128e8c6b0c9955cee8854ee92e547870b3ccb36743e4cdf1db5a60c7b572"
+    },
+    {
+      "label": "short",
+      "batch": 8,
+      "prompt": 512,
+      "output": 128,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/short_speed_inputs.json",
+      "input_sha256": "23a46937f32fff3bd58954e8afcf0438f8188fb64696c9006fa9e6d2471c676c",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/short_quality.pt",
+      "quality_sha256": "62e8a2fac4849fae5fb57e4926f22d9e2f8d5abf5d4538babf5e06d8b9b29db8"
+    },
+    {
+      "label": "long",
+      "batch": 8,
+      "prompt": 4096,
+      "output": 64,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/long_speed_inputs.json",
+      "input_sha256": "edfedf0ebc45d6c1425a22bc0d49ea805a29190fe36cfa3fd19b066ab232c409",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/long_quality.pt",
+      "quality_sha256": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572"
+    },
+    {
+      "label": "decode256",
+      "batch": 8,
+      "prompt": 512,
+      "output": 256,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/decode256_speed_inputs.json",
+      "input_sha256": "3984c1f9cf3c1a7af9ac2aa3c3124bc33b1a889940e2467e10874523a9022d0a",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/decode256_quality.pt",
+      "quality_sha256": "65fff817fd75b6dd77f8cbe588af1adc873f45b9d21f38d55f202478f322caf5"
+    },
+    {
+      "label": "single256",
+      "batch": 1,
+      "prompt": 512,
+      "output": 256,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/single256_speed_inputs.json",
+      "input_sha256": "3a094dab3f78b3b2e0fd13607379c682e8a5cc7a53e7cf50cc4f9d5700a50b4b",
+      "quality_file": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/single256_quality.pt",
+      "quality_sha256": "21395797a923b9fd63d103ecf4dcf83afb9eaa198beb037a9b03d5cff3394ad3"
+    }
+  ],
+  "rounds": [
+    [
+      "uniform_dense_bf16",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "uniform_fp8",
+      "uniform_sq_int8",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "uniform_int8",
+      "w1_e0.01",
+      "w32_e0.03",
+      "fixed_sq_int8_w4a16",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "uniform_fp8",
+      "uniform_int8",
+      "uniform_sq_int8",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "fixed_sq_int8_w4a16",
+      "w32_e0.03",
+      "w1_e0.01",
+      "uniform_dense_bf16_bracket_end"
+    ],
+    [
+      "uniform_dense_bf16",
+      "hardware_minimum_prefill_decode_phase_pair",
+      "fixed_sq_int8_w4a16",
+      "uniform_fp8",
+      "w32_e0.03",
+      "uniform_int8",
+      "w1_e0.01",
+      "uniform_sq_int8",
+      "hawq_signed_prefill_decode_phase_pair_r0.8",
+      "uniform_dense_bf16_bracket_end"
+    ]
+  ],
+  "warmups": 3,
+  "iterations": 5,
+  "quality_windows": 64,
+  "kv_gib": 6,
+  "protected_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/results/final_audit.json": "e54d706f040fa3ff3df9c83732e77285ada814d10f53453000b34ed3b7ae2b8a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/032/results/final_audit.json": "c3aa29ea6df3655d9ef1d44e5130d20995539f2e93eb4777e17ed9f8e004760d",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/results/final_audit.json": "dfb05e5b4bb8668b35d59eaeb3b6bc124ff3de13a0fcefc5e22c13a9f310475f",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/common.py": "722d64ee7e6783a03c124a8ca2e60bd91e207ee3f08b5318ba41ccfc7316cc24",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/eightbit.py": "b6c1b66b3530c24c6211b5d9d60f9b82cb89b5d6a2d7746a835a75881df792a5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/runtime_extensions.py": "6710ad53a1f26361315fefb5546fc18061a54f9d630061dd5d5e76abd1e07d7c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/graph_bindings.py": "5ac135d3f9496ff2e39b0872cf4bda737029d82f46853f84f9f54401346324e8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/export_model.py": "e3ba193f87df657ee808bc386525bf6a78b844b5e103b07e7b155b4b47bbffbd",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/int4_marlin.py": "8330f356898994b7f1fd7e7c866f1d64135c4b92b1149123767990a9f5a3d2f7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/033/code/telemetry.py": "161c9da2fa1e1d25cc02112f8f76bb67ec4d3e3f4f67642b8b2f0fc0f0177b85"
+  },
+  "input_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/center_speed_inputs.json": "d8c0bc3ba81a8c49216f74cdb35fa363fd5bce27bc753f3aa4907a855bc8b514",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/center_quality.pt": "71c648b6713614414dbb6aa2bc839c2b0fe9821c31840c2e09c54d9f760e545a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/single_speed_inputs.json": "d7a6b66cb81911f1d387d5091c0dbf435516b2708461ecdb7d045cf275306214",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/single_quality.pt": "3932128e8c6b0c9955cee8854ee92e547870b3ccb36743e4cdf1db5a60c7b572",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/short_speed_inputs.json": "23a46937f32fff3bd58954e8afcf0438f8188fb64696c9006fa9e6d2471c676c",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/short_quality.pt": "62e8a2fac4849fae5fb57e4926f22d9e2f8d5abf5d4538babf5e06d8b9b29db8",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/long_speed_inputs.json": "edfedf0ebc45d6c1425a22bc0d49ea805a29190fe36cfa3fd19b066ab232c409",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/long_quality.pt": "f86290744294481190a170e6f7ce275a7642fc4a4ee795a53fb767ae5cdd9572",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/decode256_speed_inputs.json": "3984c1f9cf3c1a7af9ac2aa3c3124bc33b1a889940e2467e10874523a9022d0a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/decode256_quality.pt": "65fff817fd75b6dd77f8cbe588af1adc873f45b9d21f38d55f202478f322caf5",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/configs/single256_speed_inputs.json": "3a094dab3f78b3b2e0fd13607379c682e8a5cc7a53e7cf50cc4f9d5700a50b4b",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/019/data/single256_quality.pt": "21395797a923b9fd63d103ecf4dcf83afb9eaa198beb037a9b03d5cff3394ad3",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/002/data/activation_scales.pt": "336fd3727be6b6b86c152082d9421a6d9c782b6863d5648b1307265748f5e2ad"
+  },
+  "scope": "Existing center policies, fixed six-load transfer; previously observed public test corpus; no load-specific tuning or newblind claim."
+}

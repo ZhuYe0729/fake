@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "metrics": [
+    {
+      "method": "dense_bf16",
+      "train_rows": 16,
+      "test_rows": 24,
+      "supported_test_rows": 24,
+      "unsupported_test_rows": 0,
+      "mape_percent": 19.654915971107236,
+      "median_ape_percent": 6.6367961925575925,
+      "p90_ape_percent": 81.74821627374827,
+      "max_ape_percent": 101.30037638644198,
+      "fit_seconds": 0.029669957933947444,
+      "query_seconds": 0.026776494923979044,
+      "mae_ms": 0.09249732468189968
+    },
+    {
+      "method": "dense_nvfp4",
+      "train_rows": 16,
+      "test_rows": 24,
+      "supported_test_rows": 24,
+      "unsupported_test_rows": 0,
+      "mape_percent": 504.1382934421831,
+      "median_ape_percent": 79.19925129259964,
+      "p90_ape_percent": 882.9605470584713,
+      "max_ape_percent": 6491.866052795732,
+      "fit_seconds": 0.03090980416163802,
+      "query_seconds": 0.04115725192241371,
+      "mae_ms": 3.981293339151888
+    },
+    {
+      "method": "sparse_bf16",
+      "train_rows": 16,
+      "test_rows": 24,
+      "supported_test_rows": 20,
+      "unsupported_test_rows": 4,
+      "mape_percent": 390.99433042795715,
+      "median_ape_percent": 92.71461253513928,
+      "p90_ape_percent": 896.9904605480494,
+      "max_ape_percent": 2500.7130129336306,
+      "fit_seconds": 0.021571238059550524,
+      "query_seconds": 0.034333345014601946,
+      "mae_ms": 2.8523651818649385
+    },
+    {
+      "method": "sparse_nvfp4",
+      "train_rows": 16,
+      "test_rows": 24,
+      "supported_test_rows": 16,
+      "unsupported_test_rows": 8,
+      "mape_percent": 539.69223038527,
+      "median_ape_percent": 81.93734483962054,
+      "p90_ape_percent": 1152.4230825109494,
+      "max_ape_percent": 4992.320765972297,
+      "fit_seconds": 0.02804535999894142,
+      "query_seconds": 0.03937701019458473,
+      "mae_ms": 3.691705323454867
+    },
+    {
+      "method": "w4a16_ours",
+      "train_rows": 16,
+      "test_rows": 24,
+      "supported_test_rows": 24,
+      "unsupported_test_rows": 0,
+      "mape_percent": 1980.8828424902501,
+      "median_ape_percent": 89.69200295376105,
+      "p90_ape_percent": 5789.7269540873285,
+      "max_ape_percent": 24134.63046919828,
+      "fit_seconds": 0.02694492507725954,
+      "query_seconds": 0.03791266796179116,
+      "mae_ms": 6.937159108536992
+    }
+  ],
+  "scope": "Original five method-aware model architectures refitted on 4 disjoint M values; 6 held-out M values, same Qwen module N/K; complete-forward wall-time target. No pretrained-model shape leakage; this is a sparse local calibration study, not the original comprehensive predictor test."
+}

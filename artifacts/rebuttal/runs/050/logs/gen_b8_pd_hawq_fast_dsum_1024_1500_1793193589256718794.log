@@ -1,0 +1,93 @@
+INFO 10-28 13:19:53 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-28 13:19:59 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast] to model_path [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast]
+INFO 10-28 13:19:59 [arg_utils.py:504] HF_HUB_OFFLINE is True, replace model_id [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast] to model_path [/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast]
+INFO 10-28 13:19:59 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 6442450944, 'max_num_batched_tokens': 32768, 'max_num_seqs': 8, 'disable_log_stats': True, 'enable_chunked_prefill': False, 'compilation_config': {"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[8],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': '/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast'}
+WARNING 10-28 13:19:59 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-28 13:19:59 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+INFO 10-28 13:19:59 [model.py:1510] Using max model len 4096
+INFO 10-28 13:20:00 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast', speculative_config=None, tokenizer='/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[8],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":8,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-28 13:20:00 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-28 13:20:00 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-28 13:20:01 [gpu_model_runner.py:2602] Starting to load model /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/050/data/work/checkpoints/pd_hawq_fast...
+INFO 10-28 13:20:01 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-28 13:20:01 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:06<00:00,  6.73s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:06<00:00,  6.74s/it]
+
+INFO 10-28 13:20:08 [default_loader.py:267] Loading weights took 7.00 seconds
+INFO 10-28 13:20:09 [gpu_model_runner.py:2653] Model loading took 7.3250 GiB and 7.374623 seconds
+INFO 10-28 13:20:11 [gpu_worker.py:251] Initial free memory 30.6871337890625 GiB, reserved 6.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-28 13:20:11 [kv_cache_utils.py:1087] GPU KV cache size: 43,680 tokens
+INFO 10-28 13:20:11 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 10.66x
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  2.77it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 1/1 [00:00<00:00,  2.77it/s]
+INFO 10-28 13:20:12 [gpu_model_runner.py:3480] Graph capturing finished in 1 secs, took -0.08 GiB
+INFO 10-28 13:20:12 [core.py:210] init engine (profile, create kv cache, warmup model) took 2.98 seconds
+INFO 10-28 13:20:12 [llm.py:306] Supported_tasks: ('generate',)
+gen_b8_pd_hawq_fast_dsum_1024_1500 8 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 16 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 24 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 32 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 40 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 48 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 56 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 64 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 72 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 80 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 88 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 96 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 104 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 112 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 120 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 128 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 136 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 144 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 152 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 160 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 168 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 176 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 184 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 192 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 200 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 208 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 216 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 224 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 232 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 240 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 248 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 256 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 264 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 272 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 280 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 288 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 296 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 304 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 312 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 320 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 328 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 336 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 344 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 352 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 360 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 368 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 376 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 384 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 392 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 400 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 408 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 416 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 424 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 432 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 440 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 448 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 456 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 464 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 472 / 476
+gen_b8_pd_hawq_fast_dsum_1024_1500 476 / 476
+[rank0]:[W1028 13:20:39.287810855 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

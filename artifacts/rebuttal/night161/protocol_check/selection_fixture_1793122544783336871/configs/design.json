@@ -1,0 +1,32 @@
+{
+  "datasets": {
+    "validation": {
+      "sha256": "fixture"
+    }
+  },
+  "validation_sizes": [
+    32,
+    64
+  ],
+  "budgets": [
+    0.01,
+    0.02,
+    0.04,
+    0.07
+  ],
+  "policies": {
+    "uniform_dense_bf16": {
+      "linear_ms": 30.0
+    },
+    "uniform_int8": {
+      "linear_ms": 20.0
+    },
+    "uniform_sq_int8": {
+      "linear_ms": 10.0
+    },
+    "uniform_fp8": {
+      "linear_ms": 25.0
+    }
+  },
+  "selection": "fixture:minimum latency passing empirical guard"
+}

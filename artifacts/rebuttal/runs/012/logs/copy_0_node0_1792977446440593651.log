@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/012/code/copy_probe.py", line 33, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/012/code/copy_probe.py", line 14, in main
+    from telemetry import gpu,placement
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/012/code/telemetry.py", line 7, in <module>
+    nvml=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(nvml)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/third_party/pynvml.py", line 1043, in <module>
+    _extractNVMLErrorsAsClasses()
+  File "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/third_party/pynvml.py", line 1028, in _extractNVMLErrorsAsClasses
+    this_module = sys.modules[__name__]
+                  ~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'rebuttal_nvml'

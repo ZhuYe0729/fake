@@ -1,0 +1,66 @@
+{
+  "model": "/root/wja/data/models/Qwen/Qwen3-8B",
+  "model_config": {
+    "architectures": [
+      "Qwen3ForCausalLM"
+    ],
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "bos_token_id": 151643,
+    "eos_token_id": 151645,
+    "head_dim": 128,
+    "hidden_act": "silu",
+    "hidden_size": 4096,
+    "initializer_range": 0.02,
+    "intermediate_size": 12288,
+    "max_position_embeddings": 40960,
+    "max_window_layers": 36,
+    "model_type": "qwen3",
+    "num_attention_heads": 32,
+    "num_hidden_layers": 36,
+    "num_key_value_heads": 8,
+    "rms_norm_eps": 1e-06,
+    "rope_scaling": null,
+    "rope_theta": 1000000,
+    "sliding_window": null,
+    "tie_word_embeddings": false,
+    "torch_dtype": "bfloat16",
+    "transformers_version": "4.51.0",
+    "use_cache": true,
+    "use_sliding_window": false,
+    "vocab_size": 151936
+  },
+  "repo_commit": "a5be1ffc446b0e5d6ac25167750a4295324f51c7",
+  "vllm_root": "/root/wja/project/my/cospaq/test/vllm",
+  "vllm_commit": "679527f6fffdc51ee79a92b4d9b0749a8855e5b6",
+  "wrapper_root": "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper",
+  "wrapper_commit": "8f60a9d2251e39fc7adbb385f6612260db56ec38",
+  "backend_files": {
+    "/root/wja/project/my/cospaq/test/vllm/artifacts/dev/012_phase_hetero_linear/export_phase_hetero_model.py": "c4b0cd60fd1f31feb5a7b0ff073a1f5fb98c6a5d5755f65e084c7580f8067ffe",
+    "/root/wja/project/my/cospaq/test/vllm/artifacts/dev/012_phase_hetero_linear/phase_hetero_mytest.py": "b570e49500f2fbb4a9a08fbbdf2785a8fd0048507442180784a234893c9d2886",
+    "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/models/qwen3.py": "ebcfa01f530ecd7c123cdddc6085d015dd809cb0a0189887a09f8a17a11f00ec",
+    "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/layers/quantization/phase_hetero_mytest.py": "86d2b86d543e4ec3860fef0616f21747added175d462f6a5d1dff72e55610a01",
+    "/root/wja/project/my/cospaq/test/vllm/vllm/vllm/model_executor/models/qwen2.py": "ae57d84ad2a2cbc986538ce221d082f4662e169413988ddaaf4a48539dee1bff"
+  },
+  "python": "3.12.13",
+  "torch": "2.9.0+cu128",
+  "transformers": "4.55.2",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "temporary_root": "/dev/shm/daso_rebuttal_001_20261025",
+  "workloads": {
+    "prefill_only": [
+      8,
+      2048,
+      1
+    ],
+    "prefill_decode": [
+      8,
+      2048,
+      64
+    ]
+  },
+  "generation_chat_template": "native Qwen3, enable_thinking=False",
+  "int8_backend": "torch._int_mm; installed vLLM CUTLASS rejects SM120",
+  "cleanup": "No existing model, code, log, CSV or document has been removed."
+}

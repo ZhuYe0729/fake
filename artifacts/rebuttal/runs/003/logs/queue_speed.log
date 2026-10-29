@@ -1,0 +1,28 @@
+speed started uniform_dense_bf16 16
+speed complete uniform_dense_bf16
+speed started uniform_dense_nvfp4 16
+speed complete uniform_dense_nvfp4
+speed started uniform_sparse_bf16 16
+speed complete uniform_sparse_bf16
+speed started uniform_sparse_nvfp4 16
+speed complete uniform_sparse_nvfp4
+speed started uniform_w4a16_ours 16
+speed complete uniform_w4a16_ours
+speed started uniform_int8 16
+speed complete uniform_int8
+speed started uniform_marlin_int4 16
+speed complete uniform_marlin_int4
+speed started uniform_sq_int8 16
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/003/code/orchestrate.py", line 116, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/003/code/orchestrate.py", line 80, in main
+    model=checkpoint(policy)
+          ^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/003/code/orchestrate.py", line 51, in checkpoint
+    invoke(command,policy+'_export')
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/003/code/orchestrate.py", line 32, in invoke
+    if result.returncode:raise RuntimeError(f'exit {result.returncode}: {log}')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: exit 1: /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/003/logs/uniform_sq_int8_export_1792939437579518106.log

@@ -1,0 +1,22 @@
+allocated_gpus,end_utc,new_labels,parallelism,policies,run,seconds,source,stage,start_utc,sum_label_elapsed_seconds
+,,,,,001,305.02914623194374,results/canonical_sparse_bf16.json,SparseGPT BF16,,
+,,,,,001,305.29572466085665,results/canonical_sparse_nvfp4.json,SparseGPT NVFP4,,
+,,,,,001,1765.6385020969901,results/hessian_trace_blockwise_p16_b4_s256.json,HAWQ Hessian,,
+,,,,,001,0.15566914388909936,results/hawq_marlin_int4_allocation.json,HAWQ INT4 分配,,
+,,,,,001,0.2617448829114437,results/hawq_fp4_allocation.json,HAWQ FP4 分配,,
+,,,,,001,66.62469808594324,results/local_error_metadata.json,局部输出误差,,
+,2026-10-25T07:42:18.688719+00:00,,1 GPU,,001,4856.442481279373,logs/cal_prefill_only_*.command.json and outer completion log,DASO prefill_only 标签采集壁钟,2026-10-25T06:21:22.246238+00:00,
+,,,,,001,3.5940726278349757,,DASO prefill_only 质量拟合,,
+,,,,,001,4.5671732479240745,,DASO prefill_only 延迟查询与 DP,,
+,2026-10-25T08:06:14.846342+00:00,,"first 12 labels serial, remaining labels on GPUs 0/1/2",,001,2583.386514186859,logs/cal_prefill_decode_*.command.json and outer completion log,DASO prefill_decode 标签采集壁钟,2026-10-25T07:23:11.459828+00:00,
+,,,,,001,4.828193424968049,,DASO prefill_decode 质量拟合,,
+,,,,,001,12.686177067924291,,DASO prefill_decode 延迟查询与 DP,,
+,,,,,002,97.85784008610062,,SmoothQuant scales and extended local errors,,
+3,,48,,,002,1273.7495865821838,,prefill_only additional labels wall,,3586.336782314349
+,,,,8,002,9.985961331054568,,daso8/prefill_only fit+query+DP,,
+,,,,9,002,8.615247112000361,,daso5_measured/prefill_only fit+query+DP,,
+3,,48,,,002,1434.55637216568,,prefill_decode additional labels wall,,4052.1263101703953
+,,,,6,002,18.857116115046665,,daso8/prefill_decode fit+query+DP,,
+,,,,8,002,12.697093289112672,,daso5_measured/prefill_decode fit+query+DP,,
+,,,,,003,131.6077425580006,/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/004/reference/profile_complete.json,360 complete-forward shape measurements,,
+,,,,,003,4.909077952848747,/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/004/reference/allocation_replay_audit.json,47-policy CPU replay,,

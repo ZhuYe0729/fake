@@ -1,0 +1,24 @@
+qkv_proj dense_bf16 complete
+qkv_proj dense_nvfp4 complete
+qkv_proj sparse_bf16 complete
+Traceback (most recent call last):
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/004/code/measure_large_shapes.py", line 60, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/004/code/measure_large_shapes.py", line 37, in main
+    layer=(EightBitLinear(method,name,w,{name:torch.ones(k,device='cuda',dtype=torch.bfloat16)}) if method in ['sq_int8','fp8'] else compressed_module(method,w))
+                                                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/004/code/common.py", line 130, in compressed_module
+    return PaddedLinear(SparseNVFP4Linear(quantize_sparse_weight_bf16(weight, prune=False)), 32)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/miniconda3/envs/vllm/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_nvfp4.py", line 302, in quantize_sparse_weight_bf16
+    require_pairwise_4to8_sparse(sparse_weight_bf16, "weight")
+  File "/root/wja/project/my/cospaq/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_nvfp4.py", line 139, in require_pairwise_4to8_sparse
+    raise ValueError(
+ValueError: weight must already satisfy pairwise 4:8 structured sparsity; pass prune=True to SparseNVFP4Linear.from_linear to prune during conversion

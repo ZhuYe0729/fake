@@ -1,0 +1,131 @@
+{
+  "verified": true,
+  "new_measurements": false,
+  "run": "048",
+  "model": "Qwen3-8B",
+  "runtime": "same arena/Graph as original main table",
+  "kv_gib": 6,
+  "batch": 8,
+  "input": 2048,
+  "outputs_in_memory_job": [
+    1,
+    64
+  ],
+  "rounds": 3,
+  "torch_peak_definition": "max(initialization peak, post-reset evaluation peak); includes warmup, O1/O64 timing and weight audit",
+  "memory_aggregation": "median of three jobs; byte-identical values observed for these fields",
+  "speed_aggregation": "mean of three per-round BF16-normalized ratios; restore mean",
+  "host_definition": "persistent CPU phase-adapter unique-storage cache, not total RSS, checkpoint disk size or GPU memory",
+  "gpu_linear_definition": "unique Linear GPU storage subset, not total model memory; phase arena is a subset",
+  "bf16_peak_reduction_percent": {
+    "w1_e0.01": 32.5201646724847,
+    "w32_e0.03": 29.39028565120676
+  },
+  "source_sha256": {
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/responses/reviewer2/qwen_full_repeat_run048/speed_rounds.csv": "9ed1b16ac89bb8782e954f4d4d75d3f3c928ebe3b0dff17f90f5ed83baf44b6a",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round0_uniform_dense_bf16.json": "948ece12740a57715f4098840f01bf0ff402d5c8796bbe9a68232fe8ba0bd0c3",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round1_uniform_dense_bf16.json": "1830afc1f23df382cf91efee37b7741e0528cc19e3198af3b3cc1e4cb507fd43",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round2_uniform_dense_bf16.json": "3e9e4e74e03b5a7970d1e26b2ed98a2b917d265766860e574c9c65581c97ac47",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round0_uniform_sq_int8.json": "1e8d8970fd3e10679c14a3a601c05cc1b0bed5fc36a8814ababf40dfb8f736c7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round1_uniform_sq_int8.json": "cd49c5fbcea4310dc77de011a25a877f05e748b8ad4d41e7817ab26ad2bbc4e3",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round2_uniform_sq_int8.json": "6f5649557a8a37c34520b37723fb2a46b463e2cff69608e55921f80a02a4b8fa",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round0_w1_e0.01.json": "8118ef96be35e04755de5ef7a68662c3575a96d3840231f3a090d555c6eca9dd",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round1_w1_e0.01.json": "44a2b53f11fe7943707be4fe016142dd287fd9ca1aafb05f6aca1471285cb082",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round2_w1_e0.01.json": "3845bb0a409efe6a18955d1869a5f264cf1be68230814a062db3cc703ed2587b",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round0_w32_e0.03.json": "dd2753ed1756d5c7057b0299eb52feb4924ee3782f059270f86b98e403e91cc7",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round1_w32_e0.03.json": "e53457f2b021caa9e4de6583de0ea8761240b35bc7ac193adb962ecbfa1bed2e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/results/measurements/repeat_round2_w32_e0.03.json": "4f24a043c6a1c7ed13fa3dbceb579181cf2561196a8566516d218b14beab1da1",
+    "/root/wja/project/my/cospaq/fake/artifacts/debug/066_llama31_vllm_overlap_ablation/report/overlap_profile.json": "da579098144e23f23f5d285346fc36715e37bb0ca866d141695b6a3aaf731bc0",
+    "/root/wja/project/my/cospaq/fake/artifacts/debug/066_llama31_vllm_overlap_ablation/report/summary.json": "80692e3b689c2a243ce098f78640fb1225b725eca757aaea0afa110f5ce6ce6e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/code/arena_runtime.py": "174a3b0866e4771f72dd4f49455d9c28c3654a7d412d868e01f5fc051e761d5e",
+    "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/048/code/benchmark.py": "fff18249d275e2a9edcb7501df076e3a5c1d3024ae6c191206e0960c8c7484bd"
+  },
+  "builder_sha256": "ff9e38de7553477d9c7f4e098fac4b765ddbdfa248bec280157f8dc4d4e2903a",
+  "paper_overlap_profile": {
+    "median_total_transfer_work_ms": 354.9427827000618,
+    "median_exposed_copy_stall_ms": 1.9193600022699684,
+    "median_hidden_transfer_work_ms": 353.02342269779183,
+    "median_hidden_ratio": 0.9937629607696886,
+    "samples": 3,
+    "raw": [
+      {
+        "e2e_latency_ms": 1605.9520151466131,
+        "total_transfer_work_ms": 354.9427827000618,
+        "exposed_copy_stall_ms": 1.9193600022699684,
+        "hidden_transfer_work_ms": 353.02342269779183,
+        "hidden_ratio": 0.9945924805466692,
+        "materialized_linear_modules": 128,
+        "first_decode_waits": 128,
+        "model": "Llama3.1-8B-Instruct",
+        "policy": "point_011",
+        "scenario": {
+          "batch": 8,
+          "input_seq": 2048,
+          "output_seq": 64
+        }
+      },
+      {
+        "e2e_latency_ms": 1612.010994926095,
+        "total_transfer_work_ms": 368.54409873485565,
+        "exposed_copy_stall_ms": 2.2986240019090474,
+        "hidden_transfer_work_ms": 366.2454747329466,
+        "hidden_ratio": 0.9937629607696886,
+        "materialized_linear_modules": 128,
+        "first_decode_waits": 128,
+        "model": "Llama3.1-8B-Instruct",
+        "policy": "point_011",
+        "scenario": {
+          "batch": 8,
+          "input_seq": 2048,
+          "output_seq": 64
+        }
+      },
+      {
+        "e2e_latency_ms": 1481.27337731421,
+        "total_transfer_work_ms": 288.19126358628273,
+        "exposed_copy_stall_ms": 1.8214720056857914,
+        "hidden_transfer_work_ms": 286.36979158059694,
+        "hidden_ratio": 0.9936796418357059,
+        "materialized_linear_modules": 128,
+        "first_decode_waits": 128,
+        "model": "Llama3.1-8B-Instruct",
+        "policy": "point_011",
+        "scenario": {
+          "batch": 8,
+          "input_seq": 2048,
+          "output_seq": 64
+        }
+      }
+    ]
+  },
+  "paper_overlap_ablation": {
+    "synchronous_copy_median_ms": 1625.8701030164957,
+    "asynchronous_overlap_median_ms": 1521.7288192361593,
+    "overlap_latency_reduction_percent": 6.405264700244001,
+    "overlap_speedup_vs_synchronous": 1.0684361644886313,
+    "samples_per_variant": 7,
+    "paired_overlap_wins": 5,
+    "paired_comparisons": 7,
+    "raw_samples_ms": {
+      "synchronous_copy": [
+        1637.3804528266191,
+        1580.3358796983957,
+        1586.6205729544163,
+        1625.8701030164957,
+        1628.7660636007786,
+        1589.387621730566,
+        1695.2217184007168
+      ],
+      "asynchronous_overlap": [
+        1574.4048673659563,
+        1503.8890857249498,
+        1521.7288192361593,
+        2303.2711297273636,
+        1658.0553650856018,
+        1519.2633103579283,
+        1511.2687963992357
+      ]
+    }
+  },
+  "table_sha256": "93c5248b6aa400f3ae6d113464f74f4a410973cdbc6ffd2dccefece48851a683"
+}

@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "policies": [
+    {
+      "policy": "hawq_fp4_phase_pair_signed_prefill_decode_q0.07",
+      "tokens_identical_three_modes": true,
+      "all_moved_weight_tensors_exact": true
+    },
+    {
+      "policy": "transfer_daso5_measured_prefill_decode_04",
+      "tokens_identical_three_modes": true,
+      "all_moved_weight_tensors_exact": true
+    },
+    {
+      "policy": "dp_prefill_decode_q0.01",
+      "tokens_identical_three_modes": true,
+      "all_moved_weight_tensors_exact": true
+    }
+  ],
+  "known_recovered_failure": "Initial restore did not reshape flattened pref tensors back to finalized GPU layout. Fixed copy source reshape; failed log and snapshots retained.",
+  "sparse_cache_note": "Environment value is a request only; current source has a fixed 512-entry cache and does not read this variable. No limit change is claimed."
+}

@@ -1,0 +1,35 @@
+{
+  "model": "llama2_7b_chat",
+  "label": "uniform_p00",
+  "policy_sha256": "c398d4f384ace0f7839f3b9cd3ccafcc153906ac565e9e4a7d89ddca69759077",
+  "batch": 8,
+  "input_seq": 2048,
+  "output_seq": 64,
+  "warmup_iters_per_phase": 1,
+  "measured_iters_per_phase": 5,
+  "execution": "one_vllm_process_per_sample",
+  "ttft_measured_ms": [
+    685.9983699396253,
+    683.223252883181,
+    685.2512389887124,
+    685.9405909199268,
+    684.3966341111809
+  ],
+  "e2e_measured_ms": [
+    1839.6968329325318,
+    1838.0107611883432,
+    1840.288643958047,
+    1837.8405589610338,
+    1837.4689349438995
+  ],
+  "ttft_median_ms": 685.2512389887124,
+  "e2e_median_ms": 1838.0107611883432,
+  "tpot_ms": 18.297770193644933,
+  "ttft_mean_ms": 684.9620173685253,
+  "e2e_mean_ms": 1838.661146396771,
+  "cuda_device_uuids": [
+    "305f915b-c789-ebb0-e184-56b64931412f"
+  ],
+  "tpot_formula": "(median_e2e_ms - median_ttft_ms) / 63",
+  "rtx5090_protocol_match": true
+}

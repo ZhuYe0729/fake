@@ -1,0 +1,255 @@
+{
+  "rows": [
+    {
+      "method": "BF16",
+      "prefill_only": {
+        "policy": "uniform_dense_bf16",
+        "quality": [
+          "002",
+          "uniform_dense_bf16"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "uniform_dense_bf16",
+        "quality": [
+          "002",
+          "uniform_dense_bf16"
+        ]
+      }
+    },
+    {
+      "method": "W4A16 NVFP4",
+      "prefill_only": {
+        "policy": "uniform_w4a16_ours",
+        "quality": [
+          "002",
+          "uniform_w4a16_ours"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "uniform_w4a16_ours",
+        "quality": [
+          "002",
+          "uniform_w4a16_ours"
+        ]
+      }
+    },
+    {
+      "method": "INT8 W8A8",
+      "prefill_only": {
+        "policy": "uniform_int8",
+        "quality": [
+          "002",
+          "uniform_int8"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "uniform_int8",
+        "quality": [
+          "002",
+          "uniform_int8"
+        ]
+      }
+    },
+    {
+      "method": "HAWQ-v3 INT4, latency target=.80 BF16 (PTQ)",
+      "prefill_only": {
+        "policy": "graph_hawq_int4_prefill_only_r0.8",
+        "selection_label": "graph_hawq_int4_prefill_only_r0.8",
+        "quality": [
+          "015",
+          "graph_hawq_int4_prefill_only_r0.8"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "graph_hawq_int4_prefill_decode_r0.8",
+        "selection_label": "graph_hawq_int4_prefill_decode_r0.8",
+        "quality": [
+          "015",
+          "graph_hawq_int4_prefill_decode_r0.8"
+        ]
+      }
+    },
+    {
+      "method": "HAWQ-v3 FP4, latency target=.80 BF16 (PTQ)",
+      "prefill_only": {
+        "policy": "graph_hawq_fp4_prefill_only_r0.8",
+        "selection_label": "graph_hawq_fp4_prefill_only_r0.8",
+        "quality": [
+          "015",
+          "graph_hawq_fp4_prefill_only_r0.8"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "graph_hawq_fp4_prefill_decode_r0.8",
+        "selection_label": "graph_hawq_fp4_prefill_decode_r0.8",
+        "quality": [
+          "015",
+          "graph_hawq_fp4_prefill_decode_r0.8"
+        ]
+      }
+    },
+    {
+      "method": "HAWQ FP4 minimum-cost control, q=.07",
+      "prefill_only": {
+        "policy": "hawq_fp4_phase_pair_signed_prefill_only_q0.07",
+        "selection_label": "graph_hawq_fp4_prefill_only_q0.07",
+        "quality": [
+          "013",
+          "hawq_fp4_phase_pair_signed_prefill_only_q0.07"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "graph_hawq_fp4_prefill_decode_q0.01",
+        "selection_label": "graph_hawq_fp4_prefill_decode_q0.07",
+        "quality": [
+          "015",
+          "graph_hawq_fp4_prefill_decode_q0.01"
+        ]
+      }
+    },
+    {
+      "method": "DASO, 5 candidates, fresh-profile DP",
+      "prefill_only": {
+        "policy": "graph_dp5_prefill_only_q0.02",
+        "selection_label": "graph_dp5_prefill_only_q0.02",
+        "quality": [
+          "015",
+          "graph_dp5_prefill_only_q0.02"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "graph_dp5_prefill_decode_q0.07",
+        "selection_label": "graph_dp5_prefill_decode_q0.07",
+        "quality": [
+          "015",
+          "graph_dp5_prefill_decode_q0.07"
+        ]
+      }
+    },
+    {
+      "method": "DASO + 8bit, fresh-profile DP",
+      "prefill_only": {
+        "policy": "graph_dp7_prefill_only_q0.02",
+        "selection_label": "graph_dp7_prefill_only_q0.02",
+        "quality": [
+          "015",
+          "graph_dp7_prefill_only_q0.02"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "graph_dp7_prefill_decode_q0.01",
+        "selection_label": "graph_dp7_prefill_decode_q0.01",
+        "quality": [
+          "015",
+          "graph_dp7_prefill_decode_q0.01"
+        ]
+      }
+    },
+    {
+      "method": "DASO + 8bit + exact/validation, epsilon=.01",
+      "prefill_only": {
+        "policy": "uniform_sq_int8",
+        "selection_label": "graph_verified_prefill_only_q0.01",
+        "quality": [
+          "002",
+          "uniform_sq_int8"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "graph_phase_dense_nvfp4_sq_int8",
+        "selection_label": "graph_verified_prefill_decode_q0.01",
+        "quality": [
+          "015",
+          "graph_phase_dense_nvfp4_sq_int8"
+        ]
+      }
+    },
+    {
+      "method": "DASO + 8bit + exact/validation, epsilon=.04",
+      "prefill_only": {
+        "policy": "graph_dp7_prefill_only_q0.04",
+        "selection_label": "graph_verified_prefill_only_q0.04",
+        "quality": [
+          "015",
+          "graph_dp7_prefill_only_q0.04"
+        ]
+      },
+      "prefill_decode": {
+        "policy": "transfer_daso5_measured_prefill_decode_04",
+        "selection_label": "graph_verified_prefill_decode_q0.04",
+        "quality": [
+          "002",
+          "daso5_measured_prefill_decode_04"
+        ]
+      }
+    }
+  ],
+  "policies": [
+    "graph_dp5_prefill_decode_q0.07",
+    "graph_dp7_prefill_decode_q0.01",
+    "graph_hawq_fp4_prefill_decode_q0.01",
+    "graph_hawq_fp4_prefill_decode_r0.8",
+    "graph_hawq_int4_prefill_decode_r0.8",
+    "graph_phase_dense_nvfp4_sq_int8",
+    "transfer_daso5_measured_prefill_decode_04",
+    "uniform_dense_bf16",
+    "uniform_int8",
+    "uniform_w4a16_ours"
+  ],
+  "workloads": [
+    {
+      "label": "single_b1_s2048_o128",
+      "batch": 1,
+      "prompt": 2048,
+      "output": 128,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/015/configs/single_b1_s2048_o128_inputs.json",
+      "input_sha256": "d7a6b66cb81911f1d387d5091c0dbf435516b2708461ecdb7d045cf275306214"
+    },
+    {
+      "label": "decode_b8_s512_o128",
+      "batch": 8,
+      "prompt": 512,
+      "output": 128,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/015/configs/decode_b8_s512_o128_inputs.json",
+      "input_sha256": "23a46937f32fff3bd58954e8afcf0438f8188fb64696c9006fa9e6d2471c676c"
+    },
+    {
+      "label": "long_b8_s4096_o64",
+      "batch": 8,
+      "prompt": 4096,
+      "output": 64,
+      "input": "/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/015/configs/long_b8_s4096_o64_inputs.json",
+      "input_sha256": "edfedf0ebc45d6c1425a22bc0d49ea805a29190fe36cfa3fd19b066ab232c409"
+    }
+  ],
+  "rounds": [
+    [
+      "graph_dp5_prefill_decode_q0.07",
+      "graph_dp7_prefill_decode_q0.01",
+      "graph_hawq_fp4_prefill_decode_q0.01",
+      "graph_hawq_fp4_prefill_decode_r0.8",
+      "graph_hawq_int4_prefill_decode_r0.8",
+      "graph_phase_dense_nvfp4_sq_int8",
+      "transfer_daso5_measured_prefill_decode_04",
+      "uniform_dense_bf16",
+      "uniform_int8",
+      "uniform_w4a16_ours"
+    ],
+    [
+      "uniform_w4a16_ours",
+      "uniform_int8",
+      "uniform_dense_bf16",
+      "transfer_daso5_measured_prefill_decode_04",
+      "graph_phase_dense_nvfp4_sq_int8",
+      "graph_hawq_int4_prefill_decode_r0.8",
+      "graph_hawq_fp4_prefill_decode_r0.8",
+      "graph_hawq_fp4_prefill_decode_q0.01",
+      "graph_dp7_prefill_decode_q0.01",
+      "graph_dp5_prefill_decode_q0.07"
+    ]
+  ],
+  "warmups": 3,
+  "iterations": 5,
+  "scope": "Fixed standard-load P+D maps transferred to three representative loads. No per-load quality guarantee or test-based retuning. Same GPU0/NUMA0,6GiB KV,decode Graph,includes TTFT/TPOT/E2E/restore. Two reverse-order campaigns with BF16 brackets."
+}

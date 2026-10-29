@@ -1,0 +1,72 @@
+"""Use the same run048 arena/Graph jobs for memory and latency accounting."""
+from pathlib import Path
+import csv
+import hashlib
+import json
+import statistics
+
+BASE=Path(__file__).resolve().parents[1];RUN=BASE/'runs/048';OUT=BASE/'responses/reviewer1/phase_memory_reply'
+OUT.mkdir(parents=True,exist_ok=True);read=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();sources={}
+def tracked(p):sources[str(p.resolve())]=sha(p);return p
+speed=list(csv.DictReader(tracked(BASE/'responses/reviewer2/qwen_full_repeat_run048/speed_rounds.csv').open()))
+methods=[('BF16','uniform_dense_bf16'),('SmoothQuant INT8','uniform_sq_int8'),('DASO（均衡）','w1_e0.01'),('DASO（速度优先）','w32_e0.03')]
+rows=[];all_rounds=[];input_sha=None
+for display,policy in methods:
+ measurements=[]
+ for i in range(3):
+  value=read(tracked(RUN/f'results/measurements/repeat_round{i}_{policy}.json'));m=value['memory']
+  assert value['complete'] and value['policy']==policy and value['mode']=='arena_graph'
+  assert value['batch_size']==8 and value['prompt_length']==2048 and {v['output'] for v in value['cases']}=={1,64}
+  assert all(v['exact_equal'] for v in value['exact_weight_audit'].values())
+  if input_sha is None:input_sha=value['input_sha256']
+  assert value['input_sha256']==input_sha
+  s=next(v for v in speed if v['policy']==policy and int(v['round'])==i and v['output']=='64')
+  row={'method':display,'policy':policy,'round':i,
+   'init_peak_gib':m['initialization_peak_allocated_bytes']/1024**3,'evaluation_peak_gib':m['torch_peak_allocated_bytes']/1024**3,
+   'process_peak_gib':max(m['initialization_peak_allocated_bytes'],m['torch_peak_allocated_bytes'])/1024**3,
+   'gpu_linear_storage_gib':m['gpu_linear_unique_storage_bytes']/1024**3,'host_phase_cache_gib':m['host_weight_bytes']/1024**3,
+   'gpu_arena_gib':m['phase_reused_arena_bytes']/1024**3,'end_allocated_gib':m['torch_allocated_after_bytes']/1024**3,
+   'prefill_linear_payload_gib':m['linear_payload_bytes']['prefill']/1024**3,'decode_linear_payload_gib':m['linear_payload_bytes']['decode']/1024**3,
+   'e2e_speedup_bf16':float(s['e2e_ms_vs_bf16']),'cycle_speedup_bf16':float(s['cycle_ms_vs_bf16']),'restore_ms':float(s['restore_ms'])}
+  measurements.append(row);all_rounds.append(row)
+ row={'method':display,'policy':policy}
+ for key in measurements[0]:
+  if key in ['method','policy','round']:continue
+  row[key]=(statistics.mean if key.endswith('speedup_bf16') or key=='restore_ms' else statistics.median)(v[key] for v in measurements)
+ rows.append(row)
+for name,data in [('memory_latency.csv',rows),('rounds.csv',all_rounds)]:
+ with (OUT/name).open('w') as f:
+  writer=csv.DictWriter(f,fieldnames=list(data[0]));writer.writeheader();writer.writerows(data)
+original=BASE.parents[1]/'artifacts/debug/066_llama31_vllm_overlap_ablation/report'
+profile=read(tracked(original/'overlap_profile.json'));ablation=read(tracked(original/'summary.json'))
+tracked(RUN/'code/arena_runtime.py');tracked(RUN/'code/benchmark.py')
+bf=rows[0]['process_peak_gib'];reduction={r['policy']:100*(1-r['process_peak_gib']/bf) for r in rows[2:]}
+audit={'verified':True,'new_measurements':False,'run':'048','model':'Qwen3-8B','runtime':'same arena/Graph as original main table',
+ 'kv_gib':6,'batch':8,'input':2048,'outputs_in_memory_job':[1,64],'rounds':3,'torch_peak_definition':'max(initialization peak, post-reset evaluation peak); includes warmup, O1/O64 timing and weight audit',
+ 'memory_aggregation':'median of three jobs; byte-identical values observed for these fields','speed_aggregation':'mean of three per-round BF16-normalized ratios; restore mean',
+ 'host_definition':'persistent CPU phase-adapter unique-storage cache, not total RSS, checkpoint disk size or GPU memory',
+ 'gpu_linear_definition':'unique Linear GPU storage subset, not total model memory; phase arena is a subset',
+ 'bf16_peak_reduction_percent':reduction,'source_sha256':sources,'builder_sha256':sha(Path(__file__)),
+ 'paper_overlap_profile':profile,'paper_overlap_ablation':ablation,'table_sha256':sha(OUT/'memory_latency.csv')}
+(OUT/'audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n')
+table=['| 方法 | 峰值显存 GiB（Torch分配） | 主机阶段权重缓存 GiB |','| --- | ---: | ---: |']
+for r in rows:table.append(f"| {r['method']} | {r['process_peak_gib']:.2f} | {r['host_phase_cache_gib']:.2f} |")
+full_table=['| 方法 | GPU峰值 GiB | GPU Linear权重 GiB | Host阶段缓存 GiB | E2E ×BF16 | cycle ×BF16 |','| --- | ---: | ---: | ---: | ---: | ---: |']
+for r in rows:full_table.append(f"| {r['method']} | {r['process_peak_gib']:.2f} | {r['gpu_linear_storage_gib']:.2f} | {r['host_phase_cache_gib']:.2f} | {r['e2e_speedup_bf16']:.3f} | {r['cycle_speedup_bf16']:.3f} |")
+lines=['# R1：阶段表示的显存、权重存储与部署收益','',
+ '采用Qwen原主表同一Run048 arena/Graph实验，B8/S2048/O64、固定6 GiB BF16 KV；内存与延迟来自相同策略的三轮测量。与047混合调度双表示常驻及053扩容引擎分开引用。本次只重算历史数据，没有新GPU实验。','',*table,'',
+ 'GPU峰值取初始化峰值与初始化后重置统计得到的测量峰值之较大者，再取三轮中位数；测量进程包含O1诊断/O64、预热、正式计时和权重核验。它是Torch分配峰值，不包括全部非Torch CUDA/驱动分配。完整CSV中的GPU Linear权重是存储子项，不能与峰值相加。',
+ 'Host列仅为持久阶段adapter权重缓存，BF16的0表示没有这项额外缓存，并非CPU总内存为零；它也不是checkpoint磁盘体积。Host与GPU属于不同资源，不能相加成GPU占用。','',
+ '## 中文回复草稿','',
+ '感谢审稿人关注阶段异构压缩的内存开销。不同阶段采用不同权重表示，会引入额外的表示存储和预取管理，也使峰值显存成为需要考虑的部署因素。当前优化器以质量预算下的延迟最小化为目标，尚未将峰值显存作为显式优化约束；运行时已通过相同表示共享、按层复用GPU缓冲区来控制驻留，并在CPU端缓存可切换的阶段权重。','',
+ f"上表对应原主表的同一执行路径。在固定6 GiB KV cache下，Qwen3-8B均衡/速度优先点的Torch峰值分别为15.55/16.27 GiB，低于BF16的23.04 GiB，分别减少约{reduction['w1_e0.01']:.1f}%/{reduction['w32_e0.03']:.1f}%；另需8.24/8.76 GiB的CPU阶段权重缓存。这些是代表配置的测量，不意味着全部策略或执行模式具有相同内存收益。",'',
+ '主机缓存位于CPU内存，不直接占用GPU显存；其作用是复用已构建的阶段权重，避免每次请求重新读取或构建表示。在CPU内存和传输带宽充足的本次实验条件下，实际执行时的调度和搬运影响已反映在延迟测量中。缓存是模型驻留期间的持续CPU内存需求，不代表任意部署条件下都无影响。','',
+ '在延迟方面，vLLM集成使用独立copy stream和事件依赖，在某层完成Prefill后准备该层Decode表示，使复制与后续层的Prefill计算重叠。论文Llama-3.1代表点的诊断中，累计复制工作354.94 ms、暴露复制等待1.92 ms；另一次同配置运行时消融中，异步预取将E2E中位数从1625.87 ms降至1521.73 ms（约6.4%，7次配对中5次更快）。这些机制诊断不等于全部传输零成本，也不代替正式E2E。','',
+ '主表的E2E已包含Prefill到Decode的实际执行与切换；下一批Prefill之前的恢复另计入完整cycle。在同一Qwen实验中，两个DASO点的恢复均值为90.0/102.0 ms；计入恢复后，cycle仍为BF16的约1.844/1.842倍速度。因此可以报告包含该恢复成本后仍有加速，不能声称部署性能普遍不受内存影响。','',
+ '异步overlap主要从降低关键路径延迟出发，并不自动保证峰值显存最小。峰值即使短暂也必须满足设备容量，并会影响KV和并发请求的空间。后续将探索显式显存约束，以及更细粒度的受限预取、分块搬运和buffer生命周期管理，联合优化内存—延迟折中。这些是后续研究方向，尚不能保证单靠细粒度overlap即可消除峰值开销。','',
+ '<details>','<summary>完整同轮存储与延迟字段</summary>','',*full_table,'','</details>','',
+ '## 不能混用的另一组内存结果','',
+ '047中的17.10/17.31 GiB来自两种阶段表示在GPU同时常驻的eager混合调度变体，其BF16为21.38 GiB；该额外GPU驻留是持续的。不能将该表当作主表单arena的瞬时峰值，也不能把它与本表相减来隔离阶段异构开销，因为运行模式和计量边界不同。','',
+ '[同轮内存与速度CSV](memory_latency.csv) · [逐轮明细](rounds.csv) · [原始来源SHA及诊断边界](audit.json) · [原Qwen主表重复](../../reviewer2/qwen_full_repeat_run048/README.md) · [混合调度独立变体](../../reviewer2/qwen_updated_mixed_run047/README.md) · [论文重叠消融](../../../../../artifacts/debug/066_llama31_vllm_overlap_ablation/report/summary.md)','']
+(OUT/'README.md').write_text('\n'.join(lines))
+print(json.dumps({'rows':len(rows),'reductions':reduction,'new_measurements':False},ensure_ascii=False))

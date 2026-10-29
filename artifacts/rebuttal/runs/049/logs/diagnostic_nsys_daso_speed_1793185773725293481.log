@@ -1,0 +1,267 @@
+INFO 10-28 11:09:52 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-28 11:09:59 [utils.py:233] non-default args: {'tokenizer': '/root/wja/data/models/Qwen/Qwen3-8B', 'dtype': 'bfloat16', 'max_model_len': 4232, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 6442450944, 'max_num_batched_tokens': 32768, 'max_num_seqs': 16, 'disable_log_stats': True, 'skip_mm_profiling': True, 'enable_chunked_prefill': False, 'compilation_config': {"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[4,8,16],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': '/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/pd_daso_fast'}
+WARNING 10-28 11:09:59 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 10-28 11:09:59 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+INFO 10-28 11:09:59 [model.py:1510] Using max model len 4232
+INFO 10-28 11:10:00 [core.py:77] Initializing a V1 LLM engine (v0.11.1.dev0+gb8b302cde.d20260624) with config: model='/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/pd_daso_fast', speculative_config=None, tokenizer='/root/wja/data/models/Qwen/Qwen3-8B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4232, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=phase_hetero_mytest, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/pd_daso_fast, enable_prefix_caching=False, chunked_prefill_enabled=False, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[16,8,4],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":16,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 10-28 11:10:01 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 10-28 11:10:01 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 10-28 11:10:01 [gpu_model_runner.py:2602] Starting to load model /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/data/work/checkpoints/pd_daso_fast...
+INFO 10-28 11:10:01 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 10-28 11:10:02 [cuda.py:366] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:22<00:00, 22.67s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:22<00:00, 22.68s/it]
+
+INFO 10-28 11:10:25 [default_loader.py:267] Loading weights took 23.14 seconds
+INFO 10-28 11:10:27 [gpu_model_runner.py:2653] Model loading took 7.4494 GiB and 24.118353 seconds
+INFO 10-28 11:10:32 [gpu_worker.py:251] Initial free memory 30.6597900390625 GiB, reserved 6.00GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+INFO 10-28 11:10:32 [kv_cache_utils.py:1087] GPU KV cache size: 43,680 tokens
+INFO 10-28 11:10:32 [kv_cache_utils.py:1091] Maximum concurrency for 4,232 tokens per request: 10.30x
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/3 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL):  33%|███▎      | 1/3 [00:00<00:01,  1.20it/s]Capturing CUDA graphs (decode, FULL):  67%|██████▋   | 2/3 [00:01<00:00,  1.64it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 3/3 [00:01<00:00,  1.80it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 3/3 [00:01<00:00,  1.69it/s]
+INFO 10-28 11:10:35 [gpu_model_runner.py:3480] Graph capturing finished in 3 secs, took -0.09 GiB
+INFO 10-28 11:10:36 [core.py:210] init engine (profile, create kv cache, warmup model) took 8.44 seconds
+INFO 10-28 11:10:37 [llm.py:306] Supported_tasks: ('generate',)
+diagnostic_nsys_daso_speed center_pd begin
+diagnostic_nsys_daso_speed center_pd {'e2e_ms': 1113.296180497855, 'ttft_ms': 531.5856989473104, 'restore_ms': 100.41820188052952, 'cycle_ms': 1217.3107315320522, 'tpot_ms': 9.252920990721101}
+diagnostic_nsys_daso_speed batch4_pd begin
+diagnostic_nsys_daso_speed batch4_pd {'e2e_ms': 760.7492599636316, 'ttft_ms': 262.3076045420021, 'restore_ms': 98.86818355880678, 'cycle_ms': 860.384987667203, 'tpot_ms': 7.910303442576339}
+diagnostic_nsys_daso_speed prompt4096_pd begin
+diagnostic_nsys_daso_speed prompt4096_pd {'e2e_ms': 1861.8414695374668, 'ttft_ms': 1171.2269424460828, 'restore_ms': 99.23691744916141, 'cycle_ms': 1962.437154026702, 'tpot_ms': 10.954161691996786}
+diagnostic_nsys_daso_speed output128_pd begin
+diagnostic_nsys_daso_speed output128_pd {'e2e_ms': 1804.2139515746385, 'ttft_ms': 535.2259275969118, 'restore_ms': 110.6857790146023, 'cycle_ms': 1917.0367924962193, 'tpot_ms': 9.9957150216471}
+[rank0]:[W1028 11:12:32.660682092 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Collecting data...
+Generating '/root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/tmp/nsys-report-450d.qdstrm'
+[1/8] [0%                          ] daso_speed_trace.nsys-rep[1/8] [0%                          ] daso_speed_trace.nsys-rep[1/8] [0%                          ] daso_speed_trace.nsys-rep[1/8] [5%                          ] daso_speed_trace.nsys-rep[1/8] [6%                          ] daso_speed_trace.nsys-rep[1/8] [7%                          ] daso_speed_trace.nsys-rep[1/8] [8%                          ] daso_speed_trace.nsys-rep[1/8] [9%                          ] daso_speed_trace.nsys-rep[1/8] [10%                         ] daso_speed_trace.nsys-rep[1/8] [11%                         ] daso_speed_trace.nsys-rep[1/8] [12%                         ] daso_speed_trace.nsys-rep[1/8] [13%                         ] daso_speed_trace.nsys-rep[1/8] [14%                         ] daso_speed_trace.nsys-rep[1/8] [=15%                        ] daso_speed_trace.nsys-rep[1/8] [=16%                        ] daso_speed_trace.nsys-rep[1/8] [=17%                        ] daso_speed_trace.nsys-rep[1/8] [==18%                       ] daso_speed_trace.nsys-rep[1/8] [==19%                       ] daso_speed_trace.nsys-rep[1/8] [==20%                       ] daso_speed_trace.nsys-rep[1/8] [==21%                       ] daso_speed_trace.nsys-rep[1/8] [===22%                      ] daso_speed_trace.nsys-rep[1/8] [===23%                      ] daso_speed_trace.nsys-rep[1/8] [===24%                      ] daso_speed_trace.nsys-rep[1/8] [====25%                     ] daso_speed_trace.nsys-rep[1/8] [====26%                     ] daso_speed_trace.nsys-rep[1/8] [====27%                     ] daso_speed_trace.nsys-rep[1/8] [====28%                     ] daso_speed_trace.nsys-rep[1/8] [=====29%                    ] daso_speed_trace.nsys-rep[1/8] [=====30%                    ] daso_speed_trace.nsys-rep[1/8] [=====31%                    ] daso_speed_trace.nsys-rep[1/8] [=====32%                    ] daso_speed_trace.nsys-rep[1/8] [======33%                   ] daso_speed_trace.nsys-rep[1/8] [======34%                   ] daso_speed_trace.nsys-rep[1/8] [======35%                   ] daso_speed_trace.nsys-rep[1/8] [=======36%                  ] daso_speed_trace.nsys-rep[1/8] [=======37%                  ] daso_speed_trace.nsys-rep[1/8] [=======38%                  ] daso_speed_trace.nsys-rep[1/8] [=======39%                  ] daso_speed_trace.nsys-rep[1/8] [========40%                 ] daso_speed_trace.nsys-rep[1/8] [========41%                 ] daso_speed_trace.nsys-rep[1/8] [========42%                 ] daso_speed_trace.nsys-rep[1/8] [=========43%                ] daso_speed_trace.nsys-rep[1/8] [=========44%                ] daso_speed_trace.nsys-rep[1/8] [=========45%                ] daso_speed_trace.nsys-rep[1/8] [=========46%                ] daso_speed_trace.nsys-rep[1/8] [==========47%               ] daso_speed_trace.nsys-rep[1/8] [==========48%               ] daso_speed_trace.nsys-rep[1/8] [==========49%               ] daso_speed_trace.nsys-rep[1/8] [===========50%              ] daso_speed_trace.nsys-rep[1/8] [===========51%              ] daso_speed_trace.nsys-rep[1/8] [===========52%              ] daso_speed_trace.nsys-rep[1/8] [===========53%              ] daso_speed_trace.nsys-rep[1/8] [============54%             ] daso_speed_trace.nsys-rep[1/8] [============55%             ] daso_speed_trace.nsys-rep[1/8] [============56%             ] daso_speed_trace.nsys-rep[1/8] [============57%             ] daso_speed_trace.nsys-rep[1/8] [=============58%            ] daso_speed_trace.nsys-rep[1/8] [=====================89%    ] daso_speed_trace.nsys-rep[1/8] [========================100%] daso_speed_trace.nsys-rep[1/8] [========================100%] daso_speed_trace.nsys-rep
+[2/8] [0%                          ] daso_speed_trace.sqlite[2/8] [1%                          ] daso_speed_trace.sqlite[2/8] [2%                          ] daso_speed_trace.sqlite[2/8] [3%                          ] daso_speed_trace.sqlite[2/8] [4%                          ] daso_speed_trace.sqlite[2/8] [5%                          ] daso_speed_trace.sqlite[2/8] [6%                          ] daso_speed_trace.sqlite[2/8] [7%                          ] daso_speed_trace.sqlite[2/8] [8%                          ] daso_speed_trace.sqlite[2/8] [9%                          ] daso_speed_trace.sqlite[2/8] [10%                         ] daso_speed_trace.sqlite[2/8] [11%                         ] daso_speed_trace.sqlite[2/8] [12%                         ] daso_speed_trace.sqlite[2/8] [13%                         ] daso_speed_trace.sqlite[2/8] [14%                         ] daso_speed_trace.sqlite[2/8] [=15%                        ] daso_speed_trace.sqlite[2/8] [=16%                        ] daso_speed_trace.sqlite[2/8] [=17%                        ] daso_speed_trace.sqlite[2/8] [==18%                       ] daso_speed_trace.sqlite[2/8] [==19%                       ] daso_speed_trace.sqlite[2/8] [==20%                       ] daso_speed_trace.sqlite[2/8] [==21%                       ] daso_speed_trace.sqlite[2/8] [===22%                      ] daso_speed_trace.sqlite[2/8] [===23%                      ] daso_speed_trace.sqlite[2/8] [===24%                      ] daso_speed_trace.sqlite[2/8] [====25%                     ] daso_speed_trace.sqlite[2/8] [====26%                     ] daso_speed_trace.sqlite[2/8] [====27%                     ] daso_speed_trace.sqlite[2/8] [====28%                     ] daso_speed_trace.sqlite[2/8] [=====29%                    ] daso_speed_trace.sqlite[2/8] [=====30%                    ] daso_speed_trace.sqlite[2/8] [=====31%                    ] daso_speed_trace.sqlite[2/8] [=====32%                    ] daso_speed_trace.sqlite[2/8] [======33%                   ] daso_speed_trace.sqlite[2/8] [======34%                   ] daso_speed_trace.sqlite[2/8] [======35%                   ] daso_speed_trace.sqlite[2/8] [=======36%                  ] daso_speed_trace.sqlite[2/8] [=======37%                  ] daso_speed_trace.sqlite[2/8] [=======38%                  ] daso_speed_trace.sqlite[2/8] [=======39%                  ] daso_speed_trace.sqlite[2/8] [========40%                 ] daso_speed_trace.sqlite[2/8] [========41%                 ] daso_speed_trace.sqlite[2/8] [========42%                 ] daso_speed_trace.sqlite[2/8] [=========43%                ] daso_speed_trace.sqlite[2/8] [=========44%                ] daso_speed_trace.sqlite[2/8] [=========45%                ] daso_speed_trace.sqlite[2/8] [=========46%                ] daso_speed_trace.sqlite[2/8] [==========47%               ] daso_speed_trace.sqlite[2/8] [==========48%               ] daso_speed_trace.sqlite[2/8] [==========49%               ] daso_speed_trace.sqlite[2/8] [===========50%              ] daso_speed_trace.sqlite[2/8] [===========51%              ] daso_speed_trace.sqlite[2/8] [===========52%              ] daso_speed_trace.sqlite[2/8] [===========53%              ] daso_speed_trace.sqlite[2/8] [============54%             ] daso_speed_trace.sqlite[2/8] [============55%             ] daso_speed_trace.sqlite[2/8] [============56%             ] daso_speed_trace.sqlite[2/8] [============57%             ] daso_speed_trace.sqlite[2/8] [=============58%            ] daso_speed_trace.sqlite[2/8] [=============59%            ] daso_speed_trace.sqlite[2/8] [=============60%            ] daso_speed_trace.sqlite[2/8] [==============61%           ] daso_speed_trace.sqlite[2/8] [==============62%           ] daso_speed_trace.sqlite[2/8] [==============63%           ] daso_speed_trace.sqlite[2/8] [==============64%           ] daso_speed_trace.sqlite[2/8] [===============65%          ] daso_speed_trace.sqlite[2/8] [===============66%          ] daso_speed_trace.sqlite[2/8] [===============67%          ] daso_speed_trace.sqlite[2/8] [================68%         ] daso_speed_trace.sqlite[2/8] [================69%         ] daso_speed_trace.sqlite[2/8] [================70%         ] daso_speed_trace.sqlite[2/8] [================71%         ] daso_speed_trace.sqlite[2/8] [=================72%        ] daso_speed_trace.sqlite[2/8] [=================73%        ] daso_speed_trace.sqlite[2/8] [=================74%        ] daso_speed_trace.sqlite[2/8] [==================75%       ] daso_speed_trace.sqlite[2/8] [==================76%       ] daso_speed_trace.sqlite[2/8] [==================77%       ] daso_speed_trace.sqlite[2/8] [==================78%       ] daso_speed_trace.sqlite[2/8] [===================79%      ] daso_speed_trace.sqlite[2/8] [===================80%      ] daso_speed_trace.sqlite[2/8] [===================81%      ] daso_speed_trace.sqlite[2/8] [===================82%      ] daso_speed_trace.sqlite[2/8] [====================83%     ] daso_speed_trace.sqlite[2/8] [====================84%     ] daso_speed_trace.sqlite[2/8] [====================85%     ] daso_speed_trace.sqlite[2/8] [=====================86%    ] daso_speed_trace.sqlite[2/8] [=====================87%    ] daso_speed_trace.sqlite[2/8] [=====================88%    ] daso_speed_trace.sqlite[2/8] [=====================89%    ] daso_speed_trace.sqlite[2/8] [======================90%   ] daso_speed_trace.sqlite[2/8] [======================91%   ] daso_speed_trace.sqlite[2/8] [======================92%   ] daso_speed_trace.sqlite[2/8] [=======================93%  ] daso_speed_trace.sqlite[2/8] [=======================94%  ] daso_speed_trace.sqlite[2/8] [=======================95%  ] daso_speed_trace.sqlite[2/8] [=======================96%  ] daso_speed_trace.sqlite[2/8] [========================97% ] daso_speed_trace.sqlite[2/8] [========================98% ] daso_speed_trace.sqlite[2/8] [========================99% ] daso_speed_trace.sqlite[2/8] [========================100%] daso_speed_trace.sqlite[2/8] [========================100%] daso_speed_trace.sqlite
+[3/8] Executing 'nvtx_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances   Avg (ns)    Med (ns)   Min (ns)   Max (ns)   StdDev (ns)   Style             Range          
+ --------  ---------------  ---------  ----------  ----------  --------  ----------  -----------  -------  -------------------------
+     98.2      38046380379    1392464     27323.1      2944.0       168  1123624764    2432759.3  PushPop  GIL Trace:Holding GIL    
+      1.5        574636803         50  11492736.1    123524.5     15531   280635363   54237704.2  PushPop  GIL Trace:Waiting for GIL
+      0.3        105489427          4  26372356.8  23261499.5     66469    58899959   30687526.5  PushPop  CCCL:cub::DeviceRadixSort
+      0.0           183167          2     91583.5     91583.5       548      182619     128743.6  PushPop  NCCL:ncclGroupStart      
+      0.0             3683          2      1841.5      1841.5      1176        2507        941.2  PushPop  NCCL:ncclGroupEnd        
+
+[4/8] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)     Min (ns)   Max (ns)    StdDev (ns)            Name         
+ --------  ---------------  ---------  ------------  -------------  --------  -----------  ------------  ----------------------
+     45.2    1367890352672      11250   121590253.6    100064633.0      2726   1002888140   122347658.9  pthread_cond_timedwait
+     29.9     905769137205      89850    10080903.0     10064119.0  10008819     35353882      353685.2  epoll_wait            
+     10.4     314642548868       3275    96074060.7    100122286.0       999   2682506122    55629979.5  poll                  
+      8.8     265637216387         38  6990453062.8  10000066222.5     34492  10000103169  4549249495.4  sem_timedwait         
+      5.0     150047555537        173   867326910.6   1000250165.0      1036   1003077192   339815238.8  epoll_pwait           
+      0.7      19833935953       6241     3178006.1       231388.0      1000    138117129    10703983.6  ioctl                 
+      0.1       2441158957      12485      195527.3         3056.0      1000    728521789     7429776.6  read                  
+      0.0        530406475      34008       15596.5         1451.5      1077    457469361     2480677.5  munmap                
+      0.0        202401898         40     5060047.5      5059687.5   5059024      5063903        1004.7  nanosleep             
+      0.0         76233925        766       99522.1         4980.0      1257     18622533     1296709.2  fopen                 
+      0.0         57166753      43612        1310.8         1080.0       999        36769         522.7  pthread_cond_signal   
+      0.0         45157324      11942        3781.4         2819.0      1025       179611        6673.4  open64                
+      0.0         39391412          1    39391412.0     39391412.0  39391412     39391412           0.0  wait3                 
+      0.0         36745321        178      206434.4       201813.0      1333      3299177      257349.5  recv                  
+      0.0         32967012        177      186254.3         3045.0      1311     20717411     1630254.6  fread                 
+      0.0         25790714        293       88022.9         1054.0      1000     11910792      742183.3  waitpid               
+      0.0         23582756         98      240640.4         1059.5      1000      8983407     1361462.0  pread                 
+      0.0         21991720        295       74548.2        38122.0      1091      1487002      110207.8  write                 
+      0.0         19503091        884       22062.3        17086.0      3142       531047       24438.9  mmap                  
+      0.0         19097706         45      424393.5         6619.0      2000     18756466     2794898.6  open                  
+      0.0         16966934        180       94260.7        95010.5      6355       175619       48143.4  send                  
+      0.0         13732117       6122        2243.1         2185.0      1002        15619         540.9  pthread_cond_broadcast
+      0.0         12505131        849       14729.2        11987.0      1013       101468       14327.9  fgets                 
+      0.0         11600550         13      892350.0       101350.0     15632      2640207     1060275.9  pthread_rwlock_wrlock 
+      0.0         11009794       2666        4129.7         1734.0      1000      1585891       31689.0  mmap64                
+      0.0          8203085       3268        2510.1         2380.0      1002        15915         986.9  fclose                
+      0.0          4474867          9      497207.4        60725.0     56040      3990089     1309833.1  sleep                 
+      0.0          4063403         30      135446.8        35497.5     11226      2885003      519609.0  backtrace             
+      0.0          3818375          3     1272791.7       809711.0    545052      2463612     1039736.0  sem_wait              
+      0.0          3434877         48       71559.9        63891.5     30497       224024       31799.1  pthread_create        
+      0.0          2384799         64       37262.5        32595.5      1311       129261       26410.9  pthread_mutex_lock    
+      0.0          1812111          3      604037.0       471605.0    378757       961749      313246.9  fork                  
+      0.0          1205774          3      401924.7         5795.0      1403      1198576      689923.8  futex                 
+      0.0           559894         59        9489.7         6974.0      2902        45894        7239.7  pipe2                 
+      0.0           507955          3      169318.3       183298.0     18008       306649      144827.4  pthread_join          
+      0.0           443974        159        2792.3         2811.0      1057         7923         772.9  sigaction             
+      0.0           387781          4       96945.3        87820.5     40536       171604       56827.7  pthread_cond_wait     
+      0.0           320581          9       35620.1        34553.0     21743        52156        9806.5  pthread_rwlock_rdlock 
+      0.0           293397          4       73349.3        46411.5      9612       190962       84690.5  connect               
+      0.0           244069         52        4693.6         3279.5      1751        15223        3358.5  stat64                
+      0.0           241356         32        7542.4         6155.5      2020        24060        4699.0  socket                
+      0.0           163793         17        9634.9         4897.0      1728        34571       10350.1  fopen64               
+      0.0            92755         12        7729.6         8268.5      1387        10851        2652.1  fflush                
+      0.0            88437         15        5895.8         6256.0      2183        10680        2630.0  stat                  
+      0.0            73922         22        3360.1         2458.0      1212         6867        1776.8  bind                  
+      0.0            72551         20        3627.6         2801.0      1065        10687        2289.3  dup2                  
+      0.0            57658         19        3034.6         1393.0      1026        15194        3754.1  fcntl                 
+      0.0            39454          3       13151.3        12167.0     11799        15488        2032.0  lstat                 
+      0.0            31957         12        2663.1         2317.5      1039         3983         943.0  epoll_ctl             
+      0.0            25897          5        5179.4         4925.0      1673         9799        3100.9  fwrite                
+      0.0            25896          4        6474.0         6141.0      5293         8321        1306.0  mprotect              
+      0.0            21341          8        2667.6         2788.5      1700         3443         590.7  listen                
+      0.0            18228          2        9114.0         9114.0      6449        11779        3768.9  fputs_unlocked        
+      0.0            14186          1       14186.0        14186.0     14186        14186           0.0  accept4               
+      0.0            11436          1       11436.0        11436.0     11436        11436           0.0  pipe                  
+      0.0            11253          6        1875.5         1949.0      1216         2258         386.7  fstat                 
+      0.0            10579          1       10579.0        10579.0     10579        10579           0.0  fputc                 
+      0.0             9810          3        3270.0         3760.0      2040         4010        1072.5  statx                 
+      0.0             6058          3        2019.3         1708.0      1250         3100         963.5  fcntl64               
+      0.0             4660          4        1165.0         1181.0      1080         1218          62.2  dup                   
+      0.0             4569          1        4569.0         4569.0      4569         4569           0.0  pthread_mutex_trylock 
+      0.0             4021          1        4021.0         4021.0      4021         4021           0.0  openat64              
+      0.0             3827          1        3827.0         3827.0      3827         3827           0.0  signal                
+      0.0             2707          2        1353.5         1353.5      1071         1636         399.5  getc                  
+      0.0             1950          1        1950.0         1950.0      1950         1950           0.0  getentropy            
+
+[5/8] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)   StdDev (ns)                     Name                   
+ --------  ---------------  ---------  ----------  ----------  --------  ---------  -----------  ------------------------------------------
+     58.1      55042209729       6476   8499414.7   5633831.5      1205  899031577   50313216.0  cudaStreamSynchronize                     
+     14.4      13635173734        868  15708725.5   2764069.0      6139  205374712   25191657.0  cudaHostAlloc                             
+     12.2      11611093117      96808    119939.4     13502.0      3687  188516363    2590068.3  cudaMemcpyAsync                           
+      4.6       4320513157       4860    888994.5      8199.0      2884   99685418    8119788.8  cudaEventSynchronize                      
+      4.0       3827271196     108569     35252.0     14624.0      1073  194923106     857699.3  cudaLaunchKernel                          
+      1.5       1420850450       4740    299757.5    278659.0    106414    2049687     135101.7  cudaGraphLaunch_v10000                    
+      1.2       1155687733        209   5529606.4   1967204.0     19898   65632915   10815125.8  cudaMalloc                                
+      1.1       1053950667         20  52697533.4    295023.5     96315  656618220  156007997.4  cuModuleLoadData                          
+      0.9        900413569        264   3410657.5     37637.0      5233   96216524   15759068.6  cudaDeviceSynchronize                     
+      0.5        501565284      15380     32611.5     11253.5      1974    6858494     293728.1  cudaEventRecordWithFlags_v11010           
+      0.4        362301917         76   4767130.5   2529684.0    146972   60084661    8787126.1  cudaFree                                  
+      0.2        182955466         11  16632315.1  17626623.0    615000   38048969   10733639.8  cuLibraryLoadData                         
+      0.2        161634052      13764     11743.2     10712.5      4627     224553       5147.3  cuLaunchKernelEx                          
+      0.2        153114951      11684     13104.7     12683.0      4529    2678551      26243.8  cuLaunchKernel                            
+      0.1        127130507        128    993207.1      7518.5      4790   47939045    5959072.7  cudaStreamCreateWithPriority              
+      0.1        125297928       6835     18331.8     19777.0      4024     114947       6449.3  cudaMemsetAsync                           
+      0.1         60364627      29043      2078.5      1893.0       435      65461       1314.2  cudaStreamIsCapturing_v10000              
+      0.0         40067757      11684      3429.3      2012.0       494    4404633      54830.0  cuKernelGetFunction                       
+      0.0         35362801       8701      4064.2      3463.0      1471      25187       1866.5  cudaStreamWaitEvent                       
+      0.0         25143334          3   8381111.3   6302484.0   5614769   13226081    4209933.0  cudaGraphInstantiateWithFlags_v11040      
+      0.0         12383224          1  12383224.0  12383224.0  12383224   12383224          0.0  cudaGetDeviceProperties_v2_v12000         
+      0.0          9686226       1925      5031.8       946.0       612    1571929      58577.9  cudaEventCreateWithFlags                  
+      0.0          9459780      12278       770.5       286.0       246      13127        814.0  cudaGetDriverEntryPoint_v11030            
+      0.0          8938432      12276       728.1       317.0       142       9114        748.1  cuTensorMapEncodeTiled                    
+      0.0          5985928          3   1995309.3   2000686.0   1498652    2486590     493990.9  cudaGraphExecDestroy_v10000               
+      0.0          2772196       1848      1500.1      1625.0       366       8227        952.4  cudaStreamGetCaptureInfo_v2_v11030        
+      0.0          2408342          3    802780.7    838039.0    706451     863852      84416.4  cudaGraphDestroy_v10000                   
+      0.0          2404012          3    801337.3   1150017.0     41338    1212657     658923.5  cudaMemGetInfo                            
+      0.0          1213715        119     10199.3      7082.0      1227      29477       7278.8  cudaEventQuery                            
+      0.0           813876        207      3931.8       833.0       622      20940       5426.3  cudaEventDestroy                          
+      0.0           519299          3    173099.7    172515.0    166267     180517       7143.0  cudaStreamEndCapture_v10000               
+      0.0           474406        838       566.1       406.5       100       7335        670.4  cuGetProcAddress_v2                       
+      0.0           356250         13     27403.8     37047.0      2240      42579      15931.8  cuLibraryGetKernel                        
+      0.0            67744          3     22581.3     26841.0     12171      28732       9065.1  cudaStreamBeginCapture_v10000             
+      0.0            44162          3     14720.7     14802.0     13075      16285       1606.5  cudaGraphGetNodes_v10000                  
+      0.0            21475          4      5368.8      4976.5      3887       7635       1799.8  cuInit                                    
+      0.0             9527          4      2381.8      1897.0       837       4896       1749.9  cudaThreadExchangeStreamCaptureMode_v10010
+      0.0             4885          3      1628.3      1723.0       407       2755       1176.9  cuModuleGetLoadingMode                    
+
+[6/8] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)                                                  Name                                                
+ --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ----------------------------------------------------------------------------------------------------
+     27.9      11472813321       6771  1694404.6  1172217.0    368414  10415486    1346645.0  void cutlass::Kernel2<cutlass_80_tensorop_i16832gemm_s8_128x128_64x6_tn_align16>(T1::Params)        
+     14.4       5945134765       2046  2905735.5  2546431.0     63711   5647239    1506498.7  void cutlass::device_kernel<cutlass::gemm::kernel::GemmUniversal<cute::tuple<int, int, int, int>, c…
+     12.9       5332006182       2160  2468521.4  1580631.0    805788   6411206    2002022.6  void flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (int)4, (…
+      8.7       3564113525       4802   742214.4   741566.0    739068    815962       6094.0  void cutlass::Kernel2<cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_16x16_128x2_tn_align8>(T1::Par…
+      5.9       2430812368       6882   353213.1   241919.0       992   3066929     326226.3  _dequantize                                                                                         
+      5.1       2115278479       2340   903965.2   851979.5      3712   1683193     497953.5  void vllm::act_and_mul_kernel<c10::BFloat16, &vllm::silu_kernel<c10::BFloat16>, (bool)1>(T1 *, cons…
+      4.4       1814824682       4680   387783.1   363647.0      1984    738205     217540.0  std::enable_if<T2>(int)0&&vllm::_typeConvert<T1>::exists, void>::type vllm::fused_add_rms_norm_kern…
+      3.7       1507797865       6882   219093.0   131951.0      1535    752510     193683.9  _quantize                                                                                           
+      2.9       1213247877       4532   267706.9   142240.0       640    944189     289292.8  void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<c10::BFloat16>, std:…
+      2.1        873484005       4745   184085.1   138175.0      1312    578046     164655.8  void vllm::rms_norm_kernel<c10::BFloat16>(T1 *, const T1 *, long, const T1 *, float, int, int)      
+      2.0        804590296       2046   393250.4   350655.0       864    707419     199261.4  void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<float>, std::array<ch…
+      1.9        797035980       2046   389558.2   347774.0       896    702460     197664.1  void at::native::vectorized_elementwise_kernel<(int)4, at::native::nan_to_num_kernel_cuda(at::Tenso…
+      1.6        668290548       6848    97589.2     5312.0      2048    575518     167080.9  void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIterator…
+      1.4        591503640       4896   120813.7    91392.0      1408    375134     111548.1  void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::n…
+      1.4        568426199       2340   242917.2   226287.0      2048    468062     141985.1  void vllm::rotary_embedding_kernel<c10::BFloat16, (bool)1>(const long *, T1 *, T1 *, const T1 *, in…
+      1.3        536419069       2046   262179.4   235199.0      1440    496414     133599.6  void cutlass_wrapper_nvfp4_sm120::pack_data_kernel<(bool)0>(const c10::BFloat16 *, unsigned char *,…
+      0.9        378181571       2079   181905.5   167839.0      1376    355199     103712.6  void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapp…
+      0.6        245241922       2268   108131.4   102847.0      1344    195839      53799.8  void vllm::reshape_and_cache_flash_kernel<__nv_bfloat16, __nv_bfloat16, (vllm::Fp8KVCacheDataType)0…
+      0.5        205721595       2046   100548.2    91951.0      1408    182911      47788.9  void cutlass_wrapper_nvfp4_sm120::compute_scales_kernel<cute::Layout<cute::tuple<cute::tuple<cute::…
+      0.1         25085379      19265     1302.1     1184.0       959      3232        308.3  void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIterator…
+      0.1         24593134       4804     5119.3     5120.0      4992      5856         62.9  void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::ArgMaxOps<…
+      0.0         11200908       4869     2300.5     1152.0       992    174848      11861.8  void at::native::vectorized_gather_kernel<(int)16, long>(char *, char *, T2 *, int, long, long, lon…
+      0.0          8124156       4800     1692.5     1696.0      1600      1920         34.3  void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void …
+      0.0          4547400       4802      947.0      960.0       896      1152         23.0  void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIterator…
+      0.0          4144116       4800      863.4      864.0       831       992         17.3  void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctorOnSelf_add<int>, std::array<cha…
+      0.0          3916588       4794      817.0      832.0       704      1120         19.5  void at::native::vectorized_elementwise_kernel<(int)2, at::native::FillFunctor<long>, std::array<ch…
+      0.0          3803973         36   105665.9   106095.5     89343    110495       3345.4  void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<signed char>, std::a…
+      0.0          3732542        144    25920.4    25727.0     12608     39680      12730.1  void marlin::Marlin<(long)1125899906909960, (long)562949953487106, (long)1125899906909960, (long)28…
+      0.0          3194575       2046     1561.4     1536.0      1055      2336        118.7  void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, floa…
+      0.0          3192528       2048     1558.9     1536.0      1472      5536        151.3  void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, floa…
+      0.0          3159279       2047     1543.4     1568.0       864      1952        132.9  void at::native::vectorized_elementwise_kernel<(int)4, at::native::reciprocal_kernel_cuda(at::Tenso…
+      0.0          2659667        111    23961.0    17152.0     11936     69055      13256.6  void cutlass::Kernel2<cutlass_80_tensorop_i16832gemm_s8_64x64_64x6_tn_align16>(T1::Params)          
+      0.0          2380026       2046     1163.3     1120.0       896      1760        101.3  void at::native::vectorized_elementwise_kernel<(int)4, at::native::<unnamed>::launch_clamp_scalar(a…
+      0.0          2153107        144    14952.1    15120.0      8928     21504       5768.7  void marlin::Marlin<(long)1125899906909960, (long)562949953487106, (long)1125899906909960, (long)28…
+      0.0          1947827         72    27053.2    26943.5     13344     41791      13090.3  void marlin::Marlin<(long)1125899906909960, (long)562949953487106, (long)1125899906909960, (long)28…
+      0.0          1537276       2059      746.6      736.0       672      1312         97.2  void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, std::array<c…
+      0.0          1129270         72    15684.3    15872.0      9440     22464       5854.8  void marlin::Marlin<(long)1125899906909960, (long)562949953487106, (long)1125899906909960, (long)28…
+      0.0           785564        108     7273.7     6720.0      5952      9248       1133.9  void flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (int)4, (…
+      0.0           305566          2   152783.0   152783.0    152639    152927        203.6  void at::native::tensor_kernel_scan_innermost_dim<float, std::plus<float>>(T1 *, const T1 *, unsign…
+      0.0           231805         72     3219.5     3232.0      3200      3296         19.0  void flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (…
+      0.0           226110          8    28263.8    29264.0     23232     31072       3082.1  void at_cuda_detail::cub::DeviceRadixSortOnesweepKernel<at_cuda_detail::cub::DeviceRadixSortPolicy<…
+      0.0           157855          4    39463.8    39376.0     31423     47680       9285.2  void at::native::<unnamed>::cunn_SoftMaxForward<(int)4, float, float, float, at::native::<unnamed>:…
+      0.0           138560         36     3848.9     3840.0      3808      3904         23.7  void flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (…
+      0.0           109024        108     1009.5     1072.0       832      1120        110.7  void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::n…
+      0.0           103904        144      721.6      704.0       672       896         28.8  void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<int>, std::array<cha…
+      0.0            55392          2    27696.0    27696.0     27552     27840        203.6  void at::native::_scatter_gather_elementwise_kernel<(int)128, (int)8, void at::native::_cuda_scatte…
+      0.0            53216          2    26608.0    26608.0     26336     26880        384.7  void at::native::<unnamed>::sort_postprocess_kernel<float>(const T1 *, T1 *, long *, const int2 *, …
+      0.0            38880          2    19440.0    19440.0     19424     19456         22.6  void at_cuda_detail::cub::DeviceRadixSortOnesweepKernel<at_cuda_detail::cub::DeviceRadixSortPolicy<…
+      0.0            24320          2    12160.0    12160.0     12160     12160          0.0  void at_cuda_detail::cub::DeviceRadixSortHistogramKernel<at_cuda_detail::cub::DeviceRadixSortPolicy…
+      0.0            18016          4     4504.0     4496.0      4448      4576         66.0  void at::native::vectorized_elementwise_kernel<(int)4, at::native::<unnamed>::masked_fill_kernel(at…
+      0.0            17632          4     4408.0     4416.0      4320      4480         66.0  void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::n…
+      0.0            16256          2     8128.0     8128.0      8096      8160         45.3  at::native::<unnamed>::fill_index_and_segment_kernel(int2 *, int, at::cuda::detail::IntDivider<unsi…
+      0.0            13952          4     3488.0     3616.0      1952      4768       1343.5  void at::native::<unnamed>::indexSelectSmallIndex<c10::BFloat16, long, unsigned int, (int)2, (int)2…
+      0.0            11167          2     5583.5     5583.5      5567      5600         23.3  void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::n…
+      0.0             9408          1     9408.0     9408.0      9408      9408          0.0  void at::native::<unnamed>::CatArrayBatchedCopy_alignedK_contig<at::native::<unnamed>::OpaqueType<(…
+      0.0             9120          2     4560.0     4560.0      4544      4576         22.6  void at_cuda_detail::cub::DeviceRadixSortHistogramKernel<at_cuda_detail::cub::DeviceRadixSortPolicy…
+      0.0             8224          2     4112.0     4112.0      4096      4128         22.6  void at::native::<unnamed>::distribution_elementwise_grid_stride_kernel<float, (int)4, void at::nat…
+      0.0             5696          1     5696.0     5696.0      5696      5696          0.0  void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::n…
+      0.0             5216          1     5216.0     5216.0      5216      5216          0.0  void at::native::vectorized_elementwise_kernel<(int)4, at::native::bfloat16_copy_kernel_cuda(at::Te…
+      0.0             4768          1     4768.0     4768.0      4768      4768          0.0  void at::native::vectorized_elementwise_kernel<(int)4, at::native::sin_kernel_cuda(at::TensorIterat…
+      0.0             4736          1     4736.0     4736.0      4736      4736          0.0  void at::native::vectorized_elementwise_kernel<(int)4, at::native::cos_kernel_cuda(at::TensorIterat…
+      0.0             4064          4     1016.0     1008.0       928      1120        102.4  void at::native::vectorized_elementwise_kernel<(int)4, void at::native::compare_scalar_kernel<float…
+      0.0             2720          2     1360.0     1360.0      1280      1440        113.1  void at::native::vectorized_elementwise_kernel<(int)2, at::native::<unnamed>::where_kernel_impl(at:…
+      0.0             2624          2     1312.0     1312.0      1312      1312          0.0  void at::native::_scatter_gather_elementwise_kernel<(int)128, (int)8, void at::native::_cuda_scatte…
+      0.0             2400          2     1200.0     1200.0      1184      1216         22.6  void at::native::<unnamed>::distribution_elementwise_grid_stride_kernel<float, (int)4, void at::nat…
+      0.0             2368          2     1184.0     1184.0      1120      1248         90.5  void at::native::vectorized_elementwise_kernel<(int)2, at::native::CUDAFunctorOnOther_add<long>, st…
+      0.0             2208          2     1104.0     1104.0      1088      1120         22.6  void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnOther_add<float>, s…
+      0.0             1984          1     1984.0     1984.0      1984      1984          0.0  void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl<at::native::…
+      0.0             1952          2      976.0      976.0       960       992         22.6  void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::n…
+      0.0             1856          2      928.0      928.0       928       928          0.0  void at_cuda_detail::cub::DeviceRadixSortExclusiveSumKernel<at_cuda_detail::cub::DeviceRadixSortPol…
+      0.0             1824          2      912.0      912.0       896       928         22.6  void at_cuda_detail::cub::DeviceRadixSortExclusiveSumKernel<at_cuda_detail::cub::DeviceRadixSortPol…
+      0.0             1664          2      832.0      832.0       704       960        181.0  void <unnamed>::elementwise_kernel_with_index<int, at::native::arange_cuda_out(const c10::Scalar &,…
+      0.0             1568          2      784.0      784.0       768       800         22.6  void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::n…
+      0.0              896          1      896.0      896.0       896       896          0.0  void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, floa…
+      0.0              832          1      832.0      832.0       832       832          0.0  void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, floa…
+
+[7/8] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)   Med (ns)  Min (ns)  Max (ns)   StdDev (ns)            Operation           
+ --------  ---------------  -----  ---------  --------  --------  ---------  -----------  ------------------------------
+     62.0      13049749770  90333   144462.7    1152.0       224  188328148     988912.3  [CUDA memcpy Host-to-Device]  
+     37.9       7982728976   5645  1414123.8     352.0       320  132216070    9588093.7  [CUDA memcpy Device-to-Host]  
+      0.1         11706062    830    14103.7    1184.0       768     129119      21998.9  [CUDA memcpy Device-to-Device]
+      0.0          2316659   6835      338.9     256.0       255       2496        153.2  [CUDA memset]                 
+
+[8/8] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)            Operation           
+ ----------  -----  --------  --------  --------  --------  -----------  ------------------------------
+ 628901.619  90333     6.962     0.008     0.000  1244.660       15.966  [CUDA memcpy Host-to-Device]  
+  11030.561    830    13.290     0.025     0.000   100.663       20.032  [CUDA memcpy Device-to-Device]
+   9403.104   5645     1.666     0.000     0.000   100.663        7.851  [CUDA memcpy Device-to-Host]  
+      4.744   6835     0.001     0.000     0.000     0.464        0.018  [CUDA memset]                 
+
+Generated:
+    /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/diagnostics/daso_speed_trace.nsys-rep
+    /root/wja/project/my/cospaq/fake/artifacts/rebuttal/runs/049/diagnostics/daso_speed_trace.sqlite
