@@ -1,0 +1,21 @@
+Retrieving notices: ...working... done
+Channels:
+ - nvidia/label/cuda-12.8.1
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... failed
+
+LibMambaUnsatisfiableError: Encountered problems while solving:
+  - nothing provides libgcc-ng >=11.2.0 needed by cuda-cudart-dev-12.8.90-0
+  - nothing provides libgcc-ng >=11.2.0 needed by cuda-driver-dev-12.8.90-0
+  - nothing provides gcc_linux-64 needed by cuda-nvcc-12.8.93-0
+
+Could not solve for environment specs
+The following packages are incompatible
+├─ cuda-cudart-dev =* * is not installable because it requires
+│  └─ libgcc-ng >=11.2.0 *, which does not exist (perhaps a missing channel);
+├─ cuda-driver-dev =* * is not installable because it requires
+│  └─ libgcc-ng >=11.2.0 *, which does not exist (perhaps a missing channel);
+└─ cuda-nvcc =* * is not installable because it requires
+   └─ gcc_linux-64 =* *, which does not exist (perhaps a missing channel).
+

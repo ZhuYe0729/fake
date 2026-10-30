@@ -1,0 +1,333 @@
+/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+______ test_nvfp4_linear_matches_bf16_shape_and_reasonable_error[1-32-32] ______
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2597: in _run_ninja_build
+    subprocess.run(
+/root/wja/miniconda3/envs/cospaq/lib/python3.12/subprocess.py:571: in run
+    raise CalledProcessError(retcode, process.args,
+E   subprocess.CalledProcessError: Command '['ninja', '-v', '-j', '8']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+fake/kernels/cutlass/cutlass_wrapper/tests/test_nvfp4_linear.py:38: in test_nvfp4_linear_matches_bf16_shape_and_reasonable_error
+    nvfp4 = NVFP4Linear.from_linear(linear).eval()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:243: in from_linear
+    return cls(canonical_to_cutlass_nvfp4_weight(canonical_from_linear(linear, device=target_device)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:131: in canonical_to_cutlass_nvfp4_weight
+    sfb = _load_ext().canonical_scale_to_sfb(
+          ^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:58: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/code/graph_bindings.py:28: in load_graph
+    return _original(*a, **kw)
+           ^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2134: in _jit_compile
+    _write_ninja_file_and_build_library(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2286: in _write_ninja_file_and_build_library
+    _run_ninja_build(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2614: in _run_ninja_build
+    raise RuntimeError(message) from e
+E   RuntimeError: Error building extension '_cutlass_wrapper_nvfp4_sm120_graph15': [1/2] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output nvfp4_sm120.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=_cutlass_wrapper_nvfp4_sm120_graph15 -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/tools/util/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 --expt-relaxed-constexpr --use_fast_math -gencode=arch=compute_120a,code=sm_120a -c /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/nvfp4_sm120.cu -o nvfp4_sm120.cuda.o 
+E   FAILED: [code=1] nvfp4_sm120.cuda.o 
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output nvfp4_sm120.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=_cutlass_wrapper_nvfp4_sm120_graph15 -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/tools/util/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 --expt-relaxed-constexpr --use_fast_math -gencode=arch=compute_120a,code=sm_120a -c /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/nvfp4_sm120.cu -o nvfp4_sm120.cuda.o 
+E   In file included from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContext.h:3,
+E                    from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/nvfp4_sm120.cu:2:
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContextLight.h:8:10: fatal error: cusparse.h: No such file or directory
+E       8 | #include <cusparse.h>
+E         |          ^~~~~~~~~~~~
+E   compilation terminated.
+E   ninja: build stopped: subcommand failed.
+_____ test_nvfp4_linear_matches_bf16_shape_and_reasonable_error[8-64-128] ______
+fake/kernels/cutlass/cutlass_wrapper/tests/test_nvfp4_linear.py:38: in test_nvfp4_linear_matches_bf16_shape_and_reasonable_error
+    nvfp4 = NVFP4Linear.from_linear(linear).eval()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:243: in from_linear
+    return cls(canonical_to_cutlass_nvfp4_weight(canonical_from_linear(linear, device=target_device)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:131: in canonical_to_cutlass_nvfp4_weight
+    sfb = _load_ext().canonical_scale_to_sfb(
+          ^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:58: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/code/graph_bindings.py:28: in load_graph
+    return _original(*a, **kw)
+           ^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2160: in _jit_compile
+    return _import_module_from_library(name, build_directory, is_python_module)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2634: in _import_module_from_library
+    module = importlib.util.module_from_spec(spec)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:813: in module_from_spec
+    ???
+<frozen importlib._bootstrap_external>:1293: in create_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+E   ImportError: /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/extensions/graph_bindings/nvfp4/_cutlass_wrapper_nvfp4_sm120_graph15.so: cannot open shared object file: No such file or directory
+____ test_nvfp4_linear_matches_bf16_shape_and_reasonable_error[128-256-256] ____
+fake/kernels/cutlass/cutlass_wrapper/tests/test_nvfp4_linear.py:38: in test_nvfp4_linear_matches_bf16_shape_and_reasonable_error
+    nvfp4 = NVFP4Linear.from_linear(linear).eval()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:243: in from_linear
+    return cls(canonical_to_cutlass_nvfp4_weight(canonical_from_linear(linear, device=target_device)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:131: in canonical_to_cutlass_nvfp4_weight
+    sfb = _load_ext().canonical_scale_to_sfb(
+          ^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/nvfp4.py:58: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/code/graph_bindings.py:28: in load_graph
+    return _original(*a, **kw)
+           ^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2160: in _jit_compile
+    return _import_module_from_library(name, build_directory, is_python_module)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2634: in _import_module_from_library
+    module = importlib.util.module_from_spec(spec)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:813: in module_from_spec
+    ???
+<frozen importlib._bootstrap_external>:1293: in create_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+E   ImportError: /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/extensions/graph_bindings/nvfp4/_cutlass_wrapper_nvfp4_sm120_graph15.so: cannot open shared object file: No such file or directory
+_______ test_sparse_nvfp4_linear_prune_true_matches_simulated_reference ________
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2597: in _run_ninja_build
+    subprocess.run(
+/root/wja/miniconda3/envs/cospaq/lib/python3.12/subprocess.py:571: in run
+    raise CalledProcessError(retcode, process.args,
+E   subprocess.CalledProcessError: Command '['ninja', '-v', '-j', '8']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+fake/kernels/cutlass/cutlass_wrapper/tests/test_sparse_nvfp4_linear.py:53: in test_sparse_nvfp4_linear_prune_true_matches_simulated_reference
+    sparse_linear = SparseNVFP4Linear.from_linear(linear, prune=True).eval()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_nvfp4.py:366: in from_linear
+    return cls(quantize_sparse_weight_bf16(weight, bias, original_dtype=linear.weight.dtype, prune=prune))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_nvfp4.py:305: in quantize_sparse_weight_bf16
+    sparse_weight, metadata = pack_sparse_nvfp4_a_from_dense(packed_weight)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_nvfp4.py:233: in pack_sparse_nvfp4_a_from_dense
+    return _load_ext().sparse_nvf4_pack_a_from_dense(packed_a.contiguous(), bool(apply_random_2to4_mask))
+           ^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_nvfp4.py:60: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/code/graph_bindings.py:28: in load_graph
+    return _original(*a, **kw)
+           ^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/code/common.py:37: in load_with_header
+    return original_load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2134: in _jit_compile
+    _write_ninja_file_and_build_library(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2286: in _write_ninja_file_and_build_library
+    _run_ninja_build(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2614: in _run_ninja_build
+    raise RuntimeError(message) from e
+E   RuntimeError: Error building extension '_cutlass_wrapper_sparse_nvfp4_sm120_graph15': [1/3] /usr/bin/g++ -MMD -MF sparse_nvfp4_bindings.o.d -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_nvfp4_sm120_graph15 -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/compat/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/tools/util/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/examples/common -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17 -c /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/sparse_nvfp4_bindings.cpp -o sparse_nvfp4_bindings.o 
+E   FAILED: [code=1] sparse_nvfp4_bindings.o 
+E   /usr/bin/g++ -MMD -MF sparse_nvfp4_bindings.o.d -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_nvfp4_sm120_graph15 -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/compat/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/tools/util/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/examples/common -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17 -c /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/sparse_nvfp4_bindings.cpp -o sparse_nvfp4_bindings.o 
+E   In file included from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContext.h:3,
+E                    from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/sparse_nvfp4_bindings.cpp:2:
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContextLight.h:7:10: fatal error: cuda_runtime_api.h: No such file or directory
+E       7 | #include <cuda_runtime_api.h>
+E         |          ^~~~~~~~~~~~~~~~~~~~
+E   compilation terminated.
+E   [2/3] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output sparse_nvfp4_sm120.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_nvfp4_sm120_graph15 -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/compat/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/tools/util/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/examples/common -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 --expt-relaxed-constexpr --use_fast_math -gencode=arch=compute_120a,code=sm_120a -c /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/sparse_nvfp4_sm120.cu -o sparse_nvfp4_sm120.cuda.o 
+E   FAILED: [code=1] sparse_nvfp4_sm120.cuda.o 
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output sparse_nvfp4_sm120.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_nvfp4_sm120_graph15 -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/compat/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/tools/util/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass/examples/common -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 --expt-relaxed-constexpr --use_fast_math -gencode=arch=compute_120a,code=sm_120a -c /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/sparse_nvfp4_sm120.cu -o sparse_nvfp4_sm120.cuda.o 
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/csrc/sparse_nvfp4_sm120.cu:83:10: fatal error: helper.h: No such file or directory
+E      83 | #include "helper.h"
+E         |          ^~~~~~~~~~
+E   compilation terminated.
+E   ninja: build stopped: subcommand failed.
+_______ test_sparse_bf16_linear_prune_true_matches_pruned_bf16_reference _______
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2597: in _run_ninja_build
+    subprocess.run(
+/root/wja/miniconda3/envs/cospaq/lib/python3.12/subprocess.py:571: in run
+    raise CalledProcessError(retcode, process.args,
+E   subprocess.CalledProcessError: Command '['ninja', '-v', '-j', '8']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+fake/kernels/cutlass/cutlass_wrapper/tests/test_sparse_bf16_linear.py:49: in test_sparse_bf16_linear_prune_true_matches_pruned_bf16_reference
+    sparse_linear = SparseBF16Linear.from_linear(linear, prune=True).eval()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:410: in from_linear
+    return cls(pack_sparse_bf16_weight(weight, bias, original_dtype=linear.weight.dtype, prune=prune, backend=backend))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:334: in pack_sparse_bf16_weight
+    sparse_weight, metadata = pack_sparse_bf16_a_from_dense(sparse_weight_bf16)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:227: in pack_sparse_bf16_a_from_dense
+    return _load_ext().sparse_bf16_compress_weight(a)
+           ^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:106: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2134: in _jit_compile
+    _write_ninja_file_and_build_library(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2286: in _write_ninja_file_and_build_library
+    _run_ninja_build(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2614: in _run_ninja_build
+    raise RuntimeError(message) from e
+E   RuntimeError: Error building extension '_cutlass_wrapper_sparse_bf16_backends': [1/3] /usr/bin/g++ -MMD -MF sparse_bf16_bindings.o.d -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_bf16_backends -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17 -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/csrc/sparse_bf16_bindings.cpp -o sparse_bf16_bindings.o 
+E   FAILED: [code=1] sparse_bf16_bindings.o 
+E   /usr/bin/g++ -MMD -MF sparse_bf16_bindings.o.d -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_bf16_backends -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17 -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/csrc/sparse_bf16_bindings.cpp -o sparse_bf16_bindings.o 
+E   In file included from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContext.h:3,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/csrc/sparse_bf16_bindings.cpp:2:
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContextLight.h:7:10: fatal error: cuda_runtime_api.h: No such file or directory
+E       7 | #include <cuda_runtime_api.h>
+E         |          ^~~~~~~~~~~~~~~~~~~~
+E   compilation terminated.
+E   [2/3] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output spinfer_api.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_bf16_backends -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr -gencode=arch=compute_120a,code=sm_120a --compiler-options '-fPIC' -O3 -std=c++17 -maxrregcount=255 --use_fast_math -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src/spinfer_api.cu -o spinfer_api.cuda.o 
+E   ninja: build stopped: subcommand failed.
+__ test_marlin_nvfp4_linear_matches_weight_only_reference[activation_dtype0] ___
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2597: in _run_ninja_build
+    subprocess.run(
+/root/wja/miniconda3/envs/cospaq/lib/python3.12/subprocess.py:571: in run
+    raise CalledProcessError(retcode, process.args,
+E   subprocess.CalledProcessError: Command '['ninja', '-v', '-j', '8']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+fake/kernels/cutlass/cutlass_wrapper/tests/test_marlin_nvfp4_linear.py:45: in test_marlin_nvfp4_linear_matches_weight_only_reference
+    marlin_linear = MarlinNVFP4Linear.from_linear(linear, activation_dtype=activation_dtype).eval()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:446: in from_linear
+    canonical_to_marlin_nvfp4_weight(
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:299: in canonical_to_marlin_nvfp4_weight
+    return _prepare_marlin_weight(
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:318: in _prepare_marlin_weight
+    _load_ext()
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:64: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2134: in _jit_compile
+    _write_ninja_file_and_build_library(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2286: in _write_ninja_file_and_build_library
+    _run_ninja_build(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2614: in _run_ninja_build
+    raise RuntimeError(message) from e
+E   RuntimeError: Error building extension 'marlin_nvfp4_ext': [1/6] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output gptq_marlin_repack.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/gptq_marlin_repack.cu -o gptq_marlin_repack.cuda.o 
+E   FAILED: [code=1] gptq_marlin_repack.cuda.o 
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output gptq_marlin_repack.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/gptq_marlin_repack.cu -o gptq_marlin_repack.cuda.o 
+E   In file included from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContext.h:3,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/marlin.cuh:10,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/gptq_marlin_repack.cu:1:
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContextLight.h:8:10: fatal error: cusparse.h: No such file or directory
+E       8 | #include <cusparse.h>
+E         |          ^~~~~~~~~~~~
+E   compilation terminated.
+E   [2/6] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output sm80_kernel_float16_fe2m1f_float16.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/sm80_kernel_float16_fe2m1f_float16.cu -o sm80_kernel_float16_fe2m1f_float16.cuda.o 
+E   FAILED: [code=1] sm80_kernel_float16_fe2m1f_float16.cuda.o 
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output sm80_kernel_float16_fe2m1f_float16.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/sm80_kernel_float16_fe2m1f_float16.cu -o sm80_kernel_float16_fe2m1f_float16.cuda.o 
+E   In file included from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContext.h:3,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/marlin.cuh:10,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/kernel.h:6,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/sm80_kernel_float16_fe2m1f_float16.cu:4:
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContextLight.h:8:10: fatal error: cusparse.h: No such file or directory
+E       8 | #include <cusparse.h>
+E         |          ^~~~~~~~~~~~
+E   compilation terminated.
+E   [3/6] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output marlin.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/marlin.cu -o marlin.cuda.o 
+E   FAILED: [code=1] marlin.cuda.o 
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output marlin.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/marlin.cu -o marlin.cuda.o 
+E   In file included from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContext.h:3,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/marlin.cuh:10,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/kernel.h:6,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/marlin.cu:26:
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContextLight.h:8:10: fatal error: cusparse.h: No such file or directory
+E       8 | #include <cusparse.h>
+E         |          ^~~~~~~~~~~~
+E   compilation terminated.
+E   [4/6] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output sm80_kernel_bfloat16_fe2m1f_bfloat16.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/sm80_kernel_bfloat16_fe2m1f_bfloat16.cu -o sm80_kernel_bfloat16_fe2m1f_bfloat16.cuda.o 
+E   FAILED: [code=1] sm80_kernel_bfloat16_fe2m1f_bfloat16.cuda.o 
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/bin/nvcc --generate-dependencies-with-compile --dependency-output sm80_kernel_bfloat16_fe2m1f_bfloat16.cuda.o.d -ccbin /usr/bin/gcc -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -std=c++17 -gencode=arch=compute_120,code=sm_120 -static-global-template-stub=false -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/sm80_kernel_bfloat16_fe2m1f_bfloat16.cu -o sm80_kernel_bfloat16_fe2m1f_bfloat16.cuda.o 
+E   In file included from /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContext.h:3,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/marlin.cuh:10,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/kernel.h:6,
+E                    from /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/quantization/marlin/sm80_kernel_bfloat16_fe2m1f_bfloat16.cu:4:
+E   /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/ATen/cuda/CUDAContextLight.h:8:10: fatal error: cusparse.h: No such file or directory
+E       8 | #include <cusparse.h>
+E         |          ^~~~~~~~~~~~
+E   compilation terminated.
+E   [5/6] /usr/bin/g++ -MMD -MF torch_bindings.o.d -DTORCH_EXTENSION_NAME=marlin_nvfp4_ext -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17 -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/standalone_marlin_nvfp4/csrc/torch_bindings.cpp -o torch_bindings.o 
+E   ninja: build stopped: subcommand failed.
+__ test_marlin_nvfp4_linear_matches_weight_only_reference[activation_dtype1] ___
+fake/kernels/cutlass/cutlass_wrapper/tests/test_marlin_nvfp4_linear.py:45: in test_marlin_nvfp4_linear_matches_weight_only_reference
+    marlin_linear = MarlinNVFP4Linear.from_linear(linear, activation_dtype=activation_dtype).eval()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:446: in from_linear
+    canonical_to_marlin_nvfp4_weight(
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:299: in canonical_to_marlin_nvfp4_weight
+    return _prepare_marlin_weight(
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:318: in _prepare_marlin_weight
+    _load_ext()
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/marlin_nvfp4.py:64: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2160: in _jit_compile
+    return _import_module_from_library(name, build_directory, is_python_module)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2634: in _import_module_from_library
+    module = importlib.util.module_from_spec(spec)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:813: in module_from_spec
+    ???
+<frozen importlib._bootstrap_external>:1293: in create_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+E   ImportError: /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/extensions/marlin_nvfp4/marlin_nvfp4_ext.so: cannot open shared object file: No such file or directory
+=========================== short test summary info ============================
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_nvfp4_linear.py::test_nvfp4_linear_matches_bf16_shape_and_reasonable_error[1-32-32]
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_nvfp4_linear.py::test_nvfp4_linear_matches_bf16_shape_and_reasonable_error[8-64-128]
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_nvfp4_linear.py::test_nvfp4_linear_matches_bf16_shape_and_reasonable_error[128-256-256]
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_sparse_nvfp4_linear.py::test_sparse_nvfp4_linear_prune_true_matches_simulated_reference
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_sparse_bf16_linear.py::test_sparse_bf16_linear_prune_true_matches_pruned_bf16_reference
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_marlin_nvfp4_linear.py::test_marlin_nvfp4_linear_matches_weight_only_reference[activation_dtype0]
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_marlin_nvfp4_linear.py::test_marlin_nvfp4_linear_matches_weight_only_reference[activation_dtype1]
+7 failed in 11.46s

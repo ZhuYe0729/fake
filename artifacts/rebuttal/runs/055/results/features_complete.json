@@ -1,0 +1,20 @@
+{
+  "complete": true,
+  "rows": 3584,
+  "model_layers": 64,
+  "fused_modules": 256,
+  "methods": [
+    "dense_bf16",
+    "dense_nvfp4",
+    "sparse_bf16",
+    "sparse_nvfp4",
+    "w4a16_ours",
+    "int8",
+    "sq_int8",
+    "fp8"
+  ],
+  "local_windows": 16,
+  "prefill_tokens": 2048,
+  "continuation_tokens": 64,
+  "scope": "Identical dense BF16 inputs; continuation features are batched teacher-forced positions, not an incremental compressed-KV decode replay. Full-policy labels use real KV."
+}

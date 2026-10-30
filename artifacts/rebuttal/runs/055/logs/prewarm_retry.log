@@ -1,0 +1,51 @@
+/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+....F..                                                                  [100%]
+=================================== FAILURES ===================================
+_______ test_sparse_bf16_linear_prune_true_matches_pruned_bf16_reference _______
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2597: in _run_ninja_build
+    subprocess.run(
+/root/wja/miniconda3/envs/cospaq/lib/python3.12/subprocess.py:571: in run
+    raise CalledProcessError(retcode, process.args,
+E   subprocess.CalledProcessError: Command '['ninja', '-v', '-j', '8']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+fake/kernels/cutlass/cutlass_wrapper/tests/test_sparse_bf16_linear.py:49: in test_sparse_bf16_linear_prune_true_matches_pruned_bf16_reference
+    sparse_linear = SparseBF16Linear.from_linear(linear, prune=True).eval()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:410: in from_linear
+    return cls(pack_sparse_bf16_weight(weight, bias, original_dtype=linear.weight.dtype, prune=prune, backend=backend))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:120: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:334: in pack_sparse_bf16_weight
+    sparse_weight, metadata = pack_sparse_bf16_a_from_dense(sparse_weight_bf16)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:227: in pack_sparse_bf16_a_from_dense
+    return _load_ext().sparse_bf16_compress_weight(a)
+           ^^^^^^^^^^^
+fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/sparse_bf16.py:106: in _load_ext
+    return load(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1692: in load
+    return _jit_compile(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2134: in _jit_compile
+    _write_ninja_file_and_build_library(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2286: in _write_ninja_file_and_build_library
+    _run_ninja_build(
+artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2614: in _run_ninja_build
+    raise RuntimeError(message) from e
+E   RuntimeError: Error building extension '_cutlass_wrapper_sparse_bf16_backends': [1/2] /usr/bin/g++ -MMD -MF sparse_bf16_bindings.o.d -DTORCH_EXTENSION_NAME=_cutlass_wrapper_sparse_bf16_backends -DTORCH_API_INCLUDE_EXTENSION_H -I/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/include -I/root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/spinfer_standalone/src -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/include -isystem /root/wja/miniconda3/envs/cospaq/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17 -c /root/wja2/project/my/fake/fake/kernels/cutlass/cutlass_wrapper/cutlass_wrapper/csrc/sparse_bf16_bindings.cpp -o sparse_bf16_bindings.o 
+E   [2/2] /usr/bin/g++ sparse_bf16_bindings.o spinfer_api.cuda.o -shared /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/lib/libcusparseLt.so.0 -Wl,-rpath,/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/lib -lcublas -lcusparse -L/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/lib -lcudart -o _cutlass_wrapper_sparse_bf16_backends.so
+E   FAILED: [code=1] _cutlass_wrapper_sparse_bf16_backends.so 
+E   /usr/bin/g++ sparse_bf16_bindings.o spinfer_api.cuda.o -shared /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/lib/libcusparseLt.so.0 -Wl,-rpath,/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/nvidia/cusparselt/lib -lcublas -lcusparse -L/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128/lib -lcudart -o _cutlass_wrapper_sparse_bf16_backends.so
+E   /usr/bin/ld: cannot find -lcublas: No such file or directory
+E   /usr/bin/ld: cannot find -lcusparse: No such file or directory
+E   collect2: error: ld returned 1 exit status
+E   ninja: build stopped: subcommand failed.
+=========================== short test summary info ============================
+FAILED fake/kernels/cutlass/cutlass_wrapper/tests/test_sparse_bf16_linear.py::test_sparse_bf16_linear_prune_true_matches_pruned_bf16_reference
+1 failed, 6 passed in 264.44s (0:04:24)

@@ -1,10 +1,19 @@
 # PRO 6000 大模型实验交接
 
-更新：2026-10-29。用途：在另一台机器 pull 后，让 Codex 直接了解现有结论、代码入口与待补实验。此提交不包含模型权重、编译缓存或可重新下载的数据集缓存；没有在 PRO 6000 上启动新实验。
+更新：2026-10-30（北京时间）。用途：在另一台机器 pull 后，让 Codex 直接了解现有结论、代码入口与待补实验。初始交接不包含模型权重、编译缓存或可重新下载的数据集缓存；本机随后启动的新实验见下方055入口。
+
+## 当前 PRO 6000 工作入口（055，已完成）
+
+- 用户已将正式完整对照收窄为 **BF16、DASO、HAWQ-V3适配**，其他baseline暂不独立评测；uniform仅作必要校准/选点锚点。
+- 用户提供的fork位于`/root/wja2/project/my/vllm-cospaq`，HEAD核对为679527f。本轮使用055内独立副本及环境，原clone未修改。
+- [055 README](runs/055/README.md)、[计划184](../../dev/plans/184_pro6000_qwen32b_rebuttal_plan.md)、[实施记录184](../../dev/impls/184_pro6000_qwen32b_rebuttal_impl.md)是新机器入口。完整Qwen3-32B的BF16容量/validation、两套canonical、kernel验证、局部特征、PRO6000画像、HAWQ主迹、72策略校准及DASO多点validation/探索测速已完成；正式100窗test、三轮测速、61个完整下游任务/分片与独立终审全部完成，见[完整表及原始证据](responses/reviewer4/pro6000_qwen32b_run055/README.md)。
+- 用户目标为尽量北京时间2026-10-30拿到结果，夜间有十几个小时；要求更多DASO候选点。055在任何DASO/HAWQ validation/test前追加六档预算、四组阶段组合与独立探索E2E选点；其后根据紧预算validation反馈，用原模型追加0.003/0.005搜索，正式报告保留0.02/0.07并增加0.04中间预算；这些扩展均在正式test前。质量闭环/test双卡，正式三轮仍独占。
+- 先读[实时接续阶段](runs/055/results/continuation_status.json)和[保存结果状态快照](runs/055/results/status.json)，再检查实际自有进程/日志；不要重复启动正在运行的校准/接续控制器。正式工作点、test/速度及任务未闭合前，不向中文回复填写未测数据。
+- 入口`source artifacts/rebuttal/runs/055/code/env.sh`；当前沙箱内CUDA不可见，GPU执行须走主机通道。两张卡可并行质量准备；正式测速须等待两卡准备结束并同时持锁，固定GPU0/CPU0–7/NUMA0。
 
 ## 先读这几份文件
 
-1. [中文 rebuttal 总稿](REBUTTAL_RESPONSE_CN.md)：五位人工 reviewer 的问题、现有答复与19张表。
+1. [中文 rebuttal 总稿](REBUTTAL_RESPONSE_CN.md)：五位人工 reviewer 的问题、现有答复及新增完整32B结果表。
 2. [当前精选证据](REBUTTAL_SELECTED_EVIDENCE.md)：结果入口及测量口径。
 3. [原审稿意见](reference/reviewers.md)与 reference 中的论文；不处理 AI reviewer。
 4. [实验清单](EXPERIMENT_CHECKLIST.md)和[实验索引](responses/README.md)。
@@ -12,15 +21,15 @@
 
 ## 目标与优先级
 
-用户接下来希望在 PRO 6000 测完整大模型，主要补 R4 对30B级别规模的 concern，并支持跨模型/硬件的 rebuttal。建议先评估 Qwen3-32B 的可行性，实际模型目录、GPU型号/显存、时间预算以新机器为准；不要仅凭名称默认设备是 Blackwell 或存在足够空闲显存。
+055已补齐完整Qwen3-32B在PRO6000上的三方法对照，支持R4的30B级规模问题。下述准备流程保留供复现；正式范围及完成状态以上方055入口为准，新机器仍须重新核对型号、资源和数值环境。
 
 1. 先检查 GPU、CPU/NUMA、CUDA、PyTorch、vLLM 和 kernel；确认 BF16 完整模型能在目标负载下运行。
 2. 优先完成 BF16、可靠8bit基线、HAWQ-V3适配及 DASO 代表点的真实质量/速度对照。DASO 与基线使用同一硬件、数值后端、任务协议和负载；小规模试运行通过后再确定正式 batch。
 3. 新模型须重新采集敏感度/质量校准；新 GPU 须重新画像延迟。不能把8B质量系数、已有8B策略或5090速度直接改标签当作32B结果。
 4. 先做可比较的 NLL、TTFT/TPOT/E2E、含恢复 cycle 和内存，再按时间补原协议下游任务及长 Decode。工作点在正式测试前冻结，完整保留全部尝试和异常。
-5. 现有最新 run 是054；新实验从未占用的055起独立建目录。按根 AGENTS.md 写新计划与开发记录，不覆盖旧运行。
+5. 旧机器封存至054，本轮055已独立完成。后续新实验使用未占用编号，按根AGENTS.md写计划与开发记录，不覆盖旧运行。
 
-当前112个 Qwen3-32B shape forward 仅用合成权重，见[004报告](runs/004/REPORT.md)，不属于完整32B质量/E2E结果。这正是本次需要补齐的缺口。
+当前112个 Qwen3-32B shape forward 仅用合成权重，见[004报告](runs/004/REPORT.md)，不属于完整32B质量/E2E结果。这一完整模型缺口已由055补齐。
 
 ## 拉取与依赖
 
@@ -81,6 +90,8 @@ export DASO_CUTLASS_WRAPPER_ROOT="$REBUTTAL_REPO/fake/kernels/cutlass/cutlass_wr
 
 可读的代码、Markdown、CSV、配置、较小 JSON 和实验日志直接进入 Git。大量逐窗 capture、phase trace、较大 JSON 和 profiler 原始文件存为分组压缩归档，单个分片不超过40 MiB；本地原文件没有删除。
 
+055新增归档10,122个原始文件，约715.2MiB，18个分片均不超过40MiB；原文件保留，分片及逐文件SHA恢复核验通过。
+
 列出可恢复组：
 
 ~~~bash
@@ -90,6 +101,7 @@ python artifacts/rebuttal/portability/restore_raw_results.py
 按需恢复一个组，例如完整任务结果或预算审计：
 
 ~~~bash
+python artifacts/rebuttal/portability/restore_raw_results.py --group run-055
 python artifacts/rebuttal/portability/restore_raw_results.py --group run-050
 python artifacts/rebuttal/portability/restore_raw_results.py --group run-003
 ~~~
@@ -112,8 +124,8 @@ python artifacts/rebuttal/portability/restore_raw_results.py --all
 - **质量口径：** 原任务 Avg 可按策略/batch复用；固定 S/O 的 NLL另测。长Decode专门NLL尚未完成，不把原Avg改标签当O512新精度。
 - **内存：** 048为单arena/Graph，047为双表示常驻eager；GPU峰值与持久Host缓存分列。
 - **求解：** 精确求解针对代理，不保证真实NLL/SLA；“几秒”是已有画像和校准后的求解时间，完整准备成本另计。
-- **未完成：** 完整30/32B模型、持续错峰生产负载、双worker PD交接。新大模型实验应补实际缺口，而不是重新命名已有微基准。
+- **未完成：** 持续错峰生产负载、双worker PD交接；055完整32B仍为单卡固定批协议，不能据此声称生产在线服务或多卡部署已验证。
 
 ## 可直接给新机器 Codex 的提示
 
-> 先阅读根 AGENTS.md 和 artifacts/rebuttal/PRO6000_HANDOFF.md，再读中文 rebuttal 总稿及现有三模型/多配置表。当前目标是在这台 PRO 6000 上补完整大模型实验，优先评估 Qwen3-32B，服务人工 reviewer 的规模和泛化问题。先核对设备、模型、phase vLLM fork及补丁、kernel环境；不要直接启动历史053夜间调度器。新实验从055起隔离，新模型重做质量校准，新硬件重新测延迟。先完成同协议 BF16与关键强基线/DASO的NLL和速度，再扩展下游任务。不要删除任何代码、日志、CSV、文档或原始结果，不使用8B参数冒充32B结果，不因为胜负筛掉已完成轮次。
+> 先阅读根AGENTS.md、本交接、中文总稿R4第2点及055完整报告。055的完整Qwen3-32B三方法对照、100窗test、三轮同卡速度和61个完整任务/分片已完成并终审通过，不要重复启动055或旧053调度器。原始证据可按run-055恢复并核验SHA。后续新实验使用未占用编号，先核对真实设备、模型、fork补丁和kernel环境，按新模型/硬件重做质量校准及延迟画像。持续错峰生产服务和双worker PD仍未验证。不要删除代码、日志、CSV、文档或原始结果，不改标签冒充新测量，不因胜负筛掉已完成轮次。

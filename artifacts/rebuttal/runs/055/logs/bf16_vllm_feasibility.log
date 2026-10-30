@@ -1,0 +1,87 @@
+/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+INFO 10-29 09:04:33 [__init__.py:216] Automatically detected platform cuda.
+INFO 10-29 09:04:36 [utils.py:233] non-default args: {'tokenizer': '/root/wja2/data/models/Qwen/Qwen3-32B', 'dtype': 'bfloat16', 'max_model_len': 2304, 'enable_prefix_caching': False, 'kv_cache_memory_bytes': 8589934592, 'max_num_batched_tokens': 16384, 'max_num_seqs': 8, 'disable_log_stats': True, 'skip_mm_profiling': True, 'enable_chunked_prefill': False, 'compilation_config': {"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,0],"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[1,4,8],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': '/root/wja2/data/models/Qwen/Qwen3-32B'}
+WARNING 10-29 09:04:36 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+ERROR 10-29 09:04:43 [registry.py:549] Error in inspecting model architecture 'Qwen3ForCausalLM'
+ERROR 10-29 09:04:43 [registry.py:549] Traceback (most recent call last):
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 967, in _run_in_subprocess
+ERROR 10-29 09:04:43 [registry.py:549]     returned.check_returncode()
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja/miniconda3/envs/cospaq/lib/python3.12/subprocess.py", line 502, in check_returncode
+ERROR 10-29 09:04:43 [registry.py:549]     raise CalledProcessError(self.returncode, self.args, self.stdout,
+ERROR 10-29 09:04:43 [registry.py:549] subprocess.CalledProcessError: Command '['/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/bin/python', '-m', 'vllm.model_executor.models.registry']' returned non-zero exit status 1.
+ERROR 10-29 09:04:43 [registry.py:549] 
+ERROR 10-29 09:04:43 [registry.py:549] The above exception was the direct cause of the following exception:
+ERROR 10-29 09:04:43 [registry.py:549] 
+ERROR 10-29 09:04:43 [registry.py:549] Traceback (most recent call last):
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 547, in _try_inspect_model_cls
+ERROR 10-29 09:04:43 [registry.py:549]     return model.inspect_model_cls()
+ERROR 10-29 09:04:43 [registry.py:549]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/logging_utils/log_time.py", line 22, in _wrapper
+ERROR 10-29 09:04:43 [registry.py:549]     result = func(*args, **kwargs)
+ERROR 10-29 09:04:43 [registry.py:549]              ^^^^^^^^^^^^^^^^^^^^^
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 510, in inspect_model_cls
+ERROR 10-29 09:04:43 [registry.py:549]     mi = _run_in_subprocess(
+ERROR 10-29 09:04:43 [registry.py:549]          ^^^^^^^^^^^^^^^^^^^
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 970, in _run_in_subprocess
+ERROR 10-29 09:04:43 [registry.py:549]     raise RuntimeError(f"Error raised in subprocess:\n"
+ERROR 10-29 09:04:43 [registry.py:549] RuntimeError: Error raised in subprocess:
+ERROR 10-29 09:04:43 [registry.py:549] /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+ERROR 10-29 09:04:43 [registry.py:549]   import pynvml  # type: ignore[import]
+ERROR 10-29 09:04:43 [registry.py:549] <frozen runpy>:128: RuntimeWarning: 'vllm.model_executor.models.registry' found in sys.modules after import of package 'vllm.model_executor.models', but prior to execution of 'vllm.model_executor.models.registry'; this may result in unpredictable behaviour
+ERROR 10-29 09:04:43 [registry.py:549] Traceback (most recent call last):
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen runpy>", line 198, in _run_module_as_main
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen runpy>", line 88, in _run_code
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 991, in <module>
+ERROR 10-29 09:04:43 [registry.py:549]     _run()
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 984, in _run
+ERROR 10-29 09:04:43 [registry.py:549]     result = fn()
+ERROR 10-29 09:04:43 [registry.py:549]              ^^^^
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 511, in <lambda>
+ERROR 10-29 09:04:43 [registry.py:549]     lambda: _ModelInfo.from_model_cls(self.load_model_cls()))
+ERROR 10-29 09:04:43 [registry.py:549]                                       ^^^^^^^^^^^^^^^^^^^^^
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/registry.py", line 522, in load_model_cls
+ERROR 10-29 09:04:43 [registry.py:549]     mod = importlib.import_module(self.module_name)
+ERROR 10-29 09:04:43 [registry.py:549]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja/miniconda3/envs/cospaq/lib/python3.12/importlib/__init__.py", line 90, in import_module
+ERROR 10-29 09:04:43 [registry.py:549]     return _bootstrap._gcd_import(name[level:], package, level)
+ERROR 10-29 09:04:43 [registry.py:549]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+ERROR 10-29 09:04:43 [registry.py:549]   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/models/qwen3.py", line 42, in <module>
+ERROR 10-29 09:04:43 [registry.py:549]     from vllm.model_executor.layers.rotary_embedding import get_rope
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/layers/rotary_embedding/__init__.py", line 8, in <module>
+ERROR 10-29 09:04:43 [registry.py:549]     from .base import RotaryEmbedding
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/layers/rotary_embedding/base.py", line 10, in <module>
+ERROR 10-29 09:04:43 [registry.py:549]     from .common import apply_rotary_emb_torch
+ERROR 10-29 09:04:43 [registry.py:549]   File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/model_executor/layers/rotary_embedding/common.py", line 12, in <module>
+ERROR 10-29 09:04:43 [registry.py:549]     from vllm.vllm_flash_attn.layers.rotary import apply_rotary_emb
+ERROR 10-29 09:04:43 [registry.py:549] ModuleNotFoundError: No module named 'vllm.vllm_flash_attn.layers'
+ERROR 10-29 09:04:43 [registry.py:549] 
+Traceback (most recent call last):
+  File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/vllm_feasibility.py", line 44, in <module>
+    main()
+  File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/code/vllm_feasibility.py", line 17, in main
+    llm = LLM(model=str(MODEL), tokenizer=str(MODEL), dtype='bfloat16',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/entrypoints/llm.py", line 297, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/v1/engine/llm_engine.py", line 169, in from_engine_args
+    vllm_config = engine_args.create_engine_config(usage_context)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/engine/arg_utils.py", line 1142, in create_engine_config
+    model_config = self.create_model_config()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/phase-vllm/vllm/vllm/engine/arg_utils.py", line 994, in create_model_config
+    return ModelConfig(
+           ^^^^^^^^^^^^
+  File "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/.venv/lib/python3.12/site-packages/pydantic/_internal/_dataclasses.py", line 121, in __init__
+    s.__pydantic_validator__.validate_python(ArgsKwargs(args, kwargs), self_instance=s)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+  Value error, Model architectures ['Qwen3ForCausalLM'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...rocessor_plugin': None}), input_type=ArgsKwargs]
+    For further information visit https://errors.pydantic.dev/2.14/v/value_error

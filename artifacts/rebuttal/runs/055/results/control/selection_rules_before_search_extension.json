@@ -1,0 +1,39 @@
+{
+  "formal_families": [
+    "BF16",
+    "DASO",
+    "HAWQ-V3 adaptation"
+  ],
+  "representative_quality_budgets": [
+    0.02,
+    0.07
+  ],
+  "validation_windows": 100,
+  "validation_guard": {
+    "paired_standard_errors": 2,
+    "additive_margin_nats_per_token": 0.005
+  },
+  "daso_candidate_pool": "New32B fitted proposals plus BF16/plain INT8/SQ INT8/FP8 calibration incumbents",
+  "daso_selection": "Minimum new-GPU additive profile cost among candidates passing the validation guard; BF16 remains eligible",
+  "daso_solver": "Two stages: minimum additive latency within predicted quality budget, then minimum predicted quality within optimum latency +1e-7 ms",
+  "hawq_primary_trace": "P16/B4/S256, signed, all448 raw projection blocks",
+  "hawq_latency_cap": "Selected DASO point additive latency; relax to feasible minimum only with explicit flag",
+  "hawq_tie_break": "Minimum additive latency within normalized signed-Hessian optimum +1e-8",
+  "formal_test_selection": false,
+  "downstream_score_selection": false,
+  "formal_speed_rounds": 3,
+  "warmups_per_case": 5,
+  "timed_iterations_per_case": 10,
+  "formal_gpu": 0,
+  "formal_cpu_affinity": "0-7",
+  "formal_numa": 0,
+  "scope": "Frozen before any DASO/HAWQ validation or test closure. Uniforms are calibration/selection anchors, not additional formal baseline rows. Exact optimization applies only to the additive proxy.",
+  "speed_aggregation": {
+    "within_case": "Median of ten timed iterations, excluding five warmups",
+    "within_round_reference": "Arithmetic mean of same-scenario BF16 start/end medians",
+    "across_rounds": "Arithmetic mean of three per-round normalized speedup ratios; show min/max and three raw case medians",
+    "variation_flag": "Retain all complete rounds. Flag when (max-min)/mean exceeds 0.05 for case E2E or BF16 bracket drift abs(end-start)/mean exceeds 0.05 in any round.",
+    "prefill_metric": "Prefill E2E with one output token; TTFT also retained.",
+    "memory": "Report Torch peak allocated separately from sampled NVML allocation minus empirical idle footprint, persistent phase cache, and process peak RSS."
+  }
+}

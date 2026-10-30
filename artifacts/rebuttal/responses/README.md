@@ -4,6 +4,8 @@
 
 **五位人工 reviewer 中文回复总稿：[REBUTTAL_RESPONSE_CN.md](../REBUTTAL_RESPONSE_CN.md)**。R1三点、R2两点；三模型和多配置表集中在R2，其余回复交叉引用，文末另列内部核对口径。
 
+**完整32B / PRO6000：[BF16、DASO、HAWQ-V3适配完整对照](reviewer4/pro6000_qwen32b_run055/README.md) · [全部任务及计时分项CSV](reviewer4/pro6000_qwen32b_run055/results.csv)**。055已完成100窗test、同卡三轮速度/内存、61个完整下游任务/分片和独立终审；三档预算在test前冻结，相同映射共享证据。HAWQ部分代理上限不可达的点标‡，完整范围见源表。
+
 **Qwen主结果优先看这里：[15行双场景主表](reviewer2/qwen3_main_table/README.md) · [分组列HTML](reviewer2/qwen3_main_table/table.html)**。包含全部baseline、HAWQ/DASO各两个报告工作点，以及两场景各自Avg；历史诊断版本不放入该主表。
 
 原主表与下方多配置补测的引擎容量不同，速度应在各自表内比较。扩容后的P+D排序有变化，完整范围与含恢复cycle见补测表。

@@ -1,0 +1,243 @@
+2 channel Terms of Service accepted
+Retrieving notices: ...working... done
+Channels:
+ - nvidia/label/cuda-12.8.1
+ - defaults
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working... failed
+
+# >>>>>>>>>>>>>>>>>>>>>> ERROR REPORT <<<<<<<<<<<<<<<<<<<<<<
+
+    Traceback (most recent call last):
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/urllib3/response.py", line 905, in _error_catcher
+        yield
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/urllib3/response.py", line 1043, in _raw_read
+        raise IncompleteRead(self._fp_bytes_read, self.length_remaining)
+    urllib3.exceptions.IncompleteRead: IncompleteRead(12578388 bytes read, 1184325 more expected)
+    
+    The above exception was the direct cause of the following exception:
+    
+    Traceback (most recent call last):
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/exception_handler.py", line 30, in __call__
+        return func(*args, **kwargs)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/cli/main.py", line 53, in main_subshell
+        exit_code = do_call(args, parser)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/cli/conda_argparse.py", line 207, in do_call
+        result = getattr(module, func_name)(args, parser)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/notices/core.py", line 137, in wrapper
+        return_value = func(*args, **kwargs)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/cli/main_create.py", line 215, in execute
+        install(args, parser, "create")
+        ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/cli/install.py", line 358, in install
+        unlink_link_transaction = solver.solve_for_transaction(
+            deps_modifier=deps_modifier,
+        ...<4 lines>...
+            ),
+        )
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/core/solve.py", line 164, in solve_for_transaction
+        unlink_precs, link_precs = self.solve_for_diff(
+                                   ~~~~~~~~~~~~~~~~~~~^
+            update_modifier,
+            ^^^^^^^^^^^^^^^^
+        ...<5 lines>...
+            should_retry_solve,
+            ^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/core/solve.py", line 233, in solve_for_diff
+        final_precs = self.solve_final_state(
+            update_modifier,
+        ...<4 lines>...
+            should_retry_solve,
+        )
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda_libmamba_solver/solver.py", line 171, in solve_final_state
+        index = self._collect_all_metadata(
+            channels=channels,
+        ...<2 lines>...
+            in_state=in_state,
+        )
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/common/io.py", line 110, in decorated
+        return f(*args, **kwds)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda_libmamba_solver/solver.py", line 270, in _collect_all_metadata
+        index = LibMambaIndexHelper(
+            channels=[*conda_build_channels, *channels],
+        ...<8 lines>...
+            build_repodata_subset=self._build_repodata_subset,
+        )
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda_libmamba_solver/index.py", line 279, in __init__
+        self.repos: list[_ChannelRepoInfo] = self._load_channels()
+                                             ~~~~~~~~~~~~~~~~~~~^^
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda_libmamba_solver/index.py", line 391, in _load_channels
+        return self._load_channel_repo_info_json(urls_to_channel, try_solv)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda_libmamba_solver/index.py", line 417, in _load_channel_repo_info_json
+        urls_to_json_path_and_state = self._fetch_repodata_jsons(tuple(urls_to_channel.keys()))
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda_libmamba_solver/index.py", line 497, in _fetch_repodata_jsons
+        for (url, path, state) in executor.map(self._fetch_one_repodata_json, urls)
+                                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/concurrent/futures/_base.py", line 645, in result_iterator
+        yield _result_or_cancel(fs.pop())
+              ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/concurrent/futures/_base.py", line 312, in _result_or_cancel
+        return fut.result(timeout)
+               ~~~~~~~~~~^^^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/concurrent/futures/_base.py", line 454, in result
+        return self.__get_result()
+               ~~~~~~~~~~~~~~~~~^^
+      File "/root/wja/miniconda3/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+        raise self._exception
+      File "/root/wja/miniconda3/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+        result = ctx.run(self.task)
+      File "/root/wja/miniconda3/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+        return fn(*args, **kwargs)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda_libmamba_solver/index.py", line 523, in _fetch_one_repodata_json
+        json_path, state = subdir_data.repo_fetch.fetch_latest_path()
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/gateways/repodata/__init__.py", line 786, in fetch_latest_path
+        _, state = self.fetch_latest()
+                   ~~~~~~~~~~~~~~~~~^^
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/gateways/repodata/__init__.py", line 884, in fetch_latest
+        raw_repodata = repo.repodata_parsed(cache.state)  # type: ignore
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/gateways/repodata/zstd.py", line 264, in repodata_parsed
+        repodata_json_or_none = request_url_zstd_state(
+            repodata_url,
+        ...<3 lines>...
+            temp_path=temp_path,
+        )
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/gateways/repodata/zstd.py", line 150, in request_url_zstd_state
+        response = download_repodata(
+            withext(url, ".json.zst"),
+        ...<4 lines>...
+            is_zst=True,
+        )
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/conda/gateways/repodata/zstd.py", line 97, in download_repodata
+        shutil.copyfileobj(zf, repodata)
+        ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/shutil.py", line 256, in copyfileobj
+        while buf := fsrc_read(length):
+                     ~~~~~~~~~^^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/compression/zstd/_zstdfile.py", line 173, in read
+        return self._buffer.read(size)
+               ~~~~~~~~~~~~~~~~~^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/compression/_common/_streams.py", line 68, in readinto
+        data = self.read(len(byte_view))
+      File "/root/wja/miniconda3/lib/python3.14/compression/_common/_streams.py", line 97, in read
+        rawblock = self._fp.read(BUFFER_SIZE)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/urllib3/response.py", line 1155, in read
+        data = self._raw_read(amt)
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/urllib3/response.py", line 1021, in _raw_read
+        with self._error_catcher():
+             ~~~~~~~~~~~~~~~~~~~^^
+      File "/root/wja/miniconda3/lib/python3.14/contextlib.py", line 162, in __exit__
+        self.gen.throw(value)
+        ~~~~~~~~~~~~~~^^^^^^^
+      File "/root/wja/miniconda3/lib/python3.14/site-packages/urllib3/response.py", line 925, in _error_catcher
+        raise ProtocolError(arg, e) from e
+    urllib3.exceptions.ProtocolError: ('Connection broken: IncompleteRead(12578388 bytes read, 1184325 more expected)', IncompleteRead(12578388 bytes read, 1184325 more expected))
+
+`$ /root/wja/miniconda3/bin/conda create --prefix /root/wja2/project/my/fake/artifacts/rebuttal/runs/055/dependencies/cuda128 --override-channels -c nvidia/label/cuda-12.8.1 -c defaults --no-default-packages -y cuda-nvcc cuda-cudart-dev cuda-driver-dev cuda-cccl`
+
+  environment variables:
+                ALL_PROXY=<set>
+                 CIO_TEST=<not set>
+        CONDA_DEFAULT_ENV=diffusion
+                CONDA_EXE=/root/wja/miniconda3/bin/conda
+          CONDA_PKGS_DIRS=/tmp/daso055-conda-pkgs
+             CONDA_PREFIX=/root/wja/miniconda3/envs/diffusion
+           CONDA_PREFIX_1=/root/wja/miniconda3
+           CONDA_PREFIX_2=/root/wja/miniconda3/envs/diffusion
+           CONDA_PREFIX_3=/root/wja/miniconda3
+    CONDA_PROMPT_MODIFIER=(diffusion)
+         CONDA_PYTHON_EXE=/root/wja/miniconda3/bin/python
+               CONDA_ROOT=/root/wja/miniconda3
+              CONDA_SHLVL=4
+           CURL_CA_BUNDLE=<not set>
+              HTTPS_PROXY=<set>
+               HTTP_PROXY=<set>
+          LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/usr
+                          /local/cuda/lib64:/usr/local/cuda/lib64:/usr/local/lib/python3.12/dist
+                          -packages/torch/lib:/usr/local/lib/python3.12/dist-packages/torch_tens
+                          orrt/lib:/usr/local/cuda/compat/lib:/usr/local/nvidia/lib:/usr/local/n
+                          vidia/lib64
+               LD_PRELOAD=<not set>
+             LIBRARY_PATH=/usr/local/cuda/lib64/stubs:
+                 NO_PROXY=<set>
+                     PATH=/root/.codex/packages/app-server-
+                          daemon/releases/0.165.0-x86_64-unknown-linux-musl/codex-
+                          path:/root/.codex/tmp/arg0-linux/codex-
+                          arg02O554s:/root/.codex/packages/app-server-
+                          daemon/releases/0.165.0-x86_64-unknown-linux-musl/codex-
+                          path:/root/.codex/tmp/arg0/codex-arg0za04No:/root/.nvm/versions/node/v
+                          24.21.0/lib/node_modules/@openai/codex/node_modules/@openai/codex-
+                          linux-x64/vendor/x86_64-unknown-linux-musl/codex-path:/usr/local/cuda/
+                          bin:/root/.nvm/versions/node/v24.21.0/bin:/usr/local/cuda/bin:/usr/loc
+                          al/cuda/bin:/root/wja/miniconda3/envs/diffusion/bin:/usr/local/cuda/bi
+                          n:/usr/local/cuda/bin:/root/wja/miniconda3/condabin:/usr/local/lib/pyt
+                          hon3.12/dist-packages/torch_tensorrt/bin:/usr/local/nvidia/bin:/usr/lo
+                          cal/cuda/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sb
+                          in:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/amazon/efa/bin:/opt/ten
+                          sorrt/bin:/opt/mellanox/doca/tools:/opt/mellanox/doca/tools/
+         PYTHONIOENCODING=utf-8
+       REQUESTS_CA_BUNDLE=<not set>
+            SSL_CERT_FILE=<not set>
+      TRITON_CUDACRT_PATH=/usr/local/cuda/include
+       TRITON_CUDART_PATH=/usr/local/cuda/include
+    TRITON_CUOBJDUMP_PATH=/usr/local/cuda/bin/cuobjdump
+        TRITON_CUPTI_PATH=/usr/local/cuda/include
+     TRITON_NVDISASM_PATH=/usr/local/cuda/bin/nvdisasm
+        TRITON_PTXAS_PATH=/usr/local/cuda/bin/ptxas
+        _CUDA_COMPAT_PATH=/usr/local/cuda/compat
+                all_proxy=<set>
+               http_proxy=<set>
+              https_proxy=<set>
+                 no_proxy=<set>
+
+     active environment : diffusion
+    active env location : /root/wja/miniconda3/envs/diffusion
+            shell level : 4
+       user config file : /root/.condarc
+ populated config files : /root/wja/miniconda3/.condarc
+                          /root/wja/miniconda3/condarc.d/anaconda-auth.yml
+          conda version : 26.7.1
+    conda-build version : not installed
+         python version : 3.14.7.final.0
+                 solver : libmamba (default)
+       virtual packages : __archspec=1=zen4
+                          __conda=26.7.1=0
+                          __cuda=13.0=0
+                          __glibc=2.39=0
+                          __linux=6.8.0=0
+                          __unix=0=0
+       base environment : /root/wja/miniconda3  (writable)
+      conda av data dir : /root/wja/miniconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://conda.anaconda.org/nvidia/label/cuda-12.8.1/linux-64
+                          https://conda.anaconda.org/nvidia/label/cuda-12.8.1/noarch
+                          https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /tmp/daso055-conda-pkgs
+          notices cache : /root/.cache/conda/notices
+       envs directories : /root/wja/miniconda3/envs
+                          /root/.conda/envs
+    temporary directory : /tmp
+               platform : linux-64
+             user-agent : conda/26.7.1 requests/2.34.2 CPython/3.14.7 Linux/6.8.0-85-generic ubuntu/24.04.3 glibc/2.39 solver/libmamba conda-libmamba-solver/26.7.0 libmambapy/2.3.2 aau/0.8.1 c/. s/. e/.
+                UID:GID : 0:0
+             netrc file : None
+           offline mode : False
+
+
+An unexpected error has occurred. Conda has prepared the above report.
+If you suspect this error is being caused by a malfunctioning plugin,
+consider using the --no-plugins option to turn off plugins.
+
+Example: conda --no-plugins install <package>
+
+Alternatively, you can set the CONDA_NO_PLUGINS environment variable on
+the command line to run the command without plugins enabled.
+
+Example: CONDA_NO_PLUGINS=true conda install <package>
+

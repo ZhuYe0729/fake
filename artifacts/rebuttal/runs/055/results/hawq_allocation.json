@@ -1,0 +1,92 @@
+{
+  "points": [
+    {
+      "policy_id": "hawq32_prefill_only_matched_q0.02",
+      "scenario": "prefill_only",
+      "paired_daso": "daso32_prefill_only_q0.003",
+      "paired_daso_budget": 0.02,
+      "requested_linear_limit_ms": 1382.2028242672484,
+      "minimum_linear_ms": 1328.1500736872354,
+      "linear_limit_ms": 1382.2028243672485,
+      "relaxed_infeasible": false,
+      "predicted_linear_ms": 1381.9430746758978,
+      "sensitivity_objective": 0.021956436532305793,
+      "tie_break": "Minimum additive latency within normalized signed-Hessian optimum +1e-8"
+    },
+    {
+      "policy_id": "hawq32_prefill_only_matched_q0.04",
+      "scenario": "prefill_only",
+      "paired_daso": "daso32_prefill_only_q0.02",
+      "paired_daso_budget": 0.04,
+      "requested_linear_limit_ms": 1258.2030519843102,
+      "minimum_linear_ms": 1328.1500736872354,
+      "linear_limit_ms": 1328.1500737872354,
+      "relaxed_infeasible": true,
+      "predicted_linear_ms": 1328.1500736872356,
+      "sensitivity_objective": 0.045038676625533215,
+      "tie_break": "Minimum additive latency within normalized signed-Hessian optimum +1e-8"
+    },
+    {
+      "policy_id": "hawq32_prefill_only_matched_q0.07",
+      "scenario": "prefill_only",
+      "paired_daso": "daso32_prefill_only_q0.02",
+      "paired_daso_budget": 0.07,
+      "requested_linear_limit_ms": 1258.2030519843102,
+      "minimum_linear_ms": 1328.1500736872354,
+      "linear_limit_ms": 1328.1500737872354,
+      "relaxed_infeasible": true,
+      "predicted_linear_ms": 1328.1500736872356,
+      "sensitivity_objective": 0.045038676625533215,
+      "tie_break": "Minimum additive latency within normalized signed-Hessian optimum +1e-8"
+    },
+    {
+      "policy_id": "hawq32_prefill_decode_matched_q0.02",
+      "scenario": "prefill_decode",
+      "paired_daso": "uniform_fp8",
+      "paired_daso_budget": 0.02,
+      "requested_linear_limit_ms": 3748.328284205279,
+      "minimum_linear_ms": 2444.034064578083,
+      "linear_limit_ms": 3748.328284305279,
+      "relaxed_infeasible": false,
+      "predicted_linear_ms": 3748.118210318359,
+      "sensitivity_objective": -0.004457628728921265,
+      "tie_break": "Minimum additive latency within normalized signed-Hessian optimum +1e-8"
+    },
+    {
+      "policy_id": "hawq32_prefill_decode_matched_q0.04",
+      "scenario": "prefill_decode",
+      "paired_daso": "daso32_prefill_decode_q0.01",
+      "paired_daso_budget": 0.04,
+      "requested_linear_limit_ms": 2162.3058011354524,
+      "minimum_linear_ms": 2444.034064578083,
+      "linear_limit_ms": 2444.034064678083,
+      "relaxed_infeasible": true,
+      "predicted_linear_ms": 2444.0340645780834,
+      "sensitivity_objective": 0.06246513673982677,
+      "tie_break": "Minimum additive latency within normalized signed-Hessian optimum +1e-8"
+    },
+    {
+      "policy_id": "hawq32_prefill_decode_matched_q0.07",
+      "scenario": "prefill_decode",
+      "paired_daso": "daso32_prefill_decode_q0.07",
+      "paired_daso_budget": 0.07,
+      "requested_linear_limit_ms": 1918.3000847365624,
+      "minimum_linear_ms": 2444.034064578083,
+      "linear_limit_ms": 2444.034064678083,
+      "relaxed_infeasible": true,
+      "predicted_linear_ms": 2444.0340645780834,
+      "sensitivity_objective": 0.06246513673982677,
+      "tie_break": "Minimum additive latency within normalized signed-Hessian optimum +1e-8"
+    }
+  ],
+  "trace_source_sha256": "8b0e93c3a2bcb305d924700768886d40dd55d6539d9254f05d8a5b044def607c",
+  "negative_trace_blocks": 76,
+  "trace_transform": "signed, unchanged",
+  "prefill_choices": [
+    "dense_nvfp4",
+    "int8",
+    "dense_bf16"
+  ],
+  "decode_fp4_representation": "w4a16_ours",
+  "scope": "Qwen3 NLL Hessian/weight-error PTQ adaptation; not the original CNN QAT/TVM pipeline. Matches additive latency caps, not true NLL budgets or measured E2E. DASO has eight candidates."
+}

@@ -1,0 +1,42 @@
+{
+  "capacity_probe": "results/bf16_vllm_feasibility.json",
+  "phase_probe": "results/measurements/pilot_phase_bf16_validation_retry.json",
+  "engine": {
+    "capture_sizes": [
+      1,
+      4,
+      8
+    ],
+    "max_model_len": 2304,
+    "max_num_seqs": 8,
+    "max_num_batched_tokens": 16384,
+    "kv_gib": 8
+  },
+  "workloads": [
+    {
+      "label": "prefill_only_b8_s2048_o1",
+      "tier": 1,
+      "scenario": "prefill_only",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 1,
+      "input": "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/configs/speed_inputs.json",
+      "input_sha256": "18d95a6f732a2e25af872eff4effbd857df49ccd4467cf8a95c1b5e963fc6864"
+    },
+    {
+      "label": "prefill_decode_b8_s2048_o64",
+      "tier": 1,
+      "scenario": "prefill_decode",
+      "batch": 8,
+      "prompt": 2048,
+      "output": 64,
+      "input": "/root/wja2/project/my/fake/artifacts/rebuttal/runs/055/configs/speed_inputs.json",
+      "input_sha256": "18d95a6f732a2e25af872eff4effbd857df49ccd4467cf8a95c1b5e963fc6864"
+    }
+  ],
+  "quality_blocks": 100,
+  "warmups": 5,
+  "iterations": 10,
+  "rounds": 3,
+  "formal_timing": "No own preparation/quality jobs on either GPU; same GPU/CPU/NUMA; BF16 brackets."
+}

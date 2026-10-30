@@ -13,7 +13,7 @@
 | R1 / AK6a | 实际质量预算、内存开销 | [质量预算](#quality-budget)、[运行开销](#runtime-cost) |
 | R2 / Exi5 | 强基线、更多负载、真实混合调度 | [模型主表](#model-results)、[不同负载](#workloads)、[混合调度](#mixed) |
 | R3 / LrT2 | 新架构、预测准确性与准备成本 | [模型主表](#model-results)、[建模与求解](#model-cost) |
-| R4 / QboE | 简单剪枝、搜索成本与规模 | [剪枝](#pruning)、[建模与求解](#model-cost)、[其他材料](#other) |
+| R4 / QboE | 简单剪枝、搜索成本与规模 | [完整32B](#large-model)、[剪枝](#pruning)、[建模与求解](#model-cost)、[其他材料](#other) |
 | R5 / gkP9 | 模块接口、反约束优化与方法定位 | [接口与反约束](#interfaces-inverse)、[其他材料](#other) |
 
 <a id="model-results"></a>
@@ -594,8 +594,14 @@ Llama-3.1三套配置，各128 Linear×2阶段；短输入真实forward记录dty
 - **Figure2乱码：** 已有无字体依赖的[替换PDF](runs/008/results/figure2_outlined.pdf)和[SVG](runs/008/results/figure2_outlined.svg)，保留原公式含义。
 - **相同输入如何测：** 从BF16参考模型捕获同一个模块输入，分别调用各候选；候选输出不替换参考主干继续传播的activation。[具体说明](responses/reviewer5/overnight_run008/IDENTICAL_INPUTS.md)。
 - **NAS方法定位：** 聚焦固定LLM的跨后端、模块、阶段联合选择和实际部署；承认资源约束搜索与硬件预测已有先例。[定位草稿](runs/008/NAS_CONTEXT.md)。
-- **更大模型规模：** 已有112个Qwen3-32B维度的真实kernel forward，支持更大矩阵的后端可执行性；尚无完整30/32B模型质量/E2E结果。[规模测量](runs/004/REPORT.md)。
 
-完整30/32B部署及生产open-loop在线SLA仍需另补证据；当前的kernel测量和mixed burst均按各自范围使用。
+<a id="large-model"></a>
+### 完整Qwen3-32B / RTX PRO 6000
+
+[完整三方法表](responses/reviewer4/pro6000_qwen32b_run055/README.md) · [任务、NLL、三轮计时及内存分项](responses/reviewer4/pro6000_qwen32b_run055/results.csv) · [终审与来源SHA](runs/055/results/final_audit_complete.json)。完整64层预训练模型、100窗test、61个完整下游任务/分片均已闭合；与[004的112个合成shape forward](runs/004/REPORT.md)分开。
+
+DASO中档P+D生成Avg为29.86，BF16为29.73，正式E2E/cycle加速为2.015×/1.753×；较快点为2.189×/1.902×、Avg29.40。全部预算与不利结果保留，质量与速度存在取舍。HAWQ为LLM PTQ适配，部分请求代理上限不可达时标‡，不作为同候选、同质量或仅分配器变化的因果消融。GPU峰值与Host缓存分列。
+
+055验证单卡固定批负载；生产open-loop在线SLA和双worker PD交接仍未完成，mixed burst按其自身范围使用。
 
 [精简英文回复](REBUTTAL_RESPONSE_DRAFT.md) · [本次来源与检查](results176/audit.json) · [重排前的完整旧版](results176/reference/REBUTTAL_SELECTED_EVIDENCE.md)
